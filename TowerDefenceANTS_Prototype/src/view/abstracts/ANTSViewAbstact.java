@@ -8,6 +8,8 @@ import interfaces.ANTSIView;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
+import javax.swing.JPanel;
+
 /**
  * @author Lukas
  *
@@ -15,16 +17,23 @@ import java.util.ArrayList;
 public abstract class ANTSViewAbstact implements ANTSIView
 {
 	protected ArrayList<ANTSIView> views;
+	protected JPanel mainPanel;
 	
 	public ANTSViewAbstact()
 	{
 		this.views = new ArrayList<ANTSIView>();
-	}
+		this.mainPanel = new JPanel();
+		
+		this.initComponents();
+		this.configMainPanel();
+	}	
 	
 	@Override
 	public final void paint(Graphics2D g)
 	{
-		paintOtherViews(g);
+		
+		
+		//paintOtherViews(g);
 		this.paintView(g);
 	}
 	
@@ -46,7 +55,29 @@ public abstract class ANTSViewAbstact implements ANTSIView
 	 */
 	protected void paintView(Graphics2D g)
 	{
+	
+	}
+	
+	
+	protected void configMainPanel()
+	{
 		
+	}
+	
+	protected void initComponents()
+	{
+		
+	}
+	
+	
+	///////////
+	//GETTERS//
+	///////////
+	
+	@Override
+	public final JPanel getPanel()
+	{
+		return this.mainPanel;
 	}
 	
 	

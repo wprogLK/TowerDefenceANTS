@@ -5,6 +5,8 @@ package interfaces;
 
 import java.awt.Graphics2D;
 
+import javax.swing.JPanel;
+
 /**
  * @author Lukas
  *
@@ -12,4 +14,7 @@ import java.awt.Graphics2D;
 public interface ANTSIView 
 {
 	public void paint(Graphics2D g);
+	
+	
+	public JPanel getPanel();
 }
