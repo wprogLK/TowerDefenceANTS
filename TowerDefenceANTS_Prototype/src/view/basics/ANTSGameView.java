@@ -6,6 +6,7 @@ package view.basics;
 
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
+import java.awt.event.ActionListener;
 import java.awt.geom.Line2D;
 
 import javax.swing.JButton;
@@ -25,11 +26,12 @@ public class ANTSGameView extends ANTSViewAbstact implements ANTSIView
 	private JButton button;
 	
 	private ANTSGameModel model;
-	
+	private boolean draw;
 	public ANTSGameView(ANTSGameModel model)
 	{
 		super();
 		this.model = model;
+		this.draw = false;
 	}
 	
 	@Override
@@ -50,10 +52,44 @@ public class ANTSGameView extends ANTSViewAbstact implements ANTSIView
 	@Override
 	protected void paintView(Graphics2D g)
 	{
-		//g.drawLine(30,0, 200, 200);		//Example
-		Line2D.Double line = new Line2D.Double(30,0,200,200);
-		g.draw(line);
+		if(this.draw)
+		{
+			//g.drawLine(30,0, 200, 200);		//Example
+			Line2D.Double line = new Line2D.Double(30,0,200,200);
+			g.draw(line);
+		}
 	}
-
+	
+	public void refresh()
+	{
+		this.mainPanel.repaint();
+	}
+	
+	/////////////
+	//LISTENERS//
+	/////////////
+	public void addButtonTestListener(ActionListener listener)
+	{
+		this.button.addActionListener(listener);
+	}
+	
+	///////////
+	//ACTIONS//
+	///////////
+	
+	public void setDraw(boolean drawState)
+	{
+		this.draw = drawState;
+		System.out.println("UPDATE");
+	}
+	
+	///////////
+	//GETTERS//
+	///////////
+	
+	public  boolean getDraw()
+	{
+		return this.draw;
+	}
 	
 }

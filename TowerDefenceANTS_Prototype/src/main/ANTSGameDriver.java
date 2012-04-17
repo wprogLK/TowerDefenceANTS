@@ -11,14 +11,6 @@ import view.basics.ANTSGameMainWindow;
  */
 public class ANTSGameDriver {
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) 
-	{
-		startGame();
-	}
-	
 	public static void startGame()
 	{
 		ANTSGameMainWindow window = new ANTSGameMainWindow();
