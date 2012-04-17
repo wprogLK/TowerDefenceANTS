@@ -12,6 +12,9 @@ import interfaces.ANTSIView;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import mvcFactories.ANTSGameMVCFactory;
+import mvcFactories.abstracts.ANTSMVCFactoryMVCFactoryAbstract;
+
 /**
  * @author Lukas
  *
@@ -25,7 +28,9 @@ public class ANTSGameMainWindow extends JFrame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 		
-		this.gameView = new ANTSGameView();
+		//this.gameView = new ANTSGameView();
+		ANTSGameMVCFactory gameFactory = new ANTSGameMVCFactory();
+		this.gameView = gameFactory.getView();
 		
 		this.changeView();
 	}

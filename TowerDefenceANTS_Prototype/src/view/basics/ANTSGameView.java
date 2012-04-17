@@ -10,6 +10,8 @@ import java.awt.geom.Line2D;
 
 import javax.swing.JButton;
 
+import model.basics.ANTSGameModel;
+
 import view.abstracts.ANTSViewAbstact;
 
 import interfaces.ANTSIView;
@@ -22,9 +24,12 @@ public class ANTSGameView extends ANTSViewAbstact implements ANTSIView
 {
 	private JButton button;
 	
-	public ANTSGameView()
+	private ANTSGameModel model;
+	
+	public ANTSGameView(ANTSGameModel model)
 	{
 		super();
+		this.model = model;
 	}
 	
 	@Override

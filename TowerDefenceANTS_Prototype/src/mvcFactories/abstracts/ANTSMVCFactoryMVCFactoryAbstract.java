@@ -7,8 +7,8 @@ import interfaces.ANTSIView;
 public abstract class ANTSMVCFactoryMVCFactoryAbstract 
 {
 	protected ANTSIView view;
-	protected ANTSIController controller;
-	protected ANTSIModel model;
+//	protected ANTSIController controller;
+//	protected ANTSIModel model;
 	
 	public ANTSMVCFactoryMVCFactoryAbstract()
 	{
