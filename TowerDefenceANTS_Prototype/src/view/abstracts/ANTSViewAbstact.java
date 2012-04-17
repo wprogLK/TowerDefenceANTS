@@ -41,7 +41,15 @@ public abstract class ANTSViewAbstact implements ANTSIView
 	
 	protected void fireRefreshAction()
 	{
-			this.refreshListener.actionPerformed(new ActionEvent(this,1,""));	
+			if(this.refreshListener!=null)
+			{
+				this.refreshListener.actionPerformed(new ActionEvent(this,1,""));	
+			}
+			else
+			{
+				System.out.println("NULL");
+			}
+			
 	}
 	
 	/**
@@ -52,9 +60,12 @@ public abstract class ANTSViewAbstact implements ANTSIView
 	{
 		for(ANTSIView currentView:this.views)
 		{
+			currentView.setRefreshListener(this.refreshListener);
 			currentView.paint(g);
 		}
 	}
+	
+
 	
 	/**
 	 * Paint this view
@@ -95,6 +106,9 @@ public abstract class ANTSViewAbstact implements ANTSIView
 	public final void addInternalView(ANTSIView view)
 	{
 		this.views.add(view);
+	
+		this.mainPanel.add(view.getPanel());
+		view.setRefreshListener(this.refreshListener);
 	}
 	
 	

@@ -33,7 +33,7 @@ public class ANTSSimpleSourceLightController implements ANTSIController
 
 	private void setupListeners()
 	{
-		//view.addButtonTestListener(new TestListener());
+		view.addButtonSwitchListener(new SwitchListener());
 	}
 	
 	///////////
@@ -50,17 +50,15 @@ public class ANTSSimpleSourceLightController implements ANTSIController
 	//INNER CLASSES: THE LISTENERS// 
 	////////////////////////////////
 	
-//	class TestListener implements ActionListener
-//	{
-//		@Override
-//		public void actionPerformed(ActionEvent e) 
-//		{
-//			boolean draw = view.getDraw();
-//			draw = model.setNewDraw(draw);
-//			
-//			view.setDraw(draw);
-//			view.refresh();
-//		}
-//		
-//	}
+	class SwitchListener implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e) 
+		{
+			model.switchLight();
+		
+			view.refresh();
+		}
+		
+	}
 }

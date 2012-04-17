@@ -24,7 +24,7 @@ import view.abstracts.ANTSViewAbstact;
  */
 public class ANTSSimpleSourceLightView extends ANTSViewAbstact 
 {
-	//private JButton button;
+	private JButton button;
 	private ANTSSimpleSourceLightModel model;
 	
 	public ANTSSimpleSourceLightView(ANTSSimpleSourceLightModel model)
@@ -38,7 +38,7 @@ public class ANTSSimpleSourceLightView extends ANTSViewAbstact
 	@Override
 	protected void initComponents()
 	{
-		//this.button = new JButton("Test");
+		this.button = new JButton("Turn off/on");
 	}
 	
 	@Override
@@ -46,7 +46,7 @@ public class ANTSSimpleSourceLightView extends ANTSViewAbstact
 	{
 		
 		this.mainPanel.setLayout(new FlowLayout());
-		//this.mainPanel.add(this.button);
+		this.mainPanel.add(this.button);
 	}
 	
 	@Override
@@ -79,9 +79,9 @@ public class ANTSSimpleSourceLightView extends ANTSViewAbstact
 	/////////////
 	//LISTENERS//
 	/////////////
-	public void addButtonTestListener(ActionListener listener)
+	public void addButtonSwitchListener(ActionListener listener)
 	{
-		//this.button.addActionListener(listener);
+		this.button.addActionListener(listener);
 	}
 	
 	///////////

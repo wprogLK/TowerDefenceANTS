@@ -34,6 +34,11 @@ public class ANTSSimpleSourceLightModel
 		this.isOn = false;
 	}
 	
+	public void switchLight()
+	{
+		this.isOn = !this.isOn;
+	}
+	
 	public boolean isOn()
 	{
 		return isOn;
