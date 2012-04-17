@@ -6,6 +6,8 @@ package view.abstracts;
 import interfaces.ANTSIView;
 
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -19,6 +21,8 @@ public abstract class ANTSViewAbstact implements ANTSIView
 	protected ArrayList<ANTSIView> views;
 	protected JPanel mainPanel;
 	
+	protected ActionListener refreshListener;
+	
 	public ANTSViewAbstact()
 	{
 		this.views = new ArrayList<ANTSIView>();
@@ -31,10 +35,13 @@ public abstract class ANTSViewAbstact implements ANTSIView
 	@Override
 	public final void paint(Graphics2D g)
 	{
-		
-		
-		//paintOtherViews(g);
+	//	paintOtherViews(g);
 		this.paintView(g);
+	}
+	
+	protected void fireRefreshAction()
+	{
+			this.refreshListener.actionPerformed(new ActionEvent(this,1,""));	
 	}
 	
 	/**
@@ -58,7 +65,6 @@ public abstract class ANTSViewAbstact implements ANTSIView
 	
 	}
 	
-	
 	protected void configMainPanel()
 	{
 		
@@ -69,6 +75,11 @@ public abstract class ANTSViewAbstact implements ANTSIView
 		
 	}
 	
+	@Override
+	public void setRefreshListener(ActionListener refreshListener)
+	{
+		this.refreshListener = refreshListener;
+	}
 	
 	///////////
 	//GETTERS//
@@ -79,6 +90,8 @@ public abstract class ANTSViewAbstact implements ANTSIView
 	{
 		return this.mainPanel;
 	}
+	
+	
 	
 	
 }

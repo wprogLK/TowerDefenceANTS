@@ -15,22 +15,18 @@ import model.basics.ANTSGameModel;
 
 import view.abstracts.ANTSViewAbstact;
 
-import interfaces.ANTSIView;
-
 /**
  * @author Lukas
  *
  */
-public class ANTSGameView extends ANTSViewAbstact implements ANTSIView
+public class ANTSGameView extends ANTSViewAbstact 
 {
 	private JButton button;
 	
-	private ANTSGameModel model;
 	private boolean draw;
 	public ANTSGameView(ANTSGameModel model)
 	{
 		super();
-		this.model = model;
 		this.draw = false;
 	}
 	
@@ -46,7 +42,6 @@ public class ANTSGameView extends ANTSViewAbstact implements ANTSIView
 		this.mainPanel.setSize(800, 600);
 		this.mainPanel.setLayout(new FlowLayout());
 		this.mainPanel.add(this.button);
-		this.mainPanel.setOpaque(true);
 	}
 	
 	@Override
@@ -54,15 +49,14 @@ public class ANTSGameView extends ANTSViewAbstact implements ANTSIView
 	{
 		if(this.draw)
 		{
-			//g.drawLine(30,0, 200, 200);		//Example
-			Line2D.Double line = new Line2D.Double(30,0,200,200);
+			Line2D.Double line = new Line2D.Double(30,0,200,200);	//Example
 			g.draw(line);
 		}
 	}
 	
 	public void refresh()
 	{
-		this.mainPanel.repaint();
+		this.fireRefreshAction();
 	}
 	
 	/////////////
@@ -80,7 +74,6 @@ public class ANTSGameView extends ANTSViewAbstact implements ANTSIView
 	public void setDraw(boolean drawState)
 	{
 		this.draw = drawState;
-		System.out.println("UPDATE");
 	}
 	
 	///////////

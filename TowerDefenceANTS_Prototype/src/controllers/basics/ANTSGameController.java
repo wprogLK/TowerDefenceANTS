@@ -52,18 +52,17 @@ public class ANTSGameController implements ANTSIController
 	}
 	
 	////////////////////////////////
-	//INNER CLASSES: THE LISTENERS//
+	//INNER CLASSES: THE LISTENERS// 
 	////////////////////////////////
 	
 	class TestListener implements ActionListener
 	{
-
 		@Override
 		public void actionPerformed(ActionEvent e) 
 		{
-
 			boolean draw = view.getDraw();
 			draw = model.setNewDraw(draw);
+			
 			view.setDraw(draw);
 			view.refresh();
 		}
