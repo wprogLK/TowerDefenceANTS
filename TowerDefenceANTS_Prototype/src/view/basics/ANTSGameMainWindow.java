@@ -7,13 +7,14 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
+import interfaces.ANTSIController;
 import interfaces.ANTSIView;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import mvcFactories.ANTSGameMVCFactory;
-import mvcFactories.abstracts.ANTSMVCFactoryMVCFactoryAbstract;
+import controllers.basics.ANTSGameController;
+
 
 /**
  * @author Lukas
@@ -22,6 +23,7 @@ import mvcFactories.abstracts.ANTSMVCFactoryMVCFactoryAbstract;
 public class ANTSGameMainWindow extends JFrame
 {
 	private ANTSIView gameView;
+	private ANTSIController gameController;		//the "main" controller
 	
 	public ANTSGameMainWindow()
 	{
@@ -29,8 +31,7 @@ public class ANTSGameMainWindow extends JFrame
 		this.setVisible(true);
 		
 		//this.gameView = new ANTSGameView();
-		ANTSGameMVCFactory gameFactory = new ANTSGameMVCFactory();
-		this.gameView = gameFactory.getView();
+		this.gameController = new ANTSGameController();
 		
 		this.changeView();
 	}
@@ -58,6 +59,7 @@ public class ANTSGameMainWindow extends JFrame
 
 	public void changeView()
 	{
+		this.gameView = this.gameController.getView();
 		JPanel mainPanel = this.gameView.getPanel();
 		this.setContentPane(mainPanel);
 		this.pack();
