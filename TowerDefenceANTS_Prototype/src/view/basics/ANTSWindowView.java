@@ -76,8 +76,6 @@ public class ANTSWindowView extends ANTSViewAbstact
 	//LISTENERS//
 	/////////////
 	
-	//public void addRefreshListener()	//TODO?
-	
 	
 	///////////
 	//ACTIONS//

@@ -35,7 +35,7 @@ public abstract class ANTSViewAbstact implements ANTSIView
 	@Override
 	public final void paint(Graphics2D g)
 	{
-	//	paintOtherViews(g);
+		paintOtherViews(g);
 		this.paintView(g);
 	}
 	
@@ -91,6 +91,11 @@ public abstract class ANTSViewAbstact implements ANTSIView
 		return this.mainPanel;
 	}
 	
+	
+	public final void addInternalView(ANTSIView view)
+	{
+		this.views.add(view);
+	}
 	
 	
 	

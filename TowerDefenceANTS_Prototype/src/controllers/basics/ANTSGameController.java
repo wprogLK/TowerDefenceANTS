@@ -20,20 +20,13 @@ public class ANTSGameController implements ANTSIController
 	private ANTSGameView view;
 	private ANTSGameModel model;
 	
-	public ANTSGameController(ANTSGameView view, ANTSGameModel model)
-	{
-		this.view = view;
-		this.model = model;
-		
-		this.setupListeners();
-	}
-	
 	public ANTSGameController()
 	{
 		this.model = new ANTSGameModel();
 		this.view = new ANTSGameView(this.model);
 		
 		this.setupListeners();
+		this.createBulb();
 	}
 
 	private void setupListeners()
@@ -41,6 +34,12 @@ public class ANTSGameController implements ANTSIController
 		view.addButtonTestListener(new TestListener());
 	}
 	
+	private void createBulb()
+	{
+		ANTSSimpleSourceLightController simpleSourceController = new ANTSSimpleSourceLightController();
+		ANTSIView simpleSourceView = simpleSourceController.getView();
+		this.view.addInternalView(simpleSourceView);
+	}
 	///////////
 	//GETTERS//
 	///////////
