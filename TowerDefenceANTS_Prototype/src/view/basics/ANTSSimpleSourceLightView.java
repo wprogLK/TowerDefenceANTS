@@ -4,14 +4,19 @@
 package view.basics;
 
 
+import interfaces.ANTSIView;
+
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
+
+import controllers.basics.ANTSSimpleRayLightController;
 
 import model.basics.ANTSGameModel;
 import model.basics.ANTSSimpleSourceLightModel;
@@ -26,13 +31,14 @@ public class ANTSSimpleSourceLightView extends ANTSViewAbstact
 {
 	private JButton button;
 	private ANTSSimpleSourceLightModel model;
-	
+	private ArrayList<ANTSSimpleRayLightController> rayControllers;
+	private int countRay=0;
 	public ANTSSimpleSourceLightView(ANTSSimpleSourceLightModel model)
 	{
 		super();
 		this.model = model;
-		//this.draw = false;
 		this.mainPanel.setSize(this.model.getRadius(), this.model.getRadius());
+		this.rayControllers = new ArrayList<ANTSSimpleRayLightController>();
 	}
 	
 	@Override
@@ -44,7 +50,6 @@ public class ANTSSimpleSourceLightView extends ANTSViewAbstact
 	@Override
 	protected void configMainPanel()
 	{
-		
 		this.mainPanel.setLayout(new FlowLayout());
 		this.mainPanel.add(this.button);
 	}
@@ -52,6 +57,8 @@ public class ANTSSimpleSourceLightView extends ANTSViewAbstact
 	@Override
 	protected void paintView(Graphics2D g)
 	{
+		System.out.println("COMP: " + this.mainPanel.getComponents().length);
+		
 		int radius = this.model.getRadius();
 		int x = this.model.getPosX();
 		int y = this.model.getPosY();
@@ -60,7 +67,6 @@ public class ANTSSimpleSourceLightView extends ANTSViewAbstact
 		
 		if(this.model.isOn())
 		{
-			//Line2D.Double line = new Line2D.Double(30,0,200,200);	//Example
 			g.setColor(Color.YELLOW);
 			g.fill(bulb);
 		}
@@ -69,6 +75,45 @@ public class ANTSSimpleSourceLightView extends ANTSViewAbstact
 			g.setColor(Color.BLACK);
 			g.draw(bulb);
 		}
+		
+
+		if(this.model.canSendRay())
+		{
+			this.createRays(g);
+		}
+		
+		this.updateRays(g);
+	}
+	
+	private void updateRays(Graphics2D g)
+	{
+		
+		//TODO MOVE and let die rays
+		for(ANTSSimpleRayLightController c:this.rayControllers)
+		{
+			ANTSIView rayView = c.getView();
+			rayView.paint(g);
+		}
+	}
+	
+	private void createRays(Graphics2D g)
+	{
+		int x = this.model.getPosX();
+		int y = this.model.getPosY();
+		
+		int maxAngle =10;
+		
+		for(int currentAngle = 0; currentAngle <maxAngle; currentAngle++)		
+		{
+			ANTSSimpleRayLightController simpleRayLightController = new ANTSSimpleRayLightController(this.model,currentAngle);
+			this.rayControllers.add(simpleRayLightController);
+			ANTSIView rayView = simpleRayLightController.getView();
+			this.countRay++;
+			
+			//this.addInternalView(rayView);
+		}
+		
+	
 	}
 	
 	public void refresh()
@@ -102,4 +147,5 @@ public class ANTSSimpleSourceLightView extends ANTSViewAbstact
 //		return this.draw;
 //	}
 //	
+	
 }
