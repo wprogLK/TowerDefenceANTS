@@ -8,15 +8,20 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 
+import view.abstracts.ANTSViewAbstact;
+
 /**
  * @author Lukas
  *
  */
-public interface ANTSIView 
+public interface ANTSIView
 {
 	public void paint(Graphics2D g);
 	
 	public JPanel getPanel();
+	public boolean isPanelEmpty();
 
-	void setRefreshListener(ActionListener refreshListener);
+	public void setRefreshListener(ActionListener refreshListener);
+	
+	public ANTSViewAbstact getAbstract();
 }

@@ -5,7 +5,9 @@ package view.abstracts;
 
 import interfaces.ANTSIView;
 
+import java.awt.Canvas;
 import java.awt.Graphics2D;
+import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -16,11 +18,10 @@ import javax.swing.JPanel;
  * @author Lukas
  *
  */
-public abstract class ANTSViewAbstact implements ANTSIView
+public abstract class ANTSViewAbstact extends Canvas implements ANTSIView 
 {
 	protected ArrayList<ANTSIView> views;
 	protected JPanel mainPanel;
-	
 	protected ActionListener refreshListener;
 	
 	public ANTSViewAbstact()
@@ -86,18 +87,39 @@ public abstract class ANTSViewAbstact implements ANTSIView
 	//GETTERS//
 	///////////
 	
+	public ANTSViewAbstact getAbstract()
+	{
+		return this;
+	}
+	
 	@Override
 	public final JPanel getPanel()
 	{
 		return this.mainPanel;
 	}
 	
+	public final boolean isPanelEmpty()
+	{
+		return this.mainPanel.getComponentCount()==0;
+	}
+	
 	
 	public  void addInternalView(ANTSIView view)
 	{
 		this.views.add(view);
+		
+		if(!view.isPanelEmpty())
+		{
+			this.mainPanel.add(view.getPanel());
+			System.out.println("Main panel is  NOT empty");
+			System.out.println("view to add: " + view.toString());
+		}
+		else
+		{
+			System.out.println("Main panel is empty");
+			System.out.println("view to add: " + view.toString());
+		}
 	
-		this.mainPanel.add(view.getPanel());
 		view.setRefreshListener(this.refreshListener);
 	}
 	

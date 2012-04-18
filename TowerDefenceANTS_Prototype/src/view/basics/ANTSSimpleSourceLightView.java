@@ -31,14 +31,12 @@ public class ANTSSimpleSourceLightView extends ANTSViewAbstact
 {
 	private JButton button;
 	private ANTSSimpleSourceLightModel model;
-	private ArrayList<ANTSSimpleRayLightController> rayControllers;
-	private int countRay=0;
+	
 	public ANTSSimpleSourceLightView(ANTSSimpleSourceLightModel model)
 	{
 		super();
 		this.model = model;
 		this.mainPanel.setSize(this.model.getRadius(), this.model.getRadius());
-		this.rayControllers = new ArrayList<ANTSSimpleRayLightController>();
 	}
 	
 	@Override
@@ -56,9 +54,7 @@ public class ANTSSimpleSourceLightView extends ANTSViewAbstact
 	
 	@Override
 	protected void paintView(Graphics2D g)
-	{
-		System.out.println("COMP: " + this.mainPanel.getComponents().length);
-		
+	{	
 		int radius = this.model.getRadius();
 		int x = this.model.getPosX();
 		int y = this.model.getPosY();
@@ -75,26 +71,13 @@ public class ANTSSimpleSourceLightView extends ANTSViewAbstact
 			g.setColor(Color.BLACK);
 			g.draw(bulb);
 		}
-		
 
 		if(this.model.canSendRay())
 		{
 			this.createRays(g);
 		}
-		
-		this.updateRays(g);
 	}
 	
-	private void updateRays(Graphics2D g)
-	{
-		
-		//TODO MOVE and let die rays
-		for(ANTSSimpleRayLightController c:this.rayControllers)
-		{
-			ANTSIView rayView = c.getView();
-			rayView.paint(g);
-		}
-	}
 	
 	private void createRays(Graphics2D g)
 	{
@@ -106,11 +89,9 @@ public class ANTSSimpleSourceLightView extends ANTSViewAbstact
 		for(int currentAngle = 0; currentAngle <maxAngle; currentAngle++)		
 		{
 			ANTSSimpleRayLightController simpleRayLightController = new ANTSSimpleRayLightController(this.model,currentAngle);
-			this.rayControllers.add(simpleRayLightController);
 			ANTSIView rayView = simpleRayLightController.getView();
-			this.countRay++;
 			
-			//this.addInternalView(rayView);
+			this.addInternalView(rayView);
 		}
 		
 	
@@ -141,6 +122,11 @@ public class ANTSSimpleSourceLightView extends ANTSViewAbstact
 	///////////
 	//GETTERS//
 	///////////
+	
+	public String toString()
+	{
+		return "SimpleSourceLight";
+	}
 	
 //	public  boolean getDraw()
 //	{

@@ -9,6 +9,8 @@ import interfaces.ANTSIView;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import view.abstracts.ANTSViewAbstact;
+
 public class ANTSWindow extends JFrame
 {
 	ANTSIView currentView;
@@ -32,7 +34,6 @@ public class ANTSWindow extends JFrame
 		Graphics2D g2d = (Graphics2D) gp;
 		
 		this.configRendering(g2d);
-		
 		this.currentView.paint(g2d);
 	}
 	

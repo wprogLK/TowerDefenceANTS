@@ -85,4 +85,9 @@ public class ANTSGameView extends ANTSViewAbstact
 		return this.draw;
 	}
 	
+	public String toString()
+	{
+		return "GameView";
+	}
+	
 }

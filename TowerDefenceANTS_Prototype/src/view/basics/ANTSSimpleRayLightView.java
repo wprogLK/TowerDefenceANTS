@@ -4,6 +4,7 @@
 package view.basics;
 
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
@@ -30,6 +31,7 @@ public class ANTSSimpleRayLightView extends ANTSViewAbstact
 	
 	private ANTSSimpleRayLightModel model;
 	private AffineTransform aT;
+	
 	public ANTSSimpleRayLightView(ANTSSimpleRayLightModel model)
 	{
 		super();
@@ -66,6 +68,7 @@ public class ANTSSimpleRayLightView extends ANTSViewAbstact
 	@Override
 	protected void paintView(Graphics2D g)
 	{
+
 		int length = this.model.getLength();
 		int x = this.model.getPosX();
 		int y = this.model.getPosY();
@@ -125,6 +128,11 @@ public class ANTSSimpleRayLightView extends ANTSViewAbstact
 	///////////
 	//GETTERS//
 	///////////
+	
+	public String toString()
+	{
+		return "SimpleRayLight";
+	}
 	
 //	public  boolean getDraw()
 //	{
