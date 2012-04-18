@@ -81,20 +81,17 @@ public class ANTSSimpleSourceLightView extends ANTSViewAbstact
 	
 	private void createRays(Graphics2D g)
 	{
-		int x = this.model.getPosX();
-		int y = this.model.getPosY();
+		double angle = this.model.getOffsetAngle();
 		
-		int maxAngle =10;
-		
-		for(int currentAngle = 0; currentAngle <maxAngle; currentAngle++)		
+		for(int numberRay = 0; numberRay<this.model.getNumberOfRays(); numberRay++)
 		{
-			ANTSSimpleRayLightController simpleRayLightController = new ANTSSimpleRayLightController(this.model,currentAngle);
-			ANTSIView rayView = simpleRayLightController.getView();
+			ANTSSimpleRayLightController simpleRayLightController = new ANTSSimpleRayLightController(this.model,angle);
 			
+			angle+=this.model.getAngleBetweetTwoRays();
+			ANTSIView rayView = simpleRayLightController.getView();
+
 			this.addInternalView(rayView);
 		}
-		
-	
 	}
 	
 	public void refresh()

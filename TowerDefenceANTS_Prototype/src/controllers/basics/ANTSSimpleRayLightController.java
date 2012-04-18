@@ -25,7 +25,7 @@ public class ANTSSimpleRayLightController implements ANTSIController
 	private ANTSSimpleRayLightModel model;
 	
 	
-	public ANTSSimpleRayLightController(ANTSSimpleSourceLightModel lightModel, int startAngle)
+	public ANTSSimpleRayLightController(ANTSSimpleSourceLightModel lightModel, double startAngle)
 	{
 		this.model = new ANTSSimpleRayLightModel(lightModel,startAngle);
 		this.view = new ANTSSimpleRayLightView(this.model);

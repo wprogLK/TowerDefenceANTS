@@ -16,6 +16,10 @@ public class ANTSSimpleSourceLightModel
 	private int radius;
 	private int posX;
 	private int posY;
+	private int angle;
+	private int numberOfRaysPer360Degree;
+	private int angleBetweetTwoRays;
+	private int angleOffset;
 	
 	private int timeBetweenRays;
 	private int timeCounter;
@@ -31,6 +35,9 @@ public class ANTSSimpleSourceLightModel
 		this.posY = 200;
 		this.timeBetweenRays=1000;
 		this.timeCounter = 0;
+		this.angle = 180;
+		this.numberOfRaysPer360Degree = 18;
+		this.angleOffset = 0;
 		
 		this.lightColor = Color.BLUE;
 	}
@@ -78,6 +85,29 @@ public class ANTSSimpleSourceLightModel
 		return this.lightColor;
 	}
 	
+	public double getAngleBetweetTwoRays()
+	{	
+		Double d = (double) this.numberOfRaysPer360Degree;
+		Double tmpAngle = 360/d;
+		
+		return tmpAngle;
+	}
+	
+	public int getEndAngle()
+	{
+		return this.angle+this.angleOffset;
+	}
+	
+	public int getNumberOfRays()
+	{
+		return this.numberOfRaysPer360Degree/(360/this.angle);
+	}
+	
+	public int getOffsetAngle()
+	{
+		return this.angleOffset;
+	}
+	
 	public boolean canSendRay()
 	{
 		if(this.isOn)
@@ -103,12 +133,9 @@ public class ANTSSimpleSourceLightModel
 		}
 	}
 	
-	
-	
 	private void resetTimerCounter()
 	{
 		this.timeCounter=0;
 	}
 	
-
 }

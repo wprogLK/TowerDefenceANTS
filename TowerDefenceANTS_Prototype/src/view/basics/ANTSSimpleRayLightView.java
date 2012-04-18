@@ -47,7 +47,8 @@ public class ANTSSimpleRayLightView extends ANTSViewAbstact
 		this.aT = new AffineTransform();
 		//this.aT.translate(this.model.getSourcePosX(), this.model.getSourcePosX());
 		//this.aT.translate(300,300);
-		this.aT.rotate(this.model.getAngle(), this.model.getSourcePosX(), this.model.getSourcePosY());
+		
+		this.aT.rotate(Math.toRadians(this.model.getAngle()), this.model.getSourcePosX(), this.model.getSourcePosY());
 		
 	}
 	

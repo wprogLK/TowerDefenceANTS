@@ -15,14 +15,14 @@ public class ANTSSimpleRayLightModel
 	private int posX;
 	private int posY;
 	private int lenght;
-	private int angle;
+	private double angle;
 	
 	private int sourcePosX;
 	private int sourcePosY;
 	private Color sourceLightColor;
 	
 	
-	public ANTSSimpleRayLightModel(int sourcePosX, int sourcePosY, int startAngle)
+	public ANTSSimpleRayLightModel(int sourcePosX, int sourcePosY, double startAngle)
 	{
 		this.velocity = 10;
 		this.posX = 0;
@@ -36,7 +36,7 @@ public class ANTSSimpleRayLightModel
 		
 	}
 	
-	public ANTSSimpleRayLightModel(ANTSSimpleSourceLightModel lightModel, int startAngle)
+	public ANTSSimpleRayLightModel(ANTSSimpleSourceLightModel lightModel, double startAngle)
 	{
 		this.velocity = 10;
 		this.posX =  lightModel.getPosX();;
@@ -80,7 +80,7 @@ public class ANTSSimpleRayLightModel
 		return this.sourcePosY;
 	}
 	
-	public int getAngle()
+	public double getAngle()
 	{
 		return this.angle;
 	}
