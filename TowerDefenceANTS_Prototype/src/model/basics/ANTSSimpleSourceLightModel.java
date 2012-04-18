@@ -33,7 +33,7 @@ public class ANTSSimpleSourceLightModel
 		this.radius = 10;
 		this.posX = 200;
 		this.posY = 200;
-		this.timeBetweenRays=1000;
+		this.timeBetweenRays=10;
 		this.timeCounter = 0;
 		this.angle = 180;
 		this.numberOfRaysPer360Degree = 18;

@@ -103,7 +103,6 @@ public abstract class ANTSViewAbstact extends Canvas implements ANTSIView
 		return this.mainPanel.getComponentCount()==0;
 	}
 	
-	
 	public  void addInternalView(ANTSIView view)
 	{
 		this.views.add(view);
@@ -111,18 +110,9 @@ public abstract class ANTSViewAbstact extends Canvas implements ANTSIView
 		if(!view.isPanelEmpty())
 		{
 			this.mainPanel.add(view.getPanel());
-			System.out.println("Main panel is  NOT empty");
-			System.out.println("view to add: " + view.toString());
-		}
-		else
-		{
-			System.out.println("Main panel is empty");
-			System.out.println("view to add: " + view.toString());
 		}
 	
 		view.setRefreshListener(this.refreshListener);
 	}
-	
-	
 	
 }

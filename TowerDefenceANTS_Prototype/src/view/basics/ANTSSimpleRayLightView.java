@@ -13,6 +13,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.NoninvertibleTransformException;
+import java.awt.geom.Point2D;
+import java.util.Vector;
 
 import javax.swing.JButton;
 
@@ -31,12 +33,12 @@ public class ANTSSimpleRayLightView extends ANTSViewAbstact
 	
 	private ANTSSimpleRayLightModel model;
 	private AffineTransform aT;
+	private AffineTransform aTVelocity;
 	
 	public ANTSSimpleRayLightView(ANTSSimpleRayLightModel model)
 	{
 		super();
 		this.model = model;
-		//this.draw = false;
 		//this.mainPanel.setSize(this.model.getLength(), this.model.getLength());
 		this.mainPanel.setName("RAY PANLE");
 		this.setupAffineTransform();
@@ -45,11 +47,13 @@ public class ANTSSimpleRayLightView extends ANTSViewAbstact
 	public void setupAffineTransform()
 	{
 		this.aT = new AffineTransform();
+		this.aTVelocity = new AffineTransform();
 		//this.aT.translate(this.model.getSourcePosX(), this.model.getSourcePosX());
 		//this.aT.translate(300,300);
-		
-		this.aT.rotate(Math.toRadians(this.model.getAngle()), this.model.getSourcePosX(), this.model.getSourcePosY());
-		
+	
+		//this.aT.rotate(Math.toRadians(this.model.getAngle()), this.model.getSourcePosX(), this.model.getSourcePosY());
+		this.aT.rotate(Math.toRadians(this.model.getAngle()), this.model.getPosX(), this.model.getPosY());
+
 	}
 	
 	@Override
@@ -71,8 +75,10 @@ public class ANTSSimpleRayLightView extends ANTSViewAbstact
 	{
 
 		int length = this.model.getLength();
-		int x = this.model.getPosX();
-		int y = this.model.getPosY();
+		double x = this.model.getPosX();
+		double y = this.model.getPosY();
+		
+		System.out.println("NAME: " + this.toString() + " getX " + this.model.getPosX()  + " getY " + this.model.getPosY());
 		
 		//Ellipse2D.Double bulb = new Ellipse2D.Double(x - (radius/2), y - (radius/2), radius, radius);
 		Line2D.Double ray = new Line2D.Double(x,y,x+length,y);
@@ -91,12 +97,29 @@ public class ANTSSimpleRayLightView extends ANTSViewAbstact
 //		aT.createTransformedShape(ray);
 		g.setColor(this.model.getSourceLightColor());
 //		g.draw(ray);
+		
+		this.aTVelocity.translate(this.model.getVelocity(), 0); //Move ray
+		aT.concatenate(aTVelocity);
+		
+		
+		System.out.println("AT: X: " + aT.getTranslateX());
+		System.out.println("AT: Y: " + aT.getTranslateY());
+		
+		//TODO
 		g.transform(aT);
+		
+		Point2D pos = this.model.getPos();
+		
+		aTVelocity.transform(pos, pos);
+		
 		g.draw(ray);
 		
+		//Reset g
 		try {
 			AffineTransform aT_inv=aT.createInverse();
 			g.transform(aT_inv);
+			
+			
 		} catch (NoninvertibleTransformException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

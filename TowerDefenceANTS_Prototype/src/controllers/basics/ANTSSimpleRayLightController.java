@@ -31,7 +31,6 @@ public class ANTSSimpleRayLightController implements ANTSIController
 		this.view = new ANTSSimpleRayLightView(this.model);
 		
 		this.setupListeners();
-		
 	}
 
 	private void setupListeners()
