@@ -78,8 +78,6 @@ public class ANTSSimpleRayLightView extends ANTSViewAbstact
 		double x = this.model.getPosX();
 		double y = this.model.getPosY();
 		
-		System.out.println("NAME: " + this.toString() + " getX " + this.model.getPosX()  + " getY " + this.model.getPosY());
-		
 		//Ellipse2D.Double bulb = new Ellipse2D.Double(x - (radius/2), y - (radius/2), radius, radius);
 		Line2D.Double ray = new Line2D.Double(x,y,x+length,y);
 //		if(this.model.isOn())
@@ -101,6 +99,7 @@ public class ANTSSimpleRayLightView extends ANTSViewAbstact
 		this.aTVelocity.translate(this.model.getVelocity(), 0); //Move ray
 		aT.concatenate(aTVelocity);
 		
+		System.out.println("NAME: " + this.toString() + " getX " + this.model.getPosX()  + " getY " + this.model.getPosY());
 		
 		System.out.println("AT: X: " + aT.getTranslateX());
 		System.out.println("AT: Y: " + aT.getTranslateY());

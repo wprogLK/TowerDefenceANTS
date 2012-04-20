@@ -19,6 +19,8 @@ public class ANTSSimpleRayLightModel
 	private double angle;
 	private Point2D.Double pos;
 	
+	private Point2D.Double endPosVelocity;
+	
 	private int sourcePosX;
 	private int sourcePosY;
 	private Color sourceLightColor;
@@ -26,7 +28,8 @@ public class ANTSSimpleRayLightModel
 	
 	public ANTSSimpleRayLightModel(int sourcePosX, int sourcePosY, double startAngle)
 	{
-		this.velocity = 2;
+		this.setVelocity(0.1);
+		
 		this.posX = 0;
 		this.posY = 0;
 		this.lenght = 20;
@@ -39,7 +42,8 @@ public class ANTSSimpleRayLightModel
 	
 	public ANTSSimpleRayLightModel(ANTSSimpleSourceLightModel lightModel, double startAngle)
 	{
-		this.velocity = 0.1;
+		this.setVelocity(0.1);
+		
 		this.posX =  lightModel.getPosX();
 		this.posY = lightModel.getPosY();
 		
@@ -52,6 +56,13 @@ public class ANTSSimpleRayLightModel
 		this.sourcePosX = lightModel.getPosX();
 		this.sourcePosY = lightModel.getPosY();
 		this.sourceLightColor = lightModel.getLightColor();
+	}
+	
+	public void setVelocity(double velocity)
+	{
+		this.velocity = velocity;
+//		this.endPosVelocity = new Point2D.Double(this.posX, this.posY);
+//		this.endPosVelocity.
 	}
 	
 	public double getPosX()
