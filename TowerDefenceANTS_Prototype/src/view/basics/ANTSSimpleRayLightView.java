@@ -48,10 +48,7 @@ public class ANTSSimpleRayLightView extends ANTSViewAbstact
 	{
 		this.aT = new AffineTransform();
 		this.aTVelocity = new AffineTransform();
-		//this.aT.translate(this.model.getSourcePosX(), this.model.getSourcePosX());
-		//this.aT.translate(300,300);
-	
-		//this.aT.rotate(Math.toRadians(this.model.getAngle()), this.model.getSourcePosX(), this.model.getSourcePosY());
+
 		this.aT.rotate(Math.toRadians(this.model.getAngle()), this.model.getPosX(), this.model.getPosY());
 
 	}
@@ -59,7 +56,7 @@ public class ANTSSimpleRayLightView extends ANTSViewAbstact
 	@Override
 	protected void initComponents()
 	{
-		//this.button = new JButton("Turn off/on");
+
 	}
 	
 	@Override
@@ -67,7 +64,6 @@ public class ANTSSimpleRayLightView extends ANTSViewAbstact
 	{
 		
 		this.mainPanel.setLayout(new FlowLayout());
-	//	this.mainPanel.add(this.button);
 	}
 	
 	@Override
@@ -78,23 +74,8 @@ public class ANTSSimpleRayLightView extends ANTSViewAbstact
 		double x = this.model.getPosX();
 		double y = this.model.getPosY();
 		
-		//Ellipse2D.Double bulb = new Ellipse2D.Double(x - (radius/2), y - (radius/2), radius, radius);
 		Line2D.Double ray = new Line2D.Double(x,y,x+length,y);
-//		if(this.model.isOn())
-//		{
-//			//Line2D.Double line = new Line2D.Double(30,0,200,200);	//Example
-//			g.setColor(Color.YELLOW);
-//			g.fill(bulb);
-//		}
-//		else
-//		{
-//			g.setColor(Color.BLACK);
-//			g.draw(bulb);
-//		}
-		//ray.
-//		aT.createTransformedShape(ray);
 		g.setColor(this.model.getSourceLightColor());
-//		g.draw(ray);
 		
 		this.aTVelocity.translate(this.model.getVelocity(), 0); //Move ray
 		aT.concatenate(aTVelocity);
