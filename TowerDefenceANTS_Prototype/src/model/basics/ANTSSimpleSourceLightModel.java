@@ -49,7 +49,7 @@ public class ANTSSimpleSourceLightModel
 		this.timeBetweenRays=10;
 		this.timeCounter = 0;
 		this.angle = 360;
-		this.numberOfRaysPer360Degree = 18;
+		this.numberOfRaysPer360Degree = 1;//18;
 		this.angleOffset = 0;
 		
 		this.lightColor = Color.BLUE;

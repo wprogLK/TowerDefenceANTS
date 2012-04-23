@@ -18,7 +18,7 @@ import javax.swing.JPanel;
  * @author Lukas
  *
  */
-public abstract class ANTSViewAbstact extends Canvas implements ANTSIView 
+public abstract class ANTSViewAbstact  implements ANTSIView// extends Canvas
 {
 	protected ArrayList<ANTSIView> views;
 	protected JPanel mainPanel;

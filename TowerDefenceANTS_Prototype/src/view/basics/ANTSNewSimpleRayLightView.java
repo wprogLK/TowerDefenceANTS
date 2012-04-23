@@ -14,6 +14,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 
 
+import model.basics.ANTSNewSimpleRayLightModel;
 import model.basics.ANTSSimpleRayLightModel;
 
 import view.abstracts.ANTSViewAbstact;
@@ -22,15 +23,14 @@ import view.abstracts.ANTSViewAbstact;
  * @author Lukas
  *
  */
-public class ANTSSimpleRayLightView extends ANTSViewAbstact 
+public class ANTSNewSimpleRayLightView extends ANTSViewAbstact 
 {
-	
-	private ANTSSimpleRayLightModel model;
+	private ANTSNewSimpleRayLightModel model;
 	private AffineTransform aT;
 	private AffineTransform aTVelocity;
 	private	Line2D.Double ray;
 	
-	public ANTSSimpleRayLightView(ANTSSimpleRayLightModel model)
+	public ANTSNewSimpleRayLightView(ANTSNewSimpleRayLightModel model)
 	{
 		super();
 		this.model = model;
@@ -47,7 +47,8 @@ public class ANTSSimpleRayLightView extends ANTSViewAbstact
 		this.aTVelocity = new AffineTransform();
 
 		this.aT.rotate(Math.toRadians(this.model.getAngle()), this.model.getPosX(), this.model.getPosY());
-
+		
+//		System.out.println(":::::::::::::::::::::::::::::ATTOT NACH ROT: " + aT + "\n ----------------POS OLD: X " + this.model.getPosX() + " Y: " + this.model.getPosY());
 	}
 	
 	private void setupLine()
@@ -75,21 +76,30 @@ public class ANTSSimpleRayLightView extends ANTSViewAbstact
 	@Override
 	protected void paintView(Graphics2D g)
 	{
+		System.out.println("PAINT....");
 		g.setColor(this.model.getSourceLightColor());
 		
-		this.aTVelocity.translate(this.model.getVelocity(), 0); //Move ray
-		aT.concatenate(aTVelocity);
+//		while(this.model.finish)
+//		{
+//			System.out.println("WARTE....");
+//		}
 		
-		//TODO
-		//g.transform(aT);
-		Shape shape = aT.createTransformedShape(ray);
-		this.model.setPosX(aT.getTranslateX());
-		this.model.setPosY(aT.getTranslateY());
+		
+		AffineTransform aTemp = this.model.calculateAffineTransform();
+		//OLD
+//		this.aTVelocity.translate(this.model.getVelocity(), 0); //Move ray
+//		aT.concatenate(aTVelocity);
+		
+		
+	//	Shape shape = aT.createTransformedShape(ray);
+		Shape shape = aTemp.createTransformedShape(ray);
+//		this.model.setPosX(aT.getTranslateX());
+//		this.model.setPosY(aT.getTranslateY());
 			
-	System.out.println("NAME: " + this.toString() + " getX " + this.model.getPosX()  + " getY " + this.model.getPosY());
-		
-		System.out.println("AT: X: " + aT.getTranslateX());
-		System.out.println("AT: Y: " + aT.getTranslateY());
+//	System.out.println("NAME: " + this.toString() + " getX " + this.model.getPosX()  + " getY " + this.model.getPosY());
+//		
+//		System.out.println("AT: X: " + aT.getTranslateX());
+//		System.out.println("AT: Y: " + aT.getTranslateY());
 		
 		g.draw(shape);
 	}

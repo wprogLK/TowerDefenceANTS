@@ -91,7 +91,8 @@ public class ANTSWindowView extends ANTSViewAbstact
 		this.antsWindow.setCurrentView(this.currentView);
 
 		this.antsWindow.setContentPane(this.currentMainPanel);
-		this.antsWindow.pack();
+		this.antsWindow.setSize(600, 800);
+		//this.antsWindow.pack();
 	}
 	
 	///////////////////////////
