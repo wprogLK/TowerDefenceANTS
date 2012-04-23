@@ -42,7 +42,7 @@ public class ANTSSimpleRayLightModel
 	
 	public ANTSSimpleRayLightModel(ANTSSimpleSourceLightModel lightModel, double startAngle)
 	{
-		this.setVelocity(0.1);
+		this.setVelocity(1);
 		
 		this.posX =  lightModel.getPosX();
 		this.posY = lightModel.getPosY();
@@ -67,13 +67,14 @@ public class ANTSSimpleRayLightModel
 	
 	public double getPosX()
 	{
-		return this.pos.getX();//this.posX;
+		//return this.pos.getX();
+		return this.posX;
 	}
 	
 	public double getPosY()
 	{
-		//return this.posY;
-		return this.pos.getY();
+		return this.posY;
+//		return this.pos.getY();
 	}
 	
 	public Point2D.Double getPos()
@@ -114,12 +115,12 @@ public class ANTSSimpleRayLightModel
 	
 	public void setPosX(double x)
 	{
-		//this.posX = x;
+		this.posX = x;
 	}
 	
 	public void setPosY(double y)
 	{
-		//this.posY = y;
+		this.posY = y;
 	}
 	
 }

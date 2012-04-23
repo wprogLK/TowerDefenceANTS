@@ -28,14 +28,27 @@ public class ANTSSimpleSourceLightModel
 	
 	public ANTSSimpleSourceLightModel()
 	{
+//		this.turnOn();
+//		
+//		this.radius = 10;
+//		this.posX = 200;
+//		this.posY = 200;
+//		this.timeBetweenRays=10;
+//		this.timeCounter = 0;
+//		this.angle = 180;
+//		this.numberOfRaysPer360Degree = 18;
+//		this.angleOffset = 0;
+//		
+//		this.lightColor = Color.BLUE;
+		
 		this.turnOn();
 		
 		this.radius = 10;
-		this.posX = 200;
-		this.posY = 200;
+		this.posX = 150;
+		this.posY = 320;
 		this.timeBetweenRays=10;
 		this.timeCounter = 0;
-		this.angle = 180;
+		this.angle = 360;
 		this.numberOfRaysPer360Degree = 18;
 		this.angleOffset = 0;
 		

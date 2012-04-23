@@ -60,7 +60,7 @@ public class ANTSSimpleSourceLightView extends ANTSViewAbstact
 		int y = this.model.getPosY();
 		
 		Ellipse2D.Double bulb = new Ellipse2D.Double(x - (radius/2), y - (radius/2), radius, radius);
-		
+
 		if(this.model.isOn())
 		{
 			g.setColor(Color.YELLOW);
