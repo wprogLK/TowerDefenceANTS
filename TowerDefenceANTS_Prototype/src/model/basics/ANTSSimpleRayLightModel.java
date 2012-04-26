@@ -4,6 +4,7 @@
 package model.basics;
 
 import java.awt.Color;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
 /**
@@ -17,69 +18,54 @@ public class ANTSSimpleRayLightModel
 	private double posY;
 	private int lenght;
 	private double angle;
-	private Point2D.Double pos;
 	
-	private Point2D.Double endPosVelocity;
+	private AffineTransform aTPos;
+	private AffineTransform aTVel;
+	private AffineTransform aTRot;
 	
 	private int sourcePosX;
 	private int sourcePosY;
 	private Color sourceLightColor;
 	
-	
-	public ANTSSimpleRayLightModel(int sourcePosX, int sourcePosY, double startAngle)
+	public ANTSSimpleRayLightModel(ANTSSimpleSourceLightModel lightSourceModel, double startAngle)
 	{
-		this.setVelocity(0.1);
+		this.setVelocity(10);
 		
-		this.posX = 0;
-		this.posY = 0;
-		this.lenght = 20;
+		this.setPosX( lightSourceModel.getPosX());
+		this.setPosY( lightSourceModel.getPosY());
 		
-		this.angle = startAngle;
+		System.out.println("START X: " + lightSourceModel.getPosX());
+		System.out.println("START Y: " + lightSourceModel.getPosY());
 		
-		this.sourcePosX = sourcePosX;
-		this.sourcePosY = sourcePosY;
-	}
-	
-	public ANTSSimpleRayLightModel(ANTSSimpleSourceLightModel lightModel, double startAngle)
-	{
-		this.setVelocity(1);
+		this.lenght =10;
 		
-		this.posX =  lightModel.getPosX();
-		this.posY = lightModel.getPosY();
+		//this.angle = startAngle;
+		this.setAngle(startAngle);
 		
-		this.pos = new Point2D.Double(posX, posY);
+		this.sourcePosX = lightSourceModel.getPosX();
+		this.sourcePosY = lightSourceModel.getPosY();
+		this.sourceLightColor = lightSourceModel.getLightColor();
 		
-		this.lenght = 10;
+		this.aTPos= new AffineTransform();
+		this.aTRot = new AffineTransform();
+		this.aTVel = new AffineTransform();
 		
-		this.angle = startAngle;
-		
-		this.sourcePosX = lightModel.getPosX();
-		this.sourcePosY = lightModel.getPosY();
-		this.sourceLightColor = lightModel.getLightColor();
+		this.aTRot.rotate(Math.toRadians(angle), this.getPosX(), this.getPosY());
 	}
 	
 	public void setVelocity(double velocity)
 	{
 		this.velocity = velocity;
-//		this.endPosVelocity = new Point2D.Double(this.posX, this.posY);
-//		this.endPosVelocity.
 	}
 	
 	public double getPosX()
 	{
-		//return this.pos.getX();
 		return this.posX;
 	}
 	
 	public double getPosY()
 	{
 		return this.posY;
-//		return this.pos.getY();
-	}
-	
-	public Point2D.Double getPos()
-	{
-		return this.pos;
 	}
 	
 	public double getVelocity()
@@ -112,7 +98,6 @@ public class ANTSSimpleRayLightModel
 		return this.sourceLightColor;
 	}
 	
-	
 	public void setPosX(double x)
 	{
 		this.posX = x;
@@ -122,5 +107,31 @@ public class ANTSSimpleRayLightModel
 	{
 		this.posY = y;
 	}
+	
+	public void setAngle(double angle)
+	{
+		this.aTRot = new AffineTransform();
+		
+		this.angle = angle;
+	}
+	
+	public AffineTransform calculateAffineTransform()
+	{
+		AffineTransform aTTot = new AffineTransform();
+		this.aTVel.translate(this.getVelocity(), 0); //Move ray
+		
+		System.out.println("XA: " + aTVel);
+		
+		aTTot.concatenate(aTRot);
+		
+		System.out.println("XB: " + aTTot);
+		
+		aTTot.concatenate(aTVel); 
+		
+		System.out.println("XC: " + aTTot);
+		
+		return aTTot;
+	}
+	
 	
 }

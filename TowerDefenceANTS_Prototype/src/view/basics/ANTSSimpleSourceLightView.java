@@ -16,7 +16,6 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 
-import controllers.basics.ANTSNewSimpleRayLightController;
 import controllers.basics.ANTSSimpleRayLightController;
 
 import model.basics.ANTSGameModel;
@@ -90,7 +89,7 @@ public class ANTSSimpleSourceLightView extends ANTSViewAbstact
 		for(int numberRay = 0; numberRay<this.model.getNumberOfRays(); numberRay++)
 		{
 			//ANTSSimpleRayLightController simpleRayLightController = new ANTSSimpleRayLightController(this.model,angle);
-			ANTSNewSimpleRayLightController simpleRayLightController = new ANTSNewSimpleRayLightController(this.model,angle);
+			ANTSSimpleRayLightController simpleRayLightController = new ANTSSimpleRayLightController(this.model,angle);
 			
 			angle+=this.model.getAngleBetweetTwoRays();
 			ANTSIView rayView = simpleRayLightController.getView();
