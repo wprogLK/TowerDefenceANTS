@@ -17,6 +17,8 @@ import javax.swing.JPanel;
 
 import view.abstracts.ANTSViewAbstact;
 
+import listeners.actionListeners.paint.ANTSOnlyDrawActionListener;
+import listeners.actionListeners.paint.ANTSPaintActionListenerAbstract;
 import model.basics.ANTSWindowModel;
 
 import controllers.basics.ANTSGameController;
@@ -43,6 +45,8 @@ public class ANTSWindowView extends ANTSViewAbstact
 		this.setupWindow();
 		
 		this.refreshListener = new RefreshListener();
+		ANTSPaintActionListenerAbstract.setWindow(antsWindow);	//Set the window everywhere
+		
 	}
 	
 	private void setupWindow()
@@ -105,6 +109,8 @@ public class ANTSWindowView extends ANTSViewAbstact
 		@Override
 		public void actionPerformed(ActionEvent e) 
 		{
+			System.out.println("SOURCE: " + e.getSource() + " COMMAND: " + e.getActionCommand());
+			
 			antsWindow.repaint();
 		}
 		

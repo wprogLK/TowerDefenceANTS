@@ -34,9 +34,6 @@ public class ANTSSimpleRayLightModel
 		this.setPosX( lightSourceModel.getPosX());
 		this.setPosY( lightSourceModel.getPosY());
 		
-		System.out.println("START X: " + lightSourceModel.getPosX());
-		System.out.println("START Y: " + lightSourceModel.getPosY());
-		
 		this.lenght =10;
 		
 		//this.angle = startAngle;
@@ -120,15 +117,9 @@ public class ANTSSimpleRayLightModel
 		AffineTransform aTTot = new AffineTransform();
 		this.aTVel.translate(this.getVelocity(), 0); //Move ray
 		
-		System.out.println("XA: " + aTVel);
-		
 		aTTot.concatenate(aTRot);
 		
-		System.out.println("XB: " + aTTot);
-		
 		aTTot.concatenate(aTVel); 
-		
-		System.out.println("XC: " + aTTot);
 		
 		return aTTot;
 	}

@@ -14,6 +14,8 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import listeners.actionListeners.paint.ANTSOnlyDrawActionListener;
+
 /**
  * @author Lukas
  *
@@ -36,13 +38,19 @@ public abstract class ANTSViewAbstact  implements ANTSIView// extends Canvas
 	@Override
 	public final void paint(Graphics2D g)
 	{
-		paintOtherViews(g);
+		this.paintOtherViews(g);
 		this.paintView(g);
 	}
 	
 	protected void fireRefreshAction()
 	{
-		this.refreshListener.actionPerformed(new ActionEvent(this,1,""));	
+		this.refreshListener.actionPerformed(new ActionEvent(this,1,"Hallo Ich bin eine Action"));	
+	}
+	
+	//NEW
+	protected void fireOnlyDrawAction()
+	{
+		ANTSOnlyDrawActionListener.getInstance().actionPerformed(new ActionEvent(this,1,"ONLY DRAW ACTION"));
 	}
 	
 	/**

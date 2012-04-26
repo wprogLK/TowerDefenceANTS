@@ -6,6 +6,7 @@ package controllers.basics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import listeners.actionListeners.paint.ANTSOnlyDrawActionListener;
 import model.basics.ANTSGameModel;
 import view.basics.ANTSGameView;
 import interfaces.ANTSIController;
@@ -31,7 +32,8 @@ public class ANTSGameController implements ANTSIController
 
 	private void setupListeners()
 	{
-		view.addButtonTestListener(new TestListener());
+		//view.addButtonTestListener(new TestListener());
+		view.addButtonTestListener(ANTSOnlyDrawActionListener.getInstance());
 	}
 	
 	private void createBulb()

@@ -11,6 +11,7 @@ import java.awt.geom.Line2D;
 
 import javax.swing.JButton;
 
+import listeners.actionListeners.paint.ANTSOnlyDrawActionListener;
 import model.basics.ANTSGameModel;
 
 import view.abstracts.ANTSViewAbstact;
@@ -65,6 +66,7 @@ public class ANTSGameView extends ANTSViewAbstact
 	public void addButtonTestListener(ActionListener listener)
 	{
 		this.button.addActionListener(listener);
+		//this.button.addActionListener(ANTSOnlyDrawActionListener.getInstance());
 	}
 	
 	///////////

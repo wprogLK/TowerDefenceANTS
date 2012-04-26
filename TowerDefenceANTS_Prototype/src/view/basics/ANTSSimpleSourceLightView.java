@@ -104,9 +104,11 @@ public class ANTSSimpleSourceLightView extends ANTSViewAbstact
 		}
 	}
 	
+	//TODO HIER
 	public void refresh()
 	{
-		this.fireRefreshAction();
+		//this.fireRefreshAction();
+		this.fireOnlyDrawAction();	//Test
 	}
 	
 	/////////////

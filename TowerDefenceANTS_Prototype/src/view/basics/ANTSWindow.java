@@ -9,14 +9,19 @@ import interfaces.ANTSIView;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import enums.ANTSStateEnum;
+
 import view.abstracts.ANTSViewAbstact;
 
 public class ANTSWindow extends JFrame
 {
 	ANTSIView currentView;
+	private ANTSStateEnum currentState;
+	
 	
 	public ANTSWindow()
 	{
+		this.currentState = ANTSStateEnum.basic;
 	}
 	
 	public void setCurrentView(ANTSIView currentView)
@@ -24,9 +29,26 @@ public class ANTSWindow extends JFrame
 		this.currentView = currentView;
 	}
 	
+	public void setState(ANTSStateEnum state)
+	{
+		this.currentState = state;
+	}
+	
+//	//NEW
+//	/** only draw the graphics. NO AnimationMove!
+//	 * 
+//	 */
+//	public void draw()
+//	{
+//		this.currentState = ANTSStateEnum.draw;
+//		
+//	}
+	
 	@Override
 	public void paint(Graphics g)
 	{
+		//TODO: switch states
+		
 		super.paintComponents(g); 
 		
 		JPanel mainPanel =this.currentView.getPanel();
