@@ -112,10 +112,22 @@ public class ANTSSimpleRayLightModel
 		this.angle = angle;
 	}
 	
-	public AffineTransform calculateAffineTransform()
+	public AffineTransform getNextAffineTransform()
 	{
 		AffineTransform aTTot = new AffineTransform();
 		this.aTVel.translate(this.getVelocity(), 0); //Move ray
+		
+		aTTot.concatenate(aTRot);
+		
+		aTTot.concatenate(aTVel); 
+		
+		return aTTot;
+	}
+	
+	public AffineTransform getCurrentAffineTransform()
+	{
+		AffineTransform aTTot = new AffineTransform();
+		this.aTVel.translate(0, 0); //Move ray
 		
 		aTTot.concatenate(aTRot);
 		

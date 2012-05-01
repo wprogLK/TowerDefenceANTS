@@ -14,6 +14,8 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import enums.ANTSStateEnum;
+
 import listeners.actionListeners.paint.ANTSDefaultActionListener;
 import listeners.actionListeners.paint.ANTSOnlyDrawActionListener;
 
@@ -25,16 +27,27 @@ public abstract class ANTSViewAbstact  implements ANTSIView// extends Canvas
 {
 	protected ArrayList<ANTSIView> views;
 	protected JPanel mainPanel;
-	//protected ActionListener refreshListener;
+	protected  ANTSStateEnum currentPaintState;	
 	
 	public ANTSViewAbstact()
 	{
 		this.views = new ArrayList<ANTSIView>();
 		this.mainPanel = new JPanel();
+		this.currentPaintState = ANTSStateEnum.basic;
 		
 		this.initComponents();
 		this.configMainPanel();
 	}	
+	
+	public final void setPaintState(ANTSStateEnum state)
+	{
+		this.currentPaintState = state;
+		
+		for(ANTSIView view: this.views)
+		{
+			view.setPaintState(state);
+		}
+	}
 	
 	@Override
 	public final void paint(Graphics2D g)

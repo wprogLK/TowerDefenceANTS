@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 import enums.ANTSStateEnum;
 
-public class ANTSDefaultActionListener extends ANTSPaintActionListenerAbstract implements ActionListener {
+public class ANTSAnimateActionListener extends ANTSPaintActionListenerAbstract implements ActionListener {
 
 	private static ANTSPaintActionListenerAbstract listener;
 	
@@ -13,7 +13,7 @@ public class ANTSDefaultActionListener extends ANTSPaintActionListenerAbstract i
 	{
 		if(listener == null)
 		{
-			listener = new ANTSDefaultActionListener();
+			listener = new ANTSAnimateActionListener();
 		}
 		
 		return listener;
@@ -24,8 +24,8 @@ public class ANTSDefaultActionListener extends ANTSPaintActionListenerAbstract i
 	{
 		//ANTSStateEnum.setCurrentState(ANTSStateEnum.basic);
 //		super.currentState = ANTSStateEnum.basic;
-		this.window.setPaintState(ANTSStateEnum.basic);
-		System.out.println("SOULD BE NOW BASIC");
+		this.window.setPaintState(ANTSStateEnum.animate);
+		
 	}
 	
 

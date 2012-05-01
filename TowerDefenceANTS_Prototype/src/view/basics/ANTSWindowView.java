@@ -22,6 +22,7 @@ import listeners.actionListeners.paint.ANTSPaintActionListenerAbstract;
 import model.basics.ANTSWindowModel;
 
 import controllers.basics.ANTSGameController;
+import enums.ANTSStateEnum;
 
 
 /**
@@ -36,7 +37,7 @@ public class ANTSWindowView extends ANTSViewAbstact
 	private ANTSIView currentView;
 	private ANTSWindow antsWindow;
 	private JPanel currentMainPanel;
-//	private RefreshListener refreshListener;
+
 	
 	public ANTSWindowView(ANTSWindowModel model)
 	{

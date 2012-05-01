@@ -15,6 +15,7 @@ import java.awt.geom.Line2D;
 
 import enums.ANTSStateEnum;
 
+import listeners.actionListeners.paint.ANTSPaintActionListenerAbstract;
 import model.basics.ANTSSimpleRayLightModel;
 
 
@@ -77,7 +78,8 @@ public class ANTSSimpleRayLightView extends ANTSViewAbstact
 	protected void paintView(Graphics2D g)
 	{
 		g.setColor(this.model.getSourceLightColor());
-		switch(ANTSStateEnum.getCurrentState())
+		System.out.println("MY STATE: " + this.currentPaintState);
+		switch(this.currentPaintState)
 		{
 			case basic:
 			{
@@ -88,7 +90,7 @@ public class ANTSSimpleRayLightView extends ANTSViewAbstact
 			case draw:
 			{
 				System.out.println("PAINT DRAW RAY LIGHT");
-				AffineTransform aTemp = this.model.calculateAffineTransform();
+				AffineTransform aTemp = this.model.getCurrentAffineTransform();
 				Shape shape = aTemp.createTransformedShape(ray);
 				
 				g.draw(shape);
@@ -97,11 +99,15 @@ public class ANTSSimpleRayLightView extends ANTSViewAbstact
 			case animate:
 			{
 				System.out.println("PAINT ANIMATE RAY LIGHT");
-				AffineTransform aTemp = this.model.calculateAffineTransform();
+				AffineTransform aTemp = this.model.getNextAffineTransform();
 				Shape shape = aTemp.createTransformedShape(ray);
 				
 				g.draw(shape);
 				break;
+			}
+			default:
+			{
+				System.out.println("DEFAULT");
 			}
 		}
 	

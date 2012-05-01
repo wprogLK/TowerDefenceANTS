@@ -11,6 +11,7 @@ import java.awt.geom.Line2D;
 
 import javax.swing.JButton;
 
+import listeners.actionListeners.paint.ANTSAnimateActionListener;
 import listeners.actionListeners.paint.ANTSDefaultActionListener;
 import listeners.actionListeners.paint.ANTSOnlyDrawActionListener;
 import model.basics.ANTSGameModel;
@@ -36,11 +37,11 @@ public class ANTSGameView extends ANTSViewAbstact
 	@Override
 	protected void initComponents()
 	{
-		this.button = new JButton("Test");
-		this.button.addActionListener(ANTSOnlyDrawActionListener.getInstance());	//NEW: add actionListener here
+		this.button = new JButton("Default");
+		this.button.addActionListener(ANTSDefaultActionListener.getInstance());	//NEW: add actionListener here
 		
-		this.buttonDefaultPaint = new JButton("Default paint");
-		this.buttonDefaultPaint.addActionListener(ANTSDefaultActionListener.getInstance());
+		this.buttonDefaultPaint = new JButton("animated paint");
+		this.buttonDefaultPaint.addActionListener(ANTSAnimateActionListener.getInstance());
 		
 		this.buttonOnlyDrawPaint = new JButton("Only draw paint");
 		this.buttonOnlyDrawPaint.addActionListener(ANTSOnlyDrawActionListener.getInstance());

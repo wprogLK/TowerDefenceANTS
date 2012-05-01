@@ -16,17 +16,24 @@ import view.abstracts.ANTSViewAbstact;
 public class ANTSWindow extends JFrame
 {
 	ANTSIView currentView;
-//	private ANTSStateEnum currentState;
+	private ANTSStateEnum currentState;
 	
 	
 	public ANTSWindow()
 	{
-		
+		this.currentState = ANTSStateEnum.basic;
 	}
 	
 	public void setCurrentView(ANTSIView currentView)
 	{
 		this.currentView = currentView;
+	}
+	
+	public final void setPaintState(ANTSStateEnum state)
+	{
+		this.currentState = state;
+		this.currentView.setPaintState(state);
+//		System.out.println("SET STATE IN WINDOW! " + this.currentState);
 	}
 	
 //	//NEW
@@ -42,6 +49,7 @@ public class ANTSWindow extends JFrame
 	@Override
 	public void paint(Graphics g)
 	{
+//		System.out.println("PAINT IN WINDOW! the state is: " + this.currentState);
 		//TODO: switch states
 //		OLD
 //		super.paintComponents(g); 

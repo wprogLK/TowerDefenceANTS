@@ -25,4 +25,6 @@ public interface ANTSIView
 
 //	public void setRefreshListener(ActionListener refreshListener);
 	public ANTSViewAbstact getAbstract();
+	
+	public void setPaintState(ANTSStateEnum state);
 }
