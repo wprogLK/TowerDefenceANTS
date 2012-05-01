@@ -76,6 +76,8 @@ public class ANTSSimpleSourceLightView extends ANTSViewAbstact
 		{
 			this.createRays(g);
 		}
+		
+		this.paintOtherViews(g);
 	}
 	
 	

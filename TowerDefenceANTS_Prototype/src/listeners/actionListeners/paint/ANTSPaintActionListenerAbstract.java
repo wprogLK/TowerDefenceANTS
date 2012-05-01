@@ -22,7 +22,7 @@ public abstract class ANTSPaintActionListenerAbstract implements ActionListener
 	}
 	
 	@Override
-	public final void actionPerformed(ActionEvent e) 
+	public void actionPerformed(ActionEvent e) 
 	{
 		this.setState();
 		//currentState = ANTSStateEnum.basic;

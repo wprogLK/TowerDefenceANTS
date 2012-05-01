@@ -6,6 +6,7 @@ package view.basics;
 
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Line2D;
 
@@ -14,6 +15,9 @@ import javax.swing.JButton;
 import listeners.actionListeners.paint.ANTSAnimateActionListener;
 import listeners.actionListeners.paint.ANTSDefaultActionListener;
 import listeners.actionListeners.paint.ANTSOnlyDrawActionListener;
+import listeners.actionListeners.paint.ANTSPaintActionListenerAbstract;
+import listeners.actionListeners.paint.ANTSRunActionListener;
+import listeners.actionListeners.paint.ANTSStopActionListener;
 import model.basics.ANTSGameModel;
 
 import view.abstracts.ANTSViewAbstact;
@@ -27,6 +31,9 @@ public class ANTSGameView extends ANTSViewAbstact
 	private JButton button;
 	private JButton buttonDefaultPaint;
 	private JButton buttonOnlyDrawPaint;
+	private JButton buttonRun;
+	private JButton buttonStop;
+	
 	private boolean draw;
 	public ANTSGameView(ANTSGameModel model)
 	{
@@ -37,6 +44,16 @@ public class ANTSGameView extends ANTSViewAbstact
 	@Override
 	protected void initComponents()
 	{
+		this.buttonRun = new JButton("Start");
+		this.buttonRun.setActionCommand("Run");
+		this.buttonRun.addActionListener(ANTSRunActionListener.getInstance());	//NEW: add actionListener here
+		this.buttonRun.addActionListener(new RunStopButtonListener());
+		
+		this.buttonStop = new JButton("Stop");
+		this.buttonStop.setActionCommand("Stop");
+		this.buttonStop.addActionListener(ANTSStopActionListener.getInstance());	//NEW: add actionListener here
+		this.buttonStop.addActionListener(new RunStopButtonListener());
+		
 		this.button = new JButton("Default");
 		this.button.addActionListener(ANTSDefaultActionListener.getInstance());	//NEW: add actionListener here
 		
@@ -56,6 +73,8 @@ public class ANTSGameView extends ANTSViewAbstact
 		this.mainPanel.add(this.button);
 		this.mainPanel.add(this.buttonDefaultPaint);
 		this.mainPanel.add(this.buttonOnlyDrawPaint);
+		this.mainPanel.add(this.buttonRun);
+		this.mainPanel.add(this.buttonStop);
 	}
 	
 	@Override
@@ -74,6 +93,7 @@ public class ANTSGameView extends ANTSViewAbstact
 	{
 		this.fireDefaultAction();
 	}
+	
 	
 	/////////////
 	//LISTENERS//
@@ -108,4 +128,26 @@ public class ANTSGameView extends ANTSViewAbstact
 		return "GameView";
 	}
 	
+	
+
+	private class RunStopButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+		
+			if(e.getActionCommand().equals("Run"))
+			{
+				buttonRun.setEnabled(false);
+				buttonStop.setEnabled(true);
+			}
+			else if(e.getActionCommand().equals("Stop"))
+			{
+				buttonRun.setEnabled(true);
+				buttonStop.setEnabled(false);
+			}
+			
+		}
+
+	}
+
 }

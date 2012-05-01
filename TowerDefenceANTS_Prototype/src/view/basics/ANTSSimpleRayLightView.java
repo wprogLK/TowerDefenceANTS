@@ -36,6 +36,7 @@ public class ANTSSimpleRayLightView extends ANTSViewAbstact
 	public ANTSSimpleRayLightView(ANTSSimpleRayLightModel model)
 	{
 		super();
+		this.currentPaintState = ANTSStateEnum.animate;
 		this.model = model;
 		//this.mainPanel.setSize(this.model.getLength(), this.model.getLength());
 		this.mainPanel.setName("RAY PANLE");
@@ -78,18 +79,20 @@ public class ANTSSimpleRayLightView extends ANTSViewAbstact
 	protected void paintView(Graphics2D g)
 	{
 		g.setColor(this.model.getSourceLightColor());
-		System.out.println("MY STATE: " + this.currentPaintState);
+//		System.out.println("MY STATE: " + this.currentPaintState);
 		switch(this.currentPaintState)
 		{
 			case basic:
 			{
-				System.out.println("PAINT BASIC RAY LIGHT");
+//				System.out.println("PAINT BASIC RAY LIGHT");
+				AffineTransform aTemp = this.model.getCurrentAffineTransform();
+				Shape shape = aTemp.createTransformedShape(ray);
 				g.draw(ray);
 				break;
 			}
 			case draw:
 			{
-				System.out.println("PAINT DRAW RAY LIGHT");
+//				System.out.println("PAINT DRAW RAY LIGHT");
 				AffineTransform aTemp = this.model.getCurrentAffineTransform();
 				Shape shape = aTemp.createTransformedShape(ray);
 				
@@ -98,7 +101,7 @@ public class ANTSSimpleRayLightView extends ANTSViewAbstact
 			}
 			case animate:
 			{
-				System.out.println("PAINT ANIMATE RAY LIGHT");
+//				System.out.println("PAINT ANIMATE RAY LIGHT");
 				AffineTransform aTemp = this.model.getNextAffineTransform();
 				Shape shape = aTemp.createTransformedShape(ray);
 				
@@ -107,7 +110,7 @@ public class ANTSSimpleRayLightView extends ANTSViewAbstact
 			}
 			default:
 			{
-				System.out.println("DEFAULT");
+//				System.out.println("DEFAULT");
 			}
 		}
 	

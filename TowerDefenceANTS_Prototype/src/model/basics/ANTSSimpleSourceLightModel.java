@@ -46,7 +46,7 @@ public class ANTSSimpleSourceLightModel
 		this.radius = 10;
 		this.posX = 150;
 		this.posY = 320;
-		this.timeBetweenRays=10;
+		this.timeBetweenRays=10; //10
 		this.timeCounter = 0;
 		this.angle = 360;
 		this.numberOfRaysPer360Degree = 18;
@@ -127,6 +127,8 @@ public class ANTSSimpleSourceLightModel
 		{
 			if(this.timeCounter==0)
 			{
+				System.out.println("SENT!!!");
+				this.timeCounter++;
 				return true;
 			}
 			else if(this.timeCounter==this.timeBetweenRays)
@@ -136,12 +138,14 @@ public class ANTSSimpleSourceLightModel
 			}
 			else
 			{
+				System.out.println("WAIT..." + (this.timeBetweenRays - this.timeCounter));
 				this.timeCounter++;
 				return false;
 			}
 		}
 		else
 		{
+			System.out.println("is off");
 			return false;
 		}
 	}
