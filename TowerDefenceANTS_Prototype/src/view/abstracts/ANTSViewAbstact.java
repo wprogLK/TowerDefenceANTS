@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import listeners.actionListeners.paint.ANTSDefaultActionListener;
 import listeners.actionListeners.paint.ANTSOnlyDrawActionListener;
 
 /**
@@ -24,7 +25,7 @@ public abstract class ANTSViewAbstact  implements ANTSIView// extends Canvas
 {
 	protected ArrayList<ANTSIView> views;
 	protected JPanel mainPanel;
-	protected ActionListener refreshListener;
+	//protected ActionListener refreshListener;
 	
 	public ANTSViewAbstact()
 	{
@@ -42,9 +43,9 @@ public abstract class ANTSViewAbstact  implements ANTSIView// extends Canvas
 		this.paintView(g);
 	}
 	
-	protected void fireRefreshAction()
+	protected void fireDefaultAction()
 	{
-		this.refreshListener.actionPerformed(new ActionEvent(this,1,"Hallo Ich bin eine Action"));	
+		ANTSDefaultActionListener.getInstance().actionPerformed(new ActionEvent(this,1,"BASIC ACTION"));		
 	}
 	
 	//NEW
@@ -61,7 +62,7 @@ public abstract class ANTSViewAbstact  implements ANTSIView// extends Canvas
 	{
 		for(ANTSIView currentView:this.views)
 		{
-			currentView.setRefreshListener(this.refreshListener);
+			//currentView.setRefreshListener(this.refreshListener);
 			currentView.paint(g);
 		}
 	}
@@ -85,11 +86,11 @@ public abstract class ANTSViewAbstact  implements ANTSIView// extends Canvas
 		
 	}
 	
-	@Override
-	public void setRefreshListener(ActionListener refreshListener)
-	{
-		this.refreshListener = refreshListener;
-	}
+//	@Override
+//	public void setRefreshListener(ActionListener refreshListener)
+//	{
+//		this.refreshListener = refreshListener;
+//	}
 	
 	///////////
 	//GETTERS//
@@ -120,7 +121,7 @@ public abstract class ANTSViewAbstact  implements ANTSIView// extends Canvas
 			this.mainPanel.add(view.getPanel());
 		}
 	
-		view.setRefreshListener(this.refreshListener);
+//		view.setRefreshListener(this.refreshListener);
 	}
 	
 }

@@ -13,6 +13,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 
+import enums.ANTSStateEnum;
+
 import model.basics.ANTSSimpleRayLightModel;
 
 
@@ -75,43 +77,45 @@ public class ANTSSimpleRayLightView extends ANTSViewAbstact
 	protected void paintView(Graphics2D g)
 	{
 		g.setColor(this.model.getSourceLightColor());
-		
-//		while(this.model.finish)
-//		{
-//			System.out.println("WARTE....");
-//		}
-		
-		AffineTransform aTemp = this.model.calculateAffineTransform();
-		//OLD
-//		this.aTVelocity.translate(this.model.getVelocity(), 0); //Move ray
-//		aT.concatenate(aTVelocity);
-		
-		
-	//	Shape shape = aT.createTransformedShape(ray);
-		Shape shape = aTemp.createTransformedShape(ray);
-//		this.model.setPosX(aT.getTranslateX());
-//		this.model.setPosY(aT.getTranslateY());
-			
-//	System.out.println("NAME: " + this.toString() + " getX " + this.model.getPosX()  + " getY " + this.model.getPosY());
-//		
-//		System.out.println("AT: X: " + aT.getTranslateX());
-//		System.out.println("AT: Y: " + aT.getTranslateY());
-		
-		g.draw(shape);
+		switch(ANTSStateEnum.getCurrentState())
+		{
+			case basic:
+			{
+				System.out.println("PAINT BASIC RAY LIGHT");
+				g.draw(ray);
+				break;
+			}
+			case draw:
+			{
+				System.out.println("PAINT DRAW RAY LIGHT");
+				AffineTransform aTemp = this.model.calculateAffineTransform();
+				Shape shape = aTemp.createTransformedShape(ray);
+				
+				g.draw(shape);
+				break;
+			}
+			case animate:
+			{
+				System.out.println("PAINT ANIMATE RAY LIGHT");
+				AffineTransform aTemp = this.model.calculateAffineTransform();
+				Shape shape = aTemp.createTransformedShape(ray);
+				
+				g.draw(shape);
+				break;
+			}
+		}
+	
 	}
 	
+	//TODO: change action
 	public void refresh()
 	{
-		this.fireRefreshAction();
+		this.fireDefaultAction();
 	}
 	
 	/////////////
 	//LISTENERS//
 	/////////////
-	public void addButtonSwitchListener(ActionListener listener)
-	{
-		//this.button.addActionListener(listener);
-	}
 	
 	///////////
 	//ACTIONS//

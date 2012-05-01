@@ -11,6 +11,7 @@ import java.awt.geom.Line2D;
 
 import javax.swing.JButton;
 
+import listeners.actionListeners.paint.ANTSDefaultActionListener;
 import listeners.actionListeners.paint.ANTSOnlyDrawActionListener;
 import model.basics.ANTSGameModel;
 
@@ -23,7 +24,8 @@ import view.abstracts.ANTSViewAbstact;
 public class ANTSGameView extends ANTSViewAbstact 
 {
 	private JButton button;
-	
+	private JButton buttonDefaultPaint;
+	private JButton buttonOnlyDrawPaint;
 	private boolean draw;
 	public ANTSGameView(ANTSGameModel model)
 	{
@@ -35,6 +37,13 @@ public class ANTSGameView extends ANTSViewAbstact
 	protected void initComponents()
 	{
 		this.button = new JButton("Test");
+		this.button.addActionListener(ANTSOnlyDrawActionListener.getInstance());	//NEW: add actionListener here
+		
+		this.buttonDefaultPaint = new JButton("Default paint");
+		this.buttonDefaultPaint.addActionListener(ANTSDefaultActionListener.getInstance());
+		
+		this.buttonOnlyDrawPaint = new JButton("Only draw paint");
+		this.buttonOnlyDrawPaint.addActionListener(ANTSOnlyDrawActionListener.getInstance());
 	}
 	
 	@Override
@@ -42,7 +51,10 @@ public class ANTSGameView extends ANTSViewAbstact
 	{
 		this.mainPanel.setSize(800, 600);
 		this.mainPanel.setLayout(new FlowLayout());
+		
 		this.mainPanel.add(this.button);
+		this.mainPanel.add(this.buttonDefaultPaint);
+		this.mainPanel.add(this.buttonOnlyDrawPaint);
 	}
 	
 	@Override
@@ -55,19 +67,22 @@ public class ANTSGameView extends ANTSViewAbstact
 		}
 	}
 	
+	
+	//TODO: change action
 	public void refresh()
 	{
-		this.fireRefreshAction();
+		this.fireDefaultAction();
 	}
 	
 	/////////////
 	//LISTENERS//
 	/////////////
-	public void addButtonTestListener(ActionListener listener)
-	{
-		this.button.addActionListener(listener);
-		//this.button.addActionListener(ANTSOnlyDrawActionListener.getInstance());
-	}
+// No longer needed
+//	public void addButtonTestListener(ActionListener listener)
+//	{
+//		this.button.addActionListener(listener);
+//		
+//	}
 	
 	///////////
 	//ACTIONS//

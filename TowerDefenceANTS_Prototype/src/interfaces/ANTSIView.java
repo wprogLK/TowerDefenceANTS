@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 
+import enums.ANTSStateEnum;
+
 import view.abstracts.ANTSViewAbstact;
 
 /**
@@ -21,7 +23,6 @@ public interface ANTSIView
 	public JPanel getPanel();
 	public boolean isPanelEmpty();
 
-	public void setRefreshListener(ActionListener refreshListener);
-	
+//	public void setRefreshListener(ActionListener refreshListener);
 	public ANTSViewAbstact getAbstract();
 }

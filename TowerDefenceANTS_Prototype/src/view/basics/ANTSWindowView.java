@@ -36,7 +36,7 @@ public class ANTSWindowView extends ANTSViewAbstact
 	private ANTSIView currentView;
 	private ANTSWindow antsWindow;
 	private JPanel currentMainPanel;
-	private RefreshListener refreshListener;
+//	private RefreshListener refreshListener;
 	
 	public ANTSWindowView(ANTSWindowModel model)
 	{
@@ -44,7 +44,7 @@ public class ANTSWindowView extends ANTSViewAbstact
 		
 		this.setupWindow();
 		
-		this.refreshListener = new RefreshListener();
+//		this.refreshListener = new RefreshListener();
 		ANTSPaintActionListenerAbstract.setWindow(antsWindow);	//Set the window everywhere
 		
 	}
@@ -89,7 +89,7 @@ public class ANTSWindowView extends ANTSViewAbstact
 	{
 		this.currentView = view;
 		
-		this.currentView.setRefreshListener(this.refreshListener);
+//		this.currentView.setRefreshListener(this.refreshListener);
 		
 		this.currentMainPanel = this.currentView.getPanel();
 		this.antsWindow.setCurrentView(this.currentView);
@@ -103,16 +103,16 @@ public class ANTSWindowView extends ANTSViewAbstact
 	//INNER CLASS: A LISTENER//	(only in this special view!)
 	///////////////////////////
 	
-	class RefreshListener implements ActionListener
-	{
-
-		@Override
-		public void actionPerformed(ActionEvent e) 
-		{
-			System.out.println("SOURCE: " + e.getSource() + " COMMAND: " + e.getActionCommand());
-			
-			antsWindow.repaint();
-		}
-		
-	}
+//	class RefreshListener implements ActionListener
+//	{
+//
+//		@Override
+//		public void actionPerformed(ActionEvent e) 
+//		{
+//			System.out.println("SOURCE: " + e.getSource() + " COMMAND: " + e.getActionCommand());
+//			
+//			antsWindow.repaint();
+//		}
+//		
+//	}
 }

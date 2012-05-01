@@ -4,22 +4,23 @@ import java.awt.event.ActionListener;
 
 import enums.ANTSStateEnum;
 
-public class ANTSOnlyDrawActionListener extends ANTSPaintActionListenerAbstract implements ActionListener {
+public class ANTSDefaultActionListener extends ANTSPaintActionListenerAbstract implements ActionListener {
 
 
 	public static final ANTSPaintActionListenerAbstract getInstance()
 	{
 		if(listener == null)
 		{
-			listener = new ANTSOnlyDrawActionListener();
+			listener = new ANTSDefaultActionListener();
 		}
 		
 		return listener;
 	}
 	
 	@Override
-	protected void setState() {
-		ANTSStateEnum.setCurrentState(ANTSStateEnum.draw);
+	protected void setState() 
+	{
+		ANTSStateEnum.setCurrentState(ANTSStateEnum.basic);
 	}
 
 }

@@ -6,6 +6,7 @@ package main;
 import interfaces.ANTSIView;
 import controllers.basics.ANTSGameController;
 import controllers.basics.ANTSWindowController;
+import enums.ANTSStateEnum;
 /**
  * @author Lukas
  *
@@ -33,6 +34,7 @@ public class ANTSGameDriver
 	{
 		this.startView = this.gameController.getView();
 		this.windowController.setupView(this.startView);
+		ANTSStateEnum.setCurrentState(ANTSStateEnum.basic);
 	}
 
 }

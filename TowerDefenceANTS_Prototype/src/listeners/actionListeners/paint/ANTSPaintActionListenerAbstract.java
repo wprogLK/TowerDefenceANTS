@@ -5,6 +5,8 @@ import interfaces.ANTSIDrawActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import enums.ANTSStateEnum;
+
 import view.basics.ANTSWindow;
 
 public abstract class ANTSPaintActionListenerAbstract implements ActionListener
@@ -25,7 +27,9 @@ public abstract class ANTSPaintActionListenerAbstract implements ActionListener
 		this.setState();
 		this.window.repaint();
 	}
-	
+
+
 	protected abstract void setState();
+	
 	
 }
