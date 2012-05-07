@@ -3,6 +3,7 @@
  */
 package view.abstracts;
 
+import helper.ANTSPainter;
 import interfaces.ANTSIView;
 
 import java.awt.Canvas;
@@ -52,7 +53,7 @@ public abstract class ANTSViewAbstact  implements ANTSIView// extends Canvas
 	@Override
 	public final void paint(Graphics2D g)
 	{
-		this.paintOtherViews(g);
+//		this.paintOtherViews(g);
 		this.paintView(g);
 	}
 	
@@ -125,16 +126,27 @@ public abstract class ANTSViewAbstact  implements ANTSIView// extends Canvas
 		return this.mainPanel.getComponentCount()==0;
 	}
 	
-	public  void addInternalView(ANTSIView view)
-	{
-		this.views.add(view);
-		
-		if(!view.isPanelEmpty())
-		{
-			this.mainPanel.add(view.getPanel());
-		}
+//	public  void addInternalView(ANTSIView view)	//OLD
+//	{
+//		this.views.add(view);
+//		
+//		if(!view.isPanelEmpty())
+//		{
+//			this.mainPanel.add(view.getPanel());
+//		}
+//	
+////		view.setRefreshListener(this.refreshListener);
+//	}
 	
-//		view.setRefreshListener(this.refreshListener);
+	public void addViewToPainter(ANTSIView view)
+	{
+		ANTSPainter.addView(view);
+		//if(!view.isPanelEmpty()
+		//{
+		//	ANTSPainter.addView(views.getPanel());
+		//}
 	}
+	
+
 	
 }

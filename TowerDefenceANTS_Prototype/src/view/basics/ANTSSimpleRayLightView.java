@@ -84,7 +84,7 @@ public class ANTSSimpleRayLightView extends ANTSViewAbstact
 		{
 			case basic:
 			{
-//				System.out.println("PAINT BASIC RAY LIGHT");
+				System.out.println("PAINT BASIC RAY LIGHT");
 				AffineTransform aTemp = this.model.getCurrentAffineTransform();
 				Shape shape = aTemp.createTransformedShape(ray);
 				g.draw(ray);
@@ -92,7 +92,7 @@ public class ANTSSimpleRayLightView extends ANTSViewAbstact
 			}
 			case draw:
 			{
-//				System.out.println("PAINT DRAW RAY LIGHT");
+				System.out.println("PAINT DRAW RAY LIGHT");
 				AffineTransform aTemp = this.model.getCurrentAffineTransform();
 				Shape shape = aTemp.createTransformedShape(ray);
 				
@@ -101,7 +101,7 @@ public class ANTSSimpleRayLightView extends ANTSViewAbstact
 			}
 			case animate:
 			{
-//				System.out.println("PAINT ANIMATE RAY LIGHT");
+				System.out.println("PAINT ANIMATE RAY LIGHT");
 				AffineTransform aTemp = this.model.getNextAffineTransform();
 				Shape shape = aTemp.createTransformedShape(ray);
 				

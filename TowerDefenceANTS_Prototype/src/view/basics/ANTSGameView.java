@@ -4,11 +4,14 @@
 package view.basics;
 
 
+import interfaces.ANTSIView;
+
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Line2D;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 
@@ -35,6 +38,7 @@ public class ANTSGameView extends ANTSViewAbstact
 	private JButton buttonStop;
 	
 	private boolean draw;
+	
 	public ANTSGameView(ANTSGameModel model)
 	{
 		super();
@@ -128,8 +132,6 @@ public class ANTSGameView extends ANTSViewAbstact
 		return "GameView";
 	}
 	
-	
-
 	private class RunStopButtonListener implements ActionListener {
 
 		@Override

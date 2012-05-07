@@ -102,7 +102,9 @@ public class ANTSSimpleSourceLightView extends ANTSViewAbstact
 	
 		for(ANTSIView currentView: rays)
 		{
-			this.addInternalView(currentView);
+			//this.addInternalView(currentView);
+			this.addViewToPainter(currentView);
+			System.out.println("ADD");
 		}
 	}
 	

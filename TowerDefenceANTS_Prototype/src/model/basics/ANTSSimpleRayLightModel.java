@@ -29,7 +29,7 @@ public class ANTSSimpleRayLightModel
 	
 	public ANTSSimpleRayLightModel(ANTSSimpleSourceLightModel lightSourceModel, double startAngle)
 	{
-		this.setVelocity(1); 	//10
+		this.setVelocity(10); 	//10
 		
 		this.setPosX( lightSourceModel.getPosX());
 		this.setPosY( lightSourceModel.getPosY());

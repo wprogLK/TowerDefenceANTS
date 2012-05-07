@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
+import helper.ANTSPainter;
 import interfaces.ANTSIView;
 
 import javax.swing.JFrame;
@@ -28,7 +29,6 @@ public class ANTSWindow extends JFrame implements Runnable
 	
 	public ANTSWindow()
 	{
-		
 		this.textMiliseconds = new JTextField("800");
 	
 		
@@ -83,7 +83,24 @@ public class ANTSWindow extends JFrame implements Runnable
 		
 		this.configRendering(g2d);
 		
-		this.currentView.paint(g2d);
+		//this.currentView.paint(g2d);	OLD
+		//ANTSPainter.paint(g2d);		OLD NEW
+		
+		ANTSPainter t = new ANTSPainter();
+		t.setGraphics(g2d);
+		
+		try {
+			t.start();
+			t.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	
+		t.isFinishPainting();
+		
+		
 	}
 	
 	private void configRendering(Graphics2D g2d) 
@@ -137,14 +154,16 @@ public class ANTSWindow extends JFrame implements Runnable
 				
 				long timeEnd = System.currentTimeMillis();
 				
-				System.out.println("FRAMERATE: 1 Frame per " + (timeEnd-timeStart));
+//				System.out.println("FRAMERATE: 1 Frame per " + (timeEnd-timeStart));
 				
 				timeStart = System.currentTimeMillis();
 				this.repaint();
+				
+				
 				Thread.sleep(miliSeconds);
 				timeEnd = System.currentTimeMillis();
 				
-				System.out.println("Duration for one repaint" + (timeEnd-timeStart));
+//				System.out.println("Duration for one repaint" + (timeEnd-timeStart));
 			}
 		} catch (InterruptedException e) {
 			

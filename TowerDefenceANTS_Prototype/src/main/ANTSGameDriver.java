@@ -25,6 +25,7 @@ public class ANTSGameDriver
 		
 		this.setupStartView();
 	}
+	
 	public void startGame()
 	{
 		this.windowController.showWindow();

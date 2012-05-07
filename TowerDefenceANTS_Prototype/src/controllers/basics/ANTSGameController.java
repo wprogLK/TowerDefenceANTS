@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import listeners.actionListeners.paint.ANTSOnlyDrawActionListener;
 import model.basics.ANTSGameModel;
 import view.basics.ANTSGameView;
+import helper.ANTSPainter;
 import interfaces.ANTSIController;
 import interfaces.ANTSIView;
 
@@ -41,7 +42,8 @@ public class ANTSGameController implements ANTSIController
 	{
 		ANTSSimpleSourceLightController simpleSourceController = new ANTSSimpleSourceLightController();
 		ANTSIView simpleSourceView = simpleSourceController.getView();
-		this.view.addInternalView(simpleSourceView);
+		//this.view.addInternalView(simpleSourceView);
+		ANTSPainter.addView(simpleSourceView);
 	}
 	///////////
 	//GETTERS//
