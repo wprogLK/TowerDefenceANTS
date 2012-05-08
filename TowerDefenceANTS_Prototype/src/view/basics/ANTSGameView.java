@@ -84,13 +84,6 @@ public class ANTSGameView extends ANTSViewAbstact
 	@Override
 	protected void paintView(Graphics2D g)
 	{
-		this.isFinish = false;
-		if(this.draw)
-		{
-			Line2D.Double line = new Line2D.Double(30,0,200,200);	//Example
-			g.draw(line);
-		}
-		this.isFinish = true;
 	}
 	
 	

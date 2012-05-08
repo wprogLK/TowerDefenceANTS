@@ -34,15 +34,17 @@ public  class ANTSGameLogicUpdater extends Thread
 	{
 		try
 		{
+			System.out.println("a: inner gameLogicUpdater start");
 			for(ANTSIModel currentModel:models)
 			{
 				currentModel.update();
 //				System.out.println("Model VIEW: " +currentModel.toString() );//+ " is finish: " + currentModel.isFinish());
 			}
+			System.out.println("a: inner gameLogicUpdater end");
 		}
 		catch(ConcurrentModificationException e)
 		{
-			
+			System.out.println("Error in gameLogicUpdater!");
 		}
 		
 	}

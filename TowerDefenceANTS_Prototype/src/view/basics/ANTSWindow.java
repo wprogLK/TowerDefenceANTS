@@ -21,10 +21,9 @@ import view.abstracts.ANTSViewAbstact;
 
 public class ANTSWindow extends JFrame implements Runnable
 {
-	Thread thread;
+	private Thread thread;
 	ANTSIView currentView;
 	private ANTSStateEnum currentState;
-
 	
 	private JTextField textMiliseconds;
 	
@@ -65,6 +64,7 @@ public class ANTSWindow extends JFrame implements Runnable
 	@Override
 	public void paint(Graphics g)
 	{	
+		System.out.println("C: start repaint");
 		super.paintComponents(g);
 		
 		JPanel mainPanel =this.currentView.getPanel();
@@ -80,14 +80,26 @@ public class ANTSWindow extends JFrame implements Runnable
 		
 		try 
 		{
+			System.out.println("A: gameLogicUpdater start");
 			gameLogicUpdater.start();
 			gameLogicUpdater.join();
+			System.out.println("A: gameLogicUpdater end");
 			
+			System.out.println("B: painter start");
 			t.start();
 			t.join();
+			System.out.println("B: painter end");
 		} 
 		catch (InterruptedException e) 
 		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("C: end repaint");
+		
+		try {
+			Thread.sleep(150);
+		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -165,29 +177,21 @@ public class ANTSWindow extends JFrame implements Runnable
 	
 
 	@Override
+	/**
+	 * this method should be the gameLogic timer and the paint timer
+	 */
 	public void run() {
 		Thread t = Thread.currentThread();
 
-		try {
+//		try {
 			while(t == thread)
 			{
 				long timeStart = System.currentTimeMillis();
-				int miliSeconds;
+				//int miliSeconds=2;
 				
-					try
-					{
-						this.textMiliseconds.setBackground(Color.white);
-						String text = this.textMiliseconds.getText();
-						miliSeconds = Integer.parseInt(text);
-					}
-					catch(NumberFormatException nfe)
-					{
-						this.textMiliseconds.setBackground(Color.red);
-						miliSeconds = 500;
-					}
 					
 	
-					Thread.sleep(miliSeconds);
+				//Thread.sleep(miliSeconds);
 				
 				long timeEnd = System.currentTimeMillis();
 				
@@ -197,13 +201,11 @@ public class ANTSWindow extends JFrame implements Runnable
 				this.repaint();
 				
 				
-				Thread.sleep(miliSeconds);
-				timeEnd = System.currentTimeMillis();
 				
 //				System.out.println("Duration for one repaint" + (timeEnd-timeStart));
 			}
-		} catch (InterruptedException e) {
-			
-		}
+//		} catch (InterruptedException e) {
+//			
+//		}
 	}
 }

@@ -47,17 +47,18 @@ public  class ANTSPainter  extends Thread
 		finishPainting = false;
 		try
 		{
-			
+			System.out.println("b: inner painter start");
 			for(ANTSIView currentView:views)
 			{
 					currentView.paint(g2d);
 //					System.out.println("CURRENT VIEW: " +currentView.toString() + " is finish: " + currentView.isFinish());
 			}
+			System.out.println("b: inner painter end");
 		finishPainting = true;
 		}
 		catch(ConcurrentModificationException e)
 		{
-			
+			System.out.println("Error in painter");
 		}
 		
 	}
