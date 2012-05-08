@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import listeners.actionListeners.paint.ANTSOnlyDrawActionListener;
 import model.basics.ANTSGameModel;
 import view.basics.ANTSGameView;
+import helper.ANTSGameLogicUpdater;
 import helper.ANTSPainter;
 import interfaces.ANTSIController;
 import interfaces.ANTSIView;
@@ -27,6 +28,7 @@ public class ANTSGameController implements ANTSIController
 		this.model = new ANTSGameModel();
 		this.view = new ANTSGameView(this.model);
 		
+		ANTSGameLogicUpdater.addModel(model);
 		//this.setupListeners(); No longer needed
 		this.createBulb();
 	}

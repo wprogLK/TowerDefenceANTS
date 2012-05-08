@@ -10,6 +10,7 @@ import model.basics.ANTSGameModel;
 import model.basics.ANTSSimpleSourceLightModel;
 import view.basics.ANTSGameView;
 import view.basics.ANTSSimpleSourceLightView;
+import helper.ANTSGameLogicUpdater;
 import interfaces.ANTSIController;
 import interfaces.ANTSIView;
 
@@ -27,6 +28,8 @@ public class ANTSSimpleSourceLightController implements ANTSIController
 	{
 		this.model = new ANTSSimpleSourceLightModel();
 		this.view = new ANTSSimpleSourceLightView(this.model);
+		
+		ANTSGameLogicUpdater.addModel(model);
 		
 		this.setupListeners();
 	}

@@ -3,6 +3,8 @@
  */
 package model.basics;
 
+import interfaces.ANTSIModel;
+
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
@@ -11,7 +13,7 @@ import java.awt.geom.Point2D;
  * @author Lukas
  *
  */
-public class ANTSSimpleRayLightModel 
+public class ANTSSimpleRayLightModel implements ANTSIModel
 {
 	private double velocity;
 	private double posX;
@@ -27,7 +29,7 @@ public class ANTSSimpleRayLightModel
 	private int sourcePosY;
 	private Color sourceLightColor;
 	
-	public ANTSSimpleRayLightModel(ANTSSimpleSourceLightModel lightSourceModel, double startAngle)
+	public ANTSSimpleRayLightModel(ANTSSimpleSourceLightModel lightSourceModel, double startAngle) 
 	{
 		this.setVelocity(10); 	//10
 		
@@ -134,6 +136,12 @@ public class ANTSSimpleRayLightModel
 		aTTot.concatenate(aTVel); 
 		
 		return aTTot;
+	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

@@ -5,6 +5,7 @@ package controllers.basics;
 
 import model.basics.ANTSWindowModel;
 import view.basics.ANTSWindowView;
+import helper.ANTSGameLogicUpdater;
 import interfaces.ANTSIController;
 import interfaces.ANTSIView;
 
@@ -21,6 +22,8 @@ public class ANTSWindowController implements ANTSIController
 	{
 		this.model = new ANTSWindowModel();
 		this.view = new ANTSWindowView(this.model);
+		
+		ANTSGameLogicUpdater.addModel(model);
 		
 		this.setupListeners();
 	}

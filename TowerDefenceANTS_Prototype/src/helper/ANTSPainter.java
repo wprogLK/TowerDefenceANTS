@@ -66,6 +66,7 @@ public  class ANTSPainter  extends Thread
 			for(ANTSIView currentView:views)
 			{
 					currentView.paint(g2d);
+//					System.out.println("CURRENT VIEW: " +currentView.toString() + " is finish: " + currentView.isFinish());
 			}
 		finishPainting = true;
 		}

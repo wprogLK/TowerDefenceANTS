@@ -15,4 +15,10 @@ public class ANTSGameModel implements ANTSIModel
 	{
 		return !drawState;
 	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
 }

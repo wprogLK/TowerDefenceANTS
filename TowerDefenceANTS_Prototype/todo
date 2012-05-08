@@ -2,3 +2,8 @@
 1.1) private Graphics2D g2d
 1.2) run -> paint() (with join)
 2) Add rays with join (thread)
+
+-----------
+gameLogic update and graphic update separate!!!
+1. update gameLogic
+2. update graphic

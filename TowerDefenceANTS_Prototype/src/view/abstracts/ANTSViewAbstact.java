@@ -29,6 +29,7 @@ public abstract class ANTSViewAbstact  implements ANTSIView// extends Canvas
 	protected ArrayList<ANTSIView> views;
 	protected JPanel mainPanel;
 	protected  ANTSStateEnum currentPaintState;	
+	protected boolean isFinish;
 	
 	public ANTSViewAbstact()
 	{
@@ -38,6 +39,7 @@ public abstract class ANTSViewAbstact  implements ANTSIView// extends Canvas
 		
 		this.initComponents();
 		this.configMainPanel();
+		this.isFinish = true;
 	}	
 	
 	public final void setPaintState(ANTSStateEnum state)
@@ -53,8 +55,10 @@ public abstract class ANTSViewAbstact  implements ANTSIView// extends Canvas
 	@Override
 	public final void paint(Graphics2D g)
 	{
+		this.isFinish = false;
 //		this.paintOtherViews(g);
 		this.paintView(g);
+		
 	}
 	
 	protected void fireDefaultAction()
@@ -124,6 +128,11 @@ public abstract class ANTSViewAbstact  implements ANTSIView// extends Canvas
 	public final boolean isPanelEmpty()
 	{
 		return this.mainPanel.getComponentCount()==0;
+	}
+	
+	public final boolean isFinish()
+	{
+		return this.isFinish;
 	}
 	
 //	public  void addInternalView(ANTSIView view)	//OLD

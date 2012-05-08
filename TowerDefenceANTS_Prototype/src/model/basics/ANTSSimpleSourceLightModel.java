@@ -3,13 +3,20 @@
  */
 package model.basics;
 
+import helper.ANTSPainter;
+import interfaces.ANTSIModel;
+import interfaces.ANTSIView;
+
 import java.awt.Color;
+import java.util.ArrayList;
+
+import controllers.basics.ANTSSimpleRayLightController;
 
 /**
  * @author Lukas
  *
  */
-public class ANTSSimpleSourceLightModel 
+public class ANTSSimpleSourceLightModel implements ANTSIModel
 {
 	private boolean isOn;
 
@@ -127,7 +134,6 @@ public class ANTSSimpleSourceLightModel
 		{
 			if(this.timeCounter==0)
 			{
-				System.out.println("SENT!!!");
 				this.timeCounter++;
 				return true;
 			}
@@ -138,14 +144,12 @@ public class ANTSSimpleSourceLightModel
 			}
 			else
 			{
-				System.out.println("WAIT..." + (this.timeBetweenRays - this.timeCounter));
 				this.timeCounter++;
 				return false;
 			}
 		}
 		else
 		{
-			System.out.println("is off");
 			return false;
 		}
 	}
@@ -154,5 +158,30 @@ public class ANTSSimpleSourceLightModel
 	{
 		this.timeCounter=0;
 	}
+
+	@Override
+	public void update() {
+		if(this.canSendRay())
+		{
+			this.createRays();
+		}
+	}
+	
+	private void createRays()
+	{
+		double angle = this.getOffsetAngle();
+		
+		for(int numberRay = 0; numberRay<this.getNumberOfRays(); numberRay++)
+		{
+			//ANTSSimpleRayLightController simpleRayLightController = new ANTSSimpleRayLightController(this.model,angle);
+			ANTSSimpleRayLightController simpleRayLightController = new ANTSSimpleRayLightController(this,angle);
+			
+			angle+=this.getAngleBetweetTwoRays();
+			ANTSIView rayView = simpleRayLightController.getView();
+
+			ANTSPainter.addView(rayView);
+		}
+	}
+	
 	
 }

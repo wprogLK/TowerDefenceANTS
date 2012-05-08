@@ -22,7 +22,7 @@ public interface ANTSIView
 	
 	public JPanel getPanel();
 	public boolean isPanelEmpty();
-
+	public  boolean isFinish();
 //	public void setRefreshListener(ActionListener refreshListener);
 	public ANTSViewAbstact getAbstract();
 	

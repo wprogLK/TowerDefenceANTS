@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
+import helper.ANTSGameLogicUpdater;
 import helper.ANTSPainter;
 import interfaces.ANTSIView;
 
@@ -77,6 +78,8 @@ public class ANTSWindow extends JFrame implements Runnable
 		
 		super.paintComponents(g); 
 		
+		
+		
 		JPanel mainPanel =this.currentView.getPanel();
 		Graphics gp = mainPanel.getGraphics();
 		Graphics2D g2d = (Graphics2D) gp;
@@ -87,20 +90,24 @@ public class ANTSWindow extends JFrame implements Runnable
 		//ANTSPainter.paint(g2d);		OLD NEW
 		
 		ANTSPainter t = new ANTSPainter();
+		ANTSGameLogicUpdater gameLogicUpdater = new ANTSGameLogicUpdater();
+		
 		t.setGraphics(g2d);
 		
-		try {
+		try 
+		{
+			gameLogicUpdater.start();
+			gameLogicUpdater.join();
+			
 			t.start();
 			t.join();
-		} catch (InterruptedException e) {
+		} 
+		catch (InterruptedException e) 
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	
-		t.isFinishPainting();
-		
-		
 	}
 	
 	private void configRendering(Graphics2D g2d) 
