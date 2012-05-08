@@ -28,7 +28,7 @@ public class ANTSGameController implements ANTSIController
 		this.model = new ANTSGameModel();
 		this.view = new ANTSGameView(this.model);
 		
-		ANTSGameLogicUpdater.addModel(model);
+		//ANTSGameLogicUpdater.addModel(model); //TODO
 		//this.setupListeners(); No longer needed
 		this.createBulb();
 	}

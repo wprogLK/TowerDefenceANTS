@@ -47,7 +47,8 @@ public class ANTSWindow extends JFrame implements Runnable
 	public final void setPaintState(ANTSStateEnum state)
 	{
 		this.currentState = state;
-		this.currentView.setPaintState(state);
+//		this.currentView.setPaintState(state);
+		ANTSPainter.setPaintState(state);
 //		System.out.println("SET STATE IN WINDOW! " + this.currentState);
 	}
 	
@@ -63,31 +64,14 @@ public class ANTSWindow extends JFrame implements Runnable
 	
 	@Override
 	public void paint(Graphics g)
-	{
-//		System.out.println("PAINT IN WINDOW! the state is: " + this.currentState);
-		//TODO: switch states
-//		OLD
-//		super.paintComponents(g); 
-//		
-//		JPanel mainPanel =this.currentView.getPanel();
-//		Graphics gp = mainPanel.getGraphics();
-//		Graphics2D g2d = (Graphics2D) gp;
-//		
-//		this.configRendering(g2d);
-//		this.currentView.paint(g2d);
-		
-		super.paintComponents(g); 
-		
-		
+	{	
+		super.paintComponents(g);
 		
 		JPanel mainPanel =this.currentView.getPanel();
 		Graphics gp = mainPanel.getGraphics();
 		Graphics2D g2d = (Graphics2D) gp;
 		
 		this.configRendering(g2d);
-		
-		//this.currentView.paint(g2d);	OLD
-		//ANTSPainter.paint(g2d);		OLD NEW
 		
 		ANTSPainter t = new ANTSPainter();
 		ANTSGameLogicUpdater gameLogicUpdater = new ANTSGameLogicUpdater();
@@ -107,7 +91,7 @@ public class ANTSWindow extends JFrame implements Runnable
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
+		
 	}
 	
 	private void configRendering(Graphics2D g2d) 
@@ -119,8 +103,9 @@ public class ANTSWindow extends JFrame implements Runnable
 	public void runAnimation()
 	{
 		this.thread = new Thread(this);
-		this.thread.setPriority(Thread.MAX_PRIORITY);
+		this.thread.setPriority(Thread.MIN_PRIORITY);
 		this.thread.start();
+	
 		
 	}
 	
@@ -132,12 +117,57 @@ public class ANTSWindow extends JFrame implements Runnable
 			thread = null;
 		}
 	}
+	
+// OLD
+//	@Override
+//	public void run() {
+//		Thread t = Thread.currentThread();
+//		
+//		
+//		try {
+//			while(t == thread)
+//			{
+//				long timeStart = System.currentTimeMillis();
+//				int miliSeconds;
+//				
+//					try
+//					{
+//						this.textMiliseconds.setBackground(Color.white);
+//						String text = this.textMiliseconds.getText();
+//						miliSeconds = Integer.parseInt(text);
+//					}
+//					catch(NumberFormatException nfe)
+//					{
+//						this.textMiliseconds.setBackground(Color.red);
+//						miliSeconds = 500;
+//					}
+//					
+//	
+//					Thread.sleep(miliSeconds);
+//				
+//				long timeEnd = System.currentTimeMillis();
+//				
+////				System.out.println("FRAMERATE: 1 Frame per " + (timeEnd-timeStart));
+//				
+//				timeStart = System.currentTimeMillis();
+//				this.repaint();
+//				
+//				
+//				Thread.sleep(miliSeconds);
+//				timeEnd = System.currentTimeMillis();
+//				
+////				System.out.println("Duration for one repaint" + (timeEnd-timeStart));
+//			}
+//		} catch (InterruptedException e) {
+//			
+//		}
+//	}
+	
 
 	@Override
 	public void run() {
 		Thread t = Thread.currentThread();
-		
-		
+
 		try {
 			while(t == thread)
 			{

@@ -9,11 +9,13 @@ import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
+import model.abstracts.ANTSModelAbstract;
+
 /**
  * @author Lukas
  *
  */
-public class ANTSSimpleRayLightModel implements ANTSIModel
+public class ANTSSimpleRayLightModel extends ANTSModelAbstract implements ANTSIModel
 {
 	private double velocity;
 	private double posX;
@@ -31,6 +33,7 @@ public class ANTSSimpleRayLightModel implements ANTSIModel
 	
 	public ANTSSimpleRayLightModel(ANTSSimpleSourceLightModel lightSourceModel, double startAngle) 
 	{
+		super();
 		this.setVelocity(10); 	//10
 		
 		this.setPosX( lightSourceModel.getPosX());

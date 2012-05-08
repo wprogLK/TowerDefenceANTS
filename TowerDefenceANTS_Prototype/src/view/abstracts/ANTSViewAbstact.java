@@ -40,10 +40,13 @@ public abstract class ANTSViewAbstact  implements ANTSIView// extends Canvas
 		this.initComponents();
 		this.configMainPanel();
 		this.isFinish = true;
+		
+		ANTSPainter.addView(this);
 	}	
 	
 	public final void setPaintState(ANTSStateEnum state)
 	{
+		System.out.println("CHANGE STATE TO: " + state);
 		this.currentPaintState = state;
 		
 		for(ANTSIView view: this.views)

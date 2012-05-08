@@ -13,6 +13,7 @@ public  class ANTSGameLogicUpdater extends Thread
 	
 	public static void addModel(ANTSIModel model)
 	{
+//		System.out.println("ADD MODEL" + model.toString());
 		if(!models.contains(models))
 		{
 			models.add(model);

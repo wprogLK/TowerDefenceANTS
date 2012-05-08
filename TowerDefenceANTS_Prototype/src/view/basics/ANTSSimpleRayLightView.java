@@ -4,21 +4,15 @@
 package view.basics;
 
 
-import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.Shape;
-import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 
 import enums.ANTSStateEnum;
 
-import listeners.actionListeners.paint.ANTSPaintActionListenerAbstract;
 import model.basics.ANTSSimpleRayLightModel;
-
-
 
 import view.abstracts.ANTSViewAbstact;
 
@@ -81,7 +75,7 @@ public class ANTSSimpleRayLightView extends ANTSViewAbstact
 		this.isFinish = false;
 		
 		g.setColor(this.model.getSourceLightColor());
-		System.out.println("MY STATE: " + this.currentPaintState);
+//		System.out.println("MY STATE: " + this.currentPaintState);
 		switch(this.currentPaintState)
 		{
 			case basic:

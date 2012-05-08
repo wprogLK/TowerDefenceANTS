@@ -6,6 +6,8 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 
+import enums.ANTSStateEnum;
+
 public  class ANTSPainter  extends Thread
 {
 	private static ArrayList<ANTSIView> views = new ArrayList<ANTSIView>();
@@ -33,23 +35,6 @@ public  class ANTSPainter  extends Thread
 		g2d = g2;
 	}
 	
-//	public static void paint(Graphics2D g2d)
-//	{
-//		finishPainting = false;
-//		try
-//		{
-//			for(ANTSIView currentView:views)
-//			{
-//					currentView.paint(g2d);
-//			}
-//		finishPainting = true;
-//		}
-//		catch(ConcurrentModificationException e)
-//		{
-//			
-//		}
-//	}
-	
 	public static void isFinishPainting()
 	{
 		System.out.println("IS FINISH: " + finishPainting);
@@ -73,6 +58,14 @@ public  class ANTSPainter  extends Thread
 		catch(ConcurrentModificationException e)
 		{
 			
+		}
+		
+	}
+
+	public static void setPaintState(ANTSStateEnum state) {
+		for(ANTSIView currentView:views)
+		{
+			currentView.setPaintState(state);
 		}
 		
 	}

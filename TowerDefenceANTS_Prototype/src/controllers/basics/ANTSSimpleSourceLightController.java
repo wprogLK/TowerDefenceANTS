@@ -29,7 +29,7 @@ public class ANTSSimpleSourceLightController implements ANTSIController
 		this.model = new ANTSSimpleSourceLightModel();
 		this.view = new ANTSSimpleSourceLightView(this.model);
 		
-		ANTSGameLogicUpdater.addModel(model);
+		//ANTSGameLogicUpdater.addModel(model); //TODO
 		
 		this.setupListeners();
 	}

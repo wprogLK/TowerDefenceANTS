@@ -10,13 +10,15 @@ import interfaces.ANTSIView;
 import java.awt.Color;
 import java.util.ArrayList;
 
+import model.abstracts.ANTSModelAbstract;
+
 import controllers.basics.ANTSSimpleRayLightController;
 
 /**
  * @author Lukas
  *
  */
-public class ANTSSimpleSourceLightModel implements ANTSIModel
+public class ANTSSimpleSourceLightModel extends ANTSModelAbstract implements ANTSIModel
 {
 	private boolean isOn;
 
@@ -47,6 +49,8 @@ public class ANTSSimpleSourceLightModel implements ANTSIModel
 //		this.angleOffset = 0;
 //		
 //		this.lightColor = Color.BLUE;
+		
+		super();
 		
 		this.turnOn();
 		
@@ -179,7 +183,7 @@ public class ANTSSimpleSourceLightModel implements ANTSIModel
 			angle+=this.getAngleBetweetTwoRays();
 			ANTSIView rayView = simpleRayLightController.getView();
 
-			ANTSPainter.addView(rayView);
+//			ANTSPainter.addView(rayView); //TODO
 		}
 	}
 	

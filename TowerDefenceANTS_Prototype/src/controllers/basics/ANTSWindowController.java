@@ -23,7 +23,7 @@ public class ANTSWindowController implements ANTSIController
 		this.model = new ANTSWindowModel();
 		this.view = new ANTSWindowView(this.model);
 		
-		ANTSGameLogicUpdater.addModel(model);
+		//ANTSGameLogicUpdater.addModel(model); //TODO
 		
 		this.setupListeners();
 	}
