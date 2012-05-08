@@ -33,7 +33,7 @@ public class ANTSWindow extends JFrame// implements Runnable
 	
 	public ANTSWindow()
 	{
-		this.painter = new ANTSPainter();
+		this.painter = new ANTSPainter(this);
 		this.logicUpdater = new ANTSGameLogicUpdater();
 		
 		this.textMiliseconds = new JTextField("800");
@@ -71,15 +71,16 @@ public class ANTSWindow extends JFrame// implements Runnable
 	@Override
 	public void paint(Graphics g)
 	{	
-		//TODO Make it better
-		JPanel mainPanel =this.currentView.getPanel();
-		Graphics gp = mainPanel.getGraphics();
-		Graphics2D g2d = (Graphics2D) gp;
-		
-		this.configRendering(g2d);
-		ANTSPainter.setGraphics(g2d);
-		
 		super.paintComponents(g);
+		//TODO Make it better
+//		JPanel mainPanel =this.currentView.getPanel();
+//		Graphics gp = mainPanel.getGraphics();
+//		Graphics2D g2d = (Graphics2D) gp;
+//		
+//		this.configRendering(g2d);
+//		ANTSPainter.setGraphics(g2d);
+		
+		
 //OLD
 //		super.paintComponents(g);
 //		System.out.println("WINDOW PAINT");
@@ -128,6 +129,10 @@ public class ANTSWindow extends JFrame// implements Runnable
 		this.painter.exit();
 	}
 	
+	public JPanel getCurrentMainPanel()
+	{
+		return this.currentView.getPanel();
+	}
 // OLD
 //	@Override
 //	public void run() {

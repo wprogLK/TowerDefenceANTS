@@ -7,6 +7,10 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 
+import javax.swing.JFrame;
+
+import view.basics.ANTSWindow;
+
 import enums.ANTSStateEnum;
 
 public  class ANTSPainter  extends Thread
@@ -15,7 +19,13 @@ public  class ANTSPainter  extends Thread
 	private static boolean finishPainting;
 	private static Graphics2D g2d;
 	private Thread painter;
-	private int timeBetweenTwoTicks = 1000;
+	private int timeBetweenTwoTicks = 3;
+	private ANTSWindow window;
+	
+	public ANTSPainter(ANTSWindow win)
+	{
+		this.window = win;
+	}
 	
 	public static void addView(ANTSIView view)
 	{
@@ -62,10 +72,18 @@ public  class ANTSPainter  extends Thread
 		try {
 			while(t== this.painter)
 			{
-				paintAll();
 				
-					Thread.sleep(timeBetweenTwoTicks);
-				} 
+				clear();
+				
+//				
+				g2d = (Graphics2D) this.window.getCurrentMainPanel().getGraphics();
+				paintAll();
+				System.out.println("B: FISNISH");
+				
+				Thread.sleep(timeBetweenTwoTicks);
+				this.window.repaint();
+				Thread.sleep(1);
+			} 
 				
 			}
 		catch (InterruptedException e) 
@@ -74,13 +92,14 @@ public  class ANTSPainter  extends Thread
 		}
 	}
 	
-	private void paintAll()
+	private synchronized void paintAll()
 	{
 		for(int i=0; i<views.size(); i++)
 		{
 			ANTSIView view = views.get(i);
 			view.paint(g2d);
 		}
+		System.out.println("A: PAINTED");
 	}
 
 	public static void setPaintState(ANTSStateEnum state) 
@@ -89,6 +108,14 @@ public  class ANTSPainter  extends Thread
 		{
 			currentView.setPaintState(state);
 		}
+	}
+	
+	private void clear()
+	{
+//		g2d=(Graphics2D) this.window.getGraphics();
+		g2d = (Graphics2D) this.window.getCurrentMainPanel().getGraphics();
+		
+//		this.window.repaint();
 	}
 
 }

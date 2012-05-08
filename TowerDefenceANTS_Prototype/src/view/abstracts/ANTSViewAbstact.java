@@ -59,7 +59,7 @@ public abstract class ANTSViewAbstact  implements ANTSIView// extends Canvas
 	public final void paint(Graphics2D g)
 	{
 		this.isFinish = false;
-//		this.paintOtherViews(g);
+//		this.paintOtherViews(g);	//Later for child views
 		this.paintView(g);
 		
 	}

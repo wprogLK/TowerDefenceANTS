@@ -26,6 +26,7 @@ public class ANTSSimpleRayLightModel extends ANTSModelAbstract implements ANTSIM
 	private AffineTransform aTPos;
 	private AffineTransform aTVel;
 	private AffineTransform aTRot;
+	private AffineTransform aTotal;
 	
 	private int sourcePosX;
 	private int sourcePosY;
@@ -34,7 +35,7 @@ public class ANTSSimpleRayLightModel extends ANTSModelAbstract implements ANTSIM
 	public ANTSSimpleRayLightModel(ANTSSimpleSourceLightModel lightSourceModel, double startAngle) 
 	{
 		super();
-		this.setVelocity(10); 	//10
+		this.setVelocity(2); 	//10
 		
 		this.setPosX( lightSourceModel.getPosX());
 		this.setPosY( lightSourceModel.getPosY());
@@ -51,6 +52,7 @@ public class ANTSSimpleRayLightModel extends ANTSModelAbstract implements ANTSIM
 		this.aTPos= new AffineTransform();
 		this.aTRot = new AffineTransform();
 		this.aTVel = new AffineTransform();
+		this.aTotal = new AffineTransform();
 		
 		this.aTRot.rotate(Math.toRadians(angle), this.getPosX(), this.getPosY());
 	}
@@ -117,33 +119,51 @@ public class ANTSSimpleRayLightModel extends ANTSModelAbstract implements ANTSIM
 		this.angle = angle;
 	}
 	
-	public AffineTransform getNextAffineTransform()
+	public AffineTransform getVelAffineTransform()
+	{
+		return this.aTVel;
+	}
+//OLD	
+//	public AffineTransform getNextAffineTransform()
+//	{
+//		AffineTransform aTTot = new AffineTransform();
+//		this.aTVel.translate(this.getVelocity(), 0); //Move ray
+//		System.out.println("X: " + aTVel.getTranslateX());
+//		aTTot.concatenate(aTRot);
+//		
+//		aTTot.concatenate(aTVel); 
+//		
+//		return aTTot;
+//	}
+	
+	public void move()
 	{
 		AffineTransform aTTot = new AffineTransform();
 		this.aTVel.translate(this.getVelocity(), 0); //Move ray
-		
+		//System.out.println("X: " + aTVel.getTranslateX());
 		aTTot.concatenate(aTRot);
 		
 		aTTot.concatenate(aTVel); 
 		
-		return aTTot;
+		this.aTotal = aTTot;
 	}
 	
 	public AffineTransform getCurrentAffineTransform()
 	{
-		AffineTransform aTTot = new AffineTransform();
-		this.aTVel.translate(0, 0); //Move ray
-		
-		aTTot.concatenate(aTRot);
-		
-		aTTot.concatenate(aTVel); 
-		
-		return aTTot;
+//		AffineTransform aTTot = new AffineTransform();
+//		//this.aTVel.translate(0, 0); //DONT Move ray
+//		
+//		aTTot.concatenate(aTRot);
+//		
+//		aTTot.concatenate(aTVel); 
+//		
+//		return aTTot;
+		return this.aTotal;
 	}
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+		move();
 		
 	}
 	

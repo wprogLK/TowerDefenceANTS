@@ -10,7 +10,7 @@ import java.util.ConcurrentModificationException;
 public  class ANTSGameLogicUpdater extends Thread
 {
 	private static ArrayList<ANTSIModel> models = new ArrayList<ANTSIModel>();
-	private static long timeBetweenTwoTicks = 10; //in ms
+	private static long timeBetweenTwoTicks = 100; //in ms
 	private  Thread gameLogic;
 	
 	public ANTSGameLogicUpdater()

@@ -29,6 +29,7 @@ public class ANTSSimpleRayLightView extends ANTSViewAbstact
 	
 	public ANTSSimpleRayLightView(ANTSSimpleRayLightModel model)
 	{
+		
 		super();
 		this.currentPaintState = ANTSStateEnum.animate;
 		this.model = model;
@@ -72,18 +73,19 @@ public class ANTSSimpleRayLightView extends ANTSViewAbstact
 	@Override
 	protected void paintView(Graphics2D g)
 	{
-		
 		this.isFinish = false;
 		
 		g.setColor(this.model.getSourceLightColor());
-		System.out.println("MY STATE: " + this.currentPaintState);
+		//System.out.println("MY STATE: " + this.currentPaintState);
+//		System.out.println("MY POS: ( " + this.model.getVelAffineTransform().getTranslateX() + " | " +this.model.getVelAffineTransform().getTranslateY());
 		switch(this.currentPaintState)
 		{
 			case basic:
 			{
 //				System.out.println("PAINT BASIC RAY LIGHT");
 				AffineTransform aTemp = this.model.getCurrentAffineTransform();
-				g.draw(ray);
+				Shape shape = aTemp.createTransformedShape(ray);
+				g.draw(shape);
 				break;
 			}
 			case draw:
@@ -98,7 +100,8 @@ public class ANTSSimpleRayLightView extends ANTSViewAbstact
 			case animate:
 			{
 //				System.out.println("PAINT ANIMATE RAY LIGHT");
-				AffineTransform aTemp = this.model.getNextAffineTransform();
+				//AffineTransform aTemp = this.model.getNextAffineTransform();
+				AffineTransform aTemp = this.model.getCurrentAffineTransform();
 				Shape shape = aTemp.createTransformedShape(ray);
 				
 				g.draw(shape);

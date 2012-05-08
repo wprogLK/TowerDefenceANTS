@@ -60,7 +60,7 @@ public class ANTSSimpleSourceLightModel extends ANTSModelAbstract implements ANT
 		this.timeBetweenRays=10; //10
 		this.timeCounter = 0;
 		this.angle = 360;
-		this.numberOfRaysPer360Degree = 18;
+		this.numberOfRaysPer360Degree = 1;
 		this.angleOffset = 0;
 		
 		this.lightColor = Color.BLUE;
@@ -168,11 +168,9 @@ public class ANTSSimpleSourceLightModel extends ANTSModelAbstract implements ANT
 		if(this.canSendRay())
 		{
 			this.createRays();
+			
 		}
-		else
-		{
-			System.out.println("NO NEW RAY");
-		}
+		System.out.println("UPDATE");
 	}
 	
 	private void createRays()
@@ -189,6 +187,8 @@ public class ANTSSimpleSourceLightModel extends ANTSModelAbstract implements ANT
 
 //			ANTSPainter.addView(rayView); //TODO
 		}
+		this.switchLight();
+		System.out.println("SWITCH OFF");
 	}
 	
 	
