@@ -10,10 +10,16 @@ import java.util.ConcurrentModificationException;
 public  class ANTSGameLogicUpdater extends Thread
 {
 	private static ArrayList<ANTSIModel> models = new ArrayList<ANTSIModel>();
+	private static long timeBetweenTwoTicks = 10; //in ms
+	private  Thread gameLogic;
+	
+	public ANTSGameLogicUpdater()
+	{
+		
+	}
 	
 	public static void addModel(ANTSIModel model)
 	{
-//		System.out.println("ADD MODEL" + model.toString());
 		if(!models.contains(models))
 		{
 			models.add(model);
@@ -28,23 +34,61 @@ public  class ANTSGameLogicUpdater extends Thread
 		}
 	}
 	
+	public  void execute()
+	{
+		this.gameLogic = new Thread(this);
+		this.gameLogic.start();
+	}
+	
+	public void exit()
+	{
+		this.gameLogic.interrupt();
+	}
 
 	@Override
 	public void run() 
 	{
-		try
+		Thread t = Thread.currentThread();
+		
+		try 
 		{
-			for(ANTSIModel currentModel:models)
+			while(t== this.gameLogic)
 			{
-				currentModel.update();
-//				System.out.println("Model VIEW: " +currentModel.toString() );//+ " is finish: " + currentModel.isFinish());
-			}
+				updateAll();
+				
+				Thread.sleep(timeBetweenTwoTicks);
+			} 
 		}
-		catch(ConcurrentModificationException e)
+		catch (InterruptedException e) 
 		{
 			
 		}
 		
+		
+//		try
+//		{
+//			for(ANTSIModel currentModel:models)
+//			{
+//				currentModel.update();
+////				System.out.println("Model VIEW: " +currentModel.toString() );//+ " is finish: " + currentModel.isFinish());
+//			}
+//		}
+//		catch(ConcurrentModificationException e)
+//		{
+//			
+//		}
+		
+	}
+	
+	private  void updateAll()
+	{
+		for(int i=0; i<models.size(); i++)
+		{
+			ANTSIModel model = models.get(i);
+			model.update();
+		}
+		
+		//System.out.println("Update done");
 	}
 
 }

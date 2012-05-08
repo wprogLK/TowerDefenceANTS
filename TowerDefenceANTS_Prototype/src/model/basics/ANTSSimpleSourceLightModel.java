@@ -169,6 +169,10 @@ public class ANTSSimpleSourceLightModel extends ANTSModelAbstract implements ANT
 		{
 			this.createRays();
 		}
+		else
+		{
+			System.out.println("NO NEW RAY");
+		}
 	}
 	
 	private void createRays()

@@ -72,10 +72,11 @@ public class ANTSSimpleRayLightView extends ANTSViewAbstact
 	@Override
 	protected void paintView(Graphics2D g)
 	{
+		
 		this.isFinish = false;
 		
 		g.setColor(this.model.getSourceLightColor());
-//		System.out.println("MY STATE: " + this.currentPaintState);
+		System.out.println("MY STATE: " + this.currentPaintState);
 		switch(this.currentPaintState)
 		{
 			case basic:

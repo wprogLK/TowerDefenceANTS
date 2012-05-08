@@ -11,7 +11,7 @@ import enums.ANTSStateEnum;
  * @author Lukas
  *
  */
-public class ANTSGameDriver 
+public class ANTSGameDriver
 {
 	private ANTSWindowController windowController;	//The "main" controller
 	private ANTSGameController gameController;
@@ -37,5 +37,4 @@ public class ANTSGameDriver
 		this.windowController.setupView(this.startView);
 		ANTSStateEnum.setCurrentState(ANTSStateEnum.basic);
 	}
-
 }

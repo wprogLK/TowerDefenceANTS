@@ -27,4 +27,5 @@ public class ANTSGameModel extends ANTSModelAbstract implements ANTSIModel
 		// TODO Auto-generated method stub
 		
 	}
+
 }

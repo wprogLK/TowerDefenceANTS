@@ -19,9 +19,12 @@ import enums.ANTSStateEnum;
 
 import view.abstracts.ANTSViewAbstact;
 
-public class ANTSWindow extends JFrame implements Runnable
+public class ANTSWindow extends JFrame// implements Runnable
 {
-	Thread thread;
+	//Thread thread;
+	ANTSPainter painter;
+	ANTSGameLogicUpdater logicUpdater;
+	
 	ANTSIView currentView;
 	private ANTSStateEnum currentState;
 
@@ -30,6 +33,9 @@ public class ANTSWindow extends JFrame implements Runnable
 	
 	public ANTSWindow()
 	{
+		this.painter = new ANTSPainter();
+		this.logicUpdater = new ANTSGameLogicUpdater();
+		
 		this.textMiliseconds = new JTextField("800");
 	
 		
@@ -65,32 +71,42 @@ public class ANTSWindow extends JFrame implements Runnable
 	@Override
 	public void paint(Graphics g)
 	{	
-		super.paintComponents(g);
-		
+		//TODO Make it better
 		JPanel mainPanel =this.currentView.getPanel();
 		Graphics gp = mainPanel.getGraphics();
 		Graphics2D g2d = (Graphics2D) gp;
 		
 		this.configRendering(g2d);
+		ANTSPainter.setGraphics(g2d);
 		
-		ANTSPainter t = new ANTSPainter();
-		ANTSGameLogicUpdater gameLogicUpdater = new ANTSGameLogicUpdater();
-		
-		t.setGraphics(g2d);
-		
-		try 
-		{
-			gameLogicUpdater.start();
-			gameLogicUpdater.join();
-			
-			t.start();
-			t.join();
-		} 
-		catch (InterruptedException e) 
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		super.paintComponents(g);
+//OLD
+//		super.paintComponents(g);
+//		System.out.println("WINDOW PAINT");
+//		JPanel mainPanel =this.currentView.getPanel();
+//		Graphics gp = mainPanel.getGraphics();
+//		Graphics2D g2d = (Graphics2D) gp;
+//		
+//		this.configRendering(g2d);
+//		
+//		ANTSPainter t = new ANTSPainter();
+//		ANTSGameLogicUpdater gameLogicUpdater = new ANTSGameLogicUpdater();
+//		
+//		t.setGraphics(g2d);
+//
+//		try 
+//		{
+//			gameLogicUpdater.start();
+//			gameLogicUpdater.join();
+//			
+//			t.start();
+//			t.join();
+//		} 
+//		catch (InterruptedException e) 
+//		{
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 	}
 	
@@ -102,20 +118,14 @@ public class ANTSWindow extends JFrame implements Runnable
 	
 	public void runAnimation()
 	{
-		this.thread = new Thread(this);
-		this.thread.setPriority(Thread.MIN_PRIORITY);
-		this.thread.start();
-	
-		
+		this.logicUpdater.execute();//	GOOD
+		this.painter.execute();
 	}
 	
 	public void stopAnimation()
 	{
-		if(this.thread != null)
-		{
-			thread.interrupt();
-			thread = null;
-		}
+		this.logicUpdater.exit();
+		this.painter.exit();
 	}
 	
 // OLD
@@ -162,48 +172,4 @@ public class ANTSWindow extends JFrame implements Runnable
 //			
 //		}
 //	}
-	
-
-	@Override
-	public void run() {
-		Thread t = Thread.currentThread();
-
-		try {
-			while(t == thread)
-			{
-				long timeStart = System.currentTimeMillis();
-				int miliSeconds;
-				
-					try
-					{
-						this.textMiliseconds.setBackground(Color.white);
-						String text = this.textMiliseconds.getText();
-						miliSeconds = Integer.parseInt(text);
-					}
-					catch(NumberFormatException nfe)
-					{
-						this.textMiliseconds.setBackground(Color.red);
-						miliSeconds = 500;
-					}
-					
-	
-					Thread.sleep(miliSeconds);
-				
-				long timeEnd = System.currentTimeMillis();
-				
-//				System.out.println("FRAMERATE: 1 Frame per " + (timeEnd-timeStart));
-				
-				timeStart = System.currentTimeMillis();
-				this.repaint();
-				
-				
-				Thread.sleep(miliSeconds);
-				timeEnd = System.currentTimeMillis();
-				
-//				System.out.println("Duration for one repaint" + (timeEnd-timeStart));
-			}
-		} catch (InterruptedException e) {
-			
-		}
-	}
 }
