@@ -19,6 +19,7 @@ import listeners.actionListeners.paint.ANTSAnimateActionListener;
 import listeners.actionListeners.paint.ANTSDefaultActionListener;
 import listeners.actionListeners.paint.ANTSOnlyDrawActionListener;
 import listeners.actionListeners.paint.ANTSPaintActionListenerAbstract;
+import listeners.actionListeners.paint.ANTSPrintStatsListener;
 import listeners.actionListeners.paint.ANTSRunActionListener;
 import listeners.actionListeners.paint.ANTSStopActionListener;
 import model.basics.ANTSGameModel;
@@ -36,6 +37,7 @@ public class ANTSGameView extends ANTSViewAbstact
 	private JButton buttonOnlyDrawPaint;
 	private JButton buttonRun;
 	private JButton buttonStop;
+	private JButton buttonPrintStat;
 	
 	private boolean draw;
 	
@@ -66,6 +68,9 @@ public class ANTSGameView extends ANTSViewAbstact
 		
 		this.buttonOnlyDrawPaint = new JButton("Only draw paint");
 		this.buttonOnlyDrawPaint.addActionListener(ANTSOnlyDrawActionListener.getInstance());
+		
+		this.buttonPrintStat = new JButton("Print Statisic");
+		this.buttonPrintStat.addActionListener(ANTSPrintStatsListener.getInstance());
 	}
 	
 	@Override
@@ -79,6 +84,7 @@ public class ANTSGameView extends ANTSViewAbstact
 		this.mainPanel.add(this.buttonOnlyDrawPaint);
 		this.mainPanel.add(this.buttonRun);
 		this.mainPanel.add(this.buttonStop);
+		this.mainPanel.add(this.buttonPrintStat);
 	}
 	
 	@Override
