@@ -12,7 +12,7 @@ import view.basics.ANTSWindow;
 
 import enums.ANTSStateEnum;
 
-public  class ANTSPainter  extends Thread
+public  class CopyOfANTSPainter  extends Thread
 {
 	private static ArrayList<ANTSIView> views = new ArrayList<ANTSIView>();
 	private static Graphics2D g2d;
@@ -22,7 +22,7 @@ public  class ANTSPainter  extends Thread
 	private ANTSGameLogicUpdater log;
 	private boolean ready;
 	
-	public ANTSPainter(ANTSWindow win, ANTSGameLogicUpdater log)
+	public CopyOfANTSPainter(ANTSWindow win, ANTSGameLogicUpdater log)
 	{
 		this.windowReady = false;
 		this.win = win;
@@ -76,32 +76,35 @@ public  class ANTSPainter  extends Thread
 		{
 			//TODO
 			//Repaint after it!
-			while(!this.log.isReady())
+			while(this.log.isReady())
 			{
-				try
+				this.win.repaint();
+				
+				while(this.win.isReady())
 				{
-					Thread.sleep(1);
-				} 
-				catch (InterruptedException e) 
-				{
-					e.printStackTrace();
+					try
+					{
+						Thread.sleep(1);
+					} 
+					catch (InterruptedException e) 
+					{
+						e.printStackTrace();
+					}
 				}
 			}
 		
 			
-			while(!this.win.isReady())
-			{
-				try
-				{
-					Thread.sleep(1);
-				} 
-				catch (InterruptedException e) 
-				{
-					e.printStackTrace();
-				}
-			}
-			this.ready = false;
-			this.win.repaint();
+//			while(!this.win.isReady())
+//			{
+//				try
+//				{
+//					Thread.sleep(1);
+//				} 
+//				catch (InterruptedException e) 
+//				{
+//					e.printStackTrace();
+//				}
+//			}
 
 			try
 			{
@@ -116,7 +119,7 @@ public  class ANTSPainter  extends Thread
 			{
 				
 			}
-			this.ready = true;
+			
 			
 			try
 			{
@@ -137,10 +140,5 @@ public  class ANTSPainter  extends Thread
 		{
 			currentView.setPaintState(state);
 		}
-	}
-	
-	public boolean isReady()
-	{
-		return this.ready;
 	}
 }

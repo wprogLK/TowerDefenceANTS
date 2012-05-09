@@ -82,12 +82,10 @@ public class ANTSGameView extends ANTSViewAbstact
 		
 	}
 	
-	
 	public void refresh()
 	{
 		this.fireDefaultAction();
 	}
-	
 	
 	/////////////
 	//LISTENERS//

@@ -16,6 +16,7 @@ public  class ANTSGameLogicUpdater extends Thread
 	private ANTSWindow win;
 	private boolean on;
 	private boolean ready;
+	private ANTSPainter painter;
 	
 	public ANTSGameLogicUpdater(ANTSWindow win)
 	{
@@ -56,6 +57,11 @@ public  class ANTSGameLogicUpdater extends Thread
 		this.on = false;
 	}
 	
+	public void setPainter(ANTSPainter p)
+	{
+		this.painter = p;
+	}
+	
 	@Override
 	public void run() 
 	{
@@ -65,7 +71,7 @@ public  class ANTSGameLogicUpdater extends Thread
 		{
 			System.out.println("LOGIC: " + this.win.isReady());
 			
-			while(!this.win.isReady())//this.windowReady) OLD
+			while(!this.win.isReady() || !this.painter.isReady())//this.windowReady) OLD
 			{
 				try
 				{

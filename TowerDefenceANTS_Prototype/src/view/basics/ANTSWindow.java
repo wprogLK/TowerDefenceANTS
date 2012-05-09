@@ -22,6 +22,9 @@ public class ANTSWindow extends JFrame implements Runnable
 	ANTSIView currentView;
 	private ANTSStateEnum currentState;
 	
+	private ANTSGameLogicUpdater gameLogicUpdater;
+	private ANTSPainter painter;
+	
 	private JTextField textMiliseconds;
 	private boolean ready;
 	
@@ -31,6 +34,10 @@ public class ANTSWindow extends JFrame implements Runnable
 		this.ready = true;
 		
 		this.currentState = ANTSStateEnum.basic;
+		
+		this.gameLogicUpdater = new ANTSGameLogicUpdater(this);
+		this.painter= new ANTSPainter(this, gameLogicUpdater);
+		this.gameLogicUpdater.setPainter(this.painter);
 	}
 	
 	public void setCurrentView(ANTSIView currentView)
@@ -93,14 +100,18 @@ public class ANTSWindow extends JFrame implements Runnable
 	
 	public void runAnimation()
 	{
-		ANTSGameLogicUpdater gameLogicUpdater = new ANTSGameLogicUpdater(this);
-		ANTSPainter t = new ANTSPainter(this, gameLogicUpdater);
-	
+		this.gameLogicUpdater.start();
+		this.painter.start();
+		//OLD
+//		ANTSGameLogicUpdater gameLogicUpdater = new ANTSGameLogicUpdater(this);
+//		ANTSPainter t = new ANTSPainter(this, gameLogicUpdater);
+//	
+//		gameLogicUpdater.start();
+//		t.start();
 		
-		gameLogicUpdater.start();
 		
 		
-		t.start();
+		//OLD OLD
 //		t.join();
 		
 //		this.thread = new Thread(this);
