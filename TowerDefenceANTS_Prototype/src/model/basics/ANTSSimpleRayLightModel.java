@@ -26,6 +26,7 @@ public class ANTSSimpleRayLightModel extends ANTSModelAbstract implements ANTSIM
 	private AffineTransform aTPos;
 	private AffineTransform aTVel;
 	private AffineTransform aTRot;
+	private AffineTransform aTot;
 	
 	private int sourcePosX;
 	private int sourcePosY;
@@ -51,8 +52,17 @@ public class ANTSSimpleRayLightModel extends ANTSModelAbstract implements ANTSIM
 		this.aTPos= new AffineTransform();
 		this.aTRot = new AffineTransform();
 		this.aTVel = new AffineTransform();
+		this.aTot = new AffineTransform();
 		
 		this.aTRot.rotate(Math.toRadians(angle), this.getPosX(), this.getPosY());
+		
+		//aTot.concatenate(aTRot);
+		
+		this.aTVel.translate(lightSourceModel.getRadius(), 0); //Move ray
+		
+		aTot.concatenate(aTRot);
+		
+		aTot.concatenate(aTVel); 
 	}
 	
 	public void setVelocity(double velocity)
@@ -117,34 +127,39 @@ public class ANTSSimpleRayLightModel extends ANTSModelAbstract implements ANTSIM
 		this.angle = angle;
 	}
 	
-	public AffineTransform getNextAffineTransform()
+	public void move()
 	{
-		AffineTransform aTTot = new AffineTransform();
+		//AffineTransform aTTot = new AffineTransform();
+		this.aTot = new AffineTransform();
 		this.aTVel.translate(this.getVelocity(), 0); //Move ray
 		
-		aTTot.concatenate(aTRot);
+		aTot.concatenate(aTRot);
 		
-		aTTot.concatenate(aTVel); 
+		aTot.concatenate(aTVel); 
 		
-		return aTTot;
+//		return aTTot;
 	}
 	
-	public AffineTransform getCurrentAffineTransform()
+//	public AffineTransform getCurrentAffineTransform()
+//	{
+//		AffineTransform aTTot = new AffineTransform();
+//		this.aTVel.translate(0, 0); //Move ray
+//		
+//		aTTot.concatenate(aTRot);
+//		
+//		aTTot.concatenate(aTVel); 
+//		
+//		return aTTot;
+//	}
+	
+	public AffineTransform getAffineTransform()
 	{
-		AffineTransform aTTot = new AffineTransform();
-		this.aTVel.translate(0, 0); //Move ray
-		
-		aTTot.concatenate(aTRot);
-		
-		aTTot.concatenate(aTVel); 
-		
-		return aTTot;
+		return this.aTot;
 	}
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-		
+		this.move();
 	}
 	
 	

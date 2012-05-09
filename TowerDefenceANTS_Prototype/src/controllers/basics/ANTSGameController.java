@@ -45,7 +45,7 @@ public class ANTSGameController implements ANTSIController
 		ANTSSimpleSourceLightController simpleSourceController = new ANTSSimpleSourceLightController();
 		ANTSIView simpleSourceView = simpleSourceController.getView();
 		//this.view.addInternalView(simpleSourceView);
-		ANTSPainter.addView(simpleSourceView);
+//		ANTSPainter.addView(simpleSourceView);
 	}
 	///////////
 	//GETTERS//

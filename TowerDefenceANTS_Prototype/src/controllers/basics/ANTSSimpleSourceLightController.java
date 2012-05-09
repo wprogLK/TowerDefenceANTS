@@ -60,7 +60,7 @@ public class ANTSSimpleSourceLightController implements ANTSIController
 		{
 			model.switchLight();
 		
-			view.refresh();
+//			view.refresh(); OLD
 		}
 		
 	}

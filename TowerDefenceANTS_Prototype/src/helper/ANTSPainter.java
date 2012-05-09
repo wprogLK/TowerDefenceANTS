@@ -47,7 +47,6 @@ public  class ANTSPainter  extends Thread
 		finishPainting = false;
 		try
 		{
-			
 			for(ANTSIView currentView:views)
 			{
 					currentView.paint(g2d);
