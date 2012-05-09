@@ -1,7 +1,6 @@
 package view.basics;
 
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -13,11 +12,9 @@ import interfaces.ANTSIView;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.Timer;
 
 import enums.ANTSStateEnum;
 
-import view.abstracts.ANTSViewAbstact;
 
 public class ANTSWindow extends JFrame implements Runnable
 {
@@ -47,20 +44,8 @@ public class ANTSWindow extends JFrame implements Runnable
 	public final void setPaintState(ANTSStateEnum state)
 	{
 		this.currentState = state;
-//		this.currentView.setPaintState(state);
 		ANTSPainter.setPaintState(state);
-//		System.out.println("SET STATE IN WINDOW! " + this.currentState);
 	}
-	
-//	//NEW
-//	/** only draw the graphics. NO AnimationMove!
-//	 * 
-//	 */
-//	public void draw()
-//	{
-//		this.currentState = ANTSStateEnum.draw;
-//		
-//	}
 	
 	@Override
 	public void paint(Graphics g)
@@ -88,10 +73,8 @@ public class ANTSWindow extends JFrame implements Runnable
 		} 
 		catch (InterruptedException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 	
 	private void configRendering(Graphics2D g2d) 
@@ -105,8 +88,6 @@ public class ANTSWindow extends JFrame implements Runnable
 		this.thread = new Thread(this);
 		this.thread.setPriority(Thread.MIN_PRIORITY);
 		this.thread.start();
-	
-		
 	}
 	
 	public void stopAnimation()
@@ -118,52 +99,6 @@ public class ANTSWindow extends JFrame implements Runnable
 		}
 	}
 	
-// OLD
-//	@Override
-//	public void run() {
-//		Thread t = Thread.currentThread();
-//		
-//		
-//		try {
-//			while(t == thread)
-//			{
-//				long timeStart = System.currentTimeMillis();
-//				int miliSeconds;
-//				
-//					try
-//					{
-//						this.textMiliseconds.setBackground(Color.white);
-//						String text = this.textMiliseconds.getText();
-//						miliSeconds = Integer.parseInt(text);
-//					}
-//					catch(NumberFormatException nfe)
-//					{
-//						this.textMiliseconds.setBackground(Color.red);
-//						miliSeconds = 500;
-//					}
-//					
-//	
-//					Thread.sleep(miliSeconds);
-//				
-//				long timeEnd = System.currentTimeMillis();
-//				
-////				System.out.println("FRAMERATE: 1 Frame per " + (timeEnd-timeStart));
-//				
-//				timeStart = System.currentTimeMillis();
-//				this.repaint();
-//				
-//				
-//				Thread.sleep(miliSeconds);
-//				timeEnd = System.currentTimeMillis();
-//				
-////				System.out.println("Duration for one repaint" + (timeEnd-timeStart));
-//			}
-//		} catch (InterruptedException e) {
-//			
-//		}
-//	}
-	
-
 	@Override
 	public void run() {
 		Thread t = Thread.currentThread();
@@ -191,18 +126,16 @@ public class ANTSWindow extends JFrame implements Runnable
 				
 				long timeEnd = System.currentTimeMillis();
 				
-//				System.out.println("FRAMERATE: 1 Frame per " + (timeEnd-timeStart));
-				
 				timeStart = System.currentTimeMillis();
 				this.repaint();
 				
 				
 				Thread.sleep(miliSeconds);
 				timeEnd = System.currentTimeMillis();
-				
-//				System.out.println("Duration for one repaint" + (timeEnd-timeStart));
 			}
-		} catch (InterruptedException e) {
+		} 
+		catch (InterruptedException e)
+		{
 			
 		}
 	}

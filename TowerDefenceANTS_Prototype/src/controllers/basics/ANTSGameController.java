@@ -28,25 +28,14 @@ public class ANTSGameController implements ANTSIController
 		this.model = new ANTSGameModel();
 		this.view = new ANTSGameView(this.model);
 		
-		//ANTSGameLogicUpdater.addModel(model); //TODO
-		//this.setupListeners(); No longer needed
 		this.createBulb();
 	}
-
-//	No longer needed
-//	private void setupListeners()
-//	{
-//		//view.addButtonTestListener(new TestListener()); 
-//		view.addButtonTestListener(ANTSOnlyDrawActionListener.getInstance());
-//	}
 	
 	private void createBulb()
 	{
 		ANTSSimpleSourceLightController simpleSourceController = new ANTSSimpleSourceLightController();
-		ANTSIView simpleSourceView = simpleSourceController.getView();
-		//this.view.addInternalView(simpleSourceView);
-//		ANTSPainter.addView(simpleSourceView);
 	}
+	
 	///////////
 	//GETTERS//
 	///////////
@@ -56,23 +45,4 @@ public class ANTSGameController implements ANTSIController
 	{
 		return this.view;
 	}
-	
-	////////////////////////////////
-	//INNER CLASSES: THE LISTENERS// 
-	////////////////////////////////
-	
-// No longer needed
-//	class TestListener implements ActionListener
-//	{
-//		@Override
-//		public void actionPerformed(ActionEvent e) 
-//		{
-//			boolean draw = view.getDraw();
-//			draw = model.setNewDraw(draw);
-//			
-//			view.setDraw(draw);
-//			view.refresh();
-//		}
-//		
-//	}
 }

@@ -4,21 +4,16 @@
 package view.basics;
 
 
-import interfaces.ANTSIView;
-
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.Line2D;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 
 import listeners.actionListeners.paint.ANTSAnimateActionListener;
 import listeners.actionListeners.paint.ANTSDefaultActionListener;
 import listeners.actionListeners.paint.ANTSOnlyDrawActionListener;
-import listeners.actionListeners.paint.ANTSPaintActionListenerAbstract;
 import listeners.actionListeners.paint.ANTSRunActionListener;
 import listeners.actionListeners.paint.ANTSStopActionListener;
 import model.basics.ANTSGameModel;
@@ -88,7 +83,6 @@ public class ANTSGameView extends ANTSViewAbstact
 	}
 	
 	
-	//TODO: change action
 	public void refresh()
 	{
 		this.fireDefaultAction();
@@ -98,12 +92,7 @@ public class ANTSGameView extends ANTSViewAbstact
 	/////////////
 	//LISTENERS//
 	/////////////
-// No longer needed
-//	public void addButtonTestListener(ActionListener listener)
-//	{
-//		this.button.addActionListener(listener);
-//		
-//	}
+
 	
 	///////////
 	//ACTIONS//

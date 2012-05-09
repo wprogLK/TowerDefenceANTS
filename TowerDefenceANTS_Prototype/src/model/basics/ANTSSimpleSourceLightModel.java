@@ -37,19 +37,6 @@ public class ANTSSimpleSourceLightModel extends ANTSModelAbstract implements ANT
 	
 	public ANTSSimpleSourceLightModel()
 	{
-//		this.turnOn();
-//		
-//		this.radius = 10;
-//		this.posX = 200;
-//		this.posY = 200;
-//		this.timeBetweenRays=10;
-//		this.timeCounter = 0;
-//		this.angle = 180;
-//		this.numberOfRaysPer360Degree = 18;
-//		this.angleOffset = 0;
-//		
-//		this.lightColor = Color.BLUE;
-		
 		super();
 		
 		this.turnOn();
@@ -173,20 +160,13 @@ public class ANTSSimpleSourceLightModel extends ANTSModelAbstract implements ANT
 	
 	private void createRays()
 	{
-		System.out.println("CREATE");
 		double angle = this.getOffsetAngle();
 		
 		for(int numberRay = 0; numberRay<this.getNumberOfRays(); numberRay++)
 		{
-			//ANTSSimpleRayLightController simpleRayLightController = new ANTSSimpleRayLightController(this.model,angle);
 			ANTSSimpleRayLightController simpleRayLightController = new ANTSSimpleRayLightController(this,angle);
 			
 			angle+=this.getAngleBetweetTwoRays();
-//			ANTSIView rayView = simpleRayLightController.getView();
-
-//			ANTSPainter.addView(rayView); //TODO
 		}
 	}
-	
-	
 }

@@ -10,8 +10,8 @@ public class ANTSWindowModel extends ANTSModelAbstract implements ANTSIModel
 		super();
 	}
 	@Override
-	public void update() {
-		// TODO Auto-generated method stub
+	public void update() 
+	{
 		
 	}
 

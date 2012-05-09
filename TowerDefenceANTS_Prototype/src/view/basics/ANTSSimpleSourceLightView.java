@@ -4,21 +4,15 @@
 package view.basics;
 
 
-import interfaces.ANTSIView;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 
-import controllers.basics.ANTSSimpleRayLightController;
-
-import model.basics.ANTSGameModel;
 import model.basics.ANTSSimpleSourceLightModel;
 
 import view.abstracts.ANTSViewAbstact;

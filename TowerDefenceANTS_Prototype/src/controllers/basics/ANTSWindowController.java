@@ -23,8 +23,6 @@ public class ANTSWindowController implements ANTSIController
 		this.model = new ANTSWindowModel();
 		this.view = new ANTSWindowView(this.model);
 		
-		//ANTSGameLogicUpdater.addModel(model); //TODO
-		
 		this.setupListeners();
 	}
 	
@@ -61,23 +59,4 @@ public class ANTSWindowController implements ANTSIController
 	{
 		this.view.hideWindow();
 	}
-	
-	////////////////////////////////
-	//INNER CLASSES: THE LISTENERS//
-	////////////////////////////////
-	
-//	class TestListener implements ActionListener
-//	{
-//
-//		@Override
-//		public void actionPerformed(ActionEvent e) 
-//		{
-//
-//			boolean draw = view.getDraw();
-//			draw = model.setNewDraw(draw);
-//			view.setDraw(draw);
-//			view.refresh();
-//		}
-//		
-//	}
 }

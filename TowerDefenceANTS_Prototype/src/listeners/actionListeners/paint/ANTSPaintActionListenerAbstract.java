@@ -1,7 +1,5 @@
 package listeners.actionListeners.paint;
 
-import interfaces.ANTSIDrawActionListener;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -12,10 +10,8 @@ import view.basics.ANTSWindow;
 public abstract class ANTSPaintActionListenerAbstract implements ActionListener
 {
 	protected static ANTSWindow window; 
-	//protected static ANTSPaintActionListenerAbstract listener;
 	protected static ANTSStateEnum currentState;
 
-	
 	public static void setWindow(ANTSWindow w)
 	{
 		window = w;
@@ -25,7 +21,6 @@ public abstract class ANTSPaintActionListenerAbstract implements ActionListener
 	public void actionPerformed(ActionEvent e) 
 	{
 		this.setState();
-		//currentState = ANTSStateEnum.basic;
 
 		this.window.repaint();
 	}
@@ -37,8 +32,4 @@ public abstract class ANTSPaintActionListenerAbstract implements ActionListener
 	{
 		return currentState;
 	}
-	
-//	protected abstract void doIt();
-	
-	
 }

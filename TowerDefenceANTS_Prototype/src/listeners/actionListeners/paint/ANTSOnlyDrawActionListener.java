@@ -1,6 +1,5 @@
 package listeners.actionListeners.paint;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import enums.ANTSStateEnum;
@@ -20,19 +19,8 @@ public class ANTSOnlyDrawActionListener extends ANTSPaintActionListenerAbstract 
 	}
 	
 	@Override
-	protected void setState() {
+	protected void setState()
+	{
 		this.window.setPaintState(ANTSStateEnum.draw);
-		System.out.println("SOULD BE NOW DRAW");
-//		super.currentState = ANTSStateEnum.draw;
 	}
-
-	
-//	@Override
-//	public void actionPerformed(ActionEvent e) {
-//	
-//		
-//		window.repaint();
-//		
-//	}
-
 }

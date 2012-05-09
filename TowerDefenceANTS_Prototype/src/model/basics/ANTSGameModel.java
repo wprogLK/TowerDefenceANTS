@@ -23,8 +23,8 @@ public class ANTSGameModel extends ANTSModelAbstract implements ANTSIModel
 	}
 
 	@Override
-	public void update() {
-		// TODO Auto-generated method stub
+	public void update() 
+	{
 		
 	}
 }

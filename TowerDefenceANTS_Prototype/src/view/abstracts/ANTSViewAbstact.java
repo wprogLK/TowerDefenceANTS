@@ -24,7 +24,7 @@ import listeners.actionListeners.paint.ANTSOnlyDrawActionListener;
  * @author Lukas
  *
  */
-public abstract class ANTSViewAbstact  implements ANTSIView// extends Canvas
+public abstract class ANTSViewAbstact  implements ANTSIView
 {
 	protected ArrayList<ANTSIView> views;
 	protected JPanel mainPanel;
@@ -46,7 +46,6 @@ public abstract class ANTSViewAbstact  implements ANTSIView// extends Canvas
 	
 	public final void setPaintState(ANTSStateEnum state)
 	{
-		System.out.println("CHANGE STATE TO: " + state);
 		this.currentPaintState = state;
 		
 		for(ANTSIView view: this.views)
@@ -83,7 +82,6 @@ public abstract class ANTSViewAbstact  implements ANTSIView// extends Canvas
 	{
 		for(ANTSIView currentView:this.views)
 		{
-			//currentView.setRefreshListener(this.refreshListener);
 			currentView.paint(g);
 		}
 	}
@@ -106,12 +104,6 @@ public abstract class ANTSViewAbstact  implements ANTSIView// extends Canvas
 	{
 		
 	}
-	
-//	@Override
-//	public void setRefreshListener(ActionListener refreshListener)
-//	{
-//		this.refreshListener = refreshListener;
-//	}
 	
 	///////////
 	//GETTERS//
@@ -136,29 +128,5 @@ public abstract class ANTSViewAbstact  implements ANTSIView// extends Canvas
 	public final boolean isFinish()
 	{
 		return this.isFinish;
-	}
-	
-//	public  void addInternalView(ANTSIView view)	//OLD
-//	{
-//		this.views.add(view);
-//		
-//		if(!view.isPanelEmpty())
-//		{
-//			this.mainPanel.add(view.getPanel());
-//		}
-//	
-////		view.setRefreshListener(this.refreshListener);
-//	}
-	
-	public void addViewToPainter(ANTSIView view)
-	{
-		ANTSPainter.addView(view);
-		//if(!view.isPanelEmpty()
-		//{
-		//	ANTSPainter.addView(views.getPanel());
-		//}
-	}
-	
-
-	
+	}	
 }

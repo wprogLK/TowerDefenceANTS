@@ -7,7 +7,6 @@ import interfaces.ANTSIModel;
 
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
 
 import model.abstracts.ANTSModelAbstract;
 
@@ -42,7 +41,6 @@ public class ANTSSimpleRayLightModel extends ANTSModelAbstract implements ANTSIM
 		
 		this.lenght =10;
 		
-		//this.angle = startAngle;
 		this.setAngle(startAngle);
 		
 		this.sourcePosX = lightSourceModel.getPosX();
@@ -56,12 +54,8 @@ public class ANTSSimpleRayLightModel extends ANTSModelAbstract implements ANTSIM
 		
 		this.aTRot.rotate(Math.toRadians(angle), this.getPosX(), this.getPosY());
 		
-		//aTot.concatenate(aTRot);
-		
-		this.aTVel.translate(lightSourceModel.getRadius(), 0); //Move ray
-		
+		this.aTVel.translate(lightSourceModel.getRadius(), 0);
 		aTot.concatenate(aTRot);
-		
 		aTot.concatenate(aTVel); 
 	}
 	
@@ -129,28 +123,13 @@ public class ANTSSimpleRayLightModel extends ANTSModelAbstract implements ANTSIM
 	
 	public void move()
 	{
-		//AffineTransform aTTot = new AffineTransform();
 		this.aTot = new AffineTransform();
-		this.aTVel.translate(this.getVelocity(), 0); //Move ray
+		this.aTVel.translate(this.getVelocity(), 0);
 		
 		aTot.concatenate(aTRot);
-		
 		aTot.concatenate(aTVel); 
-		
-//		return aTTot;
 	}
 	
-//	public AffineTransform getCurrentAffineTransform()
-//	{
-//		AffineTransform aTTot = new AffineTransform();
-//		this.aTVel.translate(0, 0); //Move ray
-//		
-//		aTTot.concatenate(aTRot);
-//		
-//		aTTot.concatenate(aTVel); 
-//		
-//		return aTTot;
-//	}
 	
 	public AffineTransform getAffineTransform()
 	{
@@ -158,9 +137,8 @@ public class ANTSSimpleRayLightModel extends ANTSModelAbstract implements ANTSIM
 	}
 
 	@Override
-	public void update() {
+	public void update() 
+	{
 		this.move();
 	}
-	
-	
 }

@@ -3,13 +3,6 @@
  */
 package view.basics;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import interfaces.ANTSIController;
 import interfaces.ANTSIView;
 
 import javax.swing.JFrame;
@@ -17,13 +10,8 @@ import javax.swing.JPanel;
 
 import view.abstracts.ANTSViewAbstact;
 
-import listeners.actionListeners.paint.ANTSOnlyDrawActionListener;
 import listeners.actionListeners.paint.ANTSPaintActionListenerAbstract;
 import model.basics.ANTSWindowModel;
-
-import controllers.basics.ANTSGameController;
-import enums.ANTSStateEnum;
-
 
 /**
  * This view is not a normal view. It's the "top view"
@@ -45,9 +33,7 @@ public class ANTSWindowView extends ANTSViewAbstact
 		
 		this.setupWindow();
 		
-//		this.refreshListener = new RefreshListener();
 		ANTSPaintActionListenerAbstract.setWindow(antsWindow);	//Set the window everywhere
-		
 	}
 	
 	private void setupWindow()
@@ -90,30 +76,10 @@ public class ANTSWindowView extends ANTSViewAbstact
 	{
 		this.currentView = view;
 		
-//		this.currentView.setRefreshListener(this.refreshListener);
-		
 		this.currentMainPanel = this.currentView.getPanel();
 		this.antsWindow.setCurrentView(this.currentView);
 
 		this.antsWindow.setContentPane(this.currentMainPanel);
 		this.antsWindow.setSize(600, 800);
-		//this.antsWindow.pack();
 	}
-	
-	///////////////////////////
-	//INNER CLASS: A LISTENER//	(only in this special view!)
-	///////////////////////////
-	
-//	class RefreshListener implements ActionListener
-//	{
-//
-//		@Override
-//		public void actionPerformed(ActionEvent e) 
-//		{
-//			System.out.println("SOURCE: " + e.getSource() + " COMMAND: " + e.getActionCommand());
-//			
-//			antsWindow.repaint();
-//		}
-//		
-//	}
 }

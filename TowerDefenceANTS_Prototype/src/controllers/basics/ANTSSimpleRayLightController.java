@@ -30,15 +30,7 @@ public class ANTSSimpleRayLightController implements ANTSIController
 	{
 		this.model = new ANTSSimpleRayLightModel(lightSourceModel,startAngle);
 		this.view = new ANTSSimpleRayLightView(this.model);
-		
-//		ANTSGameLogicUpdater.addModel(model); //TODO
-//		this.setupListeners();
 	}
-
-//	private void setupListeners()
-//	{
-//		view.addButtonSwitchListener(new SwitchListener());
-//	}
 	
 	///////////
 	//GETTERS//
@@ -49,20 +41,4 @@ public class ANTSSimpleRayLightController implements ANTSIController
 	{
 		return this.view;
 	}
-	
-	////////////////////////////////
-	//INNER CLASSES: THE LISTENERS// 
-	////////////////////////////////
-	
-//	class SwitchListener implements ActionListener
-//	{
-//		@Override
-//		public void actionPerformed(ActionEvent e) 
-//		{
-//			//model.switchLight();
-//		
-//			view.refresh();
-//		}
-//		
-//	}
 }

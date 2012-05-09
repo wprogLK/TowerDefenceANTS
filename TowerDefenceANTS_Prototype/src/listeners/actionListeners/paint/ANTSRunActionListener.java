@@ -3,8 +3,6 @@ package listeners.actionListeners.paint;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import enums.ANTSStateEnum;
-
 public class ANTSRunActionListener extends ANTSPaintActionListenerAbstract implements ActionListener {
 
 	private static ANTSPaintActionListenerAbstract listener;
@@ -22,7 +20,7 @@ public class ANTSRunActionListener extends ANTSPaintActionListenerAbstract imple
 	@Override
 	protected void setState() 
 	{
-//		
+
 	}
 	
 	

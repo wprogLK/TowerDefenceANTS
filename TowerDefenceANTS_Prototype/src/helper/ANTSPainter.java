@@ -11,7 +11,6 @@ import enums.ANTSStateEnum;
 public  class ANTSPainter  extends Thread
 {
 	private static ArrayList<ANTSIView> views = new ArrayList<ANTSIView>();
-	private static boolean finishPainting;
 	private static Graphics2D g2d;
 	
 	public static void addView(ANTSIView view)
@@ -35,24 +34,15 @@ public  class ANTSPainter  extends Thread
 		g2d = g2;
 	}
 	
-	public static void isFinishPainting()
-	{
-		System.out.println("IS FINISH: " + finishPainting);
-	}
-	
-
 	@Override
 	public void run() 
 	{
-		finishPainting = false;
 		try
 		{
 			for(ANTSIView currentView:views)
 			{
 					currentView.paint(g2d);
-//					System.out.println("CURRENT VIEW: " +currentView.toString() + " is finish: " + currentView.isFinish());
 			}
-		finishPainting = true;
 		}
 		catch(ConcurrentModificationException e)
 		{

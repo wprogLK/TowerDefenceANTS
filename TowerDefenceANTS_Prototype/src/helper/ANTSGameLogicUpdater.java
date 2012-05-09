@@ -13,7 +13,6 @@ public  class ANTSGameLogicUpdater extends Thread
 	
 	public static void addModel(ANTSIModel model)
 	{
-//		System.out.println("ADD MODEL" + model.toString());
 		if(!models.contains(models))
 		{
 			models.add(model);
@@ -37,7 +36,6 @@ public  class ANTSGameLogicUpdater extends Thread
 			for(ANTSIModel currentModel:models)
 			{
 				currentModel.update();
-//				System.out.println("Model VIEW: " +currentModel.toString() );//+ " is finish: " + currentModel.isFinish());
 			}
 		}
 		catch(ConcurrentModificationException e)
