@@ -39,24 +39,22 @@ public  class ANTSPainter  extends Thread
 	{
 		try
 		{
-			for(ANTSIView currentView:views)
+			for(int i = 0; i<views.size(); i++)
 			{
-					currentView.paint(g2d);
+				views.get(i).paint(g2d);
 			}
 		}
 		catch(ConcurrentModificationException e)
 		{
 			
 		}
-		
 	}
 
-	public static void setPaintState(ANTSStateEnum state) {
+	public static void setPaintState(ANTSStateEnum state)
+	{
 		for(ANTSIView currentView:views)
 		{
 			currentView.setPaintState(state);
 		}
-		
 	}
-
 }

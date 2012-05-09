@@ -33,9 +33,9 @@ public  class ANTSGameLogicUpdater extends Thread
 	{
 		try
 		{
-			for(ANTSIModel currentModel:models)
+			for(int i = 0; i<models.size(); i++)
 			{
-				currentModel.update();
+				models.get(i).update();
 			}
 		}
 		catch(ConcurrentModificationException e)
