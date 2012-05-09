@@ -21,14 +21,14 @@ public class ANTSWindow extends JFrame implements Runnable
 	Thread thread;
 	ANTSIView currentView;
 	private ANTSStateEnum currentState;
-
 	
 	private JTextField textMiliseconds;
+	private boolean ready;
 	
 	public ANTSWindow()
 	{
 		this.textMiliseconds = new JTextField("800");
-	
+		this.ready = true;
 		
 		this.currentState = ANTSStateEnum.basic;
 	}
@@ -50,6 +50,7 @@ public class ANTSWindow extends JFrame implements Runnable
 	@Override
 	public void paint(Graphics g)
 	{	
+		this.ready = false;
 		super.paintComponents(g);
 		
 		JPanel mainPanel =this.currentView.getPanel();
@@ -58,23 +59,30 @@ public class ANTSWindow extends JFrame implements Runnable
 		
 		this.configRendering(g2d);
 		
-		ANTSPainter t = new ANTSPainter();
-		ANTSGameLogicUpdater gameLogicUpdater = new ANTSGameLogicUpdater();
 		
-		t.setGraphics(g2d);
+//		ANTSPainter t = new ANTSPainter(this);
+//		ANTSGameLogicUpdater gameLogicUpdater = new ANTSGameLogicUpdater(this);
 		
-		try 
-		{
-			gameLogicUpdater.start();
-			gameLogicUpdater.join();
-			
-			t.start();
-			t.join();
-		} 
-		catch (InterruptedException e) 
-		{
-			e.printStackTrace();
-		}
+		//t.setGraphics(g2d);
+		ANTSPainter.setGraphics(g2d);
+		this.ready = true;
+//		try 
+//		{
+//			gameLogicUpdater.start();
+//			gameLogicUpdater.join();
+//			
+//			t.start();
+//			t.join();
+//		} 
+//		catch (InterruptedException e) 
+//		{
+//			e.printStackTrace();
+//		}
+	}
+	
+	public boolean isReady()
+	{
+		return this.ready;
 	}
 	
 	private void configRendering(Graphics2D g2d) 
@@ -85,9 +93,19 @@ public class ANTSWindow extends JFrame implements Runnable
 	
 	public void runAnimation()
 	{
-		this.thread = new Thread(this);
-		this.thread.setPriority(Thread.MIN_PRIORITY);
-		this.thread.start();
+		ANTSGameLogicUpdater gameLogicUpdater = new ANTSGameLogicUpdater(this);
+		ANTSPainter t = new ANTSPainter(this, gameLogicUpdater);
+	
+		
+		gameLogicUpdater.start();
+		
+		
+		t.start();
+//		t.join();
+		
+//		this.thread = new Thread(this);
+//		this.thread.setPriority(Thread.MIN_PRIORITY);
+//		this.thread.start();
 	}
 	
 	public void stopAnimation()

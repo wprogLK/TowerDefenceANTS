@@ -7,9 +7,23 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 
+import view.basics.ANTSWindow;
+
 public  class ANTSGameLogicUpdater extends Thread
 {
 	private static ArrayList<ANTSIModel> models = new ArrayList<ANTSIModel>();
+	private boolean windowReady;
+	private ANTSWindow win;
+	private boolean on;
+	private boolean ready;
+	
+	public ANTSGameLogicUpdater(ANTSWindow win)
+	{
+		this.windowReady = false;
+		this.win = win;
+		this.on = false;
+		this.ready = true;
+	}
 	
 	public static void addModel(ANTSIModel model)
 	{
@@ -27,22 +41,74 @@ public  class ANTSGameLogicUpdater extends Thread
 		}
 	}
 	
-
+	public void setWindowReady(boolean value)
+	{
+		this.windowReady = value;
+	}
+	
+	public void on()
+	{
+		this.on = true;
+	}
+	
+	public void off()
+	{
+		this.on = false;
+	}
+	
 	@Override
 	public void run() 
 	{
-		try
+		this.on();
+		
+		while(true)
 		{
-			for(int i = 0; i<models.size(); i++)
+			System.out.println("LOGIC: " + this.win.isReady());
+			
+			while(!this.win.isReady())//this.windowReady) OLD
 			{
-				models.get(i).update();
+				try
+				{
+					Thread.sleep(1);
+				} 
+				catch (InterruptedException e) 
+				{
+					e.printStackTrace();
+				}
+			}
+			
+			try
+			{
+				this.ready = false;
+				for(int i = 0; i<models.size(); i++)
+				{
+					models.get(i).update();
+				}
+				System.out.println("Update done");
+				this.ready = true;
+			}
+			catch(ConcurrentModificationException e)
+			{
+				
+			}
+			
+			try
+			{
+				Thread.sleep(10);
+			} 
+			catch (InterruptedException e) 
+			{
+				e.printStackTrace();
 			}
 		}
-		catch(ConcurrentModificationException e)
-		{
-			
-		}
 		
+	
+		
+	}
+	
+	public boolean isReady()
+	{
+		return this.ready;
 	}
 
 }
