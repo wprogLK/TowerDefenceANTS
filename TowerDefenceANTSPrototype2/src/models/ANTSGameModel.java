@@ -10,4 +10,9 @@ public class ANTSGameModel implements ANTSIModel
 		// TODO
 	}
 
+	@Override
+	public void update() {
+		
+	}
+
 }

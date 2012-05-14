@@ -1,9 +1,15 @@
 package models;
 
 import interfaces.ANTSIModel;
+import interfaces.ANTSIView;
 
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
+
+import basics.ANTSDriver;
+
+import controllers.ANTSSimpleRayLightController;
+
 
 public class ANTSSimpleSourceLightModel implements ANTSIModel 
 {
@@ -12,6 +18,12 @@ public class ANTSSimpleSourceLightModel implements ANTSIModel
 	
 	private boolean on;
 	private Color color;
+	
+	//RayProperties:
+	private int numberOfRaysPer360Degrees = 18;
+	private int angle = 360;
+	private double angleOffset = 0;
+	
 	
 	public ANTSSimpleSourceLightModel() 
 	{
@@ -33,6 +45,47 @@ public class ANTSSimpleSourceLightModel implements ANTSIModel
 		
 		this.on = true;
 		this.color = color;
+	}
+	
+	//@Override
+	public void update()
+	{
+		if(this.canSendRay())
+		{
+			this.createRays();
+		}
+	}
+	
+	
+	private boolean canSendRay()
+	{
+		//TODO: improve this methode (@see prototye 1)
+		return this.on;
+	}
+	
+	private void createRays()
+	{
+		double tmpAngle = this.angleOffset;
+		
+		for(int numberRay = 0; numberRay<this.getNumberOfRays(); numberRay++)
+		{
+			ANTSDriver.createSimpleRayLight(this.matrix, 10, tmpAngle, this.color);
+			
+			tmpAngle+=this.getAngleBetweetTwoRays();
+		}
+	}
+	
+	private double getAngleBetweetTwoRays()
+	{	
+		Double d = (double) this.numberOfRaysPer360Degrees;
+		Double tmpAngle = 360/d;
+		
+		return tmpAngle;
+	}
+	
+	public int getNumberOfRays()
+	{
+		return this.numberOfRaysPer360Degrees/(360/this.angle);
 	}
 	
 	

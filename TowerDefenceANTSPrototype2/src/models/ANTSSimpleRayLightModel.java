@@ -1,9 +1,11 @@
 package models;
 
+import interfaces.ANTSIModel;
+
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
 
-public class ANTSSimpleRayLightModel 
+public class ANTSSimpleRayLightModel implements ANTSIModel
 {
 	private AffineTransform matrix;
 	private AffineTransform velocityMatrix;
@@ -33,6 +35,7 @@ public class ANTSSimpleRayLightModel
 		
 		this.matrix.concatenate(this.rotateMatrix);
 		this.matrix.concatenate(this.velocityMatrix);
+		
 	}
 	
 	/////////////////////

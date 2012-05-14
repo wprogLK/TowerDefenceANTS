@@ -3,6 +3,8 @@
  */
 package basics;
 
+import java.awt.Color;
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -10,6 +12,7 @@ import javax.swing.JPanel;
 import interfaces.ANTSIDriver;
 import interfaces.ANTSIModel;
 import controllers.ANTSGameController;
+import controllers.ANTSSimpleRayLightController;
 import controllers.ANTSSimpleSourceLightController;
 
 /**
@@ -26,7 +29,7 @@ public class ANTSDriver implements ANTSIDriver
 	{
 		gameController = new ANTSGameController(this);
 		
-		window = new ANTSWindow();
+		window = new ANTSWindow(this);
 		window.setVisible(true);
 		
 		models = new ArrayList<ANTSIModel>();
@@ -58,5 +61,21 @@ public class ANTSDriver implements ANTSIDriver
 		ANTSSimpleSourceLightController c = new ANTSSimpleSourceLightController();
 		addModel(c.getModel());
 		addView(c.getView());
+	}
+	
+	public static void createSimpleRayLight(AffineTransform matrix, double velocity, double angle, Color color)
+	{
+		ANTSSimpleRayLightController c = new ANTSSimpleRayLightController(matrix,10,angle,color);
+		addModel(c.getModel());
+		addView(c.getView());
+	}
+	
+	public void update()
+	{
+		for(int i = 0; i<this.models.size(); i++)
+		{
+			ANTSIModel m = models.get(i);
+			m.update();
+		}
 	}
 }
