@@ -100,6 +100,7 @@ public class ANTSWindow extends JFrame implements Runnable
 	
 	public void runAnimation()
 	{
+		
 		this.gameLogicUpdater.start();
 		this.painter.start();
 		//OLD
@@ -121,11 +122,18 @@ public class ANTSWindow extends JFrame implements Runnable
 	
 	public void stopAnimation()
 	{
-		if(this.thread != null)
-		{
-			thread.interrupt();
-			thread = null;
-		}
+		System.out.println("------------------------ STATE: " + this.painter.getState());
+		this.painter.off();
+		this.gameLogicUpdater.off();
+		
+//		this.painter.interrupt();
+//		this.gameLogicUpdater.interrupt();
+		
+//		if(this.thread != null)
+//		{
+//			thread.interrupt();
+//			thread = null;
+//		}
 	}
 	
 	@Override

@@ -67,47 +67,57 @@ public  class ANTSGameLogicUpdater extends Thread
 	{
 		this.on();
 		
-		while(true)
+		try
 		{
-			System.out.println("LOGIC: " + this.win.isReady());
-			
-			while(!this.win.isReady() || !this.painter.isReady())//this.windowReady) OLD
+			while(this.on)
 			{
+				System.out.println("LOGIC: " + this.win.isReady());
+				
+				while((!this.win.isReady() || !this.painter.isReady()) && this.on)//this.windowReady) OLD
+				{
+//					try
+//					{
+						Thread.sleep(1);
+//					} 
+//					catch (InterruptedException e) 
+//					{
+//						e.printStackTrace();
+//						this.off();
+//					}
+				}
+				
 				try
 				{
-					Thread.sleep(1);
-				} 
-				catch (InterruptedException e) 
-				{
-					e.printStackTrace();
+					this.ready = false;
+					for(int i = 0; i<models.size(); i++)
+					{
+						models.get(i).update();
+					}
+					System.out.println("Update done");
+					this.ready = true;
 				}
-			}
-			
-			try
-			{
-				this.ready = false;
-				for(int i = 0; i<models.size(); i++)
+				catch(ConcurrentModificationException e)
 				{
-					models.get(i).update();
+					
 				}
-				System.out.println("Update done");
-				this.ready = true;
-			}
-			catch(ConcurrentModificationException e)
-			{
 				
-			}
-			
-			try
-			{
-				Thread.sleep(10);
-			} 
-			catch (InterruptedException e) 
-			{
-				e.printStackTrace();
+//				try
+//				{
+					Thread.sleep(1);
+//				} 
+//				catch (InterruptedException e) 
+//				{
+//					e.printStackTrace();
+//					this.off();
+//				}
 			}
 		}
-		
+		catch (InterruptedException e) 
+		{
+			e.printStackTrace();
+			this.off();
+		}
+
 	
 		
 	}

@@ -71,62 +71,69 @@ public  class ANTSPainter  extends Thread
 	public void run() 
 	{
 		this.on();
-		
-		while(true)
+		try
 		{
-			//TODO
-			//Repaint after it!
-			while(!this.log.isReady())
+			while(this.on)
 			{
+				while(!this.log.isReady() && this.on)
+				{
+	//				try
+	//				{
+						Thread.sleep(1);
+	//				} 
+	//				catch (InterruptedException e) 
+	//				{
+	//					e.printStackTrace();
+	//					this.off();
+	//				}
+				}
+			
+				
+				while(!this.win.isReady() && this.on)
+				{
+	//				try
+	//				{
+						Thread.sleep(1);
+	//				} 
+	//				catch (InterruptedException e) 
+	//				{
+	//					e.printStackTrace();
+	//					this.off();
+	//				}
+				}
+				this.ready = false;
+				this.win.repaint();
+	
 				try
 				{
-					Thread.sleep(1);
-				} 
-				catch (InterruptedException e) 
-				{
-					e.printStackTrace();
+					for(int i = 0; i<views.size(); i++)
+					{
+						views.get(i).paint(g2d);
+					}
+					
+					System.out.println("Paint");
 				}
-			}
-		
-			
-			while(!this.win.isReady())
-			{
-				try
+				catch(ConcurrentModificationException e)
 				{
-					Thread.sleep(1);
-				} 
-				catch (InterruptedException e) 
-				{
-					e.printStackTrace();
+					
 				}
-			}
-			this.ready = false;
-			this.win.repaint();
-
-			try
-			{
-				for(int i = 0; i<views.size(); i++)
-				{
-					views.get(i).paint(g2d);
-				}
+				this.ready = true;
 				
-				System.out.println("Paint");
+	//			try
+	//			{
+					Thread.sleep(1);
+	//			} 
+	//			catch (InterruptedException e) 
+	//			{
+	//				e.printStackTrace();
+	//				this.off();
+	//			}
 			}
-			catch(ConcurrentModificationException e)
-			{
-				
-			}
-			this.ready = true;
-			
-			try
-			{
-				Thread.sleep(1);
-			} 
-			catch (InterruptedException e) 
-			{
-				e.printStackTrace();
-			}
-			
+		}
+		catch (InterruptedException e) 
+		{
+			e.printStackTrace();
+			this.off();
 		}
 	
 	}
