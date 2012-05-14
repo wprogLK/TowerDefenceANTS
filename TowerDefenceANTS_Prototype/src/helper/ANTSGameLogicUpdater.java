@@ -17,6 +17,7 @@ public  class ANTSGameLogicUpdater extends Thread
 	private boolean on;
 	private boolean ready;
 	private ANTSPainter painter;
+	private boolean running;
 	
 	public ANTSGameLogicUpdater(ANTSWindow win)
 	{
@@ -24,6 +25,7 @@ public  class ANTSGameLogicUpdater extends Thread
 		this.win = win;
 		this.on = false;
 		this.ready = true;
+		this.running = false;
 	}
 	
 	public static void addModel(ANTSIModel model)
@@ -62,43 +64,51 @@ public  class ANTSGameLogicUpdater extends Thread
 		this.painter = p;
 	}
 	
+	public boolean getRunning()
+	{
+		return this.running;
+	}
+	
 	@Override
 	public void run() 
 	{
 		this.on();
-		
-		try
+		this.running = true;
+		while(true)
 		{
-			while(this.on)
+			try
 			{
-				System.out.println("LOGIC: " + this.win.isReady());
-				
-				while((!this.win.isReady() || !this.painter.isReady()) && this.on)//this.windowReady) OLD
+				while(this.on)
 				{
+					//System.out.println("LOGIC: " + this.win.isReady());
+					
+					while((!this.win.isReady() || !this.painter.isReady()) && this.on)//this.windowReady) OLD
+					{
+							Thread.sleep(1);
+					}
+					
+					try
+					{
+						this.ready = false;
+						for(int i = 0; i<models.size(); i++)
+						{
+							models.get(i).update();
+						}
+						//System.out.println("Update done");
+						this.ready = true;
+					}
+					catch(ConcurrentModificationException e)
+					{
+						
+					}
 						Thread.sleep(1);
 				}
-				
-				try
-				{
-					this.ready = false;
-					for(int i = 0; i<models.size(); i++)
-					{
-						models.get(i).update();
-					}
-					System.out.println("Update done");
-					this.ready = true;
-				}
-				catch(ConcurrentModificationException e)
-				{
-					
-				}
-					Thread.sleep(1);
 			}
-		}
-		catch (InterruptedException e) 
-		{
-			e.printStackTrace();
-			this.off();
+			catch (InterruptedException e) 
+			{
+				e.printStackTrace();
+				this.off();
+			}
 		}
 	}
 	

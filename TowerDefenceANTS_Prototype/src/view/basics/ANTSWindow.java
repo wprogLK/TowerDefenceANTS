@@ -37,6 +37,8 @@ public class ANTSWindow extends JFrame
 		this.gameLogicUpdater = new ANTSGameLogicUpdater(this);
 		this.painter= new ANTSPainter(this, gameLogicUpdater);
 		this.gameLogicUpdater.setPainter(this.painter);
+		
+
 	}
 	
 	public void setCurrentView(ANTSIView currentView)
@@ -83,9 +85,24 @@ public class ANTSWindow extends JFrame
 	
 	public void runAnimation()
 	{
+		if(this.gameLogicUpdater.getRunning())
+		{
+			this.gameLogicUpdater.on();
+		}
+		else
+		{
+			this.gameLogicUpdater.start();
+		}
 		
-		this.gameLogicUpdater.start();
-		this.painter.start();
+		if(this.painter.getRunning())
+		{
+			this.painter.on();
+		}
+		else
+		{
+			this.painter.start();
+		}
+		
 	}
 	
 	public void stopAnimation()

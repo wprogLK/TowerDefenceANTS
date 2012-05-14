@@ -21,6 +21,7 @@ public  class ANTSPainter  extends Thread
 	private boolean on;
 	private ANTSGameLogicUpdater log;
 	private boolean ready;
+	private boolean running;
 	
 	public ANTSPainter(ANTSWindow win, ANTSGameLogicUpdater log)
 	{
@@ -29,6 +30,8 @@ public  class ANTSPainter  extends Thread
 		this.on = false;
 		this.log = log;
 		this.ready = true;
+		this.running = false;
+		this.interrupt();
 	}
 	
 	public static void addView(ANTSIView view)
@@ -67,48 +70,57 @@ public  class ANTSPainter  extends Thread
 		this.on = false;
 	}
 	
+	public boolean getRunning()
+	{
+		return this.running;
+	}
+	
 	@Override
 	public void run() 
 	{
 		this.on();
-		try
+		this.running = true;
+		while(true)
 		{
-			while(this.on)
+			try
 			{
-				while(!this.log.isReady() && this.on)
+				while(this.on)
 				{
-						Thread.sleep(1);
-				}
-				
-				while(!this.win.isReady() && this.on)
-				{
-						Thread.sleep(1);
-				}
-				this.ready = false;
-				this.win.repaint();
-	
-				try
-				{
-					for(int i = 0; i<views.size(); i++)
+					while(!this.log.isReady() && this.on)
 					{
-						views.get(i).paint(g2d);
+							Thread.sleep(1);
 					}
 					
-					System.out.println("Paint");
-				}
-				catch(ConcurrentModificationException e)
-				{
+					while(!this.win.isReady() && this.on)
+					{
+							Thread.sleep(1);
+					}
+					this.ready = false;
+					this.win.repaint();
+		
+					try
+					{
+						for(int i = 0; i<views.size(); i++)
+						{
+							views.get(i).paint(g2d);
+						}
+						
+						//System.out.println("Paint");
+					}
+					catch(ConcurrentModificationException e)
+					{
+						
+					}
+					this.ready = true;
 					
+					Thread.sleep(1);
 				}
-				this.ready = true;
-				
-				Thread.sleep(1);
 			}
-		}
-		catch (InterruptedException e) 
-		{
-			e.printStackTrace();
-			this.off();
+			catch (InterruptedException e) 
+			{
+				e.printStackTrace();
+				this.off();
+			}
 		}
 	
 	}
