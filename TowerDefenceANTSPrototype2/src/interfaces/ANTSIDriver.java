@@ -1,7 +1,5 @@
 package interfaces;
 
-import java.awt.Component;
-
 import javax.swing.JPanel;
 
 public interface ANTSIDriver 

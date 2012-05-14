@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import interfaces.ANTSIDriver;
 import interfaces.ANTSIModel;
 import controllers.ANTSGameController;
+import controllers.ANTSSimpleSourceLightController;
 
 /**
  * @author Lukas
@@ -29,6 +30,8 @@ public class ANTSDriver implements ANTSIDriver
 		this.window.setVisible(true);
 		
 		this.models = new ArrayList<ANTSIModel>();
+		
+		this.createSimpleSourceLight(); //Only for testing
 	}
 
 	//Views
@@ -48,5 +51,14 @@ public class ANTSDriver implements ANTSIDriver
 		{
 			this.models.add(m);
 		}
+	}
+	
+	//Create new objects
+	
+	public void createSimpleSourceLight()
+	{
+		ANTSSimpleSourceLightController c = new ANTSSimpleSourceLightController();
+		this.addModel(c.getModel());
+		this.addView(c.getView());
 	}
 }
