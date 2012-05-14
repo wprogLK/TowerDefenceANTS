@@ -18,47 +18,45 @@ import controllers.ANTSSimpleSourceLightController;
  */
 public class ANTSDriver implements ANTSIDriver
 {
-	private ANTSWindow window;
-	private ANTSGameController gameController;
-	private ArrayList<ANTSIModel> models;
+	private static ANTSWindow window;
+	private static ANTSGameController gameController;
+	private static ArrayList<ANTSIModel> models;
 	
 	public ANTSDriver()
 	{
-		this.gameController = new ANTSGameController(this);
+		gameController = new ANTSGameController(this);
 		
-		this.window = new ANTSWindow();
-		this.window.setVisible(true);
+		window = new ANTSWindow();
+		window.setVisible(true);
 		
-		this.models = new ArrayList<ANTSIModel>();
+		models = new ArrayList<ANTSIModel>();
 		
-		this.createSimpleSourceLight(); //Only for testing
+		createSimpleSourceLight(); //Only for testing
 	}
 
 	//Views
 	
-	@Override
-	public void addView(JPanel v) 
+	private static void addView(JPanel v) 
 	{
-		this.window.add(v);
+		window.add(v);
 	}
 
 	//Model
 	
-	@Override
-	public void addModel(ANTSIModel m) 
+	private static void addModel(ANTSIModel m) 
 	{
-		if(!this.models.contains(m))
+		if(!models.contains(m))
 		{
-			this.models.add(m);
+			models.add(m);
 		}
 	}
 	
 	//Create new objects
 	
-	public void createSimpleSourceLight()
+	public static void createSimpleSourceLight()
 	{
 		ANTSSimpleSourceLightController c = new ANTSSimpleSourceLightController();
-		this.addModel(c.getModel());
-		this.addView(c.getView());
+		addModel(c.getModel());
+		addView(c.getView());
 	}
 }

@@ -23,7 +23,7 @@ public class ANTSSimpleRayLightModel extends ANTSModelAbstract implements ANTSIM
 	private int lenght;
 	private double angle;
 	
-	private AffineTransform aTPos;
+	//private AffineTransform aTPos;
 	private AffineTransform aTVel;
 	private AffineTransform aTRot;
 	
@@ -48,7 +48,7 @@ public class ANTSSimpleRayLightModel extends ANTSModelAbstract implements ANTSIM
 		this.sourcePosY = lightSourceModel.getPosY();
 		this.sourceLightColor = lightSourceModel.getLightColor();
 		
-		this.aTPos= new AffineTransform();
+		//this.aTPos= new AffineTransform();
 		this.aTRot = new AffineTransform();
 		this.aTVel = new AffineTransform();
 		
