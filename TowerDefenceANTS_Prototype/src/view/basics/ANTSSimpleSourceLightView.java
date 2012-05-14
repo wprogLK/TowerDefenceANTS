@@ -67,42 +67,9 @@ public class ANTSSimpleSourceLightView extends ANTSViewAbstact
 			g.setColor(Color.BLACK);
 			g.draw(bulb);
 		}
-
-//		if(this.model.canSendRay())
-//		{
-//			this.createRays(g);
-//		}
 		
 		this.isFinish = true;
 	}
-	
-//OLD
-//	private void createRays(Graphics2D g)
-//	{
-//		
-//		ArrayList<ANTSIView> rays = new ArrayList<ANTSIView>();
-//		
-//		double angle = this.model.getOffsetAngle();
-//		
-//		for(int numberRay = 0; numberRay<this.model.getNumberOfRays(); numberRay++)
-//		{
-//			//ANTSSimpleRayLightController simpleRayLightController = new ANTSSimpleRayLightController(this.model,angle);
-//			ANTSSimpleRayLightController simpleRayLightController = new ANTSSimpleRayLightController(this.model,angle);
-//			
-//			angle+=this.model.getAngleBetweetTwoRays();
-//			ANTSIView rayView = simpleRayLightController.getView();
-//
-//			rays.add(rayView);
-//		}
-//	
-//		for(ANTSIView currentView: rays)
-//		{
-//			this.isFinish =false;
-//			//this.addInternalView(currentView);
-//			this.addViewToPainter(currentView);
-////			System.out.println("ADD");
-//		}
-//	}
 	
 	//TODO: change action
 	public void refresh()
@@ -135,11 +102,5 @@ public class ANTSSimpleSourceLightView extends ANTSViewAbstact
 	{
 		return "SimpleSourceLight";
 	}
-	
-//	public  boolean getDraw()
-//	{
-//		return this.draw;
-//	}
-//	
 	
 }

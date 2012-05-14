@@ -77,29 +77,12 @@ public  class ANTSPainter  extends Thread
 			{
 				while(!this.log.isReady() && this.on)
 				{
-	//				try
-	//				{
 						Thread.sleep(1);
-	//				} 
-	//				catch (InterruptedException e) 
-	//				{
-	//					e.printStackTrace();
-	//					this.off();
-	//				}
 				}
-			
 				
 				while(!this.win.isReady() && this.on)
 				{
-	//				try
-	//				{
 						Thread.sleep(1);
-	//				} 
-	//				catch (InterruptedException e) 
-	//				{
-	//					e.printStackTrace();
-	//					this.off();
-	//				}
 				}
 				this.ready = false;
 				this.win.repaint();
@@ -119,15 +102,7 @@ public  class ANTSPainter  extends Thread
 				}
 				this.ready = true;
 				
-	//			try
-	//			{
-					Thread.sleep(1);
-	//			} 
-	//			catch (InterruptedException e) 
-	//			{
-	//				e.printStackTrace();
-	//				this.off();
-	//			}
+				Thread.sleep(1);
 			}
 		}
 		catch (InterruptedException e) 

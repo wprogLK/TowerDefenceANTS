@@ -75,15 +75,7 @@ public  class ANTSGameLogicUpdater extends Thread
 				
 				while((!this.win.isReady() || !this.painter.isReady()) && this.on)//this.windowReady) OLD
 				{
-//					try
-//					{
 						Thread.sleep(1);
-//					} 
-//					catch (InterruptedException e) 
-//					{
-//						e.printStackTrace();
-//						this.off();
-//					}
 				}
 				
 				try
@@ -100,16 +92,7 @@ public  class ANTSGameLogicUpdater extends Thread
 				{
 					
 				}
-				
-//				try
-//				{
 					Thread.sleep(1);
-//				} 
-//				catch (InterruptedException e) 
-//				{
-//					e.printStackTrace();
-//					this.off();
-//				}
 			}
 		}
 		catch (InterruptedException e) 
@@ -117,9 +100,6 @@ public  class ANTSGameLogicUpdater extends Thread
 			e.printStackTrace();
 			this.off();
 		}
-
-	
-		
 	}
 	
 	public boolean isReady()

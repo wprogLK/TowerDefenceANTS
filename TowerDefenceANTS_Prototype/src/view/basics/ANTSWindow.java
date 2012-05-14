@@ -16,9 +16,8 @@ import javax.swing.JTextField;
 import enums.ANTSStateEnum;
 
 
-public class ANTSWindow extends JFrame implements Runnable
+public class ANTSWindow extends JFrame
 {
-	Thread thread;
 	ANTSIView currentView;
 	private ANTSStateEnum currentState;
 	
@@ -67,24 +66,8 @@ public class ANTSWindow extends JFrame implements Runnable
 		this.configRendering(g2d);
 		
 		
-//		ANTSPainter t = new ANTSPainter(this);
-//		ANTSGameLogicUpdater gameLogicUpdater = new ANTSGameLogicUpdater(this);
-		
-		//t.setGraphics(g2d);
 		ANTSPainter.setGraphics(g2d);
 		this.ready = true;
-//		try 
-//		{
-//			gameLogicUpdater.start();
-//			gameLogicUpdater.join();
-//			
-//			t.start();
-//			t.join();
-//		} 
-//		catch (InterruptedException e) 
-//		{
-//			e.printStackTrace();
-//		}
 	}
 	
 	public boolean isReady()
@@ -103,21 +86,6 @@ public class ANTSWindow extends JFrame implements Runnable
 		
 		this.gameLogicUpdater.start();
 		this.painter.start();
-		//OLD
-//		ANTSGameLogicUpdater gameLogicUpdater = new ANTSGameLogicUpdater(this);
-//		ANTSPainter t = new ANTSPainter(this, gameLogicUpdater);
-//	
-//		gameLogicUpdater.start();
-//		t.start();
-		
-		
-		
-		//OLD OLD
-//		t.join();
-		
-//		this.thread = new Thread(this);
-//		this.thread.setPriority(Thread.MIN_PRIORITY);
-//		this.thread.start();
 	}
 	
 	public void stopAnimation()
@@ -125,55 +93,5 @@ public class ANTSWindow extends JFrame implements Runnable
 		System.out.println("------------------------ STATE: " + this.painter.getState());
 		this.painter.off();
 		this.gameLogicUpdater.off();
-		
-//		this.painter.interrupt();
-//		this.gameLogicUpdater.interrupt();
-		
-//		if(this.thread != null)
-//		{
-//			thread.interrupt();
-//			thread = null;
-//		}
-	}
-	
-	@Override
-	public void run() {
-		Thread t = Thread.currentThread();
-
-		try {
-			while(t == thread)
-			{
-				long timeStart = System.currentTimeMillis();
-				int miliSeconds;
-				
-					try
-					{
-						this.textMiliseconds.setBackground(Color.white);
-						String text = this.textMiliseconds.getText();
-						miliSeconds = Integer.parseInt(text);
-					}
-					catch(NumberFormatException nfe)
-					{
-						this.textMiliseconds.setBackground(Color.red);
-						miliSeconds = 500;
-					}
-					
-	
-					Thread.sleep(miliSeconds);
-				
-				long timeEnd = System.currentTimeMillis();
-				
-				timeStart = System.currentTimeMillis();
-				this.repaint();
-				
-				
-				Thread.sleep(miliSeconds);
-				timeEnd = System.currentTimeMillis();
-			}
-		} 
-		catch (InterruptedException e)
-		{
-			
-		}
 	}
 }
