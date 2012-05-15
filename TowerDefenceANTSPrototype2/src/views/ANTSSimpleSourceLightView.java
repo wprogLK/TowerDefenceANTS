@@ -43,9 +43,5 @@ public class ANTSSimpleSourceLightView extends JPanel
 			g2d.setColor(Color.black);
 			g2d.draw(shape);
 		}
-		
 	}
-	
-	
-
 }

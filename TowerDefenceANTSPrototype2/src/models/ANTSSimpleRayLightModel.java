@@ -33,7 +33,6 @@ public class ANTSSimpleRayLightModel implements ANTSIModel
 		this.velocity = velocity;
 	}
 	
-
 	@Override
 	public void update()
 	{

@@ -29,18 +29,16 @@ public class ANTSDriver implements ANTSIDriver
 	
 	public ANTSDriver()
 	{	
-		window = new ANTSWindow(this);
+		window = new ANTSWindow();
 		window.setVisible(true);
 		
 		models = new ArrayList<ANTSIModel>();
 		
-				
 		this.initAllListeners();
 		
+		this.createGame();
 		createSimpleSourceLight(); //Only for testing
 		createSimpleSourceLight2();
-		this.createGame();
-
 	}
 	
 	private void initAllListeners() 
@@ -59,7 +57,6 @@ public class ANTSDriver implements ANTSIDriver
 	
 	private static void addModel(ANTSIModel m) 
 	{
-		System.out.println("ADD MODEL: " + m);
 		if(!models.contains(m))
 		{
 			models.add(m);
@@ -70,7 +67,6 @@ public class ANTSDriver implements ANTSIDriver
 	
 	public static void createSimpleSourceLight()
 	{
-		//ANTSSimpleSourceLightController c = new ANTSSimpleSourceLightController();
 		ANTSSimpleSourceLightController c = new ANTSSimpleSourceLightController(200,200,60,Color.yellow);
 		addModel(c.getModel());
 		addView(c.getView());
@@ -81,7 +77,6 @@ public class ANTSDriver implements ANTSIDriver
 		ANTSSimpleSourceLightController c = new ANTSSimpleSourceLightController(20,20,20,Color.blue);
 		addModel(c.getModel());
 		addView(c.getView());
-	//	window.add(c.getView(),1);
 	}
 	
 	public static void createSimpleRayLight(AffineTransform matrix, double velocity, double angle, Color color)
@@ -89,25 +84,23 @@ public class ANTSDriver implements ANTSIDriver
 		ANTSSimpleRayLightController c = new ANTSSimpleRayLightController(matrix,10,angle,color);
 		addModel(c.getModel());
 		addView(c.getView());
-		//window.add(c.getView());
 	}
 	
 	private void createGame()
 	{
-		gameController = new ANTSGameController(this);
+		gameController = new ANTSGameController();
 		addModel(gameController.getModel());
-		//addView(gameController.getView());
-		//window.add(gameController.getView(),1);
 		window.add(gameController.getView());
 	}
 	
 	public void update()
 	{
-		for(int i = 0; i<this.models.size(); i++)
+		for(int i = 0; i<models.size(); i++)
 		{
 			ANTSIModel m = models.get(i);
 			m.update();
 		}
+		
 		window.repaint();
 	}
 }

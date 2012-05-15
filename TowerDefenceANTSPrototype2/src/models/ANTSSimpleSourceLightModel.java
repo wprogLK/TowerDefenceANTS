@@ -24,7 +24,6 @@ public class ANTSSimpleSourceLightModel implements ANTSIModel
 	private int angle = 360;
 	private double angleOffset = 0;
 	
-	
 	public ANTSSimpleSourceLightModel() 
 	{
 		this.matrix = new AffineTransform();
@@ -110,7 +109,6 @@ public class ANTSSimpleSourceLightModel implements ANTSIModel
 	
 	public AffineTransform getMatrix()
 	{
-		System.out.println("X: " + this.matrix.getTranslateX() + " Y: " + this.matrix.getTranslateY());
 		return this.matrix;
 	}
 	

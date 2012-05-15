@@ -11,7 +11,8 @@ public class ANTSGameModel implements ANTSIModel
 	}
 
 	@Override
-	public void update() {
+	public void update() 
+	{
 		
 	}
 

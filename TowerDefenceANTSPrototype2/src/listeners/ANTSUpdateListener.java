@@ -12,7 +12,7 @@ public class ANTSUpdateListener implements ActionListener
 	
 	public ANTSUpdateListener() 
 	{
-		// TODO Auto-generated constructor stub
+		// TODO
 	}
 	
 	public static void setDriver(ANTSDriver d)

@@ -6,7 +6,6 @@ import java.awt.Color;
 import java.awt.geom.AffineTransform;
 
 import views.ANTSSimpleRayLightView;
-import views.ANTSSimpleSourceLightView;
 import models.ANTSSimpleRayLightModel;
 
 public class ANTSSimpleRayLightController {

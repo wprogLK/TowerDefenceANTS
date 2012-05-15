@@ -7,16 +7,12 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import com.sun.xml.internal.ws.util.localization.NullLocalizable;
-
 public class ANTSWindow extends JFrame{
 
-	private ANTSDriver driver;
 	private ArrayList<JPanel> panels;
 	
-	public ANTSWindow(ANTSDriver d) 
+	public ANTSWindow() 
 	{
-		this.driver = d;
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(600,600);
 		this.setLayout(new FlowLayout());

@@ -25,7 +25,6 @@ public class ANTSGameView extends JPanel{
 	@Override
 	public void paint(Graphics g)
 	{
-		System.out.println("PAINT GAME");
 		super.paintComponents(g);
 	}
 
