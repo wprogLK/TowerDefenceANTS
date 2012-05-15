@@ -91,10 +91,10 @@ public  class ANTSPainter  extends Thread
 							Thread.sleep(1);
 					}
 					
-					while(!this.win.isReady() && this.on)
-					{
-							Thread.sleep(1);
-					}
+//					while(!this.win.isReady() && this.on)
+//					{
+//							Thread.sleep(1);
+//					}
 					this.ready = false;
 					this.win.repaint();
 		
