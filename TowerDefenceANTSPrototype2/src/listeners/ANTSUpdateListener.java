@@ -33,7 +33,7 @@ public class ANTSUpdateListener implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
-		driver.update();
+//		driver.update();
 	}
 
 }

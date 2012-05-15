@@ -19,7 +19,7 @@ public class ANTSSimpleSourceLightModel implements ANTSIModel
 	private int tickCounter;
 	
 	//RayProperties:
-	private int numberOfRaysPer360Degrees = 360;
+	private int numberOfRaysPer360Degrees = 18;
 	private int angle = 360;
 	private double angleOffset = 0;
 	

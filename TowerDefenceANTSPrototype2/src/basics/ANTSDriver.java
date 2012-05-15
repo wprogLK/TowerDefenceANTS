@@ -22,7 +22,7 @@ import controllers.ANTSSimpleSourceLightController;
  * @author Lukas
  *
  */
-public class ANTSDriver implements ANTSIDriver
+public class ANTSDriver extends Thread implements ANTSIDriver 
 {
 	private static ANTSWindow window;
 	private static ANTSGameController gameController;
@@ -93,15 +93,108 @@ public class ANTSDriver implements ANTSIDriver
 		addModel(gameController.getModel());
 		addView(gameController.getView());
 	}
+//	
+//	public void start()
+//	{
+//		
+//	}
 	
-	public void update()
+	@Override
+	public void run()
 	{
-		for(int i = 0; i<models.size(); i++)
+		while(true)
 		{
-			ANTSIModel m = models.get(i);
-			m.update();
+			try {
+				ANTSUpdaterGameLogic updaterGameLogic = new ANTSUpdaterGameLogic(models); 
+				ANTSUpdaterGraphic updaterGraphic = new ANTSUpdaterGraphic(window);
+			
+				updaterGameLogic.start();
+			
+				updaterGameLogic.join();
+				updaterGraphic.start();
+				updaterGraphic.join();
+				
+			}
+			catch (InterruptedException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		
-		window.repaint();
+	}
+	
+	
+	//////////////////
+	//INNER CLASSES://
+	//////////////////
+	
+	private class ANTSUpdaterGameLogic extends Thread
+	{
+		private ArrayList<ANTSIModel> models;
+		
+		public ANTSUpdaterGameLogic(ArrayList<ANTSIModel> m)
+		{
+			this.models = m;
+		}
+		
+		@Override
+		public void run() 
+		{
+			//TODO other way
+//			while(true)
+//			{
+				this.updateAllModels();
+				
+				try 
+				{
+					Thread.sleep(400); //100
+				} 
+				catch (InterruptedException e) 
+				{
+					e.printStackTrace();
+				}
+//			}
+		}
+		
+		private void updateAllModels()
+		{
+			for(int i = 0; i<this.models.size();i++)
+			{
+				ANTSIModel m = this.models.get(i);
+				m.update();
+			}
+		}
+	}
+	
+	private class ANTSUpdaterGraphic extends Thread
+	{
+		private ANTSWindow window;
+		
+		public ANTSUpdaterGraphic(ANTSWindow w)
+		{
+			this.window = w;
+		}
+		
+		@Override
+		public void run() 
+		{
+			//TODO other way
+//			while(true)
+//			{
+				this.window.repaint();
+
+				try 
+				{
+					Thread.sleep(115);	//150
+				} 
+				catch (InterruptedException e) 
+				{
+					e.printStackTrace();
+				}
+//			}
+		}
+		
 	}
 }

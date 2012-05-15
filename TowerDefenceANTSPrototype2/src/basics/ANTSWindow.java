@@ -28,8 +28,9 @@ public class ANTSWindow extends JFrame{
 		
 		Graphics2D g2d = (Graphics2D) g;
 		
-		for(ANTSIView v:this.views)
+		for(int i = 0; i<this.views.size(); i++)
 		{
+			ANTSIView v = this.views.get(i);
 			v.paint(g2d);
 		}
 		
