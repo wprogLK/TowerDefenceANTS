@@ -1,15 +1,11 @@
 package models;
 
 import interfaces.ANTSIModel;
-import interfaces.ANTSIView;
 
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
 
 import basics.ANTSDriver;
-
-import controllers.ANTSSimpleRayLightController;
-
 
 public class ANTSSimpleSourceLightModel implements ANTSIModel 
 {

@@ -1,7 +1,8 @@
 package views;
 
+import interfaces.ANTSIView;
+
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
@@ -11,22 +12,20 @@ import javax.swing.JPanel;
 
 import models.ANTSSimpleSourceLightModel;
 
-public class ANTSSimpleSourceLightView extends JPanel
+public class ANTSSimpleSourceLightView implements ANTSIView
 {
 	private ANTSSimpleSourceLightModel model;
+	
+	private JPanel panel;
 	
 	public ANTSSimpleSourceLightView(ANTSSimpleSourceLightModel m) 
 	{
 		this.model = m;
 	}
-	
-	@Override
-	public void paint(Graphics g)
-	{
-		super.paintComponents(g);
 
-		Graphics2D g2d = (Graphics2D) g;
-		
+	@Override
+	public void paint(Graphics2D g2d) 
+	{
 		AffineTransform aT = this.model.getMatrix();
 		double radius = this.model.getRadius();
 		
@@ -43,5 +42,11 @@ public class ANTSSimpleSourceLightView extends JPanel
 			g2d.setColor(Color.black);
 			g2d.draw(shape);
 		}
+	}
+
+	@Override
+	public JPanel getPanel()
+	{
+		return this.panel;
 	}
 }

@@ -1,6 +1,7 @@
 package views;
 
-import java.awt.Graphics;
+import interfaces.ANTSIView;
+
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
@@ -10,7 +11,7 @@ import javax.swing.JPanel;
 
 import models.ANTSSimpleRayLightModel;
 
-public class ANTSSimpleRayLightView extends JPanel
+public class ANTSSimpleRayLightView implements ANTSIView
 {
 	private ANTSSimpleRayLightModel model;
 	private	Line2D.Double ray;
@@ -19,7 +20,6 @@ public class ANTSSimpleRayLightView extends JPanel
 	{
 		this.model = m;
 		this.setupRay();
-		
 	}
 	
 	private void setupRay() 
@@ -32,12 +32,8 @@ public class ANTSSimpleRayLightView extends JPanel
 	}
 
 	@Override
-	public void paint(Graphics g)
+	public void paint(Graphics2D g2d) 
 	{
-		super.paintComponents(g);
-		
-		Graphics2D g2d = (Graphics2D) g;
-		
 		g2d.setColor(this.model.getColor());
 		
 		AffineTransform aT = this.model.getMatrix();
@@ -45,9 +41,10 @@ public class ANTSSimpleRayLightView extends JPanel
 		
 		g2d.draw(s);
 	}
-	
 
-	
-	
-
+	@Override
+	public JPanel getPanel() 
+	{
+		return null;
+	}
 }

@@ -13,6 +13,7 @@ import listeners.ANTSUpdateListener;
 
 import interfaces.ANTSIDriver;
 import interfaces.ANTSIModel;
+import interfaces.ANTSIView;
 import controllers.ANTSGameController;
 import controllers.ANTSSimpleRayLightController;
 import controllers.ANTSSimpleSourceLightController;
@@ -47,8 +48,8 @@ public class ANTSDriver implements ANTSIDriver
 	}
 
 	//Views
-
-	private static void addView(JPanel v) 
+	
+	private static void addView(ANTSIView v)
 	{
 		window.addView(v);
 	}
@@ -90,7 +91,7 @@ public class ANTSDriver implements ANTSIDriver
 	{
 		gameController = new ANTSGameController();
 		addModel(gameController.getModel());
-		window.add(gameController.getView());
+		addView(gameController.getView());
 	}
 	
 	public void update()
