@@ -23,11 +23,14 @@ public class ANTSSimpleSourceLightView extends JPanel
 	@Override
 	public void paint(Graphics g)
 	{
+		super.paintComponents(g);
+
 		Graphics2D g2d = (Graphics2D) g;
+		
 		AffineTransform aT = this.model.getMatrix();
 		double radius = this.model.getRadius();
 		
-		Ellipse2D circle = new Ellipse2D.Double(10, 10, radius, radius);
+		Ellipse2D circle = new Ellipse2D.Double(aT.getTranslateX()-(radius/2), aT.getTranslateY()-(radius/2), radius, radius);
 		Shape shape = aT.createTransformedShape(circle);
 	
 		if(this.model.isOn())

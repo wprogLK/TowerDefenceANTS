@@ -10,6 +10,7 @@ public class ANTSSimpleRayLightModel implements ANTSIModel
 	private AffineTransform matrix;
 	private AffineTransform velocityMatrix;
 	private AffineTransform rotateMatrix;
+	private AffineTransform sourceMatrix;
 	
 	private double length;
 	private double velocity;
@@ -17,25 +18,31 @@ public class ANTSSimpleRayLightModel implements ANTSIModel
 	
 	public ANTSSimpleRayLightModel(AffineTransform sourceMatrix, double velocity, double angle, Color sourceColor)
 	{
-		this.matrix = sourceMatrix;
+		this.matrix = new AffineTransform();
 		this.velocityMatrix = new AffineTransform();
 		this.rotateMatrix = new AffineTransform();
+		this.sourceMatrix = new AffineTransform();
+		
+		this.matrix.setTransform(sourceMatrix);
+		this.sourceMatrix.setTransform(sourceMatrix);
 		
 		this.rotateMatrix.rotate(Math.toRadians(angle), this.matrix.getTranslateX(), this.matrix.getTranslateY());
 		
-		this.length = 10;
+		this.length = 100;
 		this.color = sourceColor;
+		this.velocity = velocity;
 	}
 	
 
-	//@Override
+	@Override
 	public void update()
 	{
+		this.matrix.setTransform(this.sourceMatrix);
+		
 		this.velocityMatrix.translate(this.velocity, 0);
 		
 		this.matrix.concatenate(this.rotateMatrix);
 		this.matrix.concatenate(this.velocityMatrix);
-		
 	}
 	
 	/////////////////////

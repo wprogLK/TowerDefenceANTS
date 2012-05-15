@@ -29,24 +29,24 @@ public class ANTSSimpleRayLightView extends JPanel
 		double y = this.model.getMatrix().getTranslateY();
 		
 		this.ray = new Line2D.Double(x,y,x+length,y);
-		
 	}
 
 	@Override
 	public void paint(Graphics g)
 	{
+		super.paintComponents(g);
+		
 		Graphics2D g2d = (Graphics2D) g;
 		
 		g2d.setColor(this.model.getColor());
 		
-		this.model.update(); //only for testing here!
-		
 		AffineTransform aT = this.model.getMatrix();
 		Shape s = aT.createTransformedShape(this.ray);
 		
-		g2d.fill(s);
-		
+		g2d.draw(s);
 	}
+	
+
 	
 	
 

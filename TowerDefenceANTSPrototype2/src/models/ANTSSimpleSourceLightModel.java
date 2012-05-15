@@ -110,6 +110,7 @@ public class ANTSSimpleSourceLightModel implements ANTSIModel
 	
 	public AffineTransform getMatrix()
 	{
+		System.out.println("X: " + this.matrix.getTranslateX() + " Y: " + this.matrix.getTranslateY());
 		return this.matrix;
 	}
 	

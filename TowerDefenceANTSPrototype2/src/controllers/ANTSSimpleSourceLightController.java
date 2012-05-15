@@ -1,5 +1,7 @@
 package controllers;
 
+import java.awt.Color;
+
 import interfaces.ANTSIModel;
 import views.ANTSSimpleSourceLightView;
 import models.ANTSSimpleSourceLightModel;
@@ -12,6 +14,12 @@ public class ANTSSimpleSourceLightController {
 	public ANTSSimpleSourceLightController() 
 	{
 		this.model = new ANTSSimpleSourceLightModel();
+		this.view = new ANTSSimpleSourceLightView(this.model);
+	}
+	
+	public ANTSSimpleSourceLightController(double posX, double posY, double radius, Color color)
+	{
+		this.model = new ANTSSimpleSourceLightModel(posX,posY,radius,color);
 		this.view = new ANTSSimpleSourceLightView(this.model);
 	}
 	

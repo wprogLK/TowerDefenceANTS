@@ -1,8 +1,10 @@
 package controllers;
 
 import views.ANTSGameView;
+import views.ANTSSimpleRayLightView;
 import models.ANTSGameModel;
 import interfaces.ANTSIDriver;
+import interfaces.ANTSIModel;
 
 public class ANTSGameController {
 
@@ -16,6 +18,16 @@ public class ANTSGameController {
 		
 		this.model = new ANTSGameModel();
 		this.view = new ANTSGameView(this.model);
+	}
+	
+	public ANTSIModel getModel()
+	{
+		return this.model;
+	}
+	
+	public ANTSGameView getView()
+	{
+		return this.view;
 	}
 
 }
