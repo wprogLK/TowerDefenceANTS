@@ -15,8 +15,11 @@ public class ANTSSimpleSourceLightModel implements ANTSIModel
 	private boolean on;
 	private Color color;
 	
+	private int ticksBetweenTwoRays = 10;
+	private int tickCounter;
+	
 	//RayProperties:
-	private int numberOfRaysPer360Degrees = 18;
+	private int numberOfRaysPer360Degrees = 360;
 	private int angle = 360;
 	private double angleOffset = 0;
 	
@@ -29,6 +32,8 @@ public class ANTSSimpleSourceLightModel implements ANTSIModel
 		
 		this.on = true;
 		this.color = Color.yellow;
+		
+		this.tickCounter = 0;
 	}
 	
 	public ANTSSimpleSourceLightModel(double posX, double posY, double radius, Color color)
@@ -40,6 +45,8 @@ public class ANTSSimpleSourceLightModel implements ANTSIModel
 		
 		this.on = true;
 		this.color = color;
+		
+		this.tickCounter = 0;
 	}
 	
 	//@Override
@@ -54,8 +61,28 @@ public class ANTSSimpleSourceLightModel implements ANTSIModel
 	
 	private boolean canSendRay()
 	{
-		//TODO: improve this methode (@see prototye 1)
-		return this.on;
+		if(this.on)
+		{
+			if(this.tickCounter==0)
+			{
+				this.tickCounter++;
+				return true;
+			}
+			else if(this.tickCounter<this.ticksBetweenTwoRays)
+			{
+				this.tickCounter++;
+			}
+			else
+			{
+				this.tickCounter = 0;
+			}
+			
+			return false;
+		}
+		else
+		{
+			return false;
+		}
 	}
 	
 	private void createRays()
