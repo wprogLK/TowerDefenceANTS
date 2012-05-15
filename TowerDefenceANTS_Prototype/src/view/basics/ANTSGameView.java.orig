@@ -14,8 +14,11 @@ import javax.swing.JButton;
 import listeners.actionListeners.paint.ANTSAnimateActionListener;
 import listeners.actionListeners.paint.ANTSDefaultActionListener;
 import listeners.actionListeners.paint.ANTSOnlyDrawActionListener;
+<<<<<<< HEAD
+=======
 import listeners.actionListeners.paint.ANTSPaintActionListenerAbstract;
 import listeners.actionListeners.paint.ANTSPrintStatsListener;
+>>>>>>> 53647fee12a5ce5da074766d88b40fb12b513712
 import listeners.actionListeners.paint.ANTSRunActionListener;
 import listeners.actionListeners.paint.ANTSStopActionListener;
 import model.basics.ANTSGameModel;
@@ -86,7 +89,10 @@ public class ANTSGameView extends ANTSViewAbstact
 	@Override
 	protected void paintView(Graphics2D g)
 	{
+<<<<<<< HEAD
 		
+=======
+>>>>>>> 53647fee12a5ce5da074766d88b40fb12b513712
 	}
 	
 	public void refresh()

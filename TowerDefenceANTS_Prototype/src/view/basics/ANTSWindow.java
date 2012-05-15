@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.util.ArrayList;
 
 import helper.ANTSGameLogicUpdater;
 import helper.ANTSPainter;
@@ -26,6 +27,31 @@ public class ANTSWindow extends JFrame
 	
 	private JTextField textMiliseconds;
 	private boolean ready;
+	
+	private long timestepUpdateGameLogic;
+	private long startTimeUpdateGameLogic;
+	private long endTimeUpdateGameLogic;
+	
+	private long timestepPaint;
+	private long startTimePaint;
+	private long endTimePaint;
+	
+	private long timestepBasic;
+	private long startTimeBasic;
+	private long endTimeBasic;
+	
+	private long milisecondTimerBasic;
+	private int counterBasic;
+	
+	private long milisecondTimerUpdateGameLogic;
+	private int counterUpdateGameLogic;
+	
+	private long milisecondTimerPaint;
+	private int counterPaint;
+	
+	private ArrayList<Integer> steps = new ArrayList<Integer>();
+	private ArrayList<Integer> paints = new ArrayList<Integer>();
+	private ArrayList<Integer> updates = new ArrayList<Integer>();
 	
 	public ANTSWindow()
 	{
@@ -76,6 +102,44 @@ public class ANTSWindow extends JFrame
 	{
 		return this.ready;
 	}
+	
+	private void checkTimeUpPaint()
+	{
+		if(this.milisecondTimerPaint>=1000)
+		{
+			int fps =  (int) (this.counterPaint/(this.milisecondTimerPaint/1000));
+//			System.out.println("Frames per second: " + fps);
+			this.paints.add(fps);
+			this.counterPaint = 0;
+			this.milisecondTimerPaint = 0;
+		}
+	}
+	
+	private void checkTimeUpBasic()
+	{
+		if(this.milisecondTimerBasic>=1000)
+		{
+			int sps =  (int) (this.counterBasic/(this.milisecondTimerBasic/1000));
+//			System.out.println("Steps per second: " + sps );
+			this.steps.add(sps);
+			this.counterBasic = 0;
+			this.milisecondTimerBasic = 0;
+		}
+	}
+	
+	private void checkTimeUpUpdateGameLogic()
+	{
+		if(this.milisecondTimerUpdateGameLogic>=1000)
+		{
+			int ups = (int) (this.counterUpdateGameLogic/(this.milisecondTimerUpdateGameLogic/1000));
+//			System.out.println("Updates per second: " + ups);
+			this.updates.add(ups);
+			this.counterUpdateGameLogic = 0;
+			this.milisecondTimerUpdateGameLogic = 0;
+		}
+	}
+	
+	
 	
 	private void configRendering(Graphics2D g2d) 
 	{
