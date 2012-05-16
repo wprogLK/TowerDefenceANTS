@@ -16,7 +16,9 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import listeners.ANTSSwitchLightListener;
 import listeners.ANTSUpdateListener;
+import models.ANTSSimpleSourceLightModel;
 
 import interfaces.ANTSIDriver;
 import interfaces.ANTSIModel;
@@ -48,6 +50,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	private Graphics2D g2d;
 	private BufferedImage bi;
 	private BufferStrategy buffer;
+	private GraphicsConfiguration gC;
 	
 	
 	
@@ -85,10 +88,10 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		//graphics config
 		GraphicsEnvironment gE = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		GraphicsDevice gD = gE.getDefaultScreenDevice();
-		GraphicsConfiguration gC = gD.getDefaultConfiguration();
+		this.gC = gD.getDefaultConfiguration();
 		
 		//Create off-screen drawing surface
-		this.bi = gC.createCompatibleImage(640,480); //TODO use the size of the graphic JPanel of the window
+		this.bi = this.gC.createCompatibleImage(this.window.getWidthOfGraphics(),this.window.getHeightOfGraphics());
 	}
 	
 	private void initAllListeners() 
@@ -120,6 +123,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		ANTSSimpleSourceLightController c = new ANTSSimpleSourceLightController(200,200,60,Color.yellow);
 		addModel(c.getModel());
 		addView(c.getView());
+		ANTSSwitchLightListener.addLight((ANTSSimpleSourceLightModel) c.getModel());	//only for testing
 	}
 	
 	public static void createSimpleSourceLight2()
@@ -189,11 +193,11 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		{
 			this.fps.update();
 		}
-		
+		this.bi = this.gC.createCompatibleImage(this.window.getWidthOfGraphics(),this.window.getHeightOfGraphics());
 		this.g2d = bi.createGraphics();
 		
 		//Clear:
-		this.g2d.fillRect(0, 0, 640, 450); ////TODO use the size of the graphic JPanel of the window
+		this.g2d.fillRect(0, 0, this.window.getWidthOfGraphics(),this.window.getHeightOfGraphics());
 		
 		for(int i = 0; i<views.size(); i++)
 		{

@@ -9,7 +9,6 @@ package basics;
  */
 public class ANTSMain
 {
-
 	/**
 	 * @param args
 	 */
@@ -18,5 +17,4 @@ public class ANTSMain
 		ANTSDriver driver = new ANTSDriver();
 		driver.start();
 	}
-
 }
