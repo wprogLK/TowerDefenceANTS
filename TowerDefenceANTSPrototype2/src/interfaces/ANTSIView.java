@@ -6,5 +6,6 @@ import javax.swing.JPanel;
 public interface ANTSIView 
 {
 	public void paint(Graphics2D g2d);
+	public void paint(Graphics2D g2d, float interpolation);
 	public JPanel getPanel();
 }

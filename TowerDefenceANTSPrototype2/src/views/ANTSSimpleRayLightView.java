@@ -41,10 +41,25 @@ public class ANTSSimpleRayLightView implements ANTSIView
 		
 		g2d.draw(s);
 	}
+	
+	@Override
+	public void paint(Graphics2D g2d, float interpolation) 
+	{
+		g2d.setColor(this.model.getColor());
+		
+		this.model.update(interpolation);
+		
+		AffineTransform aT = this.model.getInterpolationMatrix();
+		Shape s = aT.createTransformedShape(this.ray);
+		
+		g2d.draw(s);
+	}
 
 	@Override
 	public JPanel getPanel() 
 	{
 		return null;
 	}
+
+	
 }

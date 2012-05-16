@@ -12,6 +12,8 @@ import javax.swing.JFrame;
 public class ANTSWindow extends JFrame{
 
 	private ArrayList<ANTSIView> views;
+	private float interpolation;
+	
 	public ANTSWindow() 
 	{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -31,7 +33,7 @@ public class ANTSWindow extends JFrame{
 		for(int i = 0; i<this.views.size(); i++)
 		{
 			ANTSIView v = this.views.get(i);
-			v.paint(g2d);
+			v.paint(g2d, interpolation);
 		}
 		
 	}
@@ -44,6 +46,12 @@ public class ANTSWindow extends JFrame{
 		{
 			this.add(v.getPanel());
 		}
+	}
+
+	public void paintWithInterpolation(float interpolation) 
+	{
+		this.interpolation = interpolation;
+		this.repaint();
 	}
 
 }

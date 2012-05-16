@@ -58,7 +58,6 @@ public class ANTSSimpleSourceLightModel implements ANTSIModel
 		}
 	}
 	
-	
 	private boolean canSendRay()
 	{
 		if(this.on)

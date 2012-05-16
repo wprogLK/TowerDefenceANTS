@@ -12,6 +12,8 @@ public class ANTSSimpleRayLightModel implements ANTSIModel
 	private AffineTransform rotateMatrix;
 	private AffineTransform sourceMatrix;
 	
+	private AffineTransform matrixForInterpolation;
+	
 	private double length;
 	private double velocity;
 	private Color color;
@@ -22,6 +24,8 @@ public class ANTSSimpleRayLightModel implements ANTSIModel
 		this.velocityMatrix = new AffineTransform();
 		this.rotateMatrix = new AffineTransform();
 		this.sourceMatrix = new AffineTransform();
+		
+		this.matrixForInterpolation = new AffineTransform();
 		
 		this.matrix.setTransform(sourceMatrix);
 		this.sourceMatrix.setTransform(sourceMatrix);
@@ -44,9 +48,31 @@ public class ANTSSimpleRayLightModel implements ANTSIModel
 		this.matrix.concatenate(this.velocityMatrix);
 	}
 	
+	/**
+	 * its a pseudo update for interpolation
+	 * to get the pseudo result use the get...Interpolation() method!
+	 * @param interpolation
+	 */
+	public void update(float interpolation)
+	{
+		this.matrixForInterpolation.setTransform(this.sourceMatrix);
+		
+		AffineTransform tmpVelocityMatrix = new AffineTransform(this.velocityMatrix);
+		tmpVelocityMatrix.translate(this.velocity*interpolation, 0);
+		
+		this.matrixForInterpolation.concatenate(this.rotateMatrix);
+		this.matrixForInterpolation.concatenate(tmpVelocityMatrix);
+	}
+	
+	
 	/////////////////////
 	//GETTERS & SETTERS//
 	/////////////////////
+	public AffineTransform getInterpolationMatrix()
+	{
+		return this.matrixForInterpolation;
+	}
+	
 	public AffineTransform getMatrix()
 	{
 		return this.matrix;

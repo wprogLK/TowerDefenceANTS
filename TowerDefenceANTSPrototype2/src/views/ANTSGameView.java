@@ -39,5 +39,11 @@ public class ANTSGameView implements ANTSIView
 		return this.panel;
 	}
 
+	@Override
+	public void paint(Graphics2D g2d, float interpolation) 
+	{
+		
+	}
+
 
 }

@@ -132,6 +132,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	
 	private void paint(float interpolation)
 	{
-		window.repaint();	//TODO implement the interpolation
+		window.paintWithInterpolation(interpolation);
+		//window.repaint();	//TODO implement the interpolation
 	}
 }

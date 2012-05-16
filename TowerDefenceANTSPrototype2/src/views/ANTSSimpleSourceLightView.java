@@ -43,6 +43,13 @@ public class ANTSSimpleSourceLightView implements ANTSIView
 			g2d.draw(shape);
 		}
 	}
+	
+	@Override
+	public void paint(Graphics2D g2d, float interpolation) 
+	{
+		//interpolation not needed for this view!
+		this.paint(g2d);
+	}
 
 	@Override
 	public JPanel getPanel()
