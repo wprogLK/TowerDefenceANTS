@@ -50,37 +50,6 @@ public class ANTSWindow extends JFrame{
 		this.getContentPane().add(this.navigation);
 		this.getContentPane().add(this.graphic);
 		this.navigation.add(this.buttonUpdate);
-		
-	}
-	
-	@Override
-	public void paint(Graphics g)
-	{
-		super.paintComponents(g);
-		
-		Graphics2D g2d = (Graphics2D) g;
-		
-		for(int i = 0; i<this.views.size(); i++)
-		{
-			ANTSIView v = this.views.get(i);
-			v.paint(g2d, interpolation);
-		}
-	}
-	
-	public void addView(ANTSIView v)
-	{
-		this.views.add(v);
-		
-//		if(v.getPanel() != null)	//OLD
-//		{
-//			this.add(v.getPanel());
-//		}
-	}
-
-	public void paintWithInterpolation(float interpolation) 
-	{
-		this.interpolation = interpolation;
-		this.repaint();
 	}
 	
 	//Do it only once!

@@ -5,6 +5,7 @@ package basics;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
@@ -39,11 +40,16 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	private final int SKIP_TICKS = 1000/TICKS_PER_SECOND;
 	private final int MAX_FRAMESKIP = 5;
 	
+	private boolean debugModeOn = true;
+	private FPS fps;
+	
 	//Active Rendering:
 	private Graphics graphics;
 	private Graphics2D g2d;
 	private BufferedImage bi;
 	private BufferStrategy buffer;
+	
+	
 	
 	public ANTSDriver()
 	{	
@@ -94,7 +100,6 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	
 	private static void addView(ANTSIView v)
 	{
-		//window.addView(v); OLD
 		views.add(v);
 	}
 
@@ -147,6 +152,11 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		
 		boolean gameIsRunning = true;
 		
+		if(this.debugModeOn)
+		{
+			this.fps = new FPS();
+		}
+		
 		while(gameIsRunning)
 		{
 			loops = 0;
@@ -172,15 +182,14 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		}
 	}
 	
-//OLD
-//	private void paint(float interpolation)
-//	{
-//		window.paintWithInterpolation(interpolation);
-//		//window.repaint();	//TODO implement the interpolation
-//	}
-	
 	private void paint(float interpolation)
 	{
+		
+		if(this.debugModeOn)
+		{
+			this.fps.update();
+		}
+		
 		this.g2d = bi.createGraphics();
 		
 		//Clear:
@@ -191,6 +200,11 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 			ANTSIView v = views.get(i);
 			v.paint(g2d, interpolation);
 		}
+		
+		//Show fps
+		this.g2d.setFont( new Font( "Courier New", Font.PLAIN, 12 ) );
+		this.g2d.setColor( Color.BLACK );
+	    this.g2d.drawString( String.format( "FPS: %s", this.fps.getFPS() ), 20, 20 );
 		
 		//Blit image and flip
 		this.graphics = this.buffer.getDrawGraphics();
@@ -203,7 +217,6 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		
 		Thread.yield();
 		
-		//Correct?
 		//release resources
 		if(this.graphics != null)
 		{
@@ -213,7 +226,46 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		{
 			this.g2d.dispose();
 		}
+	}
 	
-		//window.repaint();	//TODO implement the interpolation
+	
+	private class FPS
+	{
+		private int fps;
+		private int frames;
+		private long totalTime;
+		private long currentTime;
+		private long lastTime;
+		
+		public FPS()
+		{
+			this.fps = 0;
+			this.frames = 0;
+			this.totalTime = 0;
+			this.currentTime = System.currentTimeMillis();
+			this.lastTime = this.currentTime;
+		}
+		
+		public void update()
+		{
+			this.lastTime = currentTime;
+			this.currentTime = System.currentTimeMillis();
+			
+			this.totalTime += this.currentTime - this.lastTime;
+			
+			if(this.totalTime >1000)
+			{
+				this.totalTime -= 1000;
+				this.fps = this.frames;
+				this.frames = 0;
+			}
+			
+			++this.frames;
+		}
+		
+		public int getFPS()
+		{
+			return this.fps;
+		}
 	}
 }
