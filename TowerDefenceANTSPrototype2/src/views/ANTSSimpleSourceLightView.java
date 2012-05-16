@@ -8,28 +8,37 @@ import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 
-import javax.swing.JPanel;
-
 import models.ANTSSimpleSourceLightModel;
 
 public class ANTSSimpleSourceLightView implements ANTSIView
 {
 	private ANTSSimpleSourceLightModel model;
-	
-	private JPanel panel;
+	private Ellipse2D circle;
 	
 	public ANTSSimpleSourceLightView(ANTSSimpleSourceLightModel m) 
 	{
 		this.model = m;
+		this.createCircle();
+	}
+	
+	private void createCircle()
+	{
+		AffineTransform aT = this.model.getMatrix();
+		double radius = this.model.getRadius();
+		
+		this.circle = new Ellipse2D.Double(aT.getTranslateX()-(radius/2), aT.getTranslateY()-(radius/2), radius, radius);
+	}
+	
+	public boolean pointIsIn(double x, double y)
+	{
+		return this.circle.contains(x, y);
 	}
 
 	@Override
 	public void paint(Graphics2D g2d) 
 	{
+		this.createCircle();
 		AffineTransform aT = this.model.getMatrix();
-		double radius = this.model.getRadius();
-		
-		Ellipse2D circle = new Ellipse2D.Double(aT.getTranslateX()-(radius/2), aT.getTranslateY()-(radius/2), radius, radius);
 		Shape shape = aT.createTransformedShape(circle);
 	
 		if(this.model.isOn())
@@ -49,11 +58,5 @@ public class ANTSSimpleSourceLightView implements ANTSIView
 	{
 		//interpolation not needed for this view!
 		this.paint(g2d);
-	}
-
-	@Override
-	public JPanel getPanel()
-	{
-		return this.panel;
 	}
 }

@@ -14,17 +14,13 @@ public class ANTSGameView implements ANTSIView
 {
 	private ANTSGameModel model;
 	private JButton buttonUpdate;
-	//private JPanel panel;	
 	
 	public ANTSGameView(ANTSGameModel m) 
 	{
 		this.model = m;
 		
-		//this.panel = new JPanel();
-		
 		this.buttonUpdate = new JButton("Update");
 		this.buttonUpdate.addActionListener(ANTSUpdateListener.getInstance());
-		//this.panel.add(this.buttonUpdate);
 	}
 	
 	@Override
@@ -33,12 +29,11 @@ public class ANTSGameView implements ANTSIView
 		
 	}
 	
-	@Override
-	public JPanel getPanel()
+	public boolean pointIsIn(double x, double y)
 	{
-		return null;//this.panel;
+		return false; //TODO
 	}
-
+	
 	@Override
 	public void paint(Graphics2D g2d, float interpolation) 
 	{

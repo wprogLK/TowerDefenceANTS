@@ -11,6 +11,8 @@ import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -20,6 +22,7 @@ import listeners.ANTSSwitchLightListener;
 import listeners.ANTSUpdateListener;
 import models.ANTSSimpleSourceLightModel;
 
+import interfaces.ANTSIController;
 import interfaces.ANTSIDriver;
 import interfaces.ANTSIModel;
 import interfaces.ANTSIView;
@@ -31,12 +34,13 @@ import controllers.ANTSSimpleSourceLightController;
  * @author Lukas
  *
  */
-public class ANTSDriver extends Thread implements ANTSIDriver 
+public class ANTSDriver extends Thread implements ANTSIDriver, MouseListener
 {
 	private static ANTSWindow window;
 	private static ANTSGameController gameController;
 	private static ArrayList<ANTSIModel> models;
 	private static ArrayList<ANTSIView> views;
+	private static ArrayList<ANTSIController> controllers;
 	
 	private final int TICKS_PER_SECOND = 25;
 	private final int SKIP_TICKS = 1000/TICKS_PER_SECOND;
@@ -52,8 +56,6 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	private BufferStrategy buffer;
 	private GraphicsConfiguration gC;
 	
-	
-	
 	public ANTSDriver()
 	{	
 		window = new ANTSWindow();
@@ -61,6 +63,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		
 		models = new ArrayList<ANTSIModel>();
 		views = new ArrayList<ANTSIView>();
+		controllers = new ArrayList<ANTSIController>();
 		
 		this.initAllListeners();
 		
@@ -80,6 +83,8 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		canvas.setIgnoreRepaint(true);
 		
 		window.addCanvas(canvas);
+		
+		canvas.addMouseListener(this);
 		
 		//BackBuffer
 		canvas.createBufferStrategy(2);
@@ -116,6 +121,16 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		}
 	}
 	
+	//Controller
+	
+	private static void addController(ANTSIController c) 
+	{
+		if(!controllers.contains(c))
+		{
+			controllers.add(c);
+		}
+	}
+	
 	//Create new objects
 	
 	public static void createSimpleSourceLight()
@@ -123,6 +138,8 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		ANTSSimpleSourceLightController c = new ANTSSimpleSourceLightController(200,200,60,Color.yellow);
 		addModel(c.getModel());
 		addView(c.getView());
+		addController(c);
+		
 		ANTSSwitchLightListener.addLight((ANTSSimpleSourceLightModel) c.getModel());	//only for testing
 	}
 	
@@ -131,6 +148,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		ANTSSimpleSourceLightController c = new ANTSSimpleSourceLightController(20,20,20,Color.blue);
 		addModel(c.getModel());
 		addView(c.getView());
+		addController(c);
 	}
 	
 	public static void createSimpleRayLight(AffineTransform matrix, double velocity, double angle, Color color)
@@ -232,6 +250,59 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		}
 	}
 	
+	//////////////////
+	//MOUSE LISTENER//
+	//////////////////
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		System.out.println("CLICK");
+		System.out.println("MODEL: "+ this.getModelAt(e.getX(),e.getY()));
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	//////////
+	//SEARCH//
+	//////////
+	
+	private ANTSIModel getModelAt(double x, double y)
+	{
+		for(ANTSIController c:this.controllers)
+		{
+			if(c.getIView().pointIsIn(x, y))
+			{
+				return c.getModel();
+			}
+		}
+		
+		return null;
+	}
+	
+	//////////////////
+	//INNER CLASSES://
+	//////////////////
 	
 	private class FPS
 	{

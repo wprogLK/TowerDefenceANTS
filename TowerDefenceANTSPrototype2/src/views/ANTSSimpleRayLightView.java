@@ -30,6 +30,11 @@ public class ANTSSimpleRayLightView implements ANTSIView
 		
 		this.ray = new Line2D.Double(x,y,x+length,y);
 	}
+	
+	public boolean pointIsIn(double x, double y)
+	{
+		return false;	//TODO
+	}
 
 	@Override
 	public void paint(Graphics2D g2d) 
@@ -54,12 +59,4 @@ public class ANTSSimpleRayLightView implements ANTSIView
 		
 		g2d.draw(s);
 	}
-
-	@Override
-	public JPanel getPanel() 
-	{
-		return null;
-	}
-
-	
 }

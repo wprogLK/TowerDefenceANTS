@@ -1,6 +1,8 @@
 package controllers;
 
+import interfaces.ANTSIController;
 import interfaces.ANTSIModel;
+import interfaces.ANTSIView;
 
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
@@ -8,7 +10,7 @@ import java.awt.geom.AffineTransform;
 import views.ANTSSimpleRayLightView;
 import models.ANTSSimpleRayLightModel;
 
-public class ANTSSimpleRayLightController {
+public class ANTSSimpleRayLightController implements ANTSIController{
 
 	private ANTSSimpleRayLightModel model;
 	private ANTSSimpleRayLightView view;
@@ -25,6 +27,11 @@ public class ANTSSimpleRayLightController {
 	}
 	
 	public ANTSSimpleRayLightView getView()
+	{
+		return this.view;
+	}
+	
+	public ANTSIView getIView()
 	{
 		return this.view;
 	}

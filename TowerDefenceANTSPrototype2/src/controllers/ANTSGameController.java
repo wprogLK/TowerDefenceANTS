@@ -2,9 +2,12 @@ package controllers;
 
 import views.ANTSGameView;
 import models.ANTSGameModel;
+import interfaces.ANTSIController;
 import interfaces.ANTSIModel;
+import interfaces.ANTSIView;
 
-public class ANTSGameController {
+public class ANTSGameController implements ANTSIController
+{
 
 	private ANTSGameModel model;
 	private ANTSGameView view;
@@ -21,6 +24,10 @@ public class ANTSGameController {
 	}
 	
 	public ANTSGameView getView()
+	{
+		return this.view;
+	}
+	public ANTSIView getIView()
 	{
 		return this.view;
 	}
