@@ -7,8 +7,6 @@ import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
-import javax.swing.JPanel;
-
 import listeners.ANTSUpdateListener;
 
 import interfaces.ANTSIDriver;
@@ -27,6 +25,10 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	private static ANTSWindow window;
 	private static ANTSGameController gameController;
 	private static ArrayList<ANTSIModel> models;
+	
+	private final int TICKS_PER_SECOND = 25;
+	private final int SKIP_TICKS = 1000/TICKS_PER_SECOND;
+	private final int MAX_FRAMESKIP = 5;
 	
 	public ANTSDriver()
 	{	
@@ -93,108 +95,43 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		addModel(gameController.getModel());
 		addView(gameController.getView());
 	}
-//	
-//	public void start()
-//	{
-//		
-//	}
 	
 	@Override
 	public void run()
 	{
-		while(true)
+		long nextGameTick = System.currentTimeMillis();
+		int loops;
+		float interpolation;
+		
+		boolean gameIsRunning = true;
+		
+		while(gameIsRunning)
 		{
-			try {
-				ANTSUpdaterGameLogic updaterGameLogic = new ANTSUpdaterGameLogic(models); 
-				ANTSUpdaterGraphic updaterGraphic = new ANTSUpdaterGraphic(window);
-			
-				updaterGameLogic.start();
-			
-				updaterGameLogic.join();
-				updaterGraphic.start();
-				updaterGraphic.join();
-				
-			}
-			catch (InterruptedException e) 
+			loops = 0;
+			while(System.currentTimeMillis() >nextGameTick && loops<MAX_FRAMESKIP)
 			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				this.updateModels();
+				
+				nextGameTick +=SKIP_TICKS;
+				loops++;
 			}
 			
-		}
-		
-	}
-	
-	
-	//////////////////
-	//INNER CLASSES://
-	//////////////////
-	
-	private class ANTSUpdaterGameLogic extends Thread
-	{
-		private ArrayList<ANTSIModel> models;
-		
-		public ANTSUpdaterGameLogic(ArrayList<ANTSIModel> m)
-		{
-			this.models = m;
-		}
-		
-		@Override
-		public void run() 
-		{
-			//TODO other way
-//			while(true)
-//			{
-				this.updateAllModels();
-				
-				try 
-				{
-					Thread.sleep(400); //100
-				} 
-				catch (InterruptedException e) 
-				{
-					e.printStackTrace();
-				}
-//			}
-		}
-		
-		private void updateAllModels()
-		{
-			for(int i = 0; i<this.models.size();i++)
-			{
-				ANTSIModel m = this.models.get(i);
-				m.update();
-			}
+			interpolation =(System.currentTimeMillis() + SKIP_TICKS - nextGameTick) /(SKIP_TICKS); //TODO Float
+			this.paint(interpolation);
 		}
 	}
 	
-	private class ANTSUpdaterGraphic extends Thread
+	private void updateModels()
 	{
-		private ANTSWindow window;
-		
-		public ANTSUpdaterGraphic(ANTSWindow w)
+		for(int i = 0; i<models.size();i++)
 		{
-			this.window = w;
+			ANTSIModel m = models.get(i);
+			m.update();
 		}
-		
-		@Override
-		public void run() 
-		{
-			//TODO other way
-//			while(true)
-//			{
-				this.window.repaint();
-
-				try 
-				{
-					Thread.sleep(115);	//150
-				} 
-				catch (InterruptedException e) 
-				{
-					e.printStackTrace();
-				}
-//			}
-		}
-		
+	}
+	
+	private void paint(float interpolation)
+	{
+		window.repaint();	//TODO implement the interpolation
 	}
 }
