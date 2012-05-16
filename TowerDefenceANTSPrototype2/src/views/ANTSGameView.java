@@ -14,17 +14,17 @@ public class ANTSGameView implements ANTSIView
 {
 	private ANTSGameModel model;
 	private JButton buttonUpdate;
-	private JPanel panel;
+	//private JPanel panel;	
 	
 	public ANTSGameView(ANTSGameModel m) 
 	{
 		this.model = m;
 		
-		this.panel = new JPanel();
+		//this.panel = new JPanel();
 		
 		this.buttonUpdate = new JButton("Update");
 		this.buttonUpdate.addActionListener(ANTSUpdateListener.getInstance());
-		this.panel.add(this.buttonUpdate);
+		//this.panel.add(this.buttonUpdate);
 	}
 	
 	@Override
@@ -36,7 +36,7 @@ public class ANTSGameView implements ANTSIView
 	@Override
 	public JPanel getPanel()
 	{
-		return this.panel;
+		return null;//this.panel;
 	}
 
 	@Override
