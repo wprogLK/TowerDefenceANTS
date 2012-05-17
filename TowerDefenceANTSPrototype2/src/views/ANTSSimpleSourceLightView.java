@@ -31,6 +31,12 @@ public class ANTSSimpleSourceLightView implements ANTSIView
 	
 	public boolean pointIsIn(double x, double y)
 	{
+		AffineTransform aT = this.model.getMatrix();
+		double radius = this.model.getRadius();
+		
+		System.out.println("INPUT: X " + x + " Y " + y);
+		System.out.println("POS: X " + (aT.getTranslateX()-(radius/2)) + " Y: " + (aT.getTranslateY()-(radius/2)));
+		
 		return this.circle.contains(x, y);
 	}
 

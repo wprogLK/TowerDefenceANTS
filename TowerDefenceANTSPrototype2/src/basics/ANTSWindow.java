@@ -100,7 +100,10 @@ public class ANTSWindow extends JFrame implements ComponentListener
 		int height = e.getComponent().getHeight()-this.navigation.getHeight();
 		
 		this.graphic.setSize(width, height);
-		this.canvas.setSize(width,height);
+		if(this.canvas != null)
+		{
+			this.canvas.setSize(width,height);
+		}
 	}
 
 	@Override
