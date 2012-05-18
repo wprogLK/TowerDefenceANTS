@@ -4,6 +4,7 @@ import interfaces.ANTSIView;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.event.ComponentEvent;
@@ -14,6 +15,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import views.ANTSAbstractView;
+
 import listeners.ANTSSwitchLightListener;
 
 public class ANTSWindow extends JFrame implements ComponentListener
@@ -22,7 +25,7 @@ public class ANTSWindow extends JFrame implements ComponentListener
 	private float interpolation;
 	
 	private JPanel navigation;	//Panel for buttons and other stuff
-	private JPanel graphic;		//Panel for graphics
+	private ANTSPanel graphic;		//Panel for graphics
 	
 	private JButton buttonUpdate;
 	private Canvas canvas;
@@ -31,9 +34,12 @@ public class ANTSWindow extends JFrame implements ComponentListener
 	{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(600,600);
-		
+
 		this.navigation = new JPanel();
-		this.graphic = new JPanel();
+		//this.graphic = new JPanel();
+		this.graphic = new ANTSPanel();
+		
+		this.graphic.setLayout(null);
 		
 		this.navigation.setLayout(new FlowLayout());
 		this.getContentPane().setLayout(new BorderLayout());
@@ -64,6 +70,12 @@ public class ANTSWindow extends JFrame implements ComponentListener
 			this.graphic.add(this.canvas);
 			this.canvas.setBounds(0,0, this.graphic.getWidth(), this.graphic.getHeight());
 		}
+	}
+	
+	public void addViewComponent(ANTSAbstractView v)
+	{
+		this.graphic.add(v);
+		this.graphic.setOpaque(false);
 	}
 	
 	
@@ -101,8 +113,6 @@ public class ANTSWindow extends JFrame implements ComponentListener
 			this.canvas.setSize(width,height);
 			this.canvas.repaint();
 		}
-		
-		
 	}
 
 	@Override
@@ -111,9 +121,32 @@ public class ANTSWindow extends JFrame implements ComponentListener
 		// TODO Auto-generated method stub
 	}
 	
-	public void paint(Graphics g)
+	private class ANTSPanel extends JPanel
 	{
-		super.paintComponents(g);
+		@Override
+		public void paint(Graphics g)
+		{
+			System.out.println("PAINT ANTS PANEL");
+			g.drawLine(0, 0, 100, 100);
+			
+		}
+		
+		@Override
+		public void paintComponent(Graphics g)
+		{
+			System.out.println("PAINT c ANTS PANEL");
+		}
+		
+		@Override
+		public void paintComponents(Graphics g)
+		{
+			System.out.println("PAINT cs ANTS PANEL");
+		}
+		
+		@Override
+		public void paintChildren(Graphics g)
+		{
+			System.out.println("PAINT child ANTS PANEL");
+		}
 	}
-
 }

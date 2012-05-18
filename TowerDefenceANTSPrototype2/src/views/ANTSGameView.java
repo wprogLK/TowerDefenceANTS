@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import listeners.ANTSUpdateListener;
 import models.ANTSGameModel;
 
-public class ANTSGameView implements ANTSIView
+public class ANTSGameView extends ANTSAbstractView implements ANTSIView
 {
 	private ANTSGameModel model;
 	private JButton buttonUpdate;

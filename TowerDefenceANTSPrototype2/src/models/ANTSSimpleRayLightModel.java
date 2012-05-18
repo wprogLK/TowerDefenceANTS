@@ -5,7 +5,7 @@ import interfaces.ANTSIModel;
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
 
-public class ANTSSimpleRayLightModel implements ANTSIModel
+public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIModel
 {
 	private AffineTransform matrix;
 	private AffineTransform velocityMatrix;

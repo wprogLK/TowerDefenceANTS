@@ -1,6 +1,8 @@
 package interfaces;
 
-public interface ANTSIModel 
+import java.awt.event.MouseListener;
+
+public interface ANTSIModel
 {
 	public void update();
 }

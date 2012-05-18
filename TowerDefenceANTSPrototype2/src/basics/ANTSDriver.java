@@ -18,6 +18,8 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import views.ANTSAbstractView;
+
 import listeners.ANTSSwitchLightListener;
 import listeners.ANTSUpdateListener;
 import models.ANTSSimpleSourceLightModel;
@@ -34,7 +36,7 @@ import controllers.ANTSSimpleSourceLightController;
  * @author Lukas
  *
  */
-public class ANTSDriver extends Thread implements ANTSIDriver, MouseListener
+public class ANTSDriver extends Thread implements ANTSIDriver
 {
 	private static ANTSWindow window;
 	private static ANTSGameController gameController;
@@ -85,7 +87,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver, MouseListener
 		
 		window.addCanvas(canvas);
 		
-		canvas.addMouseListener(this);
+		//canvas.addMouseListener(this);	//OLD
 		
 		//BackBuffer
 		canvas.createBufferStrategy(2);
@@ -107,9 +109,10 @@ public class ANTSDriver extends Thread implements ANTSIDriver, MouseListener
 
 	//Views
 	
-	private static void addView(ANTSIView v)
+	private static void addView(ANTSAbstractView v)
 	{
 		views.add(v);
+		window.addViewComponent(v);
 	}
 
 	//Model
@@ -256,56 +259,6 @@ public class ANTSDriver extends Thread implements ANTSIDriver, MouseListener
 		{
 			this.g2d.dispose();
 		}
-	}
-	
-	//////////////////
-	//MOUSE LISTENER//
-	//////////////////
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		System.out.println("CLICK");
-		System.out.println("MODEL: "+ this.getModelAt(e.getX(),e.getY()));
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	//////////
-	//SEARCH//
-	//////////
-	
-	private ANTSIModel getModelAt(double x, double y)
-	{
-		for(ANTSIController c:this.controllers)
-		{
-			if(c.getIView().pointIsIn(x, y))
-			{
-				return c.getModel();
-			}
-		}
-		
-		return null;
 	}
 	
 	//////////////////

@@ -7,7 +7,7 @@ import java.awt.geom.AffineTransform;
 
 import basics.ANTSDriver;
 
-public class ANTSSimpleSourceLightModel implements ANTSIModel 
+public class ANTSSimpleSourceLightModel extends ANTSAbstractModel implements ANTSIModel 
 {
 	private AffineTransform matrix;
 	private double radius;
@@ -26,7 +26,6 @@ public class ANTSSimpleSourceLightModel implements ANTSIModel
 	public ANTSSimpleSourceLightModel() 
 	{
 		this.matrix = new AffineTransform();
-		
 		this.matrix.setToTranslation(100, 100);
 		this.radius = 50;
 		
@@ -147,7 +146,7 @@ public class ANTSSimpleSourceLightModel implements ANTSIModel
 	
 	public String toString()
 	{
-		return "Model: X: " + this.matrix.getTranslateX() + " Y: " + this.matrix.getTranslateY() + " COLOR: " + this.color;
+		return "Model: X: " + this.matrix.getTranslateX() + " Y: " + this.matrix.getTranslateY() + " Radius : " +this.radius + " COLOR: " + this.color;
 	}
 	
 	///////////

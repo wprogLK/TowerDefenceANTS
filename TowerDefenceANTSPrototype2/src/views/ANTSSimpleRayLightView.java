@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 
 import models.ANTSSimpleRayLightModel;
 
-public class ANTSSimpleRayLightView implements ANTSIView
+public class ANTSSimpleRayLightView extends ANTSAbstractView implements ANTSIView
 {
 	private ANTSSimpleRayLightModel model;
 	private	Line2D.Double ray;
