@@ -23,10 +23,6 @@ public class ANTSSimpleSourceLightModel implements ANTSIModel
 	private int angle = 360;
 	private double angleOffset = 0;
 	
-	//ONLY FOR DEBUG:
-	private double x;
-	private double y;
-	
 	public ANTSSimpleSourceLightModel() 
 	{
 		this.matrix = new AffineTransform();
@@ -52,10 +48,6 @@ public class ANTSSimpleSourceLightModel implements ANTSIModel
 		this.color = color;
 		
 		this.tickCounter = 0;
-		
-		//DEBUG:
-		this.x = posX;
-		this.y = posY;
 	}
 	
 	//@Override

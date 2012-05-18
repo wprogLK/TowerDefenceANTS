@@ -91,14 +91,18 @@ public class ANTSWindow extends JFrame implements ComponentListener
 
 	@Override
 	public void componentResized(ComponentEvent e) {
-		int width = e.getComponent().getWidth();
+		System.out.println("RESIZE");
+		int width = this.getContentPane().getWidth();//e.getComponent().getWidth();
 		int height = e.getComponent().getHeight()-this.navigation.getHeight();
 		
 		this.graphic.setSize(width, height);
 		if(this.canvas != null)
 		{
 			this.canvas.setSize(width,height);
+			this.canvas.repaint();
 		}
+		
+		
 	}
 
 	@Override

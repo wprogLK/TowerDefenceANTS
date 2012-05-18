@@ -38,6 +38,7 @@ public class ANTSSimpleSourceLightView implements ANTSIView
 		System.out.println("INPUT: X " + x + " Y " + y);
 		System.out.println(this.model.toString());
 		System.out.println("----------------------------------");
+	
 		
 		return this.circle.contains(x, y);
 	}
@@ -45,7 +46,7 @@ public class ANTSSimpleSourceLightView implements ANTSIView
 	@Override
 	public void paint(Graphics2D g2d) 
 	{
-		this.createCircle();
+//		this.createCircle();			//TODO CHECK IF position and radius has changed
 		AffineTransform aT = this.model.getMatrix();
 		Shape shape = aT.createTransformedShape(circle);
 	
