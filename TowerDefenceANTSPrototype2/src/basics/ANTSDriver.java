@@ -70,6 +70,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver, MouseListener
 		this.createGame();
 		createSimpleSourceLight(); //Only for testing
 		createSimpleSourceLight2();
+		createSimpleSourceLight3();
 		
 		this.initActiveRendering();
 	}
@@ -151,6 +152,14 @@ public class ANTSDriver extends Thread implements ANTSIDriver, MouseListener
 		addController(c);
 	}
 	
+	public static void createSimpleSourceLight3()
+	{
+		ANTSSimpleSourceLightController c = new ANTSSimpleSourceLightController(6,5,20,Color.RED);
+		addModel(c.getModel());
+		addView(c.getView());
+		addController(c);
+	}
+	
 	public static void createSimpleRayLight(AffineTransform matrix, double velocity, double angle, Color color)
 	{
 		ANTSSimpleRayLightController c = new ANTSSimpleRayLightController(matrix,10,angle,color);
@@ -185,7 +194,6 @@ public class ANTSDriver extends Thread implements ANTSIDriver, MouseListener
 			while(System.currentTimeMillis() >nextGameTick && loops<MAX_FRAMESKIP)
 			{
 				this.updateModels();
-				
 				nextGameTick +=SKIP_TICKS;
 				loops++;
 			}

@@ -4,12 +4,8 @@ import interfaces.ANTSIView;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GridLayout;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.util.ArrayList;
@@ -19,11 +15,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import listeners.ANTSSwitchLightListener;
-import listeners.ANTSUpdateListener;
 
 public class ANTSWindow extends JFrame implements ComponentListener
 {
-
 	private ArrayList<ANTSIView> views;
 	private float interpolation;
 	
@@ -68,6 +62,7 @@ public class ANTSWindow extends JFrame implements ComponentListener
 			this.canvas = c;
 			this.canvas.setSize(this.graphic.getWidth(), this.graphic.getHeight());
 			this.graphic.add(this.canvas);
+			this.canvas.setBounds(0,0, this.graphic.getWidth(), this.graphic.getHeight());
 		}
 	}
 	

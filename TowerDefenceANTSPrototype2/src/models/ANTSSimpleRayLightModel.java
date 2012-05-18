@@ -87,5 +87,4 @@ public class ANTSSimpleRayLightModel implements ANTSIModel
 	{
 		return this.length;
 	}
-	
 }

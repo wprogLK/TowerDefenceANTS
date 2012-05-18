@@ -23,6 +23,10 @@ public class ANTSSimpleSourceLightModel implements ANTSIModel
 	private int angle = 360;
 	private double angleOffset = 0;
 	
+	//ONLY FOR DEBUG:
+	private double x;
+	private double y;
+	
 	public ANTSSimpleSourceLightModel() 
 	{
 		this.matrix = new AffineTransform();
@@ -41,12 +45,17 @@ public class ANTSSimpleSourceLightModel implements ANTSIModel
 		this.matrix = new AffineTransform();
 		
 		this.matrix.setToTranslation(posX, posY);
+		
 		this.radius = radius;
 		
 		this.on = true;
 		this.color = color;
 		
 		this.tickCounter = 0;
+		
+		//DEBUG:
+		this.x = posX;
+		this.y = posY;
 	}
 	
 	//@Override
@@ -142,6 +151,11 @@ public class ANTSSimpleSourceLightModel implements ANTSIModel
 	public boolean isOn()
 	{
 		return this.on;
+	}
+	
+	public String toString()
+	{
+		return "Model: X: " + this.matrix.getTranslateX() + " Y: " + this.matrix.getTranslateY() + " COLOR: " + this.color;
 	}
 	
 	///////////

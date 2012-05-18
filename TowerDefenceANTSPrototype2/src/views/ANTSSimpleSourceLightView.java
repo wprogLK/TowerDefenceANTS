@@ -34,8 +34,10 @@ public class ANTSSimpleSourceLightView implements ANTSIView
 		AffineTransform aT = this.model.getMatrix();
 		double radius = this.model.getRadius();
 		
+		System.out.println("----------------------------------");
 		System.out.println("INPUT: X " + x + " Y " + y);
-		System.out.println("POS: X " + (aT.getTranslateX()-(radius/2)) + " Y: " + (aT.getTranslateY()-(radius/2)));
+		System.out.println(this.model.toString());
+		System.out.println("----------------------------------");
 		
 		return this.circle.contains(x, y);
 	}

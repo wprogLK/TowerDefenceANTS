@@ -38,13 +38,13 @@ public class ANTSSimpleRayLightView implements ANTSIView
 
 	@Override
 	public void paint(Graphics2D g2d) 
-	{
-		g2d.setColor(this.model.getColor());
-		
-		AffineTransform aT = this.model.getMatrix();
-		Shape s = aT.createTransformedShape(this.ray);
-		
-		g2d.draw(s);
+	{		
+//		g2d.setColor(this.model.getColor());
+//		
+//		AffineTransform aT = this.model.getMatrix();
+//		Shape s = aT.createTransformedShape(this.ray);
+//		
+//		g2d.draw(s);
 	}
 	
 	@Override
