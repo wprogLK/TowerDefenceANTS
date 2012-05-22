@@ -20,10 +20,10 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 	
 	public ANTSSimpleSourceLightView(ANTSSimpleSourceLightModel m) 
 	{
-		super();
 		this.addMouseListener(this);
 		this.model = m;
 		this.createCircle();
+		this.setIgnoreRepaint(true);
 	}
 	
 	private void createCircle()
@@ -51,10 +51,10 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 		this.createCircle();			//TODO CHECK IF position and radius has changed
 		AffineTransform aT = this.model.getMatrix();
 		Shape shape = aT.createTransformedShape(circle);
-		//Rectangle2D box= shape.getBounds2D();	//TODO Only for debug
+		Rectangle2D box= shape.getBounds2D();	//TODO Only for debug
 		this.setBounds(shape.getBounds());
-//		g2d.setColor(Color.GRAY);//TODO Only for debug
-//		g2d.draw(box);//TODO Only for debug
+		g2d.setColor(Color.GRAY);//TODO Only for debug
+	g2d.draw(box);//TODO Only for debug
 		
 		if(this.model.isOn())
 		{
@@ -74,6 +74,11 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 	{
 		//interpolation not needed for this view!
 		this.paint(g2d);
+	}
+	
+	public String toString()
+	{
+		return "SOURCE light " + this.model.getPosX() + " " + this.model.getPosY() + " " + this.model.getColor();
 	}
 	
 	/////////

@@ -18,6 +18,8 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import javax.swing.JPanel;
+
 import views.ANTSAbstractView;
 
 import listeners.ANTSSwitchLightListener;
@@ -82,14 +84,13 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		window.setIgnoreRepaint(true);
 		
 		//Canvas for painting
-		Canvas canvas = new Canvas();
+		ANTSCanvas canvas = new ANTSCanvas(window);
 		canvas.setIgnoreRepaint(true);
 		
 		window.addCanvas(canvas);
 		
-		//canvas.addMouseListener(this);	//OLD
-		
 		//BackBuffer
+		JPanel p = new JPanel();
 		canvas.createBufferStrategy(2);
 		this.buffer = canvas.getBufferStrategy();
 		
@@ -233,7 +234,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 			ANTSIView v = views.get(i);
 			v.paint(g2d, interpolation);
 		}
-		
+
 		//Show fps
 		this.g2d.setFont( new Font( "Courier New", Font.PLAIN, 12 ) );
 		this.g2d.setColor( Color.BLACK );

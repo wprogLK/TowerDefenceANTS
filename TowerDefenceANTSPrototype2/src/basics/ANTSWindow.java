@@ -5,11 +5,14 @@ import interfaces.ANTSIView;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -26,7 +29,8 @@ public class ANTSWindow extends JFrame implements ComponentListener
 	private float interpolation;
 	
 	private JPanel navigation;	//Panel for buttons and other stuff
-	private ANTSPanel graphic;		//Panel for graphics
+	private JPanel graphic;		//Panel for graphics
+	private JPanel view;		//Hidden panel for the views 
 	
 	private JButton buttonUpdate;
 	private Canvas canvas;
@@ -36,10 +40,11 @@ public class ANTSWindow extends JFrame implements ComponentListener
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(600,600);
 		this.navigation = new JPanel();
-		//this.graphic = new JPanel();
-		this.graphic = new ANTSPanel();
+		this.graphic = new JPanel();
+		this.view = new JPanel();
 		
 		this.graphic.setLayout(null);
+		this.view.setLayout(null);
 		
 		this.navigation.setLayout(new FlowLayout());
 		this.getContentPane().setLayout(new BorderLayout());
@@ -54,11 +59,10 @@ public class ANTSWindow extends JFrame implements ComponentListener
 		this.getContentPane().add(this.graphic, BorderLayout.CENTER);
 		this.navigation.add(this.buttonUpdate);
 		
-		//this.navigation.setSize(100, 100);
 		this.graphic.setSize(600,600);
+		this.view.setSize(600, 600);
 		
 		this.addComponentListener(this);
-		//this.graphic.hide(); WRONG
 	}
 	
 	//Do it only once!
@@ -71,12 +75,12 @@ public class ANTSWindow extends JFrame implements ComponentListener
 			this.graphic.add(this.canvas);
 			this.canvas.setBounds(0,0, this.graphic.getWidth(), this.graphic.getHeight());
 		}
+		
 	}
-	
+
 	public void addViewComponent(ANTSAbstractView v)
 	{
-		this.graphic.add(v);
-		//this.graphic.setOpaque(false);
+		this.view.add(v);
 	}
 	
 	
@@ -89,7 +93,7 @@ public class ANTSWindow extends JFrame implements ComponentListener
 	{
 		return this.graphic.getHeight();
 	}
-
+	
 	@Override
 	public void componentHidden(ComponentEvent arg0)
 	{
@@ -105,8 +109,10 @@ public class ANTSWindow extends JFrame implements ComponentListener
 	@Override
 	public void componentResized(ComponentEvent e) {
 		System.out.println("RESIZE");
-		int width = this.getContentPane().getWidth();//e.getComponent().getWidth();
+		int width = this.getContentPane().getWidth();
 		int height = e.getComponent().getHeight()-this.navigation.getHeight();
+		
+		this.view.setSize(width, height);
 		
 //		this.graphic.setSize(width, height);
 		if(this.canvas != null)
@@ -121,34 +127,17 @@ public class ANTSWindow extends JFrame implements ComponentListener
 	{
 		// TODO Auto-generated method stub
 	}
-	
-	private class ANTSPanel extends Container
+
+	public ANTSAbstractView getViewAt(int x, int y)
 	{
-//		@Override
-//		public void paint(Graphics g)
-//		{
-//			System.out.println("PAINT ANTS PANEL");
-//			g.drawLine(0, 0, 100, 100);
-//			this.setOpaque(false);
-//			
-//		}
-//		
-//		@Override
-//		public void paintComponent(Graphics g)
-//		{
-//			System.out.println("PAINT c ANTS PANEL");
-//		}
-//		
-//		@Override
-//		public void paintComponents(Graphics g)
-//		{
-//			System.out.println("PAINT cs ANTS PANEL");
-//		}
-//		
-//		@Override
-//		public void paintChildren(Graphics g)
-//		{
-//			System.out.println("PAINT child ANTS PANEL");
-//		}
+		Component c=  this.view.getComponentAt(x, y);
+		if(! c.equals(view))
+		{
+			return ((ANTSAbstractView) c);
+		}
+		else
+		{
+			return null;
+		}
 	}
 }

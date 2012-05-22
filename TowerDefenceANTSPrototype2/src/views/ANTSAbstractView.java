@@ -3,6 +3,7 @@ package views;
 import interfaces.ANTSIModel;
 import interfaces.ANTSIView;
 
+import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -13,19 +14,15 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
 
-public abstract class ANTSAbstractView extends Container implements MouseListener, ANTSIView {
-
-	public ANTSAbstractView()
-	{
-
-	}
-	
+public abstract class ANTSAbstractView extends  Container implements MouseListener, ANTSIView {
 	
 	@Override
-	public void mouseClicked(MouseEvent e) {
+	public void mouseClicked(MouseEvent e) 
+	{
 		System.out.println("CLICK abstract");
-		
 	}
+	
+	
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
@@ -51,6 +48,13 @@ public abstract class ANTSAbstractView extends Container implements MouseListene
 		
 	}
 	
+	public void paint(Graphics g)
+	{
 	
+	}
 	
+//	public boolean contains(int x, int y)
+//	{
+//		return this.
+//	}
 }
