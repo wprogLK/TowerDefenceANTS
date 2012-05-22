@@ -5,6 +5,7 @@ package basics;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -13,6 +14,7 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -46,6 +48,8 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	private static ArrayList<ANTSIView> views;
 	private static ArrayList<ANTSIController> controllers;
 	
+	private static ANTSCanvas canvas;
+	
 	private final int TICKS_PER_SECOND = 25;
 	private final int SKIP_TICKS = 1000/TICKS_PER_SECOND;
 	private final int MAX_FRAMESKIP = 5;
@@ -69,6 +73,8 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		views = new ArrayList<ANTSIView>();
 		controllers = new ArrayList<ANTSIController>();
 		
+		canvas = new ANTSCanvas();
+		
 		this.initAllListeners();
 		
 		this.createGame();
@@ -84,10 +90,10 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		window.setIgnoreRepaint(true);
 		
 		//Canvas for painting
-		ANTSCanvas canvas = new ANTSCanvas(window);
 		canvas.setIgnoreRepaint(true);
+//		canvas.addMouseListener(window);
 		
-		window.addCanvas(canvas);
+		window.addCanvas(this.canvas);
 		
 		//BackBuffer
 		JPanel p = new JPanel();
@@ -113,7 +119,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	private static void addView(ANTSAbstractView v)
 	{
 		views.add(v);
-		window.addViewComponent(v);
+		canvas.addView(v);
 	}
 
 	//Model
@@ -303,6 +309,112 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		public int getFPS()
 		{
 			return this.fps;
+		}
+	}
+	
+	private class ANTSCanvas extends Canvas implements MouseListener, MouseMotionListener
+	{
+		private JPanel hiddenPanel; //Contains all ANTSAbstract views, but it is hidden; used for correct mouse position
+		private ANTSAbstractView currentEnteredView;	//Only one entered view per time possible! (TODO: change this! (if possible)
+		
+		private final ANTSAbstractView emptyView = new ANTSAbstractView(){};
+		
+		public ANTSCanvas()
+		{
+			this.hiddenPanel = new JPanel();
+			this.currentEnteredView = this.emptyView; //empty view
+			
+			this.addMouseListener(this);
+			this.addMouseMotionListener(this);
+		}
+		
+		public void addView(ANTSAbstractView v)
+		{
+			this.hiddenPanel.add(v);
+		}
+		
+		@Override
+		public void setSize(int width, int height)
+		{
+			super.setSize(width, height);
+			this.hiddenPanel.setSize(width, height); //TODO CHECK THIS!
+		}
+		
+		private ANTSAbstractView getViewAt(int x, int y)
+		{
+			Component c =  this.hiddenPanel.getComponentAt(x, y);
+			
+			if(! c.equals(this.hiddenPanel))
+			{
+				return ((ANTSAbstractView) c);
+			}
+			else
+			{
+				return this.emptyView; //Return a new empty view // -> every return value will be a valid ANTSAbstractView!
+			}
+		}
+		
+		
+//		private void tryMouseEvent(e)
+		
+		//////////////////
+		//MOUSE LISTENER//
+		//////////////////
+		
+		@Override
+		public void mouseClicked(MouseEvent e) 
+		{
+			ANTSAbstractView v = this.getViewAt(e.getX(), e.getY());
+			v.mouseClicked(e);
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) 
+		{
+//			ANTSAbstractView v = this.getViewAt(e.getX(), e.getY());
+//			v.mouseEntered(e);
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) 
+		{
+//			System.out.println("MOUSE EXIT ( " + e.MOUSE_EXITED + " )  IN INTERNAL ANTS CANVAS! View is ");
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) 
+		{
+			// TODO Auto-generated method stub
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e)
+		{
+			// TODO Auto-generated method stub
+		}
+
+		/////////////////////////
+		//MOUSE MOTION LISTENER//
+		/////////////////////////
+		
+		@Override
+		public void mouseDragged(MouseEvent e) 
+		{
+			System.out.println("MOUSE DRAGGED");
+		}
+
+		@Override
+		public void mouseMoved(MouseEvent e) {
+			ANTSAbstractView v = this.getViewAt(e.getX(), e.getY());
+			
+			
+			if(!v.equals(this.currentEnteredView))
+			{
+				this.currentEnteredView.mouseExited(e);	//Exited the old view
+				
+				this.currentEnteredView = v;			
+				v.mouseEntered(e);						//Enter the new view
+			}
 		}
 	}
 }

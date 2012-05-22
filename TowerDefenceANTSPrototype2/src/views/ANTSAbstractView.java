@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -19,14 +20,14 @@ public abstract class ANTSAbstractView extends  Container implements MouseListen
 	@Override
 	public void mouseClicked(MouseEvent e) 
 	{
-		System.out.println("CLICK abstract");
+		System.out.println("CLICK abstract" + e.getX() + " / " +e.getY());
 	}
 	
 	
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
+//		System.out.println("entered abstract");
 		
 	}
 
@@ -48,9 +49,16 @@ public abstract class ANTSAbstractView extends  Container implements MouseListen
 		
 	}
 	
-	public void paint(Graphics g)
-	{
-	
+	@Override
+	public void paint(Graphics2D g2d) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void paint(Graphics2D g2d, float interpolation) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 //	public boolean contains(int x, int y)

@@ -54,7 +54,7 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 		Rectangle2D box= shape.getBounds2D();	//TODO Only for debug
 		this.setBounds(shape.getBounds());
 		g2d.setColor(Color.GRAY);//TODO Only for debug
-	g2d.draw(box);//TODO Only for debug
+		g2d.draw(box);//TODO Only for debug
 		
 		if(this.model.isOn())
 		{
@@ -66,7 +66,6 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 			g2d.setColor(Color.black);
 			g2d.draw(shape);
 		}
-		
 	}
 	
 	@Override
@@ -86,9 +85,23 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 	/////////
 	
 	@Override
-	public void mouseClicked(MouseEvent e) {
-	System.out.println("MOUSE CLICKED");
+	public void mouseClicked(MouseEvent e) 
+	{
+		System.out.println("MOUSE CLICKED");	
+	}
+	
+	@Override
+	public void mouseEntered(MouseEvent e) 
+	{
+	System.out.println("entered me: " + toString());
 		
+	}
+	
+	
+	@Override
+	public void mouseExited(MouseEvent e) 
+	{
+		System.out.println("exited me: " + toString());
 	}
 		
 }

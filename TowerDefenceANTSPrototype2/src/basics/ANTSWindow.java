@@ -30,7 +30,6 @@ public class ANTSWindow extends JFrame implements ComponentListener
 	
 	private JPanel navigation;	//Panel for buttons and other stuff
 	private JPanel graphic;		//Panel for graphics
-	private JPanel view;		//Hidden panel for the views 
 	
 	private JButton buttonUpdate;
 	private Canvas canvas;
@@ -41,10 +40,8 @@ public class ANTSWindow extends JFrame implements ComponentListener
 		this.setSize(600,600);
 		this.navigation = new JPanel();
 		this.graphic = new JPanel();
-		this.view = new JPanel();
 		
 		this.graphic.setLayout(null);
-		this.view.setLayout(null);
 		
 		this.navigation.setLayout(new FlowLayout());
 		this.getContentPane().setLayout(new BorderLayout());
@@ -60,7 +57,6 @@ public class ANTSWindow extends JFrame implements ComponentListener
 		this.navigation.add(this.buttonUpdate);
 		
 		this.graphic.setSize(600,600);
-		this.view.setSize(600, 600);
 		
 		this.addComponentListener(this);
 	}
@@ -75,13 +71,8 @@ public class ANTSWindow extends JFrame implements ComponentListener
 			this.graphic.add(this.canvas);
 			this.canvas.setBounds(0,0, this.graphic.getWidth(), this.graphic.getHeight());
 		}
-		
 	}
 
-	public void addViewComponent(ANTSAbstractView v)
-	{
-		this.view.add(v);
-	}
 	
 	
 	public int getWidthOfGraphics()
@@ -112,7 +103,6 @@ public class ANTSWindow extends JFrame implements ComponentListener
 		int width = this.getContentPane().getWidth();
 		int height = e.getComponent().getHeight()-this.navigation.getHeight();
 		
-		this.view.setSize(width, height);
 		
 //		this.graphic.setSize(width, height);
 		if(this.canvas != null)
@@ -126,18 +116,5 @@ public class ANTSWindow extends JFrame implements ComponentListener
 	public void componentShown(ComponentEvent arg0) 
 	{
 		// TODO Auto-generated method stub
-	}
-
-	public ANTSAbstractView getViewAt(int x, int y)
-	{
-		Component c=  this.view.getComponentAt(x, y);
-		if(! c.equals(view))
-		{
-			return ((ANTSAbstractView) c);
-		}
-		else
-		{
-			return null;
-		}
 	}
 }
