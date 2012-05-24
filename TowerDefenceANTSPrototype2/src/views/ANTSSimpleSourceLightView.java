@@ -6,12 +6,16 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.PopupMenu;
 import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
+
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 
 import models.ANTSSimpleSourceLightModel;
 
@@ -24,7 +28,8 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 	{
 		super(true);
 		
-		this.addMouseListener(this);
+		this.popupMenu = new JPopupMenu("Simple popupMenu: LightSource");
+		this.popupMenu.add(new JMenuItem("A popup menu item"));
 		this.model = m;
 		this.createCircle();
 		this.setIgnoreRepaint(true);

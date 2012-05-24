@@ -12,6 +12,7 @@ import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.PopupMenu;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -20,7 +21,9 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 
 import views.ANTSAbstractView;
 
@@ -369,6 +372,10 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 			ANTSAbstractView v = this.getViewAt(e.getX(), e.getY());
 			
 			v.mouseClicked(e);
+			
+		
+			
+			
 		}
 
 		@Override
@@ -397,6 +404,15 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		@Override
 		public void mouseReleased(MouseEvent e)
 		{
+
+			JPopupMenu m = this.currentDragAndDropView.getPopupMenu();
+			
+			if(e.isPopupTrigger()){
+				  m.show(this, e.getX(), e.getY());
+				  System.out.println("SHOW MENU");
+				  }
+			
+			
 			this.currentDragAndDropView.mouseReleased(e);
 			this.currentDragAndDropView = this.emptyView;
 		}

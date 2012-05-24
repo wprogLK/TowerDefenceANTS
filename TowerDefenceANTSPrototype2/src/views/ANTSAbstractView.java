@@ -9,15 +9,19 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.PopupMenu;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 
 public abstract class ANTSAbstractView extends  Container implements MouseListener, MouseMotionListener, ANTSIView 
 {
+	protected JPopupMenu popupMenu;
 	
 	//////////////////
 	//MOUSE LISTENER//
@@ -49,6 +53,10 @@ public abstract class ANTSAbstractView extends  Container implements MouseListen
 	private void basicInit()
 	{
 		this.isDragged = false;
+		this.popupMenu = new JPopupMenu("Simple popupMenu: ABSTRACT");
+		this.popupMenu.add(new JMenuItem("A popup menu item abstract"));
+		
+		JPopupMenu.setDefaultLightWeightPopupEnabled(false);	//shows the popupmenu in the foreground of the canvas!
 	}
 	
 	@Override
@@ -119,5 +127,10 @@ public abstract class ANTSAbstractView extends  Container implements MouseListen
 	public boolean isListenToMouse()
 	{
 		return this.listenToMouse;
+	}
+	
+	public JPopupMenu getPopupMenu()
+	{
+		return this.popupMenu;
 	}
 }
