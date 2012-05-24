@@ -3,6 +3,7 @@ package models;
 import interfaces.ANTSIModel;
 
 import java.awt.Color;
+import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 
 import basics.ANTSDriver;
@@ -149,6 +150,11 @@ public class ANTSSimpleSourceLightModel extends ANTSAbstractModel implements ANT
 		return "Model: X: " + this.matrix.getTranslateX() + " Y: " + this.matrix.getTranslateY() + " Radius : " +this.radius + " COLOR: " + this.color;
 	}
 	
+	public void setPosition(int x, int y)
+	{
+		this.matrix.setToTranslation(x, y);
+	}
+	
 	///////////
 	//SPECIAL//
 	///////////
@@ -157,5 +163,4 @@ public class ANTSSimpleSourceLightModel extends ANTSAbstractModel implements ANT
 	{
 		this.on = !this.on;
 	}
-
 }

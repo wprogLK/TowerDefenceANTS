@@ -330,7 +330,10 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		
 		public void addView(ANTSAbstractView v)
 		{
-			this.hiddenPanel.add(v);
+			if(v.isListenToMouse())
+			{
+				this.hiddenPanel.add(v);
+			}
 		}
 		
 		@Override
@@ -353,9 +356,6 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 				return this.emptyView; //Return a new empty view // -> every return value will be a valid ANTSAbstractView!
 			}
 		}
-		
-		
-//		private void tryMouseEvent(e)
 		
 		//////////////////
 		//MOUSE LISTENER//
@@ -400,13 +400,14 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		@Override
 		public void mouseDragged(MouseEvent e) 
 		{
-			System.out.println("MOUSE DRAGGED");
+			ANTSAbstractView v = this.getViewAt(e.getX(), e.getY());
+			System.out.println("MOUSE DRAGGED "+v);
+			v.mouseDragged(e);
 		}
 
 		@Override
 		public void mouseMoved(MouseEvent e) {
 			ANTSAbstractView v = this.getViewAt(e.getX(), e.getY());
-			
 			
 			if(!v.equals(this.currentEnteredView))
 			{

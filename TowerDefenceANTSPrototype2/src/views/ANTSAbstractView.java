@@ -12,10 +12,39 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.JPanel;
 
-public abstract class ANTSAbstractView extends  Container implements MouseListener, ANTSIView {
+public abstract class ANTSAbstractView extends  Container implements MouseListener, MouseMotionListener, ANTSIView 
+{
+	private boolean listenToMouse;
+	
+	public ANTSAbstractView(boolean listenToMouse)
+	{
+		this.listenToMouse = listenToMouse;
+	}
+	
+	public ANTSAbstractView()
+	{
+		this.listenToMouse = false;
+	}
+	
+	@Override
+	public void paint(Graphics2D g2d) 
+	{
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void paint(Graphics2D g2d, float interpolation) 
+	{
+		// TODO Auto-generated method stub
+	}
+	
+	//////////////////
+	//MOUSE LISTENER//
+	//////////////////
 	
 	@Override
 	public void mouseClicked(MouseEvent e) 
@@ -23,8 +52,6 @@ public abstract class ANTSAbstractView extends  Container implements MouseListen
 		System.out.println("CLICK abstract" + e.getX() + " / " +e.getY());
 	}
 	
-	
-
 	@Override
 	public void mouseEntered(MouseEvent e) {
 //		System.out.println("entered abstract");
@@ -32,9 +59,9 @@ public abstract class ANTSAbstractView extends  Container implements MouseListen
 	}
 
 	@Override
-	public void mouseExited(MouseEvent e) {
+	public void mouseExited(MouseEvent e) 
+	{
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -49,20 +76,27 @@ public abstract class ANTSAbstractView extends  Container implements MouseListen
 		
 	}
 	
+	/////////////////////////
+	//MOUSE MOTION LISTENER//
+	/////////////////////////
 	@Override
-	public void paint(Graphics2D g2d) {
-		// TODO Auto-generated method stub
+	public void mouseDragged(MouseEvent e) {
+		
 		
 	}
 
 	@Override
-	public void paint(Graphics2D g2d, float interpolation) {
+	public void mouseMoved(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
 	
-//	public boolean contains(int x, int y)
-//	{
-//		return this.
-//	}
+	/////////////////////
+	//GETTERS & SETTERS//
+	/////////////////////
+	
+	public boolean isListenToMouse()
+	{
+		return this.listenToMouse;
+	}
 }

@@ -20,6 +20,8 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 	
 	public ANTSSimpleSourceLightView(ANTSSimpleSourceLightModel m) 
 	{
+		super(true);
+		
 		this.addMouseListener(this);
 		this.model = m;
 		this.createCircle();
@@ -103,5 +105,16 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 	{
 		System.out.println("exited me: " + toString());
 	}
+	
+	/////////////////////////
+	//MOUSE MOTION LISTENER//
+	/////////////////////////
+	@Override
+	public void mouseDragged(MouseEvent e) 
+	{
+		System.out.println("MD");
+		this.model.setPosition(e.getX(), e.getY());
+	}
+	
 		
 }
