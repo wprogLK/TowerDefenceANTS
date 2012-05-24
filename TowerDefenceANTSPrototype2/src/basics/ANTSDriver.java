@@ -316,6 +316,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	{
 		private JPanel hiddenPanel; //Contains all ANTSAbstract views, but it is hidden; used for correct mouse position
 		private ANTSAbstractView currentEnteredView;	//Only one entered view per time possible! (TODO: change this! (if possible)
+		private ANTSAbstractView currentDragAndDropView;
 		
 		private final ANTSAbstractView emptyView = new ANTSAbstractView(){};
 		
@@ -323,6 +324,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		{
 			this.hiddenPanel = new JPanel();
 			this.currentEnteredView = this.emptyView; //empty view
+			this.currentDragAndDropView = this.emptyView; //empty view
 			
 			this.addMouseListener(this);
 			this.addMouseMotionListener(this);
@@ -365,32 +367,38 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		public void mouseClicked(MouseEvent e) 
 		{
 			ANTSAbstractView v = this.getViewAt(e.getX(), e.getY());
+			
 			v.mouseClicked(e);
 		}
 
 		@Override
 		public void mouseEntered(MouseEvent e) 
 		{
-//			ANTSAbstractView v = this.getViewAt(e.getX(), e.getY());
-//			v.mouseEntered(e);
+
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) 
 		{
-//			System.out.println("MOUSE EXIT ( " + e.MOUSE_EXITED + " )  IN INTERNAL ANTS CANVAS! View is ");
+
 		}
 
 		@Override
 		public void mousePressed(MouseEvent e) 
 		{
-			// TODO Auto-generated method stub
+			ANTSAbstractView v = this.getViewAt(e.getX(), e.getY());
+			
+			if(!v.equals(this.emptyView))
+			{
+				this.currentDragAndDropView = v;	//Set the current view at point (x|y) as a possible dagAndDropView
+			}
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent e)
 		{
-			// TODO Auto-generated method stub
+			this.currentDragAndDropView.mouseReleased(e);
+			this.currentDragAndDropView = this.emptyView;
 		}
 
 		/////////////////////////
@@ -400,15 +408,19 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		@Override
 		public void mouseDragged(MouseEvent e) 
 		{
-			ANTSAbstractView v = this.getViewAt(e.getX(), e.getY());
-			System.out.println("MOUSE DRAGGED "+v);
-			v.mouseDragged(e);
+			this.currentDragAndDropView.mouseDragged(e);
 		}
 
 		@Override
-		public void mouseMoved(MouseEvent e) {
+		public void mouseMoved(MouseEvent e)
+		{
 			ANTSAbstractView v = this.getViewAt(e.getX(), e.getY());
 			
+			this.exitEnterView(e, v);
+		}
+		
+		private void exitEnterView(MouseEvent e, ANTSAbstractView v)
+		{
 			if(!v.equals(this.currentEnteredView))
 			{
 				this.currentEnteredView.mouseExited(e);	//Exited the old view

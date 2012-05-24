@@ -18,16 +18,37 @@ import javax.swing.JPanel;
 
 public abstract class ANTSAbstractView extends  Container implements MouseListener, MouseMotionListener, ANTSIView 
 {
+	
+	//////////////////
+	//MOUSE LISTENER//
+	//////////////////
+	
 	private boolean listenToMouse;
+	
+	///////////////
+	//DRAG & DROP//
+	///////////////
+	
+	protected boolean isDragged;	//For example to change the graphic if it is dragged
 	
 	public ANTSAbstractView(boolean listenToMouse)
 	{
+		this.basicInit();
+		
 		this.listenToMouse = listenToMouse;
 	}
 	
 	public ANTSAbstractView()
 	{
+		this.basicInit();
+		
 		this.listenToMouse = false;
+	}
+	
+	
+	private void basicInit()
+	{
+		this.isDragged = false;
 	}
 	
 	@Override
@@ -49,12 +70,12 @@ public abstract class ANTSAbstractView extends  Container implements MouseListen
 	@Override
 	public void mouseClicked(MouseEvent e) 
 	{
-		System.out.println("CLICK abstract" + e.getX() + " / " +e.getY());
+
 	}
 	
 	@Override
-	public void mouseEntered(MouseEvent e) {
-//		System.out.println("entered abstract");
+	public void mouseEntered(MouseEvent e) 
+	{
 		
 	}
 
@@ -71,18 +92,18 @@ public abstract class ANTSAbstractView extends  Container implements MouseListen
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void mouseReleased(MouseEvent e) 
+	{
+		this.isDragged = false;	
 	}
 	
 	/////////////////////////
 	//MOUSE MOTION LISTENER//
 	/////////////////////////
 	@Override
-	public void mouseDragged(MouseEvent e) {
-		
-		
+	public void mouseDragged(MouseEvent e) 
+	{
+		this.isDragged = true;
 	}
 
 	@Override

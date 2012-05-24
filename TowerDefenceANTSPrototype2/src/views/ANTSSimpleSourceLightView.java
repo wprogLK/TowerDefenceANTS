@@ -2,10 +2,12 @@ package views;
 
 import interfaces.ANTSIView;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Shape;
+import java.awt.Stroke;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
@@ -36,27 +38,38 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 		this.circle = new Ellipse2D.Double(aT.getTranslateX()-(radius/2), aT.getTranslateY()-(radius/2), radius, radius);
 	}
 	
-//	public boolean pointIsIn(double x, double y)
-//	{
-//		System.out.println("----------------------------------");
-//		System.out.println("INPUT: X " + x + " Y " + y);
-//		System.out.println(this.model.toString());
-//		
-//		System.out.println("----------------------------------");
-//	
-//		return this.circle.contains(x, y);
-//	}
-
 	@Override
 	public void paint(Graphics2D g2d) 
 	{
 		this.createCircle();			//TODO CHECK IF position and radius has changed
 		AffineTransform aT = this.model.getMatrix();
 		Shape shape = aT.createTransformedShape(circle);
-		Rectangle2D box= shape.getBounds2D();	//TODO Only for debug
 		this.setBounds(shape.getBounds());
-		g2d.setColor(Color.GRAY);//TODO Only for debug
-		g2d.draw(box);//TODO Only for debug
+
+		if(this.isDragged)
+		{
+			//Only an example
+			
+			g2d.setColor(Color.GRAY);
+
+			float[] dash_array=new float[4];
+			dash_array[0]=5; //sichtbar
+			dash_array[1]=20; //unsichtbar
+			
+			BasicStroke dashStroke = new BasicStroke( 
+				5f, //Breite
+				BasicStroke.CAP_SQUARE, //End Style
+				BasicStroke.JOIN_ROUND, //Join Style
+				1f, //Limit für Join
+				dash_array, //Strichelung
+				0 //offset in Pixeln f. Strichelung
+				);
+			g2d.setStroke(dashStroke);
+			g2d.draw(shape.getBounds2D());
+			
+			g2d.setStroke(new BasicStroke());
+		}
+		
 		
 		if(this.model.isOn())
 		{
@@ -89,13 +102,14 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 	@Override
 	public void mouseClicked(MouseEvent e) 
 	{
-		System.out.println("MOUSE CLICKED");	
+		//Only an example
+		this.model.switchLight();
 	}
 	
 	@Override
 	public void mouseEntered(MouseEvent e) 
 	{
-	System.out.println("entered me: " + toString());
+	
 		
 	}
 	
@@ -103,7 +117,7 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 	@Override
 	public void mouseExited(MouseEvent e) 
 	{
-		System.out.println("exited me: " + toString());
+		
 	}
 	
 	/////////////////////////
@@ -112,8 +126,9 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 	@Override
 	public void mouseDragged(MouseEvent e) 
 	{
-		System.out.println("MD");
-		this.model.setPosition(e.getX(), e.getY());
+		super.mouseDragged(e);
+
+		this.model.setPosition(e.getX()/2, e.getY()/2);	//TODO: Important: test this! is it always /2 ? 
 	}
 	
 		
