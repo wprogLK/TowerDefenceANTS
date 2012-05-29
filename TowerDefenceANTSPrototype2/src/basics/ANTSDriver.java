@@ -271,6 +271,18 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		}
 	}
 	
+	public ANTSIController getControllerFrom(ANTSIView v)
+	{
+		for(ANTSIController c: controllers)
+		{
+			if(c.getIView().equals(v))
+			{
+				return c;
+			}
+		}
+		return null;
+	}
+	
 	//////////////////
 	//INNER CLASSES://
 	//////////////////
@@ -370,6 +382,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		public void mouseClicked(MouseEvent e) 
 		{
 			ANTSAbstractView v = this.getViewAt(e.getX(), e.getY());
+//			System.out.println("VIEW: "+ getControllerFrom(v).getIView());
 			
 			v.mouseClicked(e);
 			
