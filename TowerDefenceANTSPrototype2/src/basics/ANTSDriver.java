@@ -35,6 +35,7 @@ import interfaces.ANTSIController;
 import interfaces.ANTSIDriver;
 import interfaces.ANTSIModel;
 import interfaces.ANTSIView;
+import controllers.ANTSAbstractController;
 import controllers.ANTSGameController;
 import controllers.ANTSSimpleRayLightController;
 import controllers.ANTSSimpleSourceLightController;
@@ -271,6 +272,10 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		}
 	}
 	
+	/**
+	 * @param v
+	 * @return always returns a valid controller (if no controller was found it will return an empty controller) 
+	 */
 	public ANTSIController getControllerFrom(ANTSIView v)
 	{
 		for(ANTSIController c: controllers)
@@ -280,7 +285,8 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 				return c;
 			}
 		}
-		return null;
+		
+		return ANTSAbstractController.getEmptyController();
 	}
 	
 	//////////////////
@@ -330,16 +336,17 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	private class ANTSCanvas extends Canvas implements MouseListener, MouseMotionListener
 	{
 		private JPanel hiddenPanel; //Contains all ANTSAbstract views, but it is hidden; used for correct mouse position
-		private ANTSAbstractView currentEnteredView;	//Only one entered view per time possible! (TODO: change this! (if possible)
-		private ANTSAbstractView currentDragAndDropView;
 		
-		private final ANTSAbstractView emptyView = new ANTSAbstractView(){};
+		private ANTSIController currentEnteredController; //Only one entered controller per time possible! (TODO: change this! (if possible)
+		private ANTSIController currentDragAndDropController;
+		
 		
 		public ANTSCanvas()
 		{
 			this.hiddenPanel = new JPanel();
-			this.currentEnteredView = this.emptyView; //empty view
-			this.currentDragAndDropView = this.emptyView; //empty view
+			
+			this.currentDragAndDropController = ANTSAbstractController.getEmptyController();
+			this.currentEnteredController = ANTSAbstractController.getEmptyController();
 			
 			this.addMouseListener(this);
 			this.addMouseMotionListener(this);
@@ -370,7 +377,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 			}
 			else
 			{
-				return this.emptyView; //Return a new empty view // -> every return value will be a valid ANTSAbstractView!
+				return (ANTSAbstractView) ANTSAbstractView.getEmptyView(); //Return a new empty view // -> every return value will be a valid ANTSAbstractView!
 			}
 		}
 		
@@ -387,10 +394,8 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		@Override
 		public void mouseClicked(MouseEvent e) 
 		{
-			ANTSAbstractView v = this.getViewAt(e.getX(), e.getY());
-//			System.out.println("VIEW: "+ getControllerFrom(v).getIView());
-			
-			v.mouseClicked(e);
+			ANTSIController c = this.getControllerFromPos(e.getX(), e.getY());
+			c.mouseClicked(e);
 		}
 
 		@Override
@@ -408,28 +413,31 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		@Override
 		public void mousePressed(MouseEvent e) 
 		{
-			ANTSAbstractView v = this.getViewAt(e.getX(), e.getY());
+			ANTSIController c = this.getControllerFromPos(e.getX(), e.getY());
 			
-			if(!v.equals(this.emptyView))
+			if(!c.equals(ANTSAbstractController.getEmptyController()))
 			{
-				this.currentDragAndDropView = v;	//Set the current view at point (x|y) as a possible dagAndDropView
+				this.currentDragAndDropController = c; //Set the current controller with view at point (x|y) as a possible dagAndDropController
 			}
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent e)
 		{
-
-			JPopupMenu m = this.currentDragAndDropView.getPopupMenu();
+			if(e.isPopupTrigger())
+			{
+				ANTSIView v = this.currentDragAndDropController.getIView();
+				v.showPopupMenu(this,e.getX(), e.getY());
+				 System.out.println("SHOW MENU");
+			}
+			else
+			{
+				 //TODO Do things when not show press right (?) button
+			}
 			
-			if(e.isPopupTrigger()){	//TODO
-				  m.show(this, e.getX(), e.getY());
-				  System.out.println("SHOW MENU");
-				  }
+			this.currentDragAndDropController.mouseReleased(e);
+			this.currentDragAndDropController = ANTSAbstractController.getEmptyController();
 			
-			
-			this.currentDragAndDropView.mouseReleased(e);
-			this.currentDragAndDropView = this.emptyView;
 		}
 
 		/////////////////////////
@@ -439,25 +447,24 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		@Override
 		public void mouseDragged(MouseEvent e) 
 		{
-			this.currentDragAndDropView.mouseDragged(e);
+			this.currentDragAndDropController.mouseDragged(e);
 		}
 
 		@Override
 		public void mouseMoved(MouseEvent e)
 		{
-			ANTSAbstractView v = this.getViewAt(e.getX(), e.getY());
-			
-			this.exitEnterView(e, v);
+			ANTSIController c = this.getControllerFromPos(e.getX(), e.getY());
+			this.exitEnterController(e, c);
 		}
 		
-		private void exitEnterView(MouseEvent e, ANTSAbstractView v)
+		private void exitEnterController(MouseEvent e, ANTSIController c)
 		{
-			if(!v.equals(this.currentEnteredView))
+			if(!c.equals(this.currentEnteredController))
 			{
-				this.currentEnteredView.mouseExited(e);	//Exited the old view
+				this.currentEnteredController.mouseExited(e);	//Exited the old controller
 				
-				this.currentEnteredView = v;			
-				v.mouseEntered(e);						//Enter the new view
+				this.currentEnteredController = c;			
+				c.mouseEntered(e);						//Enter the new controller
 			}
 		}
 	}

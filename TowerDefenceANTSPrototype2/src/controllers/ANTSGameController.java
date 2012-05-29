@@ -6,7 +6,7 @@ import interfaces.ANTSIController;
 import interfaces.ANTSIModel;
 import interfaces.ANTSIView;
 
-public class ANTSGameController implements ANTSIController
+public class ANTSGameController extends ANTSAbstractController implements ANTSIController
 {
 
 	private ANTSGameModel model;
@@ -14,9 +14,15 @@ public class ANTSGameController implements ANTSIController
 	
 	public ANTSGameController()
 	{
+		super();
+		
 		this.model = new ANTSGameModel();
 		this.view = new ANTSGameView(this.model);
 	}
+	
+	/////////////////////
+	//GETTERS & SETTERS//
+	/////////////////////
 	
 	public ANTSIModel getModel()
 	{
@@ -31,5 +37,13 @@ public class ANTSGameController implements ANTSIController
 	{
 		return this.view;
 	}
+	
+	//////////////////
+	//MOUSE LISTENER//
+	//////////////////
+	
+	/////////////////////////
+	//MOUSE MOTION LISTENER//
+	/////////////////////////
 
 }

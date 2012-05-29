@@ -107,8 +107,8 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 	@Override
 	public void mouseClicked(MouseEvent e) 
 	{
-		//Only an example
-		this.model.switchLight();
+//		//Only an example
+//		this.model.switchLight();
 	}
 	
 	@Override
@@ -131,9 +131,9 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 	@Override
 	public void mouseDragged(MouseEvent e) 
 	{
-		super.mouseDragged(e);
-
-		this.model.setPosition(e.getX()/2, e.getY()/2);	//TODO: Important: test this! is it always /2 ? 
+//		super.mouseDragged(e);
+//
+//		this.model.setPosition(e.getX()/2, e.getY()/2);	//TODO: Important: test this! is it always /2 ? 
 	}
 	
 		

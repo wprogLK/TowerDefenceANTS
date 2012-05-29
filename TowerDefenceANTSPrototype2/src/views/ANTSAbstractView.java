@@ -19,10 +19,15 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
+import models.ANTSAbstractModel;
+
+import com.sun.org.apache.bcel.internal.generic.NEW;
+
 public abstract class ANTSAbstractView extends  Container implements MouseListener, MouseMotionListener, ANTSIView 
 {
 	protected JPopupMenu popupMenu;
 	
+	private static ANTSAbstractView emptyView = new ANTSAbstractView() {};
 	//////////////////
 	//MOUSE LISTENER//
 	//////////////////
@@ -120,6 +125,15 @@ public abstract class ANTSAbstractView extends  Container implements MouseListen
 		
 	}
 	
+	//////////////
+	//POPUP MENU//
+	//////////////
+	@Override
+	public void showPopupMenu(Component component,int x, int y)
+	{
+		this.popupMenu.show(component, x, y);
+	}
+	
 	/////////////////////
 	//GETTERS & SETTERS//
 	/////////////////////
@@ -133,4 +147,11 @@ public abstract class ANTSAbstractView extends  Container implements MouseListen
 	{
 		return this.popupMenu;
 	}
+	
+	public final static ANTSIView getEmptyView()
+	{
+		return emptyView;
+	}
+	
+
 }
