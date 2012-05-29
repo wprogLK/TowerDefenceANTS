@@ -374,6 +374,12 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 			}
 		}
 		
+		public ANTSIController getControllerFromPos(int x, int y)
+		{
+			ANTSIView v = this.getViewAt(x, y);
+			return getControllerFrom(v);
+		}
+		
 		//////////////////
 		//MOUSE LISTENER//
 		//////////////////
@@ -385,10 +391,6 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 //			System.out.println("VIEW: "+ getControllerFrom(v).getIView());
 			
 			v.mouseClicked(e);
-			
-		
-			
-			
 		}
 
 		@Override
