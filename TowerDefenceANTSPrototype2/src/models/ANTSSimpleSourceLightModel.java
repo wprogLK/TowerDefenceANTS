@@ -3,7 +3,6 @@ package models;
 import interfaces.ANTSIModel;
 
 import java.awt.Color;
-import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 
 import basics.ANTSDriver;
@@ -18,6 +17,8 @@ public class ANTSSimpleSourceLightModel extends ANTSAbstractModel implements ANT
 	
 	private int ticksBetweenTwoRays = 10;
 	private int tickCounter;
+	
+	private boolean isDragged;
 	
 	//RayProperties:
 	private int numberOfRaysPer360Degrees = 18;
@@ -34,6 +35,9 @@ public class ANTSSimpleSourceLightModel extends ANTSAbstractModel implements ANT
 		this.color = Color.yellow;
 		
 		this.tickCounter = 0;
+		
+		this.isDragged = false;
+		this.isMouseListener = true;
 	}
 	
 	public ANTSSimpleSourceLightModel(double posX, double posY, double radius, Color color)
@@ -48,9 +52,29 @@ public class ANTSSimpleSourceLightModel extends ANTSAbstractModel implements ANT
 		this.color = color;
 		
 		this.tickCounter = 0;
+		
+		this.isDragged = false;
+		this.isMouseListener = true;
 	}
 	
-	//@Override
+	public ANTSSimpleSourceLightModel(double posX, double posY, double radius, Color color, boolean isMouseListener)
+	{
+		this.matrix = new AffineTransform();
+		
+		this.matrix.setToTranslation(posX, posY);
+		
+		this.radius = radius;
+		
+		this.on = true;
+		this.color = color;
+		
+		this.tickCounter = 0;
+		
+		this.isDragged = false;
+		this.isMouseListener = isMouseListener;
+	}
+	
+	@Override
 	public void update()
 	{
 		if(this.canSendRay())
@@ -115,6 +139,11 @@ public class ANTSSimpleSourceLightModel extends ANTSAbstractModel implements ANT
 	//GETTERS & SETTERS//
 	/////////////////////
 	
+	public boolean isDragged()
+	{
+		return this.isDragged;
+	}
+	
 	public double getPosX()
 	{
 		return this.matrix.getTranslateX();
@@ -154,6 +183,13 @@ public class ANTSSimpleSourceLightModel extends ANTSAbstractModel implements ANT
 	{
 		this.matrix.setToTranslation(x, y);
 	}
+	
+	public void setDragged(boolean isDragged)
+	{
+		this.isDragged = isDragged;
+	}
+	
+
 	
 	///////////
 	//SPECIAL//

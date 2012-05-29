@@ -3,10 +3,7 @@ package views;
 import interfaces.ANTSIView;
 
 import java.awt.Graphics2D;
-
 import javax.swing.JButton;
-import javax.swing.JPanel;
-
 import listeners.ANTSUpdateListener;
 import models.ANTSGameModel;
 
@@ -29,16 +26,15 @@ public class ANTSGameView extends ANTSAbstractView implements ANTSIView
 		
 	}
 	
-	public boolean pointIsIn(double x, double y)
-	{
-		return false; //TODO
-	}
-	
 	@Override
 	public void paint(Graphics2D g2d, float interpolation) 
 	{
 		
 	}
-
-
+	
+	@Override
+	public boolean isMouseListener() 
+	{
+		return this.model.isMouseListener();
+	}
 }

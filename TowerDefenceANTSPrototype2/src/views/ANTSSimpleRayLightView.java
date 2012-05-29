@@ -7,8 +7,6 @@ import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 
-import javax.swing.JPanel;
-
 import models.ANTSSimpleRayLightModel;
 
 public class ANTSSimpleRayLightView extends ANTSAbstractView implements ANTSIView
@@ -31,20 +29,10 @@ public class ANTSSimpleRayLightView extends ANTSAbstractView implements ANTSIVie
 		this.ray = new Line2D.Double(x,y,x+length,y);
 	}
 	
-	public boolean pointIsIn(double x, double y)
-	{
-		return false;	//TODO
-	}
-
 	@Override
 	public void paint(Graphics2D g2d) 
 	{		
-//		g2d.setColor(this.model.getColor());
-//		
-//		AffineTransform aT = this.model.getMatrix();
-//		Shape s = aT.createTransformedShape(this.ray);
-//		
-//		g2d.draw(s);
+
 	}
 	
 	@Override
@@ -58,5 +46,11 @@ public class ANTSSimpleRayLightView extends ANTSAbstractView implements ANTSIVie
 		Shape s = aT.createTransformedShape(this.ray);
 		
 		g2d.draw(s);
+	}
+	
+	@Override
+	public boolean isMouseListener() 
+	{
+		return this.model.isMouseListener();
 	}
 }

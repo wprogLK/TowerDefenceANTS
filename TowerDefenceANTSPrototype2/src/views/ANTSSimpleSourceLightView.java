@@ -4,16 +4,10 @@ import interfaces.ANTSIView;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.PopupMenu;
 import java.awt.Shape;
-import java.awt.Stroke;
-import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
-
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
@@ -26,13 +20,14 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 	
 	public ANTSSimpleSourceLightView(ANTSSimpleSourceLightModel m) 
 	{
-		super(true);
+		super();
 		
 		this.popupMenu = new JPopupMenu("Simple popupMenu: LightSource");
 		this.popupMenu.add(new JMenuItem("A popup menu item"));
+		
 		this.model = m;
+		
 		this.createCircle();
-		this.setIgnoreRepaint(true);
 	}
 	
 	private void createCircle()
@@ -51,7 +46,7 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 		Shape shape = aT.createTransformedShape(circle);
 		this.setBounds(shape.getBounds());
 
-		if(this.isDragged)
+		if(this.model.isDragged())
 		{
 			//Only an example
 			
@@ -99,42 +94,10 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 	{
 		return "SOURCE light " + this.model.getPosX() + " " + this.model.getPosY() + " " + this.model.getColor();
 	}
-	
-	/////////
-	//MOUSE//
-	/////////
-	
+
 	@Override
-	public void mouseClicked(MouseEvent e) 
+	public boolean isMouseListener() 
 	{
-//		//Only an example
-//		this.model.switchLight();
+		return this.model.isMouseListener();
 	}
-	
-	@Override
-	public void mouseEntered(MouseEvent e) 
-	{
-	
-		
-	}
-	
-	
-	@Override
-	public void mouseExited(MouseEvent e) 
-	{
-		
-	}
-	
-	/////////////////////////
-	//MOUSE MOTION LISTENER//
-	/////////////////////////
-	@Override
-	public void mouseDragged(MouseEvent e) 
-	{
-//		super.mouseDragged(e);
-//
-//		this.model.setPosition(e.getX()/2, e.getY()/2);	//TODO: Important: test this! is it always /2 ? 
-	}
-	
-		
 }

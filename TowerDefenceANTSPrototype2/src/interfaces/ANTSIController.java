@@ -9,5 +9,4 @@ public interface ANTSIController extends MouseListener, MouseMotionListener
 {
 	public ANTSIModel getModel();
 	public ANTSIView getIView();
-	public boolean isListenToMouse();
 }

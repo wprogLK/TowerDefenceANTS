@@ -95,12 +95,10 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		
 		//Canvas for painting
 		canvas.setIgnoreRepaint(true);
-//		canvas.addMouseListener(window);
 		
 		window.addCanvas(this.canvas);
 		
 		//BackBuffer
-		JPanel p = new JPanel();
 		canvas.createBufferStrategy(2);
 		this.buffer = canvas.getBufferStrategy();
 		
@@ -160,7 +158,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	
 	public static void createSimpleSourceLight2()
 	{
-		ANTSSimpleSourceLightController c = new ANTSSimpleSourceLightController(20,20,20,Color.blue);
+		ANTSSimpleSourceLightController c = new ANTSSimpleSourceLightController(20,20,20,Color.blue,false);
 		addModel(c.getModel());
 		addView(c.getView());
 		addController(c);
@@ -168,7 +166,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	
 	public static void createSimpleSourceLight3()
 	{
-		ANTSSimpleSourceLightController c = new ANTSSimpleSourceLightController(6,5,20,Color.RED);
+		ANTSSimpleSourceLightController c = new ANTSSimpleSourceLightController(6,5,20,Color.RED,true);
 		addModel(c.getModel());
 		addView(c.getView());
 		addController(c);
@@ -340,7 +338,6 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		private ANTSIController currentEnteredController; //Only one entered controller per time possible! (TODO: change this! (if possible)
 		private ANTSIController currentDragAndDropController;
 		
-		
 		public ANTSCanvas()
 		{
 			this.hiddenPanel = new JPanel();
@@ -354,7 +351,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		
 		public void addView(ANTSAbstractView v)
 		{
-			if(v.isListenToMouse())
+			if(v.isMouseListener())
 			{
 				this.hiddenPanel.add(v);
 			}

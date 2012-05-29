@@ -1,13 +1,10 @@
 package controllers;
 
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
 import models.ANTSAbstractModel;
 
 import views.ANTSAbstractView;
-import views.ANTSSimpleRayLightView;
 
 import interfaces.ANTSIController;
 import interfaces.ANTSIModel;
@@ -18,34 +15,20 @@ import interfaces.ANTSIView;
  * @author Lukas
  *
  */
-public abstract class ANTSAbstractController implements ANTSIController//, MouseListener, MouseMotionListener
+public abstract class ANTSAbstractController implements ANTSIController
 {
-	protected boolean listenToMouse;
-	
-	protected boolean isDragged;	//For example to change the graphic in the view if it is dragged
 	
 	private static ANTSAbstractController emptyAbstractController = new ANTSAbstractController() {};
 	
 	public ANTSAbstractController()
 	{
-		this.isDragged = false;
-		this.listenToMouse = false;
 	}
 	
-	public ANTSAbstractController(boolean isListenToMouse)
-	{
-		this.isDragged = false;
-		this.listenToMouse = isListenToMouse;
-	}
 	
 	/////////////////////
 	//GETTERS & SETTERS//
 	/////////////////////
 	
-	public boolean isListenToMouse()
-	{
-		return this.listenToMouse;
-	}
 	
 	@Override
 	public ANTSIModel getModel()
@@ -95,7 +78,7 @@ public abstract class ANTSAbstractController implements ANTSIController//, Mouse
 	@Override
 	public void mouseReleased(MouseEvent e) 
 	{
-		this.isDragged = false;	
+
 	}
 	
 	/////////////////////////
@@ -105,7 +88,7 @@ public abstract class ANTSAbstractController implements ANTSIController//, Mouse
 	@Override
 	public void mouseDragged(MouseEvent arg0) 
 	{
-		this.isDragged = true;
+
 	}
 
 	@Override
@@ -113,7 +96,4 @@ public abstract class ANTSAbstractController implements ANTSIController//, Mouse
 	{
 		// TODO Auto-generated method stub
 	}
-	
-	
-
 }

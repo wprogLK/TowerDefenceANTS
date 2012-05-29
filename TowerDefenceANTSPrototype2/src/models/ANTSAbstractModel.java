@@ -2,15 +2,14 @@ package models;
 
 import interfaces.ANTSIModel;
 
-import java.awt.event.MouseAdapter;
-
-public  class ANTSAbstractModel implements ANTSIModel
+public class ANTSAbstractModel implements ANTSIModel
 {
 	private static ANTSAbstractModel emptyModel = new ANTSAbstractModel();
+	protected boolean isMouseListener;
 	
 	public ANTSAbstractModel() 
 	{
-		
+		this.isMouseListener = false;
 	}
 	
 	public final static ANTSIModel getEmptyModel()
@@ -23,6 +22,12 @@ public  class ANTSAbstractModel implements ANTSIModel
 	{
 		
 	}
+	
+	public boolean isMouseListener()
+	{
+		return this.isMouseListener;
+	}
+	
 
 
 }

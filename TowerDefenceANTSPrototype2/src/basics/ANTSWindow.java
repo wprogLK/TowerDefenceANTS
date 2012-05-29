@@ -1,33 +1,20 @@
 package basics;
 
-import interfaces.ANTSIView;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import views.ANTSAbstractView;
-
 import listeners.ANTSSwitchLightListener;
 
 public class ANTSWindow extends JFrame implements ComponentListener
 {
-	private ArrayList<ANTSIView> views;
-	private float interpolation;
-	
 	private JPanel navigation;	//Panel for buttons and other stuff
 	private JPanel graphic;		//Panel for graphics
 	
@@ -45,8 +32,6 @@ public class ANTSWindow extends JFrame implements ComponentListener
 		
 		this.navigation.setLayout(new FlowLayout());
 		this.getContentPane().setLayout(new BorderLayout());
-		
-		this.views = new ArrayList<ANTSIView>();
 		
 		//Test button:
 		this.buttonUpdate = new JButton("Switch light");
@@ -72,8 +57,6 @@ public class ANTSWindow extends JFrame implements ComponentListener
 			this.canvas.setBounds(0,0, this.graphic.getWidth(), this.graphic.getHeight());
 		}
 	}
-
-	
 	
 	public int getWidthOfGraphics()
 	{
@@ -98,13 +81,11 @@ public class ANTSWindow extends JFrame implements ComponentListener
 	}
 
 	@Override
-	public void componentResized(ComponentEvent e) {
-		System.out.println("RESIZE");
+	public void componentResized(ComponentEvent e) 
+	{
 		int width = this.getContentPane().getWidth();
 		int height = e.getComponent().getHeight()-this.navigation.getHeight();
 		
-		
-//		this.graphic.setSize(width, height);
 		if(this.canvas != null)
 		{
 			this.canvas.setSize(width,height);
