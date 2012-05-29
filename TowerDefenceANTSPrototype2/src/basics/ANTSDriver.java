@@ -407,7 +407,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 
 			JPopupMenu m = this.currentDragAndDropView.getPopupMenu();
 			
-			if(e.isPopupTrigger()){
+			if(e.isPopupTrigger()){	//TODO
 				  m.show(this, e.getX(), e.getY());
 				  System.out.println("SHOW MENU");
 				  }
