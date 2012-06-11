@@ -39,6 +39,7 @@ import controllers.ANTSAbstractController;
 import controllers.ANTSGameController;
 import controllers.ANTSSimpleRayLightController;
 import controllers.ANTSSimpleSourceLightController;
+import controllers.ANTSSimpleTestAnt1Controller;
 
 /**
  * @author Lukas
@@ -85,6 +86,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		createSimpleSourceLight(); //Only for testing
 		createSimpleSourceLight2();
 		createSimpleSourceLight3();
+		createSimpleTestAnt1();
 		
 		this.initActiveRendering();
 	}
@@ -172,12 +174,22 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		addController(c);
 	}
 	
+	public static void createSimpleTestAnt1()
+	{
+		ANTSSimpleTestAnt1Controller c = new ANTSSimpleTestAnt1Controller(60,50,Color.RED,true);
+		addModel(c.getModel());
+		addView(c.getView());
+		addController(c);
+	}
+	
 	public static void createSimpleRayLight(AffineTransform matrix, double velocity, double angle, Color color)
 	{
 		ANTSSimpleRayLightController c = new ANTSSimpleRayLightController(matrix,10,angle,color);
 		addModel(c.getModel());
 		addView(c.getView());
 	}
+	
+	
 	
 	private void createGame()
 	{
