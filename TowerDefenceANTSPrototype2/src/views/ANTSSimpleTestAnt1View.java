@@ -31,7 +31,13 @@ public class ANTSSimpleTestAnt1View extends ANTSAbstractView implements ANTSIVie
 	//Animation
 	private ArrayList<BufferedImage> animation;
 	private int animationIndex;
-	private int animationStep;
+	private int animationStep;		//ticks between image change
+	private BufferedImage currentImage;
+	private int currentStep;
+	
+	//Timer					//TODO: only for Debug
+	private long startTime;
+	private long endTime = 0;
 	
 	public ANTSSimpleTestAnt1View(ANTSSimpleTestAnt1Model m) 
 	{
@@ -51,7 +57,10 @@ public class ANTSSimpleTestAnt1View extends ANTSAbstractView implements ANTSIVie
 		this.loadImage("img/testAnt/testAnt2.jpg");
 		
 		this.animationIndex = 0;
-		this.animationStep = 6;	//TODO example
+		this.currentStep = 0;
+		this.animationStep = 50;	//TODO example
+		
+		this.startTime = System.currentTimeMillis();
 	}
 	
 	private void loadImage(String fileWithPath)
@@ -68,68 +77,49 @@ public class ANTSSimpleTestAnt1View extends ANTSAbstractView implements ANTSIVie
 		}
 	}
 	
-	
 	private BufferedImage getCurrentImage()
 	{
+		if(this.currentStep>=this.animationStep)
+		{
+			this.currentStep = 0;
+			this.nextImage();
+			
+			this.endTime = System.currentTimeMillis();
+			
+//			System.out.println("TIME: " + (endTime - startTime));
+			this.startTime = System.currentTimeMillis();
+		}
+		else
+		{
+			this.currentStep++;
+		}
+		
+		return this.currentImage;
+	}
+	
+	private BufferedImage nextImage()
+	{	
 		if(this.animation.isEmpty())
 		{
 			System.out.println("image: null! ArrayList is empty!");
 			//TODO
 			return null;
 		}
-		else if(!(this.animationIndex>0 && (this.animationIndex % this.animationStep)<this.animation.size()))
+		else if(this.animationIndex>=this.animation.size())
 		{
-			this.animationIndex=0;
+			this.animationIndex = 0;
 		}
-		System.out.println("Animation: index " + this.animationIndex + " % animationStep " + this.animationStep + " = " +  (this.animationIndex % this.animationStep)  );
-		BufferedImage image = this.animation.get(this.animationIndex % this.animationStep);
-		this.animationIndex++;
 		
-		return image;
+		this.currentImage = this.animation.get(this.animationIndex);
+		this.animationIndex++;
+		return this.currentImage;
 	}
 	
 	@Override
 	public void paint(Graphics2D g2d) 
 	{
 		AffineTransform aT = this.model.getMatrix();
-		
-		//this.setBounds();	//TODO
 
-//		if(this.model.isDragged())
-//		{
-//			//Only an example
-//			
-//			g2d.setColor(Color.GRAY);
-//
-//			float[] dash_array=new float[4];
-//			dash_array[0]=5; //sichtbar
-//			dash_array[1]=20; //unsichtbar
-//			
-//			BasicStroke dashStroke = new BasicStroke( 
-//				5f, //Breite
-//				BasicStroke.CAP_SQUARE, //End Style
-//				BasicStroke.JOIN_ROUND, //Join Style
-//				1f, //Limit für Join
-//				dash_array, //Strichelung
-//				0 //offset in Pixeln f. Strichelung
-//				);
-//			g2d.setStroke(dashStroke);
-//			g2d.draw(shape.getBounds2D());
-//			
-//			g2d.setStroke(new BasicStroke());
-//		}
-//		
-//		
-//		if(this.model.isOn())
-//		{
-//			g2d.setColor(this.model.getColor());
-//			g2d.fill(shape);
-//		}
-//		else
-//		{
-//			g2d.setColor(Color.black);
-//			g2d.draw(shape);
-//		}
 		Rectangle2D r = new Rectangle2D.Double(aT.getTranslateX(), aT.getTranslateY(),60, 60);
 		g2d.draw(r);
 		g2d.drawImage(this.getCurrentImage(), aT, null);
