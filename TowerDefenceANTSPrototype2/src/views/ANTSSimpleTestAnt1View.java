@@ -118,11 +118,21 @@ public class ANTSSimpleTestAnt1View extends ANTSAbstractView implements ANTSIVie
 	@Override
 	public void paint(Graphics2D g2d) 
 	{
-		AffineTransform aT = this.model.getMatrix();
-
-		Rectangle2D r = new Rectangle2D.Double(aT.getTranslateX(), aT.getTranslateY(),60, 60);
-		g2d.draw(r);
-		g2d.drawImage(this.getCurrentImage(), aT, null);
+		BufferedImage image = this.getCurrentImage();
+		AffineTransform aT = null;
+		if(image != null)
+		{
+			aT = this.model.getAffineTransformForImage(image.getWidth(), image.getHeight());
+			Rectangle2D shape = new Rectangle(image.getWidth(), image.getHeight());
+			Shape box = aT.createTransformedShape(shape);
+			this.setBounds(box.getBounds());
+			g2d.drawImage(image, aT, null);
+		}
+		else
+		{
+			System.out.println("Image IS NULL");
+			//TODO
+		}
 	}
 	
 	@Override

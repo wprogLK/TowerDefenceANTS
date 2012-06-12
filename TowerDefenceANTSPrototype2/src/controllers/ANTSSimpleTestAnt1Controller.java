@@ -28,9 +28,9 @@ public class ANTSSimpleTestAnt1Controller extends ANTSAbstractController impleme
 		this.view = new ANTSSimpleTestAnt1View(this.model);
 	}
 	
-	public ANTSSimpleTestAnt1Controller(double posX, double posY, Color color, boolean isMouseListener)
+	public ANTSSimpleTestAnt1Controller(double posX, double posY, int width, int height, Color color, boolean isMouseListener)
 	{
-		this.model = new ANTSSimpleTestAnt1Model(posX,posY,color,isMouseListener);
+		this.model = new ANTSSimpleTestAnt1Model(posX, posY, width, height, color, isMouseListener);
 		this.view = new ANTSSimpleTestAnt1View(this.model);
 	}
 	
@@ -62,6 +62,7 @@ public class ANTSSimpleTestAnt1Controller extends ANTSAbstractController impleme
 	{
 		//Only an example
 		this.model.switchLight();
+		System.out.println("ANTS CLICKED");
 	}
 	
 	@Override
@@ -79,6 +80,6 @@ public class ANTSSimpleTestAnt1Controller extends ANTSAbstractController impleme
 	public void mouseDragged(MouseEvent e) 
 	{
 		this.model.setDragged(true);
-		this.model.setPosition(e.getX()/2, e.getY()/2);	//TODO: Important: test this! is it always /2 ? 
+		this.model.setPosition(e.getX(), e.getY());	//TODO: Important: test this! is it always /2 ?  //Here not /2 because the center is in the left top corner!
 	}
 }

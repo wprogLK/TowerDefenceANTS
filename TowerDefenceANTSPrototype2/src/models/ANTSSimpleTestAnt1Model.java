@@ -16,10 +16,16 @@ public class ANTSSimpleTestAnt1Model extends ANTSAbstractModel implements ANTSIM
 	
 	private boolean isDragged;
 	
+	private int width;
+	private int height;
+	
 	public ANTSSimpleTestAnt1Model() 
 	{
 		this.matrix = new AffineTransform();
 		this.matrix.setToTranslation(100, 100);
+		
+		this.width = 100;
+		this.height = 100;
 		
 		this.on = true;
 		this.color = Color.yellow;
@@ -31,8 +37,10 @@ public class ANTSSimpleTestAnt1Model extends ANTSAbstractModel implements ANTSIM
 	public ANTSSimpleTestAnt1Model(double posX, double posY, Color color)
 	{
 		this.matrix = new AffineTransform();
-		
 		this.matrix.setToTranslation(posX, posY);
+		
+		this.width = 100;
+		this.height = 100;
 		
 		this.on = true;
 		this.color = color;
@@ -41,11 +49,13 @@ public class ANTSSimpleTestAnt1Model extends ANTSAbstractModel implements ANTSIM
 		this.isMouseListener = true;
 	}
 	
-	public ANTSSimpleTestAnt1Model(double posX, double posY, Color color, boolean isMouseListener)
+	public ANTSSimpleTestAnt1Model(double posX, double posY, int width, int height, Color color, boolean isMouseListener)
 	{
 		this.matrix = new AffineTransform();
-		
 		this.matrix.setToTranslation(posX, posY);
+		
+		this.width = width;
+		this.height = height;
 		
 		this.on = true;
 		this.color = color;
@@ -80,6 +90,15 @@ public class ANTSSimpleTestAnt1Model extends ANTSAbstractModel implements ANTSIM
 		return this.matrix.getTranslateY();
 	}
 	
+	public int getWidth()
+	{
+		return this.width;
+	}
+	
+	public int getHeight()
+	{
+		return this.height;
+	}
 	
 	public AffineTransform getMatrix()
 	{
@@ -105,6 +124,24 @@ public class ANTSSimpleTestAnt1Model extends ANTSAbstractModel implements ANTSIM
 	public void setDragged(boolean isDragged)
 	{
 		this.isDragged = isDragged;
+	}
+	
+	/**
+	 * calculates an affineTransform with an additional scaling factor for the image
+	 * @param widthImage
+	 * @param heightImage
+	 * @return
+	 */
+	public AffineTransform getAffineTransformForImage(int widthImage, int heightImage)
+	{
+		AffineTransform aTImage = new AffineTransform(matrix);
+		
+		float dw = (float) this.width/widthImage;
+		float dh = (float) this.height/heightImage;
+		
+		aTImage.scale(dw,dh);
+		
+		return aTImage;
 	}
 	
 	///////////

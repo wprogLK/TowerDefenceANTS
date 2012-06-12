@@ -176,7 +176,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	
 	public static void createSimpleTestAnt1()
 	{
-		ANTSSimpleTestAnt1Controller c = new ANTSSimpleTestAnt1Controller(60,50,Color.RED,true);
+		ANTSSimpleTestAnt1Controller c = new ANTSSimpleTestAnt1Controller(60,50,320,320,Color.RED,true);
 		addModel(c.getModel());
 		addView(c.getView());
 		addController(c);
