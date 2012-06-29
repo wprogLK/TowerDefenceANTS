@@ -3,6 +3,7 @@ package basics;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
@@ -32,6 +33,7 @@ public class ANTSWindow extends JFrame implements ComponentListener
 		
 		this.navigation.setLayout(new FlowLayout());
 		this.getContentPane().setLayout(new BorderLayout());
+	
 		
 		//Test button:
 		this.buttonUpdate = new JButton("Switch light");

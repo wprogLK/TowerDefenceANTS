@@ -2,6 +2,7 @@ package views;
 
 import interfaces.ANTSIView;
 
+import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -39,6 +40,8 @@ public class ANTSSimpleTestAnt1View extends ANTSAbstractView implements ANTSIVie
 	private long startTime;
 	private long endTime = 0;
 	
+	private Color transparentColor = Color.black;
+	
 	public ANTSSimpleTestAnt1View(ANTSSimpleTestAnt1Model m) 
 	{
 		super();
@@ -58,7 +61,7 @@ public class ANTSSimpleTestAnt1View extends ANTSAbstractView implements ANTSIVie
 		
 		this.animationIndex = 0;
 		this.currentStep = 0;
-		this.animationStep = 50;	//TODO example
+		this.animationStep = 1000;	//TODO example
 		
 		this.startTime = System.currentTimeMillis();
 	}
@@ -66,16 +69,47 @@ public class ANTSSimpleTestAnt1View extends ANTSAbstractView implements ANTSIVie
 	private void loadImage(String fileWithPath)
 	{
 		BufferedImage img = null;
-		try 
-		{	
-		    img = ImageIO.read(new File(fileWithPath));
+//		try 
+//		{	
+//		    img = ImageIO.read(new File(fileWithPath));
+			img = this.makeColorTransparent(fileWithPath, this.transparentColor);
 		    this.animation.add(img);
-		} 
-		catch (IOException e)
-		{
-			//TODO
-		}
+//		} 
+//		catch (IOException e)
+//		{
+//			//TODO
+//		}
 	}
+	
+	/*
+	 * Test code
+	 */
+	public  BufferedImage makeColorTransparent(String ref, Color color) 
+	{  
+        BufferedImage image = null;
+		try {
+			image = ImageIO.read(new File(ref));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        BufferedImage dimg = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);  
+
+
+        Graphics2D g = dimg.createGraphics();  
+	    g.setComposite(AlphaComposite.Src);  
+	    g.drawImage(image, null, 0, 0);  
+	    g.dispose();  
+	    for(int i = 0; i < dimg.getHeight(); i++) {  
+	        for(int j = 0; j < dimg.getWidth(); j++) {  
+	            if(dimg.getRGB(j, i) == color.getRGB()) {  
+	            dimg.setRGB(j, i, 0x8F1C1C);  
+	            System.out.println("Set color brown");
+	            }  
+	        }  
+	    }  
+	    return dimg;  
+	}  
 	
 	private BufferedImage getCurrentImage()
 	{

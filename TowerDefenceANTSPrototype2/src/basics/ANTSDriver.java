@@ -55,6 +55,8 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	
 	private static ANTSCanvas canvas;
 	
+	private Color backgroundColor = Color.CYAN;
+	
 	private final int TICKS_PER_SECOND = 25;
 	private final int SKIP_TICKS = 1000/TICKS_PER_SECOND;
 	private final int MAX_FRAMESKIP = 5;
@@ -247,6 +249,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		this.g2d = bi.createGraphics();
 		
 		//Clear:
+		g2d.setColor(this.backgroundColor); 
 		this.g2d.fillRect(0, 0, this.window.getWidthOfGraphics(),this.window.getHeightOfGraphics());
 		
 		for(int i = 0; i<views.size(); i++)
