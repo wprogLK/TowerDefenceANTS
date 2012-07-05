@@ -40,7 +40,7 @@ public class ANTSSimpleTestAnt1View extends ANTSAbstractView implements ANTSIVie
 	private long startTime;
 	private long endTime = 0;
 	
-	private Color transparentColor = Color.black;
+	private Color transparentColor = new Color(255,0,255);// Color.black;
 	
 	public ANTSSimpleTestAnt1View(ANTSSimpleTestAnt1Model m) 
 	{
@@ -56,8 +56,10 @@ public class ANTSSimpleTestAnt1View extends ANTSAbstractView implements ANTSIVie
 	private void setupAnimation()
 	{
 		this.animation = new ArrayList<BufferedImage>();
-		this.loadImage("img/testAnt/testAnt1.jpg");
-		this.loadImage("img/testAnt/testAnt2.jpg");
+//		this.loadImage("img/testAnt/testAnt1.png");
+//		this.loadImage("img/testAnt/testAnt2T.png")
+		this.loadImage("img/testAnt/testAnt1.png");
+		this.loadImage("img/testAnt/testAnt2.png");
 		
 		this.animationIndex = 0;
 		this.currentStep = 0;

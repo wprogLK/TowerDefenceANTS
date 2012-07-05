@@ -55,7 +55,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	
 	private static ANTSCanvas canvas;
 	
-	private Color backgroundColor = Color.CYAN;
+	private Color backgroundColor = Color.BLUE;
 	
 	private final int TICKS_PER_SECOND = 25;
 	private final int SKIP_TICKS = 1000/TICKS_PER_SECOND;
