@@ -40,7 +40,7 @@ public class ANTSSimpleTestAnt1View extends ANTSAbstractView implements ANTSIVie
 	private long startTime;
 	private long endTime = 0;
 	
-	private Color transparentColor = new Color(255,0,255);// Color.black;
+	private Color transparentColor = new Color(255,0,255);
 	
 	public ANTSSimpleTestAnt1View(ANTSSimpleTestAnt1Model m) 
 	{
@@ -56,10 +56,9 @@ public class ANTSSimpleTestAnt1View extends ANTSAbstractView implements ANTSIVie
 	private void setupAnimation()
 	{
 		this.animation = new ArrayList<BufferedImage>();
+		this.loadImage("img/testAnt/testAnt2T.png");
 //		this.loadImage("img/testAnt/testAnt1.png");
-//		this.loadImage("img/testAnt/testAnt2T.png")
-		this.loadImage("img/testAnt/testAnt1.png");
-		this.loadImage("img/testAnt/testAnt2.png");
+//		this.loadImage("img/testAnt/testAnt2.png");
 		
 		this.animationIndex = 0;
 		this.currentStep = 0;
@@ -71,47 +70,48 @@ public class ANTSSimpleTestAnt1View extends ANTSAbstractView implements ANTSIVie
 	private void loadImage(String fileWithPath)
 	{
 		BufferedImage img = null;
-//		try 
-//		{	
-//		    img = ImageIO.read(new File(fileWithPath));
-			img = this.makeColorTransparent(fileWithPath, this.transparentColor);
+		try 
+		{	
+			img = ImageIO.read(new File(fileWithPath));
+//			img = this.makeColorTransparent(fileWithPath, this.transparentColor);
 		    this.animation.add(img);
-//		} 
-//		catch (IOException e)
-//		{
+		} 
+		catch (IOException e)
+		{
 //			//TODO
-//		}
+		}
 	}
 	
-	/*
-	 * Test code
-	 */
-	public  BufferedImage makeColorTransparent(String ref, Color color) 
-	{  
-        BufferedImage image = null;
-		try {
-			image = ImageIO.read(new File(ref));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        BufferedImage dimg = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);  
-
-
-        Graphics2D g = dimg.createGraphics();  
-	    g.setComposite(AlphaComposite.Src);  
-	    g.drawImage(image, null, 0, 0);  
-	    g.dispose();  
-	    for(int i = 0; i < dimg.getHeight(); i++) {  
-	        for(int j = 0; j < dimg.getWidth(); j++) {  
-	            if(dimg.getRGB(j, i) == color.getRGB()) {  
-	            dimg.setRGB(j, i, 0x8F1C1C);  
-	            System.out.println("Set color brown");
-	            }  
-	        }  
-	    }  
-	    return dimg;  
-	}  
+//	public  BufferedImage makeColorTransparent(String ref, Color color) 
+//	{  
+//        BufferedImage image = null;
+//		try 
+//		{
+//			image = ImageIO.read(new File(ref));
+//		} 
+//		catch (IOException e) 
+//		{
+//			e.printStackTrace();
+//		}
+//        BufferedImage dimg = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);  
+//        
+//        Graphics2D g = dimg.createGraphics();  
+//	    g.setComposite(AlphaComposite.Src);  
+//	    g.drawImage(image, null, 0, 0);  
+//	    g.dispose();  
+//	    
+//	    for(int i = 0; i < dimg.getHeight(); i++) 
+//	    {  
+//	        for(int j = 0; j < dimg.getWidth(); j++)
+//	        {  
+//	            if(dimg.getRGB(j, i) == color.getRGB())
+//	            {  
+//	            	dimg.setRGB(j, i, 0x8F1C1C);  
+//	            }  
+//	        }  
+//	    }  
+//	    return dimg;  
+//	}  
 	
 	private BufferedImage getCurrentImage()
 	{
@@ -122,7 +122,6 @@ public class ANTSSimpleTestAnt1View extends ANTSAbstractView implements ANTSIVie
 			
 			this.endTime = System.currentTimeMillis();
 			
-//			System.out.println("TIME: " + (endTime - startTime));
 			this.startTime = System.currentTimeMillis();
 		}
 		else
@@ -166,7 +165,7 @@ public class ANTSSimpleTestAnt1View extends ANTSAbstractView implements ANTSIVie
 		}
 		else
 		{
-			System.out.println("Image IS NULL");
+//			System.out.println("Image IS NULL");
 			//TODO
 		}
 	}
@@ -174,7 +173,7 @@ public class ANTSSimpleTestAnt1View extends ANTSAbstractView implements ANTSIVie
 	@Override
 	public void paint(Graphics2D g2d, float interpolation) 
 	{
-		//interpolation not needed for this view!
+		//TODO
 		this.paint(g2d);
 	}
 	
