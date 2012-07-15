@@ -36,7 +36,9 @@ import interfaces.ANTSIDriver;
 import interfaces.ANTSIModel;
 import interfaces.ANTSIView;
 import controllers.ANTSAbstractController;
+import controllers.ANTSCellController;
 import controllers.ANTSGameController;
+import controllers.ANTSGridController;
 import controllers.ANTSSimpleRayLightController;
 import controllers.ANTSSimpleSourceLightController;
 import controllers.ANTSSimpleTestAnt1Controller;
@@ -49,13 +51,15 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 {
 	private static ANTSWindow window;
 	private static ANTSGameController gameController;
+	private static ANTSGridController gridController;
+	
 	private static ArrayList<ANTSIModel> models;
 	private static ArrayList<ANTSIView> views;
 	private static ArrayList<ANTSIController> controllers;
 	
 	private static ANTSCanvas canvas;
 	
-	private Color backgroundColor = Color.BLUE;
+	private Color backgroundColor = Color.white;
 	
 	private final int TICKS_PER_SECOND = 25;
 	private final int SKIP_TICKS = 1000/TICKS_PER_SECOND;
@@ -71,6 +75,10 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	private BufferStrategy buffer;
 	private GraphicsConfiguration gC;
 	
+	//Grid Config
+	private int xCells = 10;
+	private int yCells = 10;
+	
 	public ANTSDriver()
 	{	
 		window = new ANTSWindow();
@@ -85,10 +93,10 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		this.initAllListeners();
 		
 		this.createGame();
-		createSimpleSourceLight(); //Only for testing
-		createSimpleSourceLight2();
-		createSimpleSourceLight3();
-		createSimpleTestAnt1();
+//		createSimpleSourceLight(); //Only for testing
+//		createSimpleSourceLight2();
+//		createSimpleSourceLight3();
+//		createSimpleTestAnt1();
 		
 		this.initActiveRendering();
 	}
@@ -120,11 +128,23 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		ANTSUpdateListener.setDriver(this);
 	}
 
+	private static void addComponents(ANTSIController c) 
+	{
+		addModel(c.getModel());
+		addController(c);
+	}
+	
 	//Views
 	
 	private static void addView(ANTSAbstractView v)
 	{
 		views.add(v);
+		canvas.addView(v);
+	}
+	
+	
+	public static void addToCanvas(ANTSAbstractView v)
+	{
 		canvas.addView(v);
 	}
 
@@ -153,42 +173,37 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	public static void createSimpleSourceLight()
 	{
 		ANTSSimpleSourceLightController c = new ANTSSimpleSourceLightController(200,200,60,Color.yellow);
-		addModel(c.getModel());
+		addComponents(c);
 		addView(c.getView());
-		addController(c);
-		
 		ANTSSwitchLightListener.addLight((ANTSSimpleSourceLightModel) c.getModel());	//only for testing
 	}
-	
+
 	public static void createSimpleSourceLight2()
 	{
 		ANTSSimpleSourceLightController c = new ANTSSimpleSourceLightController(20,20,20,Color.blue,false);
-		addModel(c.getModel());
 		addView(c.getView());
-		addController(c);
+		addComponents(c);
 	}
 	
 	public static void createSimpleSourceLight3()
 	{
 		ANTSSimpleSourceLightController c = new ANTSSimpleSourceLightController(6,5,20,Color.RED,true);
-		addModel(c.getModel());
 		addView(c.getView());
-		addController(c);
+		addComponents(c);
 	}
 	
 	public static void createSimpleTestAnt1()
 	{
 		ANTSSimpleTestAnt1Controller c = new ANTSSimpleTestAnt1Controller(60,50,320,320,Color.RED,true);
-		addModel(c.getModel());
 		addView(c.getView());
-		addController(c);
+		addComponents(c);
 	}
 	
 	public static void createSimpleRayLight(AffineTransform matrix, double velocity, double angle, Color color)
 	{
 		ANTSSimpleRayLightController c = new ANTSSimpleRayLightController(matrix,10,angle,color);
-		addModel(c.getModel());
 		addView(c.getView());
+		addComponents(c);
 	}
 	
 	
@@ -196,9 +211,27 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	private void createGame()
 	{
 		gameController = new ANTSGameController();
-		addModel(gameController.getModel());
 		addView(gameController.getView());
+		addComponents(gameController);
+		
+		this.createGrid();
 	}
+	
+	private void createGrid()
+	{
+		gridController = new ANTSGridController(this.xCells, this.yCells);
+		addView(gridController.getView());
+		addComponents(gridController);
+		//TODO add to game and co
+	}
+	
+//	public static ANTSCellController createACell()
+//	{
+//		ANTSCellController cellController = new ANTSCellController();
+//		//addView(cellController.getView());	//Maybe not necessary because it will be added to the grid
+//		//addComponents(cellController);
+//		return cellController;
+//	}
 	
 	@Override
 	public void run()
@@ -252,11 +285,12 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		g2d.setColor(this.backgroundColor); 
 		this.g2d.fillRect(0, 0, this.window.getWidthOfGraphics(),this.window.getHeightOfGraphics());
 		
-		for(int i = 0; i<views.size(); i++)
-		{
-			ANTSIView v = views.get(i);
-			v.paint(g2d, interpolation);
-		}
+//		for(int i = 0; i<views.size(); i++)
+//		{
+//			ANTSIView v = views.get(i);
+//			v.paint(g2d, interpolation);
+//		}
+		this.gridController.getView().paint(g2d, interpolation);
 
 		//Show fps
 		this.g2d.setFont( new Font( "Courier New", Font.PLAIN, 12 ) );
@@ -275,14 +309,14 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		Thread.yield();
 		
 		//release resources
-		if(this.graphics != null)
-		{
-			this.graphics.dispose();
-		}
-		if(this.g2d != null)
-		{
-			this.g2d.dispose();
-		}
+//		if(this.graphics != null)
+//		{
+//			this.graphics.dispose();
+//		}
+//		if(this.g2d != null)
+//		{
+//			this.g2d.dispose();
+//		}
 	}
 	
 	/**
@@ -291,13 +325,23 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	 */
 	public ANTSIController getControllerFrom(ANTSIView v)
 	{
-		for(ANTSIController c: controllers)
+		for(int i = 0; i<controllers.size()-1;i++)
 		{
+			ANTSIController c = controllers.get(i);
+			
 			if(c.getIView().equals(v))
 			{
 				return c;
 			}
 		}
+		
+//		for(ANTSIController c: controllers)
+//		{
+//			if(c.getIView().equals(v))
+//			{
+//				return c;
+//			}
+//		}
 		
 		return ANTSAbstractController.getEmptyController();
 	}
@@ -444,7 +488,8 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 			}
 			else
 			{
-				 //TODO Do things when not show press right (?) button
+				ANTSIView v = this.currentDragAndDropController.getIView();
+				v.showPopupMenu(this,e.getX(), e.getY());
 			}
 			
 			this.currentDragAndDropController.mouseReleased(e);

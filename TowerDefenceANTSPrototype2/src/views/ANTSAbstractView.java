@@ -18,6 +18,14 @@ public abstract class ANTSAbstractView extends  Container implements ANTSIView
 	
 	private static ANTSAbstractView emptyView = new ANTSAbstractView() 
 	{
+		private void doIt()
+		{
+			
+			System.out.println("do it empty");
+			this.popupMenu = new JPopupMenu("Simple popupMenu: EMPTY");
+			this.popupMenu.add(new JMenuItem("A popup menu item EMPTY"));
+		}
+		
 		@Override
 		public boolean isMouseListener() 
 		{
@@ -27,10 +35,19 @@ public abstract class ANTSAbstractView extends  Container implements ANTSIView
 	
 	public ANTSAbstractView()
 	{
+		//TODO
+		
 		this.popupMenu = new JPopupMenu("Simple popupMenu: ABSTRACT");
 		this.popupMenu.add(new JMenuItem("A popup menu item abstract"));
 		
 		JPopupMenu.setDefaultLightWeightPopupEnabled(false);	//shows the popupmenu in the foreground of the canvas!
+	
+		doIt();
+	}
+	
+	private void doIt()
+	{
+		System.out.println("do it not empty! do it abstract");
 	}
 	
 	@Override
