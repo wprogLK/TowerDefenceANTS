@@ -5,6 +5,8 @@ import interfaces.ANTSIModel;
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
 
+import layers.ANTSLayerSystem;
+
 import basics.ANTSDriver;
 
 public class ANTSSimpleSourceLightModel extends ANTSAbstractModel implements ANTSIModel 
@@ -33,7 +35,6 @@ public class ANTSSimpleSourceLightModel extends ANTSAbstractModel implements ANT
 		
 		this.on = true;
 		this.color = Color.yellow;
-		
 		this.tickCounter = 0;
 		
 		this.isDragged = false;

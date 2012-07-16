@@ -2,6 +2,9 @@ package views;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
 
 import interfaces.ANTSIView;
 
@@ -51,14 +54,25 @@ public class ANTSCellView extends ANTSAbstractView implements ANTSIView
 	}
 	
 	@Override
+	public boolean doPaintDirect()
+	{
+		return false;
+	}
+	
+	@Override
 	public void paint(Graphics2D g2d, float interpolation)
 	{
 		//TODO
 		g2d.setColor(Color.BLUE);
-//		System.out.println("Paint Cell with interpolation of " + interpolation + (int) this.model.getAbsolutPosX() + " "+(int) this.model.getAbsolutPosY() +" "+ (int) this.model.getWidth() +" "+ (int) this.model.getHeight());
-		g2d.fillRect((int) this.model.getAbsolutPosX()+5, (int) this.model.getAbsolutPosY()+5, (int) this.model.getWidth()-5, (int) this.model.getHeight()-5); //Only for testing
-//		g2d.fillRect(40,40,40,40);
-//		g2d.drawRect(40,40,40,40);
 	
+		Rectangle2D rec = new Rectangle2D.Double(0, 0, model.getWidth(), model.getHeight());
+		AffineTransform aT = this.model.getMatrix();
+		Shape shape = aT.createTransformedShape(rec);
+		this.setBounds(shape.getBounds());
+		g2d.fill(shape);
+		g2d.setColor(Color.white);
+		g2d.draw(shape.getBounds());
+		
+		//g2d.draw(shape);
 	}
 }

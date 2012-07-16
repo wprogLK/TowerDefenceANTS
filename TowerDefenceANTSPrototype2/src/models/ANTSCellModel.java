@@ -20,14 +20,16 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 	private int relativePosX;	//nr of the cell
 	private int relativePosY;	//nr of the cell
 	
-	private double absolutePosX; //pos in pix
-	private double absolutePosY; //pos in pix
+//	private double absolutePosX; //pos in pix
+//	private double absolutePosY; //pos in pix
 	
 	private double defaultHeight = 60;
 	private double defaultWidth = 60;
 	
 	private double height;
 	private double width;
+	
+	private AffineTransform matrix;
 	
 	public ANTSCellModel(int cellNrX, int cellNrY) 
 	{
@@ -40,11 +42,11 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 		this.relativePosX = cellNrX;
 		this.relativePosY = cellNrY;
 		
-		this.absolutePosX = defaultWidth*cellNrX; //TODO: Test this; make sense?
-		this.absolutePosY = defaultHeight*cellNrY; //TODO: Test this; make sense?
-		
 		this.height = defaultHeight;
 		this.width = defaultWidth;
+		
+		this.matrix = new AffineTransform();
+		this.matrix.setToTranslation(defaultWidth*cellNrX, defaultHeight*cellNrY);
 	}
 	
 	/////////////////////
@@ -56,14 +58,9 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 		return "CellModel";
 	}
 
-	public double getAbsolutPosX()
+	public AffineTransform getMatrix()
 	{
-		return this.absolutePosX;
-	}
-	
-	public double getAbsolutPosY()
-	{
-		return this.absolutePosY;
+		return this.matrix;
 	}
 	
 	public double getWidth()

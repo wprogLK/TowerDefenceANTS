@@ -93,7 +93,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		this.initAllListeners();
 		
 		this.createGame();
-//		createSimpleSourceLight(); //Only for testing
+		createSimpleSourceLight(); //Only for testing
 //		createSimpleSourceLight2();
 //		createSimpleSourceLight3();
 //		createSimpleTestAnt1();
@@ -128,7 +128,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		ANTSUpdateListener.setDriver(this);
 	}
 
-	private static void addComponents(ANTSIController c) 
+	public static void addComponents(ANTSIController c) 
 	{
 		addModel(c.getModel());
 		addController(c);
@@ -219,19 +219,11 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	
 	private void createGrid()
 	{
-		gridController = new ANTSGridController(this.xCells, this.yCells);
-		addView(gridController.getView());
+		gridController = new ANTSGridController(this.xCells,this.yCells);
+//		addView(gridController.getView());
 		addComponents(gridController);
 		//TODO add to game and co
 	}
-	
-//	public static ANTSCellController createACell()
-//	{
-//		ANTSCellController cellController = new ANTSCellController();
-//		//addView(cellController.getView());	//Maybe not necessary because it will be added to the grid
-//		//addComponents(cellController);
-//		return cellController;
-//	}
 	
 	@Override
 	public void run()
@@ -285,12 +277,18 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		g2d.setColor(this.backgroundColor); 
 		this.g2d.fillRect(0, 0, this.window.getWidthOfGraphics(),this.window.getHeightOfGraphics());
 		
-//		for(int i = 0; i<views.size(); i++)
-//		{
-//			ANTSIView v = views.get(i);
-//			v.paint(g2d, interpolation);
-//		}
 		this.gridController.getView().paint(g2d, interpolation);
+
+		for(int i = 0; i<views.size(); i++)
+		{
+			ANTSIView v = views.get(i);
+			if(v.doPaintDirect())
+			{
+				v.paint(g2d, interpolation);
+			}
+			
+		}
+		
 
 		//Show fps
 		this.g2d.setFont( new Font( "Courier New", Font.PLAIN, 12 ) );
@@ -309,14 +307,14 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		Thread.yield();
 		
 		//release resources
-//		if(this.graphics != null)
-//		{
-//			this.graphics.dispose();
-//		}
-//		if(this.g2d != null)
-//		{
-//			this.g2d.dispose();
-//		}
+		if(this.graphics != null)
+		{
+			this.graphics.dispose();
+		}
+		if(this.g2d != null)
+		{
+			this.g2d.dispose();
+		}
 	}
 	
 	/**
@@ -334,14 +332,6 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 				return c;
 			}
 		}
-		
-//		for(ANTSIController c: controllers)
-//		{
-//			if(c.getIView().equals(v))
-//			{
-//				return c;
-//			}
-//		}
 		
 		return ANTSAbstractController.getEmptyController();
 	}
@@ -413,6 +403,18 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 			if(v.isMouseListener())
 			{
 				this.hiddenPanel.add(v);
+				
+				if(v.doPaintDirect())
+				{
+					System.out.println("ADD view zOrder 1");
+					this.hiddenPanel.setComponentZOrder(v, 1);
+				}
+				else
+				{
+					System.out.println("ADD view zOrder 0");
+					this.hiddenPanel.setComponentZOrder(v, 0);
+				}
+			
 			}
 		}
 		
@@ -420,20 +422,20 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		public void setSize(int width, int height)
 		{
 			super.setSize(width, height);
-			this.hiddenPanel.setSize(width, height); //TODO CHECK THIS!
+			this.hiddenPanel.setSize(width, height);
 		}
 		
-		private ANTSAbstractView getViewAt(int x, int y)
+		private ANTSIView getViewAt(int x, int y)
 		{
 			Component c =  this.hiddenPanel.getComponentAt(x, y);
 			
 			if(! c.equals(this.hiddenPanel))
 			{
-				return ((ANTSAbstractView) c);
+				return ((ANTSIView) c);
 			}
 			else
 			{
-				return (ANTSAbstractView) ANTSAbstractView.getEmptyView(); //Return a new empty view // -> every return value will be a valid ANTSAbstractView!
+				return  ANTSAbstractView.getEmptyView(); //Return a new empty view // -> every return value will be a valid ANTSAbstractView!
 			}
 		}
 		
@@ -484,12 +486,12 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 			{
 				ANTSIView v = this.currentDragAndDropController.getIView();
 				v.showPopupMenu(this,e.getX(), e.getY());
-				 System.out.println("SHOW MENU");
+				System.out.println("SHOW MENU");
 			}
 			else
 			{
 				ANTSIView v = this.currentDragAndDropController.getIView();
-				v.showPopupMenu(this,e.getX(), e.getY());
+				System.out.println("No menu: view " + v);
 			}
 			
 			this.currentDragAndDropController.mouseReleased(e);

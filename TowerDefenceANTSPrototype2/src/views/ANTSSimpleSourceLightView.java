@@ -60,7 +60,7 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 				5f, //Breite
 				BasicStroke.CAP_SQUARE, //End Style
 				BasicStroke.JOIN_ROUND, //Join Style
-				1f, //Limit für Join
+				1f, //Limit fï¿½r Join
 				dash_array, //Strichelung
 				0 //offset in Pixeln f. Strichelung
 				);

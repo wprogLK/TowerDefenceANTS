@@ -4,6 +4,9 @@
  */
 package basics;
 
+import layers.ANTSLayer;
+import layers.ANTSLayerSystem;
+
 /**
  * @author Lukas
  *

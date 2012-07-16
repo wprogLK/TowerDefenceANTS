@@ -19,6 +19,7 @@ public class ANTSGridModel extends ANTSAbstractModel implements ANTSIModel
 	
 	public ANTSGridModel(int xCells, int yCells)
 	{
+		this.isMouseListener = true;
 		this.initCells(xCells,yCells);
 		
 		this.xCells = xCells;
@@ -34,7 +35,11 @@ public class ANTSGridModel extends ANTSAbstractModel implements ANTSIModel
 		{
 			for(int y = 0; y<yCells-1; y++)
 			{
-				this.grid[x][y] = new ANTSCellController(x,y);
+				ANTSCellController c = new ANTSCellController(x,y);
+				this.grid[x][y] = c;
+				ANTSDriver.addToCanvas(c.getView());
+				ANTSDriver.addComponents(c);
+				
 			}
 		}
 		

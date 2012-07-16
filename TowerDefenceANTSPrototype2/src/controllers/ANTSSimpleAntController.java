@@ -20,19 +20,9 @@ public class ANTSSimpleAntController extends ANTSAbstractController implements A
 	{
 		this.model = new ANTSSimpleAntModel();
 		this.view = new ANTSSimpleAntView(this.model);
+		
+		this.setIModel(this.model);
 	}
-	
-//	public ANTSSimpleAntController(double posX, double posY, double radius, Color color)
-//	{
-//		this.model = new ANTSSimpleSourceLightModel(posX,posY,radius,color);
-//		this.view = new ANTSSimpleSourceLightView(this.model);
-//	}
-	
-//	public ANTSSimpleAntController(double posX, double posY, double radius, Color color, boolean isMouseListener)
-//	{
-//		this.model = new ANTSSimpleSourceLightModel(posX,posY,radius,color,isMouseListener);
-//		this.view = new ANTSSimpleSourceLightView(this.model);
-//	}
 	
 	/////////////////////
 	//GETTERS & SETTERS//

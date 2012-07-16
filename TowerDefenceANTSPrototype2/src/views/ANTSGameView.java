@@ -14,6 +14,7 @@ public class ANTSGameView extends ANTSAbstractView implements ANTSIView
 	
 	public ANTSGameView(ANTSGameModel m) 
 	{
+		super();
 		this.model = m;
 		
 		this.buttonUpdate = new JButton("Update");
@@ -36,5 +37,11 @@ public class ANTSGameView extends ANTSAbstractView implements ANTSIView
 	public boolean isMouseListener() 
 	{
 		return this.model.isMouseListener();
+	}
+	
+	@Override
+	public String toString()
+	{
+		return "Game view";
 	}
 }

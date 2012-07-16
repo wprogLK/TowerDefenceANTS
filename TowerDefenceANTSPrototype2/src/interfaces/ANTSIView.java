@@ -10,4 +10,10 @@ public interface ANTSIView
 	
 	public void showPopupMenu(Component component, int x, int y);
 	public boolean isMouseListener();
+	
+	/**
+	 * if a view should not painted by calling from the Driver. Example ANTSCells.
+	 * @return
+	 */
+	public boolean doPaintDirect();
 }

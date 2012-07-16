@@ -17,10 +17,10 @@ public class ANTSSimpleRayLightController extends ANTSAbstractController impleme
 	
 	public ANTSSimpleRayLightController(AffineTransform sourceMatrix, double velocity, double angle, Color sourceColor) 
 	{
-		super();
-		
 		this.model = new ANTSSimpleRayLightModel(sourceMatrix, velocity, angle, sourceColor);
 		this.view = new ANTSSimpleRayLightView(this.model);
+		
+		this.setIModel(this.model);
 	}
 	
 	/////////////////////

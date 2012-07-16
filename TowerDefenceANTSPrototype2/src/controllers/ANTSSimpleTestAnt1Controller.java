@@ -20,18 +20,26 @@ public class ANTSSimpleTestAnt1Controller extends ANTSAbstractController impleme
 	{
 		this.model = new ANTSSimpleTestAnt1Model();
 		this.view = new ANTSSimpleTestAnt1View(this.model);
+		
+		this.setIModel(this.model);
 	}
 	
 	public ANTSSimpleTestAnt1Controller(double posX, double posY, Color color)
 	{
 		this.model = new ANTSSimpleTestAnt1Model(posX,posY,color);
 		this.view = new ANTSSimpleTestAnt1View(this.model);
+		
+		this.setIModel(this.model);
+
 	}
 	
 	public ANTSSimpleTestAnt1Controller(double posX, double posY, int width, int height, Color color, boolean isMouseListener)
 	{
 		this.model = new ANTSSimpleTestAnt1Model(posX, posY, width, height, color, isMouseListener);
 		this.view = new ANTSSimpleTestAnt1View(this.model);
+		
+		this.setIModel(this.model);
+
 	}
 	
 	/////////////////////

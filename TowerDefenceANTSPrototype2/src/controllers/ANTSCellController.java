@@ -1,6 +1,5 @@
 package controllers;
 
-import java.awt.Color;
 import java.awt.event.MouseEvent;
 
 import interfaces.ANTSIController;
@@ -11,8 +10,6 @@ import models.ANTSCellModel;
 
 public class ANTSCellController extends ANTSAbstractController implements ANTSIController
 {
-	//SourceLightModel
-	
 	private ANTSCellModel model;
 	private ANTSCellView view;
 	
@@ -21,7 +18,7 @@ public class ANTSCellController extends ANTSAbstractController implements ANTSIC
 		this.model = new ANTSCellModel(cellNrX, cellNrY);
 		this.view = new ANTSCellView(this.model);
 		
-		//this.addComponent(new ANTSSimpleSourceLightController(20,20,20,Color.green,false)); TODO //only for Testing
+		this.setIModel(this.model);
 	}
 	
 	/////////////////////
@@ -68,7 +65,7 @@ public class ANTSCellController extends ANTSAbstractController implements ANTSIC
 	public void mouseClicked(MouseEvent e) 
 	{
 		//Only an example
-//		this.model.switchLight();
+		System.out.println("CLICK");
 	}
 	
 	@Override
@@ -85,6 +82,7 @@ public class ANTSCellController extends ANTSAbstractController implements ANTSIC
 	@Override
 	public void mouseDragged(MouseEvent e) 
 	{
+		
 //		this.model.setDragged(true);
 //		this.model.setPosition(e.getX()/2, e.getY()/2);	//TODO: Important: test this! is it always /2 ? 
 	}

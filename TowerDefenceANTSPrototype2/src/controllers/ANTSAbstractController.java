@@ -1,6 +1,7 @@
 package controllers;
 
 import java.awt.event.MouseEvent;
+import layers.ANTSLayerSystem.Layer;
 
 import models.ANTSAbstractModel;
 
@@ -19,10 +20,15 @@ public abstract class ANTSAbstractController implements ANTSIController
 {
 	
 	private static ANTSAbstractController emptyAbstractController = new ANTSAbstractController() {};
+	private ANTSIModel model;
+	
 	
 	public ANTSAbstractController()
 	{
+		this.model = ANTSAbstractModel.getEmptyModel();
 	}
+	
+	
 	
 	
 	/////////////////////
@@ -42,9 +48,26 @@ public abstract class ANTSAbstractController implements ANTSIController
 		return ANTSAbstractView.getEmptyView();
 	}
 	
+	protected void setIModel(ANTSIModel m)
+	{
+		this.model = m;
+	}
+	
 	public final static ANTSAbstractController getEmptyController()
 	{
 		return emptyAbstractController;
+	}
+	
+	@Override
+	public Layer getLayer()
+	{
+		return  this.model.getLayer();
+	}
+	
+	@Override
+	public void setLayer(Layer layer)
+	{
+		 this.model.setLayer(layer);
 	}
 	
 	//////////////////

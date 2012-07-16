@@ -18,6 +18,8 @@ public class ANTSGameController extends ANTSAbstractController implements ANTSIC
 		
 		this.model = new ANTSGameModel();
 		this.view = new ANTSGameView(this.model);
+		
+		this.setIModel(this.model);
 	}
 	
 	/////////////////////

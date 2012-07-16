@@ -19,6 +19,8 @@ public class ANTSGridController extends ANTSAbstractController implements ANTSIC
 	{
 		this.model = new ANTSGridModel(xCells, yCells);
 		this.view = new ANTSGridView(this.model);
+		
+		this.setIModel(this.model);
 	}
 	
 	/////////////////////

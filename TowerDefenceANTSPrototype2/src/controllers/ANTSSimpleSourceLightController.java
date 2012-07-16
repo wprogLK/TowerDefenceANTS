@@ -18,18 +18,24 @@ public class ANTSSimpleSourceLightController extends ANTSAbstractController impl
 	{
 		this.model = new ANTSSimpleSourceLightModel();
 		this.view = new ANTSSimpleSourceLightView(this.model);
+	
+		this.setIModel(this.model);
 	}
 	
 	public ANTSSimpleSourceLightController(double posX, double posY, double radius, Color color)
 	{
 		this.model = new ANTSSimpleSourceLightModel(posX,posY,radius,color);
 		this.view = new ANTSSimpleSourceLightView(this.model);
+		
+		this.setIModel(this.model);
 	}
 	
 	public ANTSSimpleSourceLightController(double posX, double posY, double radius, Color color, boolean isMouseListener)
 	{
 		this.model = new ANTSSimpleSourceLightModel(posX,posY,radius,color,isMouseListener);
 		this.view = new ANTSSimpleSourceLightView(this.model);
+		
+		this.setIModel(this.model);
 	}
 	
 	/////////////////////
