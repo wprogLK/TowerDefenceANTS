@@ -3,7 +3,5 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="img"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="img/testAnt/testAnt1.jpg"/>
-	<classpathentry kind="lib" path="img/testAnt/testAnt2.jpg"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

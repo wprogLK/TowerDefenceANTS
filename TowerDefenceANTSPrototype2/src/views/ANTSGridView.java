@@ -31,11 +31,6 @@ public class ANTSGridView extends ANTSAbstractView implements ANTSIView
 	{
 		return "Grid view";
 	}
-	
-	private void doIt()
-	{
-		System.out.println("do it not empty! do it grid");
-	}
 
 	@Override
 	public boolean isMouseListener() 
@@ -52,9 +47,9 @@ public class ANTSGridView extends ANTSAbstractView implements ANTSIView
 	@Override
 	public void paint(Graphics2D g2d, float interpolation) 	//TODO: Check this, if first y and then x or the other way
 	{
-		for(int y = 0; y < this.model.getMaxCellY() -1; y++)
+		for(int y = 0; y < this.model.getMaxCellY(); y++)
 		{
-			for(int x = 0; x < this.model.getMaxCellX() - 1; x++)
+			for(int x = 0; x < this.model.getMaxCellX(); x++)
 			{
 				ANTSCellController controller = model.getCellControllerAt(x, y);
 				controller.getView().paint(g2d, interpolation);

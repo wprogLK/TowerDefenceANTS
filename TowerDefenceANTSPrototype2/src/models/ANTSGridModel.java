@@ -29,11 +29,11 @@ public class ANTSGridModel extends ANTSAbstractModel implements ANTSIModel
 	
 	private void initCells(int xCells, int yCells)
 	{
-		this.grid = new  ANTSCellController[xCells-1][yCells-1];
+		this.grid = new  ANTSCellController[xCells][yCells];
 		
-		for(int x = 0; x<xCells-1; x++)
+		for(int x = 0; x<xCells; x++)
 		{
-			for(int y = 0; y<yCells-1; y++)
+			for(int y = 0; y<yCells; y++)
 			{
 				ANTSCellController c = new ANTSCellController(x,y);
 				this.grid[x][y] = c;

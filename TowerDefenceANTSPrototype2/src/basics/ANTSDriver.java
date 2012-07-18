@@ -76,8 +76,8 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	private GraphicsConfiguration gC;
 	
 	//Grid Config
-	private int xCells = 10;
-	private int yCells = 10;
+	private int xCells = 2;
+	private int yCells = 2;
 	
 	public ANTSDriver()
 	{	
@@ -93,7 +93,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		this.initAllListeners();
 		
 		this.createGame();
-		createSimpleSourceLight(); //Only for testing
+//		createSimpleSourceLight(); //Only for testing
 //		createSimpleSourceLight2();
 //		createSimpleSourceLight3();
 //		createSimpleTestAnt1();

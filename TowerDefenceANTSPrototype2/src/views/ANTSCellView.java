@@ -2,8 +2,10 @@ package views;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Polygon;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 
 import interfaces.ANTSIView;
@@ -35,11 +37,6 @@ public class ANTSCellView extends ANTSAbstractView implements ANTSIView
 	{
 		return "Cell view";
 	}
-	
-	private void doIt()
-	{
-		System.out.println("do it not empty! do it cell");
-	}
 
 	@Override
 	public boolean isMouseListener() 
@@ -62,17 +59,46 @@ public class ANTSCellView extends ANTSAbstractView implements ANTSIView
 	@Override
 	public void paint(Graphics2D g2d, float interpolation)
 	{
-		//TODO
-		g2d.setColor(Color.BLUE);
-	
+		
+//		//TODO
+//		g2d.setColor(Color.BLUE);
+//	
 		Rectangle2D rec = new Rectangle2D.Double(0, 0, model.getWidth(), model.getHeight());
 		AffineTransform aT = this.model.getMatrix();
 		Shape shape = aT.createTransformedShape(rec);
 		this.setBounds(shape.getBounds());
-		g2d.fill(shape);
-		g2d.setColor(Color.white);
-		g2d.draw(shape.getBounds());
+		g2d.setColor(Color.BLUE);
 		
-		//g2d.draw(shape);
-	}
+		g2d.draw(shape);
+		
+		/////--------------------------------------------------------------------------
+		
+		Line2D lineA = new Line2D.Double(0, 0, this.model.getLineLength(), 0);
+		Line2D lineB = new Line2D.Double(0, 0, this.model.getLineLength(), 0);
+		Line2D lineC = new Line2D.Double(0, 0, this.model.getLineLength(), 0);
+		Line2D lineD = new Line2D.Double(0, 0, this.model.getLineLength(), 0);
+		
+		AffineTransform aTA = this.model.getMatrixForLineA();
+		AffineTransform aTB = this.model.getMatrixForLineB();
+		AffineTransform aTC = this.model.getMatrixForLineC();
+		AffineTransform aTD = this.model.getMatrixForLineD();
+		
+		Shape shapeA = aTA.createTransformedShape(lineA);
+		Shape shapeB = aTB.createTransformedShape(lineB);
+		Shape shapeC = aTC.createTransformedShape(lineC);
+		Shape shapeD = aTD.createTransformedShape(lineD);
+		
+		g2d.setColor(Color.black);
+		
+		g2d.draw(shapeA);
+		g2d.draw(shapeB);
+		g2d.draw(shapeC);
+		g2d.draw(shapeD);
+		
+		g2d.drawString("A", (int) aTA.getTranslateX(), (int) aTA.getTranslateY());
+		g2d.drawString("B", (int) aTB.getTranslateX(), (int) aTB.getTranslateY());
+		g2d.drawString("C", (int) aTC.getTranslateX(), (int) aTC.getTranslateY());
+		g2d.drawString("D", (int) aTD.getTranslateX(), (int) aTD.getTranslateY());
+		
+	}	
 }
