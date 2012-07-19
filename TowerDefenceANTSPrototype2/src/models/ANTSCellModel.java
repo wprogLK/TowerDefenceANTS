@@ -25,8 +25,8 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 	private int offsetX = 60;
 	private int offsetY = 60;
 	
-	private int offsetCellX = 45;
-	private int offsetCellY = 0;
+	private int offsetCellX = 44;	//Space "between" to cells
+	private int offsetCellY = 0;	//Space "between" to cells
 	
 	private double absolutePosX; //pos in pix
 	private double absolutePosY; //pos in pix
@@ -44,11 +44,13 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 	 */
 	private double angle;
 
-	private double height;
-	private double width;
+	private double boxHeight;
+	private double boxWidth;
+	
+	private double cellHeight;
+	private double cellWidth;
 	
 	private double lineLength;
-	private double lineLengthOffset = 24;	
 	
 	private AffineTransform matrix;
 	
@@ -60,17 +62,21 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 		this.models = new ArrayList<ANTSIModel>();
 		this.controllers = new ArrayList<ANTSIController>();
 		
-		this.height = this.defaultHeight;
-		this.width = this.defaultWidth;
+		this.boxHeight = this.defaultHeight;
+		this.boxWidth = this.defaultWidth;
+		
+		this.cellHeight = this.boxHeight;
+		this.cellWidth = boxWidth;
+		
 		this.angle = this.defaultAngle;
 		
 		this.relativePosX = cellNrX;
 		this.relativePosY = cellNrY;
 		
-		this.absolutePosX = this.width * cellNrX + this.offsetX + this.offsetCellX * cellNrX;
-		this.absolutePosY = this.height * cellNrY + this.offsetY + this.offsetCellY * cellNrY;
+		this.absolutePosX = this.boxWidth * cellNrX + this.offsetX + this.offsetCellX * cellNrX;
+		this.absolutePosY = this.boxHeight * cellNrY + this.offsetY + this.offsetCellY * cellNrY;
 		
-		this.lineLength = Math.sqrt(this.height*this.height+this.width*this.width)-this.lineLengthOffset;
+		this.lineLength = Math.sqrt(this.cellHeight*this.cellHeight+this.cellWidth); //don't ask me why it's only + this.cellWidth (and not + cellWidth²) 
 		
 		this.matrix = new AffineTransform();
 		this.matrix.setToTranslation(this.absolutePosX, this.absolutePosY);
@@ -92,32 +98,32 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 	
 	public double getWidth()
 	{
-		return this.width;
+		return this.boxWidth;
 	}
 	
 	public double getHeight()
 	{
-		return this.height;
+		return this.boxHeight;
 	}
 	
 	public AffineTransform getMatrixForLineA()
 	{
-		return this.calculateMatrix(-1,30, -this.width/2, 0);
+		return this.calculateMatrix(-1,30, -this.boxWidth/2, 0);
 	}
 	
 	public AffineTransform getMatrixForLineB()
 	{
-		return this.calculateMatrix(1,30, -this.width/2, -this.height);
+		return this.calculateMatrix(1,30, -this.boxWidth/2, -this.boxHeight);
 	}
 	
 	public AffineTransform getMatrixForLineC()
 	{
-		return this.calculateMatrix(-1,210, -this.width/2, -this.height);
+		return this.calculateMatrix(-1,210, -this.boxWidth/2, -this.boxHeight);
 	}
 	
 	public AffineTransform getMatrixForLineD()
 	{
-		return this.calculateMatrix(-1,150, -this.width/2, 0);
+		return this.calculateMatrix(-1,150, -this.boxWidth/2, 0);
 	}
 	
 	private AffineTransform calculateMatrix(int sign, int angleDegree, double startPointXOffset, double startPointYOffset)
@@ -125,7 +131,7 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 		double angleInRadian = Math.toRadians(angleDegree);
 		
 		AffineTransform matrixLine = new AffineTransform(matrix);
-		matrixLine.translate(this.width, this.height);
+		matrixLine.translate(this.boxWidth, this.boxHeight);
 		
 		matrixLine.translate(startPointXOffset, startPointYOffset);
 		matrixLine.rotate(sign*angleInRadian, 0, 0);

@@ -76,8 +76,8 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	private GraphicsConfiguration gC;
 	
 	//Grid Config
-	private int xCells = 4;
-	private int yCells = 4;
+	private int xCells = 1;
+	private int yCells = 1;
 	
 	public ANTSDriver()
 	{	
