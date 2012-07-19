@@ -2,6 +2,7 @@ package views;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
 
 import interfaces.ANTSIView;
 
@@ -55,5 +56,8 @@ public class ANTSGridView extends ANTSAbstractView implements ANTSIView
 				controller.getView().paint(g2d, interpolation);
 			}
 		}
+		
+		Rectangle2D rec = new Rectangle2D.Double(this.model.getOffsetX(), this.model.getOffsetY(), this.model.getWidth(), this.model.getHeight());
+		g2d.draw(rec);
 	}
 }

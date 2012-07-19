@@ -25,8 +25,8 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 	private int offsetX;
 	private int offsetY;
 	
-	private final int offsetCellX = 44;	//Space "between" to cells	//don't know why it is 44
-	private final int offsetCellY = 0;	//Space "between" to cells
+	public static final int offsetCellX = 44;	//Space "between" to cells	//don't know why it is 44
+	private static final int offsetCellY = 0;	//Space "between" to cells
 	
 	private double absolutePosX; //pos in pix
 	private double absolutePosY; //pos in pix
@@ -119,7 +119,7 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 		this.boxWidth = this.defaultWidth;
 		
 		this.cellHeight = this.boxHeight;
-		this.cellWidth = boxWidth;
+		this.cellWidth = this.boxWidth;
 		
 		this.angle = this.defaultAngle;
 		
@@ -153,7 +153,19 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 	
 	public double getWidth()
 	{
+//		return this.boxWidth;
+		System.out.println("width: " +Math.sqrt(this.lineLength*this.lineLength - this.boxHeight/2*this.boxHeight/2)*2);
+		return 44+this.boxWidth;//Math.sqrt(this.lineLength*this.lineLength - this.boxHeight/2*this.boxHeight/2)*2;	//TODO
+	}
+	
+	public double getBoxWidth()
+	{
 		return this.boxWidth;
+	}
+	
+	public double getBoxHeight()
+	{
+		return this.boxHeight;
 	}
 	
 	public double getHeight()

@@ -14,11 +14,15 @@ public class ANTSGridModel extends ANTSAbstractModel implements ANTSIModel
 	
 	private ANTSCellController[][] grid;		//"[x][y]"
 	
-	private int xCells;
+	private int xCells;	
 	private int yCells;
+	
 	
 	private int xOffset = 30;
 	private int yOffset = 30;
+	
+	private double height;
+	private double width;
 	
 	public ANTSGridModel(int xCells, int yCells)
 	{
@@ -28,6 +32,12 @@ public class ANTSGridModel extends ANTSAbstractModel implements ANTSIModel
 		this.xCells = xCells;
 		this.yCells = yCells;
 		
+		ANTSCellModel cellModel = (ANTSCellModel) grid[0][0].getModel();
+		
+		System.out.println("yCelles: " + yCells);
+		
+		this.height = (cellModel.getHeight()*yCells/2) + (cellModel.getHeight()/2) ;
+		this.width = cellModel.getWidth()*xCells+this.xOffset;
 	}
 	
 	private void initCells(int xCells, int yCells)
@@ -55,6 +65,26 @@ public class ANTSGridModel extends ANTSAbstractModel implements ANTSIModel
 	/////////////////////
 	//GETTERS & SETTERS//
 	/////////////////////
+	
+	public int getOffsetX()
+	{
+		return this.xOffset - ANTSCellModel.offsetCellX/2;
+	}
+	
+	public int getOffsetY()
+	{
+		return this.yOffset;
+	}
+	
+	public double getHeight()
+	{
+		return this.height;
+	}
+	
+	public double getWidth()
+	{
+		return this.width + ANTSCellModel.offsetCellX/2;
+	}
 	
 	public String toString()
 	{

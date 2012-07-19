@@ -73,7 +73,7 @@ public class ANTSCellController extends ANTSAbstractController implements ANTSIC
 	public void mouseClicked(MouseEvent e) 
 	{
 		//Only an example
-		System.out.println("CLICK");
+		System.out.println("CLICK of " + this.model.toString());
 	}
 	
 	@Override
