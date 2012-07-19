@@ -60,9 +60,6 @@ public class ANTSCellView extends ANTSAbstractView implements ANTSIView
 	public void paint(Graphics2D g2d, float interpolation)
 	{
 		
-//		//TODO
-//		g2d.setColor(Color.BLUE);
-//	
 		Rectangle2D rec = new Rectangle2D.Double(0, 0, model.getWidth(), model.getHeight());
 		AffineTransform aT = this.model.getMatrix();
 		Shape shape = aT.createTransformedShape(rec);
@@ -71,7 +68,6 @@ public class ANTSCellView extends ANTSAbstractView implements ANTSIView
 		
 		g2d.draw(shape);
 		
-		/////--------------------------------------------------------------------------
 		
 		Line2D lineA = new Line2D.Double(0, 0, this.model.getLineLength(), 0);
 		Line2D lineB = new Line2D.Double(0, 0, this.model.getLineLength(), 0);
@@ -94,11 +90,5 @@ public class ANTSCellView extends ANTSAbstractView implements ANTSIView
 		g2d.draw(shapeB);
 		g2d.draw(shapeC);
 		g2d.draw(shapeD);
-		
-		g2d.drawString("A", (int) aTA.getTranslateX(), (int) aTA.getTranslateY());
-		g2d.drawString("B", (int) aTB.getTranslateX(), (int) aTB.getTranslateY());
-		g2d.drawString("C", (int) aTC.getTranslateX(), (int) aTC.getTranslateY());
-		g2d.drawString("D", (int) aTD.getTranslateX(), (int) aTD.getTranslateY());
-		
 	}	
 }

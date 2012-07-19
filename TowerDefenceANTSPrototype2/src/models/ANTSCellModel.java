@@ -25,6 +25,9 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 	private int offsetX = 60;
 	private int offsetY = 60;
 	
+	private int offsetCellX = 45;
+	private int offsetCellY = 0;
+	
 	private double absolutePosX; //pos in pix
 	private double absolutePosY; //pos in pix
 	
@@ -64,8 +67,8 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 		this.relativePosX = cellNrX;
 		this.relativePosY = cellNrY;
 		
-		this.absolutePosX = this.width * cellNrX + this.offsetX;
-		this.absolutePosY = this.height * cellNrY + this.offsetY;
+		this.absolutePosX = this.width * cellNrX + this.offsetX + this.offsetCellX * cellNrX;
+		this.absolutePosY = this.height * cellNrY + this.offsetY + this.offsetCellY * cellNrY;
 		
 		this.lineLength = Math.sqrt(this.height*this.height+this.width*this.width)-this.lineLengthOffset;
 		
