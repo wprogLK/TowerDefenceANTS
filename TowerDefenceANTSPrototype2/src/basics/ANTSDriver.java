@@ -76,8 +76,8 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	private GraphicsConfiguration gC;
 	
 	//Grid Config
-	private int xCells = 1;
-	private int yCells = 1;
+	private int xCells = 10;
+	private int yCells = 10;
 	
 	public ANTSDriver()
 	{	
@@ -219,7 +219,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	
 	private void createGrid()
 	{
-		gridController = new ANTSGridController(this.xCells,this.yCells);
+		gridController = new ANTSGridController(this.xCells/2,this.yCells);  //xCells/2 for a more quadratic square
 //		addView(gridController.getView());
 		addComponents(gridController);
 		//TODO add to game and co
