@@ -66,7 +66,7 @@ public class ANTSGridModel extends ANTSAbstractModel implements ANTSIModel
 	//GETTERS & SETTERS//
 	/////////////////////
 	
-	public int getOffsetX()
+	public double getOffsetX()
 	{
 		return this.xOffset - ANTSCellModel.offsetCellX/2;
 	}
