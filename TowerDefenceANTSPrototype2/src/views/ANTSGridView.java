@@ -26,6 +26,9 @@ public class ANTSGridView extends ANTSAbstractView implements ANTSIView
 		
 		this.model = m;
 		
+		Rectangle2D rec = new Rectangle2D.Double(this.model.getPosX(), this.model.getPosY(), this.model.getWidth(), this.model.getHeight());
+		this.setBounds(rec.getBounds());
+		
 	}
 		
 	public String toString()
@@ -57,7 +60,9 @@ public class ANTSGridView extends ANTSAbstractView implements ANTSIView
 			}
 		}
 		
-		Rectangle2D rec = new Rectangle2D.Double(this.model.getOffsetX(), this.model.getOffsetY(), this.model.getWidth(), this.model.getHeight());
-		g2d.draw(rec);
+		
+		g2d.setColor(Color.blue);
+		
+//		g2d.draw(rec);
 	}
 }

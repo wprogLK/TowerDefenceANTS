@@ -58,7 +58,7 @@ public class ANTSGridController extends ANTSAbstractController implements ANTSIC
 	public void mouseClicked(MouseEvent e) 
 	{
 		//Only an example
-//		this.model.switchLight();
+		System.out.println("Click on grid");
 	}
 	
 	@Override

@@ -66,7 +66,7 @@ public class ANTSCellView extends ANTSAbstractView implements ANTSIView
 		this.setBounds(shape.getBounds());
 		g2d.setColor(Color.BLUE);
 		
-		g2d.draw(shape);
+//		g2d.draw(shape);
 		
 		
 		Line2D lineA = new Line2D.Double(0, 0, this.model.getLineLength(), 0);
@@ -93,6 +93,6 @@ public class ANTSCellView extends ANTSAbstractView implements ANTSIView
 		
 //		AffineTransform aT = this.model.getMatrix();	//for debugging
 		
-		g2d.drawString(this.model.toString() ,(int) aT.getTranslateX()-5, (int) aT.getTranslateY() + 35);//for debugging
+		g2d.drawString(this.model.toString() ,(int) aT.getTranslateX()+10,(int) aT.getTranslateY() + 35);//for debugging
 	}	
 }

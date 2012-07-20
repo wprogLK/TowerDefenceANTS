@@ -22,17 +22,16 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 	private int relativePosX;	//nr of the cell
 	private int relativePosY;	//nr of the cell
 	
-	private int offsetX;
-	private int offsetY;
-	
-	public static double offsetCellX = 0;	//Space "between" to cells	//don't know why it is 44
-	private static final int offsetCellY = 0;	//Space "between" to cells
+	private int gridOffsetX =60;
+	private int gridOffsetY = 60;
 	
 	private double absolutePosX; //pos in pix
 	private double absolutePosY; //pos in pix
 	
-	private double defaultHeight = 30;
-	private double defaultWidth = 30;
+	private double defaultHeight = 60;
+	private double defaultWidth = 60;
+	
+	private int shift;
 	
 	/**
 	 * in degrees!
@@ -43,15 +42,9 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 	 * in degrees!
 	 */
 	private double angle;
-
-	private double angleIn;
 	
 	private double cellHeight;
 	private double cellWidth;
-	
-	private double a;
-	private double b;
-	private double c;
 	
 	private double lineLength;
 	
@@ -59,67 +52,44 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 	
 	
 	
-	public ANTSCellModel(int cellNrX, int cellNrY, int shiftHalf, int xOffset, int yOffset )
+	public ANTSCellModel(int cellNrX, int cellNrY, int shiftHalf, int xGridOffset, int yGridOffset )
 	{
-		init(cellNrX, cellNrY, xOffset, yOffset);
+		init(cellNrX, cellNrY, xGridOffset, yGridOffset);
 		
-		
-		
-		
-	
-		
-		this.shiftY(cellNrY);
-		
-		this.lineLength = Math.sqrt(this.cellHeight/2*this.cellHeight/2+this.cellWidth/2*this.cellWidth/2); //don't ask me why it's only + this.cellWidth (and not + cellWidth²) 
-		this.lineLength = this.cellHeight/2*1/Math.sin(30);
 		this.matrix = new AffineTransform();
 		
 		this.calc();
-		this.absolutePosX = this.cellWidth * cellNrX + this.offsetY;
-		this.absolutePosY = this.cellHeight * cellNrY +this.offsetY;
+		
+		this.shift = shiftHalf;
+		
+		this.absolutePosX = this.cellWidth * cellNrX + this.gridOffsetX;
+		this.absolutePosY = this.cellHeight * cellNrY+ this.gridOffsetY;
+		
+		
+		this.absolutePosY = this.cellHeight*this.relativePosY/2;
+		this.absolutePosX+=this.cellWidth/2*this.shift;
+		
+		
 		this.matrix.setToTranslation(this.absolutePosX, this.absolutePosY);
 		
 	}
 	
+
 	private void calc() 
 	{
-		this.c = this.b/Math.sin(angleIn);
-		this.a = Math.sqrt(this.c*this.c-b*b);//Math.sqrt((b*b)/(Math.sin(angleIn)*Math.sin(angleIn)) - (b*b));
+		double angleInRadian = Math.toRadians(this.angle);
 		
-		this.cellWidth = a*2;
-		this.lineLength = c;
+		double halfeCellHeight = this.cellHeight/2;
 		
-		this.offsetCellX = a;
-	}
-
-	private void shiftY(int cellNrY) 	//TODO this is a working solution, but not the best one. Try to find a better solution!
-	{
-//		if(cellNrY<=1)
-//		{
-//			//do nothing
-//		}
-//		else if(cellNrY<=3)
-//		{
-//			this.absolutePosY-=this.cellHeight*1;
-//		}
-//		else if(cellNrY<=5)
-//		{
-//			this.absolutePosY-=this.cellHeight*2;
-//		}
-//		else if(cellNrY<=7)
-//		{
-//			this.absolutePosY-=this.cellHeight*3;
-//		}
-//		else if(cellNrY<=9)
-//		{
-//			this.absolutePosY-=this.cellHeight*4;
-//		}
+		this.lineLength = halfeCellHeight/Math.sin(angleInRadian);
+		this.cellWidth = 2*Math.sqrt(this.lineLength*this.lineLength-halfeCellHeight*halfeCellHeight);
 		
 	}
 
-	private void init(int cellNrX, int cellNrY, int xOffset, int yOffset)
+
+	private void init(int cellNrX, int cellNrY, int xGridOffset, int yGridOffset)
 	{
-		this.isMouseListener = true;
+		this.isMouseListener = false;
 		
 		this.views = new ArrayList<ANTSIView>();
 		this.models = new ArrayList<ANTSIModel>();
@@ -128,19 +98,13 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 		this.cellHeight = this.defaultHeight;
 		this.cellWidth = this.defaultWidth;
 		
-		this.cellHeight = this.cellHeight;
-		this.cellWidth = this.cellWidth;
-		
 		this.angle = this.defaultAngle;
-		this.angleIn = Math.toRadians(angle);//this.defaultAngle;
 		
 		this.relativePosX = cellNrX;
 		this.relativePosY = cellNrY;
 		
-		this.offsetX = xOffset;
-		this.offsetY = yOffset;
-		
-		this.b = this.cellHeight/2;
+		this.gridOffsetX = xGridOffset;
+		this.gridOffsetY = yGridOffset;
 		
 	}
 	
@@ -156,7 +120,7 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 	
 	public String toString()
 	{
-		return " Cell (" + this.getCoord()[0] + " | " + this.getCoord()[1] + " ) ";
+		return "(" + this.getCoord()[0] + "|" + this.getCoord()[1] + ") shift: " + this.shift;
 	}
 
 	public AffineTransform getMatrix()

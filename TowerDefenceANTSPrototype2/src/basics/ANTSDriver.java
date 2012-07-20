@@ -76,8 +76,10 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	private GraphicsConfiguration gC;
 	
 	//Grid Config
-	private int xCells = 2;
-	private int yCells = 2;
+	private int xCells = 10;
+	private int yCells = 10;
+	
+	private boolean ready = true;
 	
 	public ANTSDriver()
 	{	
@@ -93,7 +95,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		this.initAllListeners();
 		
 		this.createGame();
-//		createSimpleSourceLight(); //Only for testing
+		createSimpleSourceLight(); //Only for testing
 //		createSimpleSourceLight2();
 //		createSimpleSourceLight3();
 //		createSimpleTestAnt1();
@@ -219,10 +221,23 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	
 	private void createGrid()
 	{
-		gridController = new ANTSGridController(this.xCells,this.yCells);  //TODO xCells/2 for a more quadratic square
-//		addView(gridController.getView());
+		int xCells;
+		
+		if(this.xCells==1)
+		{
+			xCells=1;
+		}
+		else
+		{
+			xCells=this.xCells/2; // xCells/2 for a more quadratic square
+
+		}
+		
+		gridController = new ANTSGridController(xCells,this.yCells); 		
+		addView(gridController.getView());									
 		addComponents(gridController);
 		//TODO add to game and co
+		addToCanvas(gridController.getView());
 	}
 	
 	@Override
@@ -323,11 +338,12 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	 */
 	public ANTSIController getControllerFrom(ANTSIView v)
 	{
-		for(int i = 0; i<controllers.size()-1;i++)
+		for(int i = controllers.size()-1 ; i>=0;i--)
 		{
 			ANTSIController c = controllers.get(i);
-			
-			if(c.getIView().equals(v))
+			System.out.println("controller: size " + i);
+
+			if(c.getIView().equals(v)) 
 			{
 				return c;
 			}
@@ -403,18 +419,6 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 			if(v.isMouseListener())
 			{
 				this.hiddenPanel.add(v);
-				
-				if(v.doPaintDirect())
-				{
-					System.out.println("ADD view zOrder 1");
-					this.hiddenPanel.setComponentZOrder(v, 1);
-				}
-				else
-				{
-					System.out.println("ADD view zOrder 0");
-					this.hiddenPanel.setComponentZOrder(v, 0);
-				}
-			
 			}
 		}
 		
@@ -428,7 +432,6 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		private ANTSIView getViewAt(int x, int y)
 		{
 			Component c =  this.hiddenPanel.getComponentAt(x, y);
-			
 			if(! c.equals(this.hiddenPanel))
 			{
 				return ((ANTSIView) c);
@@ -472,6 +475,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		public void mousePressed(MouseEvent e) 
 		{
 			ANTSIController c = this.getControllerFromPos(e.getX(), e.getY());
+			
 			
 			if(!c.equals(ANTSAbstractController.getEmptyController()))
 			{
@@ -527,4 +531,6 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 			}
 		}
 	}
+	
+	
 }
