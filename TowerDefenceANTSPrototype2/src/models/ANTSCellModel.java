@@ -29,7 +29,6 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 	private double absolutePosY; //pos in pix
 	
 	private double defaultHeight = 60;
-	private double defaultWidth = 60;
 	
 	private int shift;
 	
@@ -52,9 +51,9 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 	
 	
 	
-	public ANTSCellModel(int cellNrX, int cellNrY, int shiftHalf, int xGridOffset, int yGridOffset )
+	public ANTSCellModel(double cellHeight, double cellAngleInDegree, int cellNrX, int cellNrY, int shiftHalf, int xGridOffset, int yGridOffset )
 	{
-		init(cellNrX, cellNrY, xGridOffset, yGridOffset);
+		init(cellHeight, cellAngleInDegree, cellNrX, cellNrY, xGridOffset, yGridOffset);
 		
 		this.matrix = new AffineTransform();
 		
@@ -87,7 +86,7 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 	}
 
 
-	private void init(int cellNrX, int cellNrY, int xGridOffset, int yGridOffset)
+	private void init(double cellHeight, double cellAngleInDegree, int cellNrX, int cellNrY, int xGridOffset, int yGridOffset)
 	{
 		this.isMouseListener = false;
 		
@@ -95,10 +94,10 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 		this.models = new ArrayList<ANTSIModel>();
 		this.controllers = new ArrayList<ANTSIController>();
 		
-		this.cellHeight = this.defaultHeight;
-		this.cellWidth = this.defaultWidth;
+		this.cellHeight = cellHeight;
+		this.cellWidth = 0;
 		
-		this.angle = this.defaultAngle;
+		this.angle = cellAngleInDegree;
 		
 		this.relativePosX = cellNrX;
 		this.relativePosY = cellNrY;
@@ -112,15 +111,21 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 	//GETTERS & SETTERS//
 	/////////////////////
 	
-	public int[] getCoord()
+	public int[] getCoordRel()
 	{
 		int[] coord = {this.relativePosX, this.relativePosY};
 		return coord;
 	}
 	
+	public double[] getCoordAbs()
+	{
+		double[] coord = {this.absolutePosX, this.absolutePosY};
+		return coord;
+	}
+	
 	public String toString()
 	{
-		return "(" + this.getCoord()[0] + "|" + this.getCoord()[1] + ") shift: " + this.shift;
+		return "(" + this.getCoordAbs()[0] + "|" + this.getCoordAbs()[1] + ")";
 	}
 
 	public AffineTransform getMatrix()

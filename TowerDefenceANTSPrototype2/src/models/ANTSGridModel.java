@@ -3,6 +3,7 @@ package models;
 import interfaces.ANTSIModel;
 
 import java.awt.Color;
+import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 
 import controllers.ANTSCellController;
@@ -17,12 +18,15 @@ public class ANTSGridModel extends ANTSAbstractModel implements ANTSIModel
 	private int xCells;	
 	private int yCells;
 	
-	
 	private int xOffset = 30;
 	private int yOffset = 30;
 	
 	private double height;
 	private double width;
+	
+	private double cellAngleInDegree = 30;
+	private double cellHeight = 120;
+	private double cellWidth;
 	
 	public ANTSGridModel(int xCells, int yCells)
 	{
@@ -34,26 +38,25 @@ public class ANTSGridModel extends ANTSAbstractModel implements ANTSIModel
 		
 		ANTSCellModel cellModel = (ANTSCellModel) grid[0][0].getModel();
 		
-		System.out.println("yCelles: " + yCells);
-		
-//		this.height = (cellModel.getHeight()*yCells/2) + (cellModel.getHeight()/2) ;
-//		this.width = cellModel.getWidth()*xCells+this.xOffset;
+		this.cellWidth = cellModel.getWidth();
 		
 		double xOffset = 0;
 		double yOffset = 0;
 		
-		if(yCells>1)		//TODO(gerade oder ungerade)
+		if(yCells>1)
 		{
-			xOffset = cellModel.getWidth()/2;
+			xOffset = this.cellWidth/2;
 		}
 		
-		if(yCells>1)	//TODO (gereade oder ungerade)
+		if(yCells>1)
 		{
-			yOffset = cellModel.getHeight()/2;
+			yOffset = this.cellHeight/2;
 		}
 		
-		this.width = cellModel.getWidth()*xCells+xOffset;
-		this.height = cellModel.getHeight()*yCells/2+yOffset;
+		this.width = this.cellWidth*xCells+xOffset;
+		this.height = this.cellHeight*yCells/2+yOffset;
+		
+		System.out.println("cellWith " + this.cellWidth);
 	
 	}
 	
@@ -68,10 +71,8 @@ public class ANTSGridModel extends ANTSAbstractModel implements ANTSIModel
 				
 				int shiftHalf = -1*(((y+1)%2)-1); // 0 or 1
 				
-				ANTSCellController c = new ANTSCellController(x,y,shiftHalf, this.xOffset, this.yOffset);
+				ANTSCellController c = new ANTSCellController(this.cellHeight, this.cellAngleInDegree,x,y,shiftHalf, this.xOffset, this.yOffset);
 				this.grid[x][y] = c;
-//				ANTSDriver.addComponents(c);
-				
 			}
 		}
 		
@@ -99,9 +100,7 @@ public class ANTSGridModel extends ANTSAbstractModel implements ANTSIModel
 	
 	public double getPosY()
 	{
-		
-		ANTSCellModel cellModel = (ANTSCellModel) grid[0][0].getModel();
-		return this.yOffset-cellModel.getHeight()/2;
+		return this.yOffset-this.cellHeight/2;
 	}
 
 	
@@ -114,7 +113,7 @@ public class ANTSGridModel extends ANTSAbstractModel implements ANTSIModel
 	{
 		return this.width;
 	}
-	
+		
 	public String toString()
 	{
 		return "GridModel";
@@ -135,6 +134,21 @@ public class ANTSGridModel extends ANTSAbstractModel implements ANTSIModel
 		return this.grid[x][y];
 	}
 	
+	public ANTSCellController getCellControllerAtMousePos(MouseEvent e)
+	{
+		
+		int x = 0;
+		int y = 0;
+		
+		int mouseX = e.getX();
+		int mouseY = e.getY();
+		
+		x = (int)( mouseX/this.cellWidth);
+		y = (int) (mouseY/this.cellHeight);
+		
+		
+		return this.grid[x][y];
+	}
 
 	
 	

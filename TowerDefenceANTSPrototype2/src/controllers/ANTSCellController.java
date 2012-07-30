@@ -21,9 +21,9 @@ public class ANTSCellController extends ANTSAbstractController implements ANTSIC
 //		this.setIModel(this.model);
 //	}
 	
-	public ANTSCellController(int cellNrX, int cellNrY, int shiftHalf, int xOffset, int yOffset) 
+	public ANTSCellController(double cellHeight, double cellAngleInDegree, int cellNrX, int cellNrY, int shiftHalf, int xOffset, int yOffset) 
 	{
-		this.model = new ANTSCellModel(cellNrX, cellNrY, shiftHalf, xOffset, yOffset);
+		this.model = new ANTSCellModel(cellHeight, cellAngleInDegree, cellNrX, cellNrY, shiftHalf, xOffset, yOffset);
 		this.view = new ANTSCellView(this.model);
 		
 		this.setIModel(this.model);

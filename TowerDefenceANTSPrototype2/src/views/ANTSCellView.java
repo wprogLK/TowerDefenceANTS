@@ -94,5 +94,20 @@ public class ANTSCellView extends ANTSAbstractView implements ANTSIView
 //		AffineTransform aT = this.model.getMatrix();	//for debugging
 		
 		g2d.drawString(this.model.toString() ,(int) aT.getTranslateX()+10,(int) aT.getTranslateY() + 35);//for debugging
-	}	
+	
+		//A
+		
+		double xA = aT.getTranslateX()+this.model.getWidth()/2;
+		double yA = aT.getTranslateY();
+		
+		//A
+		
+		double xB = aT.getTranslateX()-this.model.getWidth()/2;
+		double yB = aT.getTranslateY()+this.model.getHeight()/2;
+		
+		g2d.drawString("A (" + xA + " | " + yA + ")" , (int) xA, (int) yA);
+		
+		g2d.drawString("B (" + xB + " | " + yB + ")" , (int) xB, (int) yB);
+	}	 
+	
 }
