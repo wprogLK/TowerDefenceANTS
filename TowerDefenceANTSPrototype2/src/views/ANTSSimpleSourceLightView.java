@@ -17,6 +17,7 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 {
 	private ANTSSimpleSourceLightModel model;
 	private Ellipse2D circle;
+	private Shape shape;
 	
 	public ANTSSimpleSourceLightView(ANTSSimpleSourceLightModel m) 
 	{
@@ -36,16 +37,18 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 		double radius = this.model.getRadius();
 		
 		this.circle = new Ellipse2D.Double(aT.getTranslateX()-(radius/2), aT.getTranslateY()-(radius/2), radius, radius);
+		this.shape = circle;
 	}
 	
 	@Override
 	public void paint(Graphics2D g2d) 
 	{
 		this.createCircle();			//TODO CHECK IF position and radius has changed
+		
 		AffineTransform aT = this.model.getMatrix();
-		Shape shape = aT.createTransformedShape(circle);
-		this.setBounds(shape.getBounds());
-
+		this.shape = aT.createTransformedShape(circle);
+		this.setBounds(this.shape.getBounds());
+		
 		if(this.model.isDragged())
 		{
 			//Only an example
@@ -99,5 +102,11 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 	public boolean isMouseListener() 
 	{
 		return this.model.isMouseListener();
+	}
+	
+	@Override
+	public boolean containsPoint(int x, int y)
+	{
+		return this.shape.contains(x, y);
 	}
 }

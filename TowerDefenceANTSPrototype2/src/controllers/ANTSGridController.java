@@ -2,6 +2,8 @@ package controllers;
 
 import java.awt.event.MouseEvent;
 
+import basics.ANTSFactory;
+
 import interfaces.ANTSIController;
 import interfaces.ANTSIModel;
 import interfaces.ANTSIView;
@@ -15,11 +17,12 @@ public class ANTSGridController extends ANTSAbstractController implements ANTSIC
 	
 	
 	
-	public ANTSGridController(int xCells, int yCells) 
+	public ANTSGridController(int xCells, int yCells, ANTSFactory factory) 
 	{
-		this.model = new ANTSGridModel(xCells, yCells);
+		this.model = new ANTSGridModel(xCells, yCells, factory);
 		this.view = new ANTSGridView(this.model);
 		
+		this.iview = view;
 		this.setIModel(this.model);
 	}
 	
@@ -55,30 +58,12 @@ public class ANTSGridController extends ANTSAbstractController implements ANTSIC
 	//////////////////
 	
 	@Override
-	public void mouseClicked(MouseEvent e) 
+	public void mouseClickedANTS(MouseEvent e) 
 	{
 		//Only an example
 		System.out.println("Click on grid");
 		
 		ANTSIController c = this.model.getCellControllerAtMousePos(e);
 		c.mouseClicked(e);
-	}
-	
-	@Override
-	public void mouseReleased(MouseEvent e) 
-	{
-//		this.model.setDragged(false);
-	}
-	
-	
-	/////////////////////////
-	//MOUSE MOTION LISTENER//
-	/////////////////////////
-	
-	@Override
-	public void mouseDragged(MouseEvent e) 
-	{
-//		this.model.setDragged(true);
-//		this.model.setPosition(e.getX()/2, e.getY()/2);	//TODO: Important: test this! is it always /2 ? 
 	}
 }

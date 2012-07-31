@@ -81,4 +81,10 @@ public abstract class ANTSAbstractView extends  Container implements ANTSIView
 	{
 		return true;
 	}
+	
+	@Override
+	public boolean containsPoint(int x, int y)
+	{
+		return false;
+	}
 }

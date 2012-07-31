@@ -2,6 +2,8 @@ package controllers;
 
 import java.awt.event.MouseEvent;
 
+import basics.ANTSFactory;
+
 import interfaces.ANTSIController;
 import interfaces.ANTSIModel;
 import interfaces.ANTSIView;
@@ -21,10 +23,11 @@ public class ANTSCellController extends ANTSAbstractController implements ANTSIC
 //		this.setIModel(this.model);
 //	}
 	
-	public ANTSCellController(double cellHeight, double cellAngleInDegree, int cellNrX, int cellNrY, int shiftHalf, int xOffset, int yOffset) 
+	public ANTSCellController(double cellHeight, double cellAngleInDegree, int cellNrX, int cellNrY, int shiftHalf, int xOffset, int yOffset, ANTSFactory factory) 
 	{
-		this.model = new ANTSCellModel(cellHeight, cellAngleInDegree, cellNrX, cellNrY, shiftHalf, xOffset, yOffset);
+		this.model = new ANTSCellModel(cellHeight, cellAngleInDegree, cellNrX, cellNrY, shiftHalf, xOffset, yOffset, factory);
 		this.view = new ANTSCellView(this.model);
+		this.iview = view;
 		
 		this.setIModel(this.model);
 	}
@@ -60,8 +63,6 @@ public class ANTSCellController extends ANTSAbstractController implements ANTSIC
 	
 	public void addComponent(ANTSIController c)
 	{
-		this.model.addView(c.getIView());
-		this.model.addModel(c.getModel());
 		this.model.addController(c);
 	}
 	
@@ -70,28 +71,9 @@ public class ANTSCellController extends ANTSAbstractController implements ANTSIC
 	//////////////////
 	
 	@Override
-	public void mouseClicked(MouseEvent e) 
+	public void mouseClickedANTS(MouseEvent e) 
 	{
 		//Only an example
 		System.out.println("CLICK of " + this.model.toString());
-	}
-	
-	@Override
-	public void mouseReleased(MouseEvent e) 
-	{
-//		this.model.setDragged(false);
-	}
-	
-	
-	/////////////////////////
-	//MOUSE MOTION LISTENER//
-	/////////////////////////
-	
-	@Override
-	public void mouseDragged(MouseEvent e) 
-	{
-		
-//		this.model.setDragged(true);
-//		this.model.setPosition(e.getX()/2, e.getY()/2);	//TODO: Important: test this! is it always /2 ? 
 	}
 }

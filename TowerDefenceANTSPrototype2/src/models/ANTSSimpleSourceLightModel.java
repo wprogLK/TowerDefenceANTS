@@ -8,6 +8,7 @@ import java.awt.geom.AffineTransform;
 import layers.ANTSLayerSystem;
 
 import basics.ANTSDriver;
+import basics.ANTSFactory;
 
 public class ANTSSimpleSourceLightModel extends ANTSAbstractModel implements ANTSIModel 
 {
@@ -20,46 +21,46 @@ public class ANTSSimpleSourceLightModel extends ANTSAbstractModel implements ANT
 	private int ticksBetweenTwoRays = 10;
 	private int tickCounter;
 	
-	private boolean isDragged;
-	
 	//RayProperties:
 	private int numberOfRaysPer360Degrees = 18;
 	private int angle = 360;
 	private double angleOffset = 0;
 	
-	public ANTSSimpleSourceLightModel() 
-	{
-		this.matrix = new AffineTransform();
-		this.matrix.setToTranslation(100, 100);
-		this.radius = 50;
-		
-		this.on = true;
-		this.color = Color.yellow;
-		this.tickCounter = 0;
-		
-		this.isDragged = false;
-		this.isMouseListener = true;
-	}
+//	public ANTSSimpleSourceLightModel() 
+//	{
+//		this.matrix = new AffineTransform();
+//		this.matrix.setToTranslation(100, 100);
+//		this.radius = 50;
+//		
+//		this.on = true;
+//		this.color = Color.yellow;
+//		this.tickCounter = 0;
+//		
+//		this.isDragged = false;
+//		this.isMouseListener = true;
+//	}
 	
-	public ANTSSimpleSourceLightModel(double posX, double posY, double radius, Color color)
+//	public ANTSSimpleSourceLightModel(double posX, double posY, double radius, Color color)
+//	{
+//		this.matrix = new AffineTransform();
+//		
+//		this.matrix.setToTranslation(posX, posY);
+//		
+//		this.radius = radius;
+//		
+//		this.on = true;
+//		this.color = color;
+//		
+//		this.tickCounter = 0;
+//		
+//		this.isDragged = false;
+//		this.isMouseListener = true;
+//	}
+//	
+	public ANTSSimpleSourceLightModel(double posX, double posY, double radius, Color color, boolean isMouseListener, ANTSFactory factory)
 	{
-		this.matrix = new AffineTransform();
+		super(factory);
 		
-		this.matrix.setToTranslation(posX, posY);
-		
-		this.radius = radius;
-		
-		this.on = true;
-		this.color = color;
-		
-		this.tickCounter = 0;
-		
-		this.isDragged = false;
-		this.isMouseListener = true;
-	}
-	
-	public ANTSSimpleSourceLightModel(double posX, double posY, double radius, Color color, boolean isMouseListener)
-	{
 		this.matrix = new AffineTransform();
 		
 		this.matrix.setToTranslation(posX, posY);
@@ -116,8 +117,7 @@ public class ANTSSimpleSourceLightModel extends ANTSAbstractModel implements ANT
 		
 		for(int numberRay = 0; numberRay<this.getNumberOfRays(); numberRay++)
 		{
-			ANTSDriver.createSimpleRayLight(this.matrix, 10, tmpAngle, this.color);
-			
+			this.factory.createSimpleRayLight(this.matrix, 10, tmpAngle, this.color);
 			tmpAngle+=this.getAngleBetweetTwoRays();
 		}
 	}
@@ -184,14 +184,7 @@ public class ANTSSimpleSourceLightModel extends ANTSAbstractModel implements ANT
 	{
 		this.matrix.setToTranslation(x, y);
 	}
-	
-	public void setDragged(boolean isDragged)
-	{
-		this.isDragged = isDragged;
-	}
-	
-
-	
+		
 	///////////
 	//SPECIAL//
 	///////////

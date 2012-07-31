@@ -12,11 +12,10 @@ import java.util.ArrayList;
 import java.util.Set;
 
 import basics.ANTSDriver;
+import basics.ANTSFactory;
 
 public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel 
 {
-	private ArrayList<ANTSIView> views;
-	private ArrayList<ANTSIModel> models;
 	private ArrayList<ANTSIController> controllers;
 	
 	private int relativePosX;	//nr of the cell
@@ -51,8 +50,10 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 	
 	
 	
-	public ANTSCellModel(double cellHeight, double cellAngleInDegree, int cellNrX, int cellNrY, int shiftHalf, int xGridOffset, int yGridOffset )
+	public ANTSCellModel(double cellHeight, double cellAngleInDegree, int cellNrX, int cellNrY, int shiftHalf, int xGridOffset, int yGridOffset, ANTSFactory factory )
 	{
+		super(factory);
+		
 		init(cellHeight, cellAngleInDegree, cellNrX, cellNrY, xGridOffset, yGridOffset);
 		
 		this.matrix = new AffineTransform();
@@ -90,8 +91,6 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 	{
 		this.isMouseListener = false;
 		
-		this.views = new ArrayList<ANTSIView>();
-		this.models = new ArrayList<ANTSIModel>();
 		this.controllers = new ArrayList<ANTSIController>();
 		
 		this.cellHeight = cellHeight;
@@ -238,21 +237,6 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 	///////////
 	//SPECIAL//
 	///////////
-	public void addView(ANTSIView iView) 
-	{
-		if(!this.views.contains(iView))
-		{
-			this.views.add(iView);
-		}
-	}
-
-	public void addModel(ANTSIModel model) 
-	{
-		if(!this.models.contains(model))
-		{
-			this.models.add(model);
-		}
-	}
 
 	public void addController(ANTSIController controller)
 	{

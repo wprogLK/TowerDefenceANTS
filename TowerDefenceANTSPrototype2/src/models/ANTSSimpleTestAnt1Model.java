@@ -14,8 +14,6 @@ public class ANTSSimpleTestAnt1Model extends ANTSAbstractModel implements ANTSIM
 	private boolean on;
 	private Color color;
 	
-	private boolean isDragged;
-	
 	private int width;
 	private int height;
 	
@@ -119,11 +117,6 @@ public class ANTSSimpleTestAnt1Model extends ANTSAbstractModel implements ANTSIM
 	public void setPosition(int x, int y)
 	{
 		this.matrix.setToTranslation(x, y);
-	}
-	
-	public void setDragged(boolean isDragged)
-	{
-		this.isDragged = isDragged;
 	}
 	
 	/**

@@ -9,6 +9,7 @@ import java.awt.geom.AffineTransform;
 import controllers.ANTSCellController;
 
 import basics.ANTSDriver;
+import basics.ANTSFactory;
 
 public class ANTSGridModel extends ANTSAbstractModel implements ANTSIModel 
 {
@@ -28,8 +29,10 @@ public class ANTSGridModel extends ANTSAbstractModel implements ANTSIModel
 	private double cellHeight = 120;
 	private double cellWidth;
 	
-	public ANTSGridModel(int xCells, int yCells)
+	public ANTSGridModel(int xCells, int yCells, ANTSFactory factory)
 	{
+		super(factory);
+		
 		this.isMouseListener = true;
 		this.initCells(xCells,yCells);
 		
@@ -71,7 +74,7 @@ public class ANTSGridModel extends ANTSAbstractModel implements ANTSIModel
 				
 				int shiftHalf = -1*(((y+1)%2)-1); // 0 or 1
 				
-				ANTSCellController c = new ANTSCellController(this.cellHeight, this.cellAngleInDegree,x,y,shiftHalf, this.xOffset, this.yOffset);
+				ANTSCellController c = new ANTSCellController(this.cellHeight, this.cellAngleInDegree,x,y,shiftHalf, this.xOffset, this.yOffset, factory);
 				this.grid[x][y] = c;
 			}
 		}

@@ -49,15 +49,11 @@ import controllers.ANTSSimpleTestAnt1Controller;
  */
 public class ANTSDriver extends Thread implements ANTSIDriver
 {
-	private static ANTSWindow window;
-	private static ANTSGameController gameController;
-	private static ANTSGridController gridController;
+	private ANTSWindow window;
 	
-	private static ArrayList<ANTSIModel> models;
-	private static ArrayList<ANTSIView> views;
-	private static ArrayList<ANTSIController> controllers;
+	private ANTSFactory factory;
 	
-	private static ANTSCanvas canvas;
+	private Canvas canvas;
 	
 	private Color backgroundColor = Color.white;
 	
@@ -75,28 +71,20 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	private BufferStrategy buffer;
 	private GraphicsConfiguration gC;
 	
-	//Grid Config
-	private int xCells = 2;
-	private int yCells = 2;
+	
 	
 	public ANTSDriver()
 	{	
 		window = new ANTSWindow();
 		window.setVisible(true);
 		
-		models = new ArrayList<ANTSIModel>();
-		views = new ArrayList<ANTSIView>();
-		controllers = new ArrayList<ANTSIController>();
-		
-		canvas = new ANTSCanvas();
+		this.canvas = new Canvas();
 		
 		this.initAllListeners();
 		
+		this.factory = new ANTSFactory(this);
+		
 		this.createGame();
-//		createSimpleSourceLight(); //Only for testing
-//		createSimpleSourceLight2();
-//		createSimpleSourceLight3();
-//		createSimpleTestAnt1();
 		
 		this.initActiveRendering();
 	}
@@ -112,7 +100,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		
 		//BackBuffer
 		canvas.createBufferStrategy(2);
-		this.buffer = canvas.getBufferStrategy();
+		this.buffer = this.canvas.getBufferStrategy();
 		
 		//graphics config
 		GraphicsEnvironment gE = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -128,114 +116,18 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		ANTSUpdateListener.setDriver(this);
 	}
 
-	public static void addComponents(ANTSIController c) 
+	public void addControllerToMouseListener(ANTSIController c)
 	{
-		addModel(c.getModel());
-		addController(c);
+		this.canvas.addMouseListener(c);
+		this.canvas.addMouseMotionListener(c);
 	}
 	
-	//Views
-	
-	private static void addView(ANTSAbstractView v)
-	{
-		views.add(v);
-		canvas.addView(v);
-	}
-	
-	
-	public static void addToCanvas(ANTSAbstractView v)
-	{
-		canvas.addView(v);
-	}
-
-	//Model
-	
-	private static void addModel(ANTSIModel m) 
-	{
-		if(!models.contains(m))
-		{
-			models.add(m);
-		}
-	}
-	
-	//Controller
-	
-	private static void addController(ANTSIController c) 
-	{
-		if(!controllers.contains(c))
-		{
-			controllers.add(c);
-		}
-	}
 	
 	//Create new objects
 	
-	public static void createSimpleSourceLight()
-	{
-		ANTSSimpleSourceLightController c = new ANTSSimpleSourceLightController(200,200,60,Color.yellow);
-		addComponents(c);
-		addView(c.getView());
-		ANTSSwitchLightListener.addLight((ANTSSimpleSourceLightModel) c.getModel());	//only for testing
-	}
-
-	public static void createSimpleSourceLight2()
-	{
-		ANTSSimpleSourceLightController c = new ANTSSimpleSourceLightController(20,20,20,Color.blue,false);
-		addView(c.getView());
-		addComponents(c);
-	}
-	
-	public static void createSimpleSourceLight3()
-	{
-		ANTSSimpleSourceLightController c = new ANTSSimpleSourceLightController(6,5,20,Color.RED,true);
-		addView(c.getView());
-		addComponents(c);
-	}
-	
-	public static void createSimpleTestAnt1()
-	{
-		ANTSSimpleTestAnt1Controller c = new ANTSSimpleTestAnt1Controller(60,50,320,320,Color.RED,true);
-		addView(c.getView());
-		addComponents(c);
-	}
-	
-	public static void createSimpleRayLight(AffineTransform matrix, double velocity, double angle, Color color)
-	{
-		ANTSSimpleRayLightController c = new ANTSSimpleRayLightController(matrix,10,angle,color);
-		addView(c.getView());
-		addComponents(c);
-	}
-	
-	
-	
 	private void createGame()
-	{
-		gameController = new ANTSGameController();
-		addView(gameController.getView());
-		addComponents(gameController);
-		
-		this.createGrid();
-	}
-	
-	private void createGrid()
-	{
-		int xCells;
-		
-		if(this.xCells==1)
-		{
-			xCells=1;
-		}
-		else
-		{
-			xCells=this.xCells/2; // xCells/2 for a more quadratic square
-
-		}
-		
-		gridController = new ANTSGridController(xCells,this.yCells); 		
-		addView(gridController.getView());									
-		addComponents(gridController);
-		//TODO add to game and co
-		addToCanvas(gridController.getView());
+	{		
+		this.factory.createGame();
 	}
 	
 	@Override
@@ -257,22 +149,13 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 			loops = 0;
 			while(System.currentTimeMillis() >nextGameTick && loops<MAX_FRAMESKIP)
 			{
-				this.updateModels();
+				this.factory.updateAllModels();
 				nextGameTick +=SKIP_TICKS;
 				loops++;
 			}
 			
 			interpolation =(System.currentTimeMillis() + SKIP_TICKS - nextGameTick) /(SKIP_TICKS); //TODO Float
 			this.paint(interpolation);
-		}
-	}
-	
-	private void updateModels()
-	{
-		for(int i = 0; i<models.size();i++)
-		{
-			ANTSIModel m = models.get(i);
-			m.update();
 		}
 	}
 	
@@ -290,18 +173,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		g2d.setColor(this.backgroundColor); 
 		this.g2d.fillRect(0, 0, this.window.getWidthOfGraphics(),this.window.getHeightOfGraphics());
 		
-		this.gridController.getView().paint(g2d, interpolation);
-
-		for(int i = 0; i<views.size(); i++)
-		{
-			ANTSIView v = views.get(i);
-			if(v.doPaintDirect())
-			{
-				v.paint(g2d, interpolation);
-			}
-			
-		}
-		
+		this.factory.paintAllViews(g2d, interpolation);
 
 		//Show fps
 		this.g2d.setFont( new Font( "Courier New", Font.PLAIN, 12 ) );
@@ -328,25 +200,6 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		{
 			this.g2d.dispose();
 		}
-	}
-	
-	/**
-	 * @param v
-	 * @return always returns a valid controller (if no controller was found it will return an empty controller) 
-	 */
-	public ANTSIController getControllerFrom(ANTSIView v)
-	{
-		for(int i = controllers.size()-1 ; i>=0;i--)
-		{
-			ANTSIController c = controllers.get(i);
-
-			if(c.getIView().equals(v)) 
-			{
-				return c;
-			}
-		}
-		
-		return ANTSAbstractController.getEmptyController();
 	}
 	
 	//////////////////
@@ -392,142 +245,4 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 			return this.fps;
 		}
 	}
-	
-	private class ANTSCanvas extends Canvas implements MouseListener, MouseMotionListener
-	{
-		private JPanel hiddenPanel; //Contains all ANTSAbstract views, but it is hidden; used for correct mouse position
-		
-		private ANTSIController currentEnteredController; //Only one entered controller per time possible! (TODO: change this! (if possible)
-		private ANTSIController currentDragAndDropController;
-		
-		public ANTSCanvas()
-		{
-			this.hiddenPanel = new JPanel();
-			
-			this.currentDragAndDropController = ANTSAbstractController.getEmptyController();
-			this.currentEnteredController = ANTSAbstractController.getEmptyController();
-			
-			this.addMouseListener(this);
-			this.addMouseMotionListener(this);
-		}
-		
-		public void addView(ANTSAbstractView v)
-		{
-			if(v.isMouseListener())
-			{
-				this.hiddenPanel.add(v);
-			}
-		}
-		
-		@Override
-		public void setSize(int width, int height)
-		{
-			super.setSize(width, height);
-			this.hiddenPanel.setSize(width, height);
-		}
-		
-		private ANTSIView getViewAt(int x, int y)
-		{
-			Component c =  this.hiddenPanel.getComponentAt(x, y);
-			if(! c.equals(this.hiddenPanel))
-			{
-				return ((ANTSIView) c);
-			}
-			else
-			{
-				return  ANTSAbstractView.getEmptyView(); //Return a new empty view // -> every return value will be a valid ANTSAbstractView!
-			}
-		}
-		
-		public ANTSIController getControllerFromPos(int x, int y)
-		{
-			ANTSIView v = this.getViewAt(x, y);
-			return getControllerFrom(v);
-		}
-		
-		//////////////////
-		//MOUSE LISTENER//
-		//////////////////
-		
-		@Override
-		public void mouseClicked(MouseEvent e) 
-		{
-			ANTSIController c = this.getControllerFromPos(e.getX(), e.getY());
-			c.mouseClicked(e);
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) 
-		{
-
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) 
-		{
-
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) 
-		{
-			ANTSIController c = this.getControllerFromPos(e.getX(), e.getY());
-			
-			
-			if(!c.equals(ANTSAbstractController.getEmptyController()))
-			{
-				this.currentDragAndDropController = c; //Set the current controller with view at point (x|y) as a possible dagAndDropController
-			}
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e)
-		{
-			if(e.isPopupTrigger())
-			{
-				ANTSIView v = this.currentDragAndDropController.getIView();
-				v.showPopupMenu(this,e.getX(), e.getY());
-				System.out.println("SHOW MENU");
-			}
-			else
-			{
-				ANTSIView v = this.currentDragAndDropController.getIView();
-				System.out.println("No menu: view " + v);
-			}
-			
-			this.currentDragAndDropController.mouseReleased(e);
-			this.currentDragAndDropController = ANTSAbstractController.getEmptyController();
-			
-		}
-
-		/////////////////////////
-		//MOUSE MOTION LISTENER//
-		/////////////////////////
-		
-		@Override
-		public void mouseDragged(MouseEvent e) 
-		{
-			this.currentDragAndDropController.mouseDragged(e);
-		}
-
-		@Override
-		public void mouseMoved(MouseEvent e)
-		{
-			ANTSIController c = this.getControllerFromPos(e.getX(), e.getY());
-			this.exitEnterController(e, c);
-		}
-		
-		private void exitEnterController(MouseEvent e, ANTSIController c)
-		{
-			if(!c.equals(this.currentEnteredController))
-			{
-				this.currentEnteredController.mouseExited(e);	//Exited the old controller
-				
-				this.currentEnteredController = c;			
-				c.mouseEntered(e);						//Enter the new controller
-			}
-		}
-	}
-	
-	
 }

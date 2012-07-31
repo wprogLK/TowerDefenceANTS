@@ -63,6 +63,5 @@ public class ANTSGridView extends ANTSAbstractView implements ANTSIView
 		
 		g2d.setColor(Color.blue);
 		
-//		g2d.draw(rec);
 	}
 }

@@ -7,6 +7,8 @@ import interfaces.ANTSIView;
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
 
+import basics.ANTSFactory;
+
 import views.ANTSSimpleRayLightView;
 import models.ANTSSimpleRayLightModel;
 
@@ -15,11 +17,12 @@ public class ANTSSimpleRayLightController extends ANTSAbstractController impleme
 	private ANTSSimpleRayLightModel model;
 	private ANTSSimpleRayLightView view;
 	
-	public ANTSSimpleRayLightController(AffineTransform sourceMatrix, double velocity, double angle, Color sourceColor) 
+	public ANTSSimpleRayLightController(AffineTransform sourceMatrix, double velocity, double angle, Color sourceColor, ANTSFactory factory) 
 	{
-		this.model = new ANTSSimpleRayLightModel(sourceMatrix, velocity, angle, sourceColor);
+		this.model = new ANTSSimpleRayLightModel(sourceMatrix, velocity, angle, sourceColor, factory);
 		this.view = new ANTSSimpleRayLightView(this.model);
 		
+		this.iview = view;
 		this.setIModel(this.model);
 	}
 	

@@ -5,6 +5,8 @@ import interfaces.ANTSIModel;
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
 
+import basics.ANTSFactory;
+
 public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIModel
 {
 	private AffineTransform matrix;
@@ -18,8 +20,10 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 	private double velocity;
 	private Color color;
 	
-	public ANTSSimpleRayLightModel(AffineTransform sourceMatrix, double velocity, double angle, Color sourceColor)
+	public ANTSSimpleRayLightModel(AffineTransform sourceMatrix, double velocity, double angle, Color sourceColor, ANTSFactory factory)
 	{
+		super(factory);
+		
 		this.matrix = new AffineTransform();
 		this.velocityMatrix = new AffineTransform();
 		this.rotateMatrix = new AffineTransform();

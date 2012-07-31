@@ -1,13 +1,14 @@
 package models;
 
+import basics.ANTSFactory;
 import interfaces.ANTSIModel;
 
 public class ANTSGameModel extends ANTSAbstractModel implements ANTSIModel
 {
 
-	public ANTSGameModel() 
+	public ANTSGameModel(ANTSFactory factory) 
 	{
-		// TODO
+		super(factory);
 	}
 
 	@Override

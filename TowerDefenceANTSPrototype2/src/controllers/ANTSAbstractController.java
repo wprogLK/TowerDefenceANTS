@@ -21,11 +21,13 @@ public abstract class ANTSAbstractController implements ANTSIController
 	
 	private static ANTSAbstractController emptyAbstractController = new ANTSAbstractController() {};
 	private ANTSIModel model;
+	protected ANTSIView iview;
 	
 	
 	public ANTSAbstractController()
 	{
 		this.model = ANTSAbstractModel.getEmptyModel();
+		this.iview = ANTSAbstractView.getEmptyView();
 	}
 	
 	
@@ -39,13 +41,13 @@ public abstract class ANTSAbstractController implements ANTSIController
 	@Override
 	public ANTSIModel getModel()
 	{
-		return ANTSAbstractModel.getEmptyModel();
+		return this.model;
 	}
 	
 	@Override
 	public ANTSIView getIView()
 	{
-		return ANTSAbstractView.getEmptyView();
+		return this.iview;
 	}
 	
 	protected void setIModel(ANTSIModel m)
@@ -75,33 +77,49 @@ public abstract class ANTSAbstractController implements ANTSIController
 	//////////////////
 	
 	@Override
-	public void mouseClicked(MouseEvent e) 
+	public final void mouseClicked(MouseEvent e) 
 	{
-		// TODO Auto-generated method stub
+		if(this.containsPoint(e.getX(),e.getY()))
+		{
+			this.mouseClickedANTS(e);
+		}
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent e) 
+	public final void mouseEntered(MouseEvent e) 
 	{
-		// TODO Auto-generated method stub
+		if(this.containsPoint(e.getX(),e.getY()))
+		{
+			this.mouseEnteredANTS(e);
+		}
 	}
 
 	@Override
-	public void mouseExited(MouseEvent e) 
+	public final void mouseExited(MouseEvent e) 
 	{
-		// TODO Auto-generated method stub
+		if(this.containsPoint(e.getX(),e.getY()))
+		{
+			this.mouseExitedANTS(e);
+		}
 	}
 
 	@Override
-	public void mousePressed(MouseEvent e) 
+	public final void mousePressed(MouseEvent e) 
 	{
-		// TODO Auto-generated method stub
+		if(this.containsPoint(e.getX(),e.getY()))
+		{
+			this.mousePressedANTS(e);
+		}
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent e) 
+	public final void mouseReleased(MouseEvent e) 
 	{
-
+		if(this.containsPoint(e.getX(),e.getY()))
+		{
+			this.model.setDragged(false);
+			this.mouseReleasedANTS(e);
+		}
 	}
 	
 	/////////////////////////
@@ -109,14 +127,66 @@ public abstract class ANTSAbstractController implements ANTSIController
 	/////////////////////////
 
 	@Override
-	public void mouseDragged(MouseEvent arg0) 
+	public final void mouseDragged(MouseEvent e) 
 	{
-
+		if(this.containsPoint(e.getX(),e.getY()))
+		{
+			this.model.setDragged(true);
+			this.mouseDraggedANTS(e);
+		}
 	}
 
 	@Override
-	public void mouseMoved(MouseEvent arg0) 
+	public final void mouseMoved(MouseEvent e) 
 	{
-		// TODO Auto-generated method stub
+		if(this.containsPoint(e.getX(),e.getY()))
+		{
+			this.mouseMovedANTS(e);
+		}
 	}
+	
+	private final boolean containsPoint(int x, int y)
+	{
+		return this.model.containsPoint(x, y) || this.iview.containsPoint(x,y);
+	}
+	
+	///////////////////
+	//Mouse "Actions"//
+	///////////////////
+	
+	public void mouseClickedANTS(MouseEvent e) 
+	{
+
+	}
+
+	public void mouseEnteredANTS(MouseEvent e) 
+	{
+
+	}
+
+	public void mouseExitedANTS(MouseEvent e) 
+	{
+
+	}
+
+	protected void mousePressedANTS(MouseEvent e) 
+	{
+
+	}
+
+	protected void mouseReleasedANTS(MouseEvent e) 
+	{
+
+	}
+	
+	public void mouseDraggedANTS(MouseEvent arg0) 
+	{
+
+	}
+
+	public void mouseMovedANTS(MouseEvent arg0) 
+	{
+
+	}
+	
 }

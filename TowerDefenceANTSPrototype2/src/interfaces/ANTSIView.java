@@ -16,4 +16,5 @@ public interface ANTSIView
 	 * @return
 	 */
 	public boolean doPaintDirect();
+	public boolean containsPoint(int x, int y);
 }
