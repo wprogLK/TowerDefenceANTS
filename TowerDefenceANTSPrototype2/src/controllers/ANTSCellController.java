@@ -29,6 +29,8 @@ public class ANTSCellController extends ANTSAbstractController implements ANTSIC
 		this.view = new ANTSCellView(this.model);
 		this.iview = view;
 		
+		factory.addToMouseListener(this);
+		
 		this.setIModel(this.model);
 	}
 	
@@ -71,9 +73,29 @@ public class ANTSCellController extends ANTSAbstractController implements ANTSIC
 	//////////////////
 	
 	@Override
+	public void mouseMoved(MouseEvent e) 
+	{
+		if(this.containsPoint(e.getX(),e.getY()))
+		{
+			this.mouseEnteredANTS(e);
+		}
+		else
+		{
+			this.model.setMouseEntered(false);
+		}
+	}
+	
+	@Override
 	public void mouseClickedANTS(MouseEvent e) 
 	{
 		//Only an example
 		System.out.println("CLICK of " + this.model.toString());
+	}
+	
+	@Override 
+	public void mouseEnteredANTS(MouseEvent e)
+	{
+		this.model.setMouseEntered(true);
+		System.out.println("Enter of " + this.model.toString());
 	}
 }

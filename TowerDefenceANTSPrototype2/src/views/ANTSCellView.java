@@ -5,7 +5,10 @@ import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
+import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 
 import interfaces.ANTSIView;
@@ -21,6 +24,7 @@ public class ANTSCellView extends ANTSAbstractView implements ANTSIView
 {
 	private ANTSCellModel model;
 	
+	private Shape shape;
 	public ANTSCellView(ANTSCellModel m) 
 	{
 		super();
@@ -57,55 +61,42 @@ public class ANTSCellView extends ANTSAbstractView implements ANTSIView
 	@Override
 	public void paint(Graphics2D g2d, float interpolation)
 	{
-		
-		Rectangle2D rec = new Rectangle2D.Double(0, 0, model.getBoxWidth(), model.getBoxHeight());
 		AffineTransform aT = this.model.getMatrix();
-		Shape shape = aT.createTransformedShape(rec);
-		this.setBounds(shape.getBounds());
-		g2d.setColor(Color.BLUE);
-		
-//		g2d.draw(shape);
-		
-		
-		Line2D lineA = new Line2D.Double(0, 0, this.model.getLineLength(), 0);
-		Line2D lineB = new Line2D.Double(0, 0, this.model.getLineLength(), 0);
-		Line2D lineC = new Line2D.Double(0, 0, this.model.getLineLength(), 0);
-		Line2D lineD = new Line2D.Double(0, 0, this.model.getLineLength(), 0);
-		
-		AffineTransform aTA = this.model.getMatrixForLineA();
-		AffineTransform aTB = this.model.getMatrixForLineB();
-		AffineTransform aTC = this.model.getMatrixForLineC();
-		AffineTransform aTD = this.model.getMatrixForLineD();
-		
-		Shape shapeA = aTA.createTransformedShape(lineA);
-		Shape shapeB = aTB.createTransformedShape(lineB);
-		Shape shapeC = aTC.createTransformedShape(lineC);
-		Shape shapeD = aTD.createTransformedShape(lineD);
 		
 		g2d.setColor(Color.black);
 		
-		g2d.draw(shapeA);
-		g2d.draw(shapeB);
-		g2d.draw(shapeC);
-		g2d.draw(shapeD);
+		if(this.model.getMouseEntered())
+		{
+			g2d.setColor(Color.blue);
+		}
 		
-//		AffineTransform aT = this.model.getMatrix();	//for debugging
+		GeneralPath g = new GeneralPath();
+		double[][] points = this.model.getPoints();
+		g.moveTo(points[0][0],points[0][1]);
 		
-//		g2d.drawString(this.model.toString() ,(int) aT.getTranslateX()+10,(int) aT.getTranslateY() + 35);//for debugging
-	
-//		//A
-//		
-//		double xA = aT.getTranslateX()+this.model.getWidth()/2;
-//		double yA = aT.getTranslateY();
-//		
-//		//B
-//		
-//		double xB = aT.getTranslateX()-this.model.getWidth()/2;
-//		double yB = aT.getTranslateY()+this.model.getHeight()/2;
-//		
-//		g2d.drawString("A (" + xA + " | " + yA + ")" , (int) xA, (int) yA);
-//		
-//		g2d.drawString("B (" + xB + " | " + yB + ")" , (int) xB, (int) yB);
+		for(int x = 0; x<4; x++)
+		{
+			g.lineTo(points[x][0],points[x][1]);
+		}
+		
+		g.closePath();
+		
+		this.shape = aT.createTransformedShape(g);
+		
+		g2d.draw(this.shape);
+		g2d.setColor(Color.black);
 	}	 
 	
+	@Override
+	public boolean containsPoint(int x, int y)
+	{
+		if(this.shape!=null)
+		{
+			return this.shape.contains(x, y);
+		}
+		else
+		{
+			return false;
+		}
+	}
 }

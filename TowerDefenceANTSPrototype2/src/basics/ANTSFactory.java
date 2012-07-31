@@ -113,5 +113,14 @@ public class ANTSFactory
 			
 		}
 	}
+
+	public void addToMouseListener(ANTSIController c) 
+	{
+		if(c.getModel().isMouseListener())
+		{
+			this.driver.addControllerToMouseListener(c);
+		}
+		
+	}
 	
 }

@@ -71,7 +71,6 @@ public class ANTSGridModel extends ANTSAbstractModel implements ANTSIModel
 		{
 			for(int y = 0; y<yCells; y++)
 			{
-				
 				int shiftHalf = -1*(((y+1)%2)-1); // 0 or 1
 				
 				ANTSCellController c = new ANTSCellController(this.cellHeight, this.cellAngleInDegree,x,y,shiftHalf, this.xOffset, this.yOffset, factory);

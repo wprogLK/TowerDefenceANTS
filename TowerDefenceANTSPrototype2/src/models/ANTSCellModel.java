@@ -48,6 +48,9 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 	
 	private AffineTransform matrix;
 	
+	private AffineTransform matrixNew;
+	
+	private boolean mouseEntered;
 	
 	
 	public ANTSCellModel(double cellHeight, double cellAngleInDegree, int cellNrX, int cellNrY, int shiftHalf, int xGridOffset, int yGridOffset, ANTSFactory factory )
@@ -57,6 +60,7 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 		init(cellHeight, cellAngleInDegree, cellNrX, cellNrY, xGridOffset, yGridOffset);
 		
 		this.matrix = new AffineTransform();
+		this.matrixNew = new AffineTransform();
 		
 		this.calc();
 		
@@ -69,9 +73,19 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 		this.absolutePosY = this.cellHeight*this.relativePosY/2;
 		this.absolutePosX+=this.cellWidth/2*this.shift;
 		
+		this.matrixNew.rotate(Math.toRadians(45));
+//		this.matrix.setToTranslation(this.absolutePosX, this.absolutePosY);
+//		this.matrixNew.setToTranslation(this.absolutePosX+this.gridOffsetX*2, this.absolutePosY);
+		this.matrixNew.translate(this.absolutePosX-this.gridOffsetX, this.absolutePosY);
 		
-		this.matrix.setToTranslation(this.absolutePosX, this.absolutePosY);
+		double xFactor = this.cellHeight/this.cellWidth/2;
+		double yFactor = 0.0;
 		
+		this.isMouseListener = true;
+		
+		
+		this.matrixNew.shear(xFactor, yFactor);
+		this.mouseEntered =false;
 	}
 	
 
@@ -94,7 +108,7 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 		this.controllers = new ArrayList<ANTSIController>();
 		
 		this.cellHeight = cellHeight;
-		this.cellWidth = 0;
+		this.cellWidth = cellHeight;
 		
 		this.angle = cellAngleInDegree;
 		
@@ -132,6 +146,11 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 		return this.matrix;
 	}
 	
+	public AffineTransform getMatrixNew()
+	{
+		return this.matrixNew;
+	}
+	
 	public double getWidth()
 	{
 		return this.cellWidth;
@@ -139,7 +158,7 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 	
 	public double getBoxWidth()
 	{
-		return this.cellWidth;
+		return this.cellHeight;
 	}
 	
 	public double getBoxHeight()
@@ -182,56 +201,68 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 		
 		AffineTransform matrixLine = new AffineTransform(matrix);
 		matrixLine.translate(this.cellWidth, this.cellHeight);
-		
 		matrixLine.translate(startPointXOffset, startPointYOffset);
 		matrixLine.rotate(sign*angleInRadian, 0, 0);
 		
 		return matrixLine;
 	}
 	
-//	private double[] rotatePoint(int sign, int angleDegree, double startPointXOffset, double startPointYOffset)
-//	{
-//		double angleInRadian = Math.toRadians(angleDegree);
-//		AffineTransform matrixLine = new AffineTransform(matrix);
-//		
-//		matrixLine.translate(startPointXOffset + this.absolutePosX-this.offsetX, startPointYOffset + this.absolutePosY-this.offsetY);
-//		matrixLine.translate(this.lineLength, 0);
-//		matrixLine.rotate(sign*angleInRadian, 0, 0);
-//		
-//		double[] point = {matrixLine.getTranslateX(), matrixLine.getTranslateY()};
-//		
-//		return point;
-//	}
-//	
-//	public double[] getPointA()
-//	{
-//		double [] p = {this.matrix.getTranslateX() - this.width/2, this.matrix.getTranslateY() - 0};
-//		return p;
-////		return this.calculateMatrix(-1,30, -this.width/2, 0);
-//	}
-//	
-//	public double[] getPointB()
-//	{
-//		return this.rotatePoint(1, 30,  -this.width/2, -this.height);
-//		//return this.calculateMatrix(1,30, -this.width/2, -this.height);
-//	}
-//	
-//	public double[] getPointC()
-//	{
-//		double [] p = {this.matrix.getTranslateX() - this.width/2, this.matrix.getTranslateY() - this.height};
-//		return p;
-////		return this.calculateMatrix(-1,210, -this.width/2, -this.height);
-//	}
-//	
-//	public double[] getPointD()
-//	{
-//		return this.rotatePoint(-1,150, -this.width/2, 0);
-////		return this.calculateMatrix(-1,150, -this.width/2, 0);
-//	}
+	public double[][] getPoints()
+	{
+		double[][] points = new double[4][2];
+		
+		int offset = 100;
+		
+		double aX =  this.absolutePosX +  + this.cellWidth/2 + offset;
+		double aY = this.absolutePosY +offset;
+		
+		points[0][0] = aX;
+		points[0][1] = aY;
+		
+		double bX = this.absolutePosX+offset;
+		double bY = this.absolutePosY - this.cellHeight/2+offset;
+		
+		points[1][0] = bX;
+		points[1][1] = bY;
+		
+		double cX = this.absolutePosX  + this.cellWidth/2+offset;
+		double cY = this.absolutePosY - this.cellHeight+offset;
+		
+		points[2][0] = cX;
+		points[2][1] = cY;
+		
+		double dX = this.absolutePosX  + this.cellWidth+offset;
+		double dY = this.absolutePosY - this.cellHeight/2+offset;
+		
+		points[3][0] = dX;
+		points[3][1] = dY;
+		
+		
+		return points;
+//			double xA = aT.getTranslateX()+this.model.getWidth()/2;
+//			double yA = aT.getTranslateY();
+//			
+//			//B
+//			
+//			double xB = aT.getTranslateX()-this.model.getWidth()/2;
+//			double yB = aT.getTranslateY()+this.model.getHeight()/2;
+	}
+	
+	
 	
 	public double getLineLength()
 	{
 		return this.lineLength;
+	}
+	
+	public void setMouseEntered(boolean entered)
+	{
+		this.mouseEntered = entered;
+	}
+	
+	public boolean getMouseEntered()
+	{
+		return this.mouseEntered;
 	}
 	
 	///////////

@@ -137,7 +137,7 @@ public abstract class ANTSAbstractController implements ANTSIController
 	}
 
 	@Override
-	public final void mouseMoved(MouseEvent e) 
+	public void mouseMoved(MouseEvent e) 
 	{
 		if(this.containsPoint(e.getX(),e.getY()))
 		{
@@ -145,7 +145,7 @@ public abstract class ANTSAbstractController implements ANTSIController
 		}
 	}
 	
-	private final boolean containsPoint(int x, int y)
+	protected final boolean containsPoint(int x, int y)
 	{
 		return this.model.containsPoint(x, y) || this.iview.containsPoint(x,y);
 	}
