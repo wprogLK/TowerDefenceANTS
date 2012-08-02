@@ -36,9 +36,9 @@ public class ANTSGameController extends ANTSAbstractController implements ANTSIC
 	private void initGame() 
 	{
 		this.createGrid();
-		createSimpleSourceLight(); //Only for testing
-		createSimpleSourceLight2();
-		createSimpleSourceLight3();
+//		createSimpleSourceLight(); //Only for testing
+//		createSimpleSourceLight2();
+//		createSimpleSourceLight3();
 //		createSimpleTestAnt1();
 	}
 

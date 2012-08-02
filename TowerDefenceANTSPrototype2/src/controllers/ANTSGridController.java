@@ -63,7 +63,5 @@ public class ANTSGridController extends ANTSAbstractController implements ANTSIC
 		//Only an example
 		System.out.println("Click on grid");
 		
-		ANTSIController c = this.model.getCellControllerAtMousePos(e);
-		c.mouseClicked(e);
 	}
 }

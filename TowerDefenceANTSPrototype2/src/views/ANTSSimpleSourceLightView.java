@@ -47,7 +47,6 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 		
 		AffineTransform aT = this.model.getMatrix();
 		this.shape = aT.createTransformedShape(circle);
-		this.setBounds(this.shape.getBounds());
 		
 		if(this.model.isDragged())
 		{

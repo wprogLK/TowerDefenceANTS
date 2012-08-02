@@ -158,9 +158,6 @@ public class ANTSSimpleTestAnt1View extends ANTSAbstractView implements ANTSIVie
 		if(image != null)
 		{
 			aT = this.model.getAffineTransformForImage(image.getWidth(), image.getHeight());
-			Rectangle2D shape = new Rectangle(image.getWidth(), image.getHeight());
-			Shape box = aT.createTransformedShape(shape);
-			this.setBounds(box.getBounds());
 			g2d.drawImage(image, aT, null);
 		}
 		else

@@ -2,7 +2,10 @@ package controllers;
 
 import java.awt.event.MouseEvent;
 
+import basics.ANTSDevelopment;
+import basics.ANTSDevelopment.ANTSDebug;
 import basics.ANTSFactory;
+import basics.ANTSDevelopment.ANTSStream;
 
 import interfaces.ANTSIController;
 import interfaces.ANTSIModel;
@@ -14,14 +17,6 @@ public class ANTSCellController extends ANTSAbstractController implements ANTSIC
 {
 	private ANTSCellModel model;
 	private ANTSCellView view;
-	
-//	public ANTSCellController(int cellNrX, int cellNrY) 
-//	{
-//		this.model = new ANTSCellModel(cellNrX, cellNrY);
-//		this.view = new ANTSCellView(this.model);
-//		
-//		this.setIModel(this.model);
-//	}
 	
 	public ANTSCellController(double cellHeight, double cellAngleInDegree, int cellNrX, int cellNrY, int shiftHalf, int xOffset, int yOffset, ANTSFactory factory) 
 	{
@@ -56,7 +51,7 @@ public class ANTSCellController extends ANTSAbstractController implements ANTSIC
 	@Override
 	public String toString()
 	{
-		return "CELL CONTROLLER";
+		return "CELL CONTROLLER " + this.model;
 	}
 	
 	///////////
@@ -78,6 +73,7 @@ public class ANTSCellController extends ANTSAbstractController implements ANTSIC
 		if(this.containsPoint(e.getX(),e.getY()))
 		{
 			this.mouseEnteredANTS(e);
+			ANTSDebug.setCurrentHoveringCell(this);
 		}
 		else
 		{
@@ -89,13 +85,12 @@ public class ANTSCellController extends ANTSAbstractController implements ANTSIC
 	public void mouseClickedANTS(MouseEvent e) 
 	{
 		//Only an example
-		System.out.println("CLICK of " + this.model.toString());
+		ANTSStream.print("CLICK of " + this.model.toString());
 	}
 	
 	@Override 
 	public void mouseEnteredANTS(MouseEvent e)
 	{
 		this.model.setMouseEntered(true);
-		System.out.println("Enter of " + this.model.toString());
 	}
 }

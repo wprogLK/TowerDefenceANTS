@@ -1,5 +1,6 @@
 package interfaces;
 
+
 import java.awt.Component;
 import java.awt.Graphics2D;
 
@@ -17,4 +18,5 @@ public interface ANTSIView
 	 */
 	public boolean doPaintDirect();
 	public boolean containsPoint(int x, int y);
+	boolean isMouseOver();
 }

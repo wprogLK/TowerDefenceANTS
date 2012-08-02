@@ -25,6 +25,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
+import basics.ANTSDevelopment.ANTSDebug;
+
 import views.ANTSAbstractView;
 
 import listeners.ANTSSwitchLightListener;
@@ -61,8 +63,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	private final int SKIP_TICKS = 1000/TICKS_PER_SECOND;
 	private final int MAX_FRAMESKIP = 5;
 	
-	private boolean debugModeOn = true;
-	private FPS fps;
+	private ANTSFPS fps;
 	
 	//Active Rendering:
 	private Graphics graphics;
@@ -70,8 +71,6 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	private BufferedImage bi;
 	private BufferStrategy buffer;
 	private GraphicsConfiguration gC;
-	
-	
 	
 	public ANTSDriver()
 	{	
@@ -122,7 +121,6 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		this.canvas.addMouseMotionListener(c);
 	}
 	
-	
 	//Create new objects
 	
 	private void createGame()
@@ -138,11 +136,8 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		float interpolation;
 		
 		boolean gameIsRunning = true;
-		
-		if(this.debugModeOn)
-		{
-			this.fps = new FPS();
-		}
+	
+		this.fps = new ANTSFPS();
 		
 		while(gameIsRunning)
 		{
@@ -161,13 +156,13 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	
 	private void paint(float interpolation)
 	{
+		this.fps.update();
 		
-		if(this.debugModeOn)
-		{
-			this.fps.update();
-		}
 		this.bi = this.gC.createCompatibleImage(this.window.getWidthOfGraphics(),this.window.getHeightOfGraphics());
 		this.g2d = bi.createGraphics();
+		
+		ANTSDebug.setGraphics2D(this.g2d);
+		ANTSDebug.setFPS(fps);
 		
 		//Clear:
 		g2d.setColor(this.backgroundColor); 
@@ -175,10 +170,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		
 		this.factory.paintAllViews(g2d, interpolation);
 
-		//Show fps
-		this.g2d.setFont( new Font( "Courier New", Font.PLAIN, 12 ) );
-		this.g2d.setColor( Color.BLACK );
-	    this.g2d.drawString( String.format( "FPS: %s", this.fps.getFPS() ), 20, 20 );
+		ANTSDebug.showDebugScreen();
 		
 		//Blit image and flip
 		this.graphics = this.buffer.getDrawGraphics();
@@ -196,6 +188,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		{
 			this.graphics.dispose();
 		}
+		
 		if(this.g2d != null)
 		{
 			this.g2d.dispose();
@@ -206,7 +199,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	//INNER CLASSES://
 	//////////////////
 	
-	private class FPS
+	public class ANTSFPS
 	{
 		private int fps;
 		private int frames;
@@ -214,7 +207,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		private long currentTime;
 		private long lastTime;
 		
-		public FPS()
+		public ANTSFPS()
 		{
 			this.fps = 0;
 			this.frames = 0;

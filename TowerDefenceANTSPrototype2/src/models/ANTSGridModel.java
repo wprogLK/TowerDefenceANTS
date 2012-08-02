@@ -20,7 +20,7 @@ public class ANTSGridModel extends ANTSAbstractModel implements ANTSIModel
 	private int yCells;
 	
 	private int xOffset = 30;
-	private int yOffset = 30;
+	private int yOffset = 60;
 	
 	private double height;
 	private double width;
@@ -58,9 +58,6 @@ public class ANTSGridModel extends ANTSAbstractModel implements ANTSIModel
 		
 		this.width = this.cellWidth*xCells+xOffset;
 		this.height = this.cellHeight*yCells/2+yOffset;
-		
-		System.out.println("cellWith " + this.cellWidth);
-	
 	}
 	
 	private void initCells(int xCells, int yCells)
@@ -72,13 +69,10 @@ public class ANTSGridModel extends ANTSAbstractModel implements ANTSIModel
 			for(int y = 0; y<yCells; y++)
 			{
 				int shiftHalf = -1*(((y+1)%2)-1); // 0 or 1
-				
-				ANTSCellController c = new ANTSCellController(this.cellHeight, this.cellAngleInDegree,x,y,shiftHalf, this.xOffset, this.yOffset, factory);
+				ANTSCellController c = this.factory.createCell(this.cellHeight, this.cellAngleInDegree,x,y,shiftHalf, this.xOffset, this.yOffset);
 				this.grid[x][y] = c;
 			}
 		}
-		
-		System.out.println("initCells done!");
 	}
 	
 	/////////////////////
@@ -136,21 +130,21 @@ public class ANTSGridModel extends ANTSAbstractModel implements ANTSIModel
 		return this.grid[x][y];
 	}
 	
-	public ANTSCellController getCellControllerAtMousePos(MouseEvent e)
-	{
-		
-		int x = 0;
-		int y = 0;
-		
-		int mouseX = e.getX();
-		int mouseY = e.getY();
-		
-		x = (int)( mouseX/this.cellWidth);
-		y = (int) (mouseY/this.cellHeight);
-		
-		
-		return this.grid[x][y];
-	}
+//	public ANTSCellController getCellControllerAtMousePos(MouseEvent e)
+//	{
+//		
+//		int x = 0;
+//		int y = 0;
+//		
+//		int mouseX = e.getX();
+//		int mouseY = e.getY();
+//		
+//		x = (int)( mouseX/this.cellWidth);
+//		y = (int) (mouseY/this.cellHeight);
+//		
+//		
+//		return this.grid[x][y];
+//	}
 
 	
 	

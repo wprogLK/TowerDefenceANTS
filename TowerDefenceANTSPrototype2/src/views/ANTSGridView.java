@@ -1,9 +1,6 @@
 package views;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-
 import interfaces.ANTSIView;
 
 import javax.swing.JMenuItem;
@@ -25,10 +22,6 @@ public class ANTSGridView extends ANTSAbstractView implements ANTSIView
 		this.popupMenu.add(new JMenuItem("A popup menu item of Grid"));
 		
 		this.model = m;
-		
-		Rectangle2D rec = new Rectangle2D.Double(this.model.getPosX(), this.model.getPosY(), this.model.getWidth(), this.model.getHeight());
-		this.setBounds(rec.getBounds());
-		
 	}
 		
 	public String toString()
@@ -51,17 +44,23 @@ public class ANTSGridView extends ANTSAbstractView implements ANTSIView
 	@Override
 	public void paint(Graphics2D g2d, float interpolation) 	//TODO: Check this, if first y and then x or the other way
 	{
+		ANTSIView currentHoveringView = ANTSAbstractView.getEmptyView();
+		
 		for(int y = 0; y < this.model.getMaxCellY(); y++)
 		{
 			for(int x = 0; x < this.model.getMaxCellX(); x++)
 			{
 				ANTSCellController controller = model.getCellControllerAt(x, y);
-				controller.getView().paint(g2d, interpolation);
+				ANTSIView v = controller.getIView();
+				v.paint(g2d, interpolation);
+				
+				if(v.isMouseOver())
+				{
+					currentHoveringView = v;
+				}
 			}
 		}
 		
-		
-		g2d.setColor(Color.blue);
-		
+		currentHoveringView.paint(g2d,interpolation);
 	}
 }

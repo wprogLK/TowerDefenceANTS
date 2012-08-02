@@ -92,7 +92,16 @@ public class ANTSCellView extends ANTSAbstractView implements ANTSIView
 	{
 		if(this.shape!=null)
 		{
-			return this.shape.contains(x, y);
+			if(this.shape.contains(x,y))
+			{
+				this.isMouseOver = true;
+				return true;
+			}
+			else
+			{
+				this.isMouseOver =false;
+				return false;
+			}
 		}
 		else
 		{

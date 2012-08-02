@@ -10,6 +10,9 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
+import views.ANTSAbstractView;
+
+import controllers.ANTSCellController;
 import controllers.ANTSGameController;
 import controllers.ANTSGridController;
 import controllers.ANTSSimpleRayLightController;
@@ -67,6 +70,13 @@ public class ANTSFactory
 		this.gridController = new ANTSGridController(xCells,yCellsIn, this); 		
 	}
 	
+	public ANTSCellController createCell(double cellHeight, double cellAngleInDegree, int cellNrX, int cellNrY, int shiftHalf, int xOffset, int yOffset) {
+		ANTSCellController c = new ANTSCellController(cellHeight, cellAngleInDegree, cellNrX, cellNrY, shiftHalf, xOffset, yOffset, this);
+		this.addController(c);
+		
+		return c;
+	}
+	
 	
 	//------------------------------------------------------//
 	
@@ -98,8 +108,6 @@ public class ANTSFactory
 	
 	public void paintAllViews(Graphics2D g2d, float interpolation)
 	{
-//		System.out.println("Paint...");
-		
 		this.gridController.getIView().paint(g2d, interpolation);
 		
 		for(int i = 0; i<this.controllers.size(); i++)
@@ -110,7 +118,6 @@ public class ANTSFactory
 			{
 				v.paint(g2d, interpolation);
 			}
-			
 		}
 	}
 
@@ -122,5 +129,7 @@ public class ANTSFactory
 		}
 		
 	}
+
+	
 	
 }

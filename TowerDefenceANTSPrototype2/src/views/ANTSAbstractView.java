@@ -12,9 +12,10 @@ import java.awt.event.MouseMotionListener;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
-public abstract class ANTSAbstractView extends  Container implements ANTSIView 
+public abstract class ANTSAbstractView  implements ANTSIView
 {
 	protected JPopupMenu popupMenu;
+	protected boolean isMouseOver;
 	
 	private static ANTSAbstractView emptyView = new ANTSAbstractView() 
 	{
@@ -33,6 +34,8 @@ public abstract class ANTSAbstractView extends  Container implements ANTSIView
 		this.popupMenu.add(new JMenuItem("A popup menu item abstract"));
 		
 		JPopupMenu.setDefaultLightWeightPopupEnabled(false);	//shows the popupmenu in the foreground of the canvas!
+	
+		this.isMouseOver = false;
 	}
 	
 	
@@ -86,5 +89,11 @@ public abstract class ANTSAbstractView extends  Container implements ANTSIView
 	public boolean containsPoint(int x, int y)
 	{
 		return false;
+	}
+	
+	@Override
+	public boolean isMouseOver()
+	{
+		return this.isMouseOver;
 	}
 }

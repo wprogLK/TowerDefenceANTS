@@ -83,6 +83,9 @@ public abstract class ANTSAbstractController implements ANTSIController
 		{
 			this.mouseClickedANTS(e);
 		}
+		
+	
+
 	}
 
 	@Override
@@ -110,6 +113,12 @@ public abstract class ANTSAbstractController implements ANTSIController
 		{
 			this.mousePressedANTS(e);
 		}
+		
+		if (e.isPopupTrigger())
+		{
+			this.iview.showPopupMenu(e.getComponent(),e.getX(),e.getY());
+			System.out.println("POPUP");
+		}
 	}
 
 	@Override
@@ -119,6 +128,12 @@ public abstract class ANTSAbstractController implements ANTSIController
 		{
 			this.model.setDragged(false);
 			this.mouseReleasedANTS(e);
+		}
+		
+		if (e.isPopupTrigger())
+		{
+//			this.iview.showPopupMenu(e.getComponent(),e.getX(),e.getY());
+//			System.out.println("POPUP");
 		}
 	}
 	
