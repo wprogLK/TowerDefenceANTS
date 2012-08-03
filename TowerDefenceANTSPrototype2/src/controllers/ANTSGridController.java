@@ -58,7 +58,7 @@ public class ANTSGridController extends ANTSAbstractController implements ANTSIC
 	//////////////////
 	
 	@Override
-	public void mouseClickedANTS(MouseEvent e) 
+	public void mouseLeftClickedANTS(MouseEvent e) 
 	{
 		//Only an example
 		System.out.println("Click on grid");

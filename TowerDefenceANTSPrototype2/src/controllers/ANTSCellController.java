@@ -80,7 +80,7 @@ public class ANTSCellController extends ANTSAbstractController implements ANTSIC
 	}
 	
 	@Override
-	public void mouseClickedANTS(MouseEvent e) 
+	public void mouseLeftClickedANTS(MouseEvent e) 
 	{
 		//Only an example
 		ANTSStream.print("CLICK of " + this.model.toString());

@@ -67,7 +67,7 @@ public class ANTSSimpleTestAnt1Controller extends ANTSAbstractController impleme
 	//////////////////
 	
 	@Override
-	public void mouseClickedANTS(MouseEvent e) 
+	public void mouseLeftClickedANTS(MouseEvent e) 
 	{
 		//Only an example
 		this.model.switchLight();

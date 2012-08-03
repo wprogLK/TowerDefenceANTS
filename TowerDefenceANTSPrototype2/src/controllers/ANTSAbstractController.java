@@ -4,6 +4,8 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.SwingUtilities;
 
+import basics.ANTSDevelopment.ANTSStream;
+
 import layers.ANTSLayerSystem.Layer;
 
 import models.ANTSAbstractModel;
@@ -21,11 +23,9 @@ import interfaces.ANTSIView;
  */
 public abstract class ANTSAbstractController implements ANTSIController
 {
-	
 	private static ANTSAbstractController emptyAbstractController = new ANTSAbstractController() {};
 	private ANTSIModel model;
 	protected ANTSIView iview;
-	
 	
 	public ANTSAbstractController()
 	{
@@ -82,7 +82,22 @@ public abstract class ANTSAbstractController implements ANTSIController
 	{
 		if(this.containsPoint(e.getX(),e.getY()))
 		{
-			this.mouseClickedANTS(e);
+			if(SwingUtilities.isLeftMouseButton(e))
+			{
+				this.mouseLeftClickedANTS(e);
+			}
+			else if(SwingUtilities.isMiddleMouseButton(e))
+			{
+				this.mouseWheelClickedANTS(e);
+			}
+			else if(SwingUtilities.isRightMouseButton(e))
+			{
+				this.mouseRightClickedANTS(e);
+			}
+			else
+			{
+				ANTSStream.print("Unkown button was clicked!");
+			}
 		}
 	}
 
@@ -109,11 +124,26 @@ public abstract class ANTSAbstractController implements ANTSIController
 	{
 		if(this.containsPoint(e.getX(),e.getY()))
 		{
-			this.mousePressedANTS(e);
+			if(SwingUtilities.isLeftMouseButton(e))
+			{
+				this.mouseLeftPressedANTS(e);
+			}
+			else if(SwingUtilities.isMiddleMouseButton(e))
+			{
+				this.mouseWheelPressedANTS(e);
+			}
+			else if(SwingUtilities.isRightMouseButton(e))
+			{
+				this.mouseRightPressedANTS(e);
+			}
+			else
+			{
+				ANTSStream.print("Unkown button was pressed!");
+			}
 			
 			if(e.isPopupTrigger())
 			{
-				System.out.println("Menu by pressing");	//TODO
+				this.showMenu(e);
 			}
 		}
 	}
@@ -124,13 +154,34 @@ public abstract class ANTSAbstractController implements ANTSIController
 		if(this.containsPoint(e.getX(),e.getY()))
 		{
 			this.model.setDragged(false);
-			this.mouseReleasedANTS(e);
+			
+			if(SwingUtilities.isLeftMouseButton(e))
+			{
+				this.mouseLeftReleasedANTS(e);
+			}
+			else if(SwingUtilities.isMiddleMouseButton(e))
+			{
+				this.mouseWheelReleasedANTS(e);
+			}
+			else if(SwingUtilities.isRightMouseButton(e))
+			{
+				this.mouseRightReleasedANTS(e);
+			}
+			else
+			{
+				ANTSStream.print("Unkown button was released!");
+			}
 			
 			if(e.isPopupTrigger())
 			{
-				System.out.println("Menu by releasing");	//TODO
+				this.showMenu(e);
 			}
 		}
+	}
+	
+	private void showMenu(MouseEvent e)
+	{
+		System.out.println("show menu"); //TODO
 	}
 	
 	/////////////////////////
@@ -165,11 +216,23 @@ public abstract class ANTSAbstractController implements ANTSIController
 	//Mouse "Actions"//
 	///////////////////
 	
-	public void mouseClickedANTS(MouseEvent e) 
+	
+	
+	public void mouseRightClickedANTS(MouseEvent e) 
+	{
+
+	}
+	
+	public void mouseLeftClickedANTS(MouseEvent e) 
 	{
 
 	}
 
+	public void mouseWheelClickedANTS(MouseEvent e) 
+	{
+
+	}
+	
 	public void mouseEnteredANTS(MouseEvent e) 
 	{
 
@@ -180,16 +243,35 @@ public abstract class ANTSAbstractController implements ANTSIController
 
 	}
 
-	protected void mousePressedANTS(MouseEvent e) 
-	{
-
-	}
-
-	protected void mouseReleasedANTS(MouseEvent e) 
+	public void mouseRightPressedANTS(MouseEvent e) 
 	{
 
 	}
 	
+	public void mouseLeftPressedANTS(MouseEvent e) 
+	{
+
+	}
+
+	public void mouseWheelPressedANTS(MouseEvent e) 
+	{
+
+	}
+
+	public void mouseRightReleasedANTS(MouseEvent e) 
+	{
+
+	}
+	
+	public void mouseLeftReleasedANTS(MouseEvent e) 
+	{
+
+	}
+
+	public void mouseWheelReleasedANTS(MouseEvent e) 
+	{
+
+	}
 	public void mouseDraggedANTS(MouseEvent arg0) 
 	{
 
