@@ -18,9 +18,6 @@ public class ANTSGridView extends ANTSAbstractView implements ANTSIView
 	{
 		super();
 		
-		this.popupMenu = new JPopupMenu("Grid popupMenu: Grid");
-		this.popupMenu.add(new JMenuItem("A popup menu item of Grid"));
-		
 		this.model = m;
 	}
 		

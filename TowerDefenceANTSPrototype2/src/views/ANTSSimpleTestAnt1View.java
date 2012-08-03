@@ -45,8 +45,6 @@ public class ANTSSimpleTestAnt1View extends ANTSAbstractView implements ANTSIVie
 	public ANTSSimpleTestAnt1View(ANTSSimpleTestAnt1Model m) 
 	{
 		super();
-		this.popupMenu = new JPopupMenu("Simple popupMenu: Test ant");
-		this.popupMenu.add(new JMenuItem("A popup menu item of Ant"));
 		
 		this.model = m;
 		

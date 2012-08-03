@@ -5,6 +5,7 @@ import interfaces.ANTSIView;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Graphics2D;
+import java.awt.Shape;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -14,8 +15,8 @@ import javax.swing.JPopupMenu;
 
 public abstract class ANTSAbstractView  implements ANTSIView
 {
-	protected JPopupMenu popupMenu;
 	protected boolean isMouseOver;
+	protected Shape shape;
 	
 	private static ANTSAbstractView emptyView = new ANTSAbstractView() 
 	{
@@ -29,12 +30,6 @@ public abstract class ANTSAbstractView  implements ANTSIView
 	public ANTSAbstractView()
 	{
 		//TODO
-
-		this.popupMenu = new JPopupMenu("Simple popupMenu: ABSTRACT");
-		this.popupMenu.add(new JMenuItem("A popup menu item abstract"));
-		
-		JPopupMenu.setDefaultLightWeightPopupEnabled(false);	//shows the popupmenu in the foreground of the canvas!
-	
 		this.isMouseOver = false;
 	}
 	
@@ -51,23 +46,9 @@ public abstract class ANTSAbstractView  implements ANTSIView
 		// TODO Auto-generated method stub
 	}
 	
-	//////////////
-	//POPUP MENU//
-	//////////////
-	@Override
-	public void showPopupMenu(Component component,int x, int y)
-	{
-		this.popupMenu.show(component, x, y);
-	}
-	
 	/////////////////////
 	//GETTERS & SETTERS//
 	/////////////////////
-	
-	public JPopupMenu getPopupMenu()
-	{
-		return this.popupMenu;
-	}
 	
 	public final static ANTSIView getEmptyView()
 	{
@@ -88,7 +69,23 @@ public abstract class ANTSAbstractView  implements ANTSIView
 	@Override
 	public boolean containsPoint(int x, int y)
 	{
-		return false;
+		if(this.shape!=null)
+		{
+			if(this.shape.contains(x,y))
+			{
+				this.isMouseOver = true;
+				return true;
+			}
+			else
+			{
+				this.isMouseOver =false;
+				return false;
+			}
+		}
+		else
+		{
+			return false;
+		}
 	}
 	
 	@Override

@@ -1,6 +1,9 @@
 package controllers;
 
 import java.awt.event.MouseEvent;
+
+import javax.swing.SwingUtilities;
+
 import layers.ANTSLayerSystem.Layer;
 
 import models.ANTSAbstractModel;
@@ -29,8 +32,6 @@ public abstract class ANTSAbstractController implements ANTSIController
 		this.model = ANTSAbstractModel.getEmptyModel();
 		this.iview = ANTSAbstractView.getEmptyView();
 	}
-	
-	
 	
 	
 	/////////////////////
@@ -83,9 +84,6 @@ public abstract class ANTSAbstractController implements ANTSIController
 		{
 			this.mouseClickedANTS(e);
 		}
-		
-	
-
 	}
 
 	@Override
@@ -112,12 +110,11 @@ public abstract class ANTSAbstractController implements ANTSIController
 		if(this.containsPoint(e.getX(),e.getY()))
 		{
 			this.mousePressedANTS(e);
-		}
-		
-		if (e.isPopupTrigger())
-		{
-			this.iview.showPopupMenu(e.getComponent(),e.getX(),e.getY());
-			System.out.println("POPUP");
+			
+			if(e.isPopupTrigger())
+			{
+				System.out.println("Menu by pressing");	//TODO
+			}
 		}
 	}
 
@@ -128,12 +125,11 @@ public abstract class ANTSAbstractController implements ANTSIController
 		{
 			this.model.setDragged(false);
 			this.mouseReleasedANTS(e);
-		}
-		
-		if (e.isPopupTrigger())
-		{
-//			this.iview.showPopupMenu(e.getComponent(),e.getX(),e.getY());
-//			System.out.println("POPUP");
+			
+			if(e.isPopupTrigger())
+			{
+				System.out.println("Menu by releasing");	//TODO
+			}
 		}
 	}
 	

@@ -87,17 +87,12 @@ public class ANTSFactory
 			this.controllers.add(c);
 		}
 		
-		if(c.getModel().isMouseListener())
-		{
-			this.driver.addControllerToMouseListener(c);
-		}
+		this.addToMouseListener(c);
 	}
 	
 	public void updateAllModels()
 	{
 		this.gridController.getModel().update();
-		
-//		System.out.println("Update model ...");
 		
 		for(int i = 0; i<this.controllers.size();i++)
 		{
@@ -121,7 +116,7 @@ public class ANTSFactory
 		}
 	}
 
-	public void addToMouseListener(ANTSIController c) 
+	private void addToMouseListener(ANTSIController c) 
 	{
 		if(c.getModel().isMouseListener())
 		{
@@ -129,7 +124,4 @@ public class ANTSFactory
 		}
 		
 	}
-
-	
-	
 }

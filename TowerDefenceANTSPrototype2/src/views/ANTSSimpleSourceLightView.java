@@ -17,14 +17,11 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 {
 	private ANTSSimpleSourceLightModel model;
 	private Ellipse2D circle;
-	private Shape shape;
 	
 	public ANTSSimpleSourceLightView(ANTSSimpleSourceLightModel m) 
 	{
 		super();
 		
-		this.popupMenu = new JPopupMenu("Simple popupMenu: LightSource");
-		this.popupMenu.add(new JMenuItem("A popup menu item"));
 		
 		this.model = m;
 		
@@ -101,11 +98,5 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 	public boolean isMouseListener() 
 	{
 		return this.model.isMouseListener();
-	}
-	
-	@Override
-	public boolean containsPoint(int x, int y)
-	{
-		return this.shape.contains(x, y);
 	}
 }

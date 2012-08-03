@@ -24,8 +24,6 @@ public class ANTSCellController extends ANTSAbstractController implements ANTSIC
 		this.view = new ANTSCellView(this.model);
 		this.iview = view;
 		
-		factory.addToMouseListener(this);
-		
 		this.setIModel(this.model);
 	}
 	

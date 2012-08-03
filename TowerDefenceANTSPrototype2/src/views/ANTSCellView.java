@@ -24,13 +24,9 @@ public class ANTSCellView extends ANTSAbstractView implements ANTSIView
 {
 	private ANTSCellModel model;
 	
-	private Shape shape;
 	public ANTSCellView(ANTSCellModel m) 
 	{
 		super();
-		
-		this.popupMenu = new JPopupMenu("Cell popupMenu: Cell");
-		this.popupMenu.add(new JMenuItem("A popup menu item Cell"));
 		
 		this.model = m;
 	}
@@ -87,25 +83,4 @@ public class ANTSCellView extends ANTSAbstractView implements ANTSIView
 		g2d.setColor(Color.black);
 	}	 
 	
-	@Override
-	public boolean containsPoint(int x, int y)
-	{
-		if(this.shape!=null)
-		{
-			if(this.shape.contains(x,y))
-			{
-				this.isMouseOver = true;
-				return true;
-			}
-			else
-			{
-				this.isMouseOver =false;
-				return false;
-			}
-		}
-		else
-		{
-			return false;
-		}
-	}
 }
