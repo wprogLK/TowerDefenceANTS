@@ -1,5 +1,8 @@
 package interfaces;
 
+import java.util.Iterator;
+
+import controllers.ANTSCircleMenuController;
 import layers.ANTSLayerSystem.Layer;
 
 public interface ANTSIModel
@@ -14,4 +17,7 @@ public interface ANTSIModel
 	boolean containsPoint(int x, int y);
 
 	void setDragged(boolean isDragged);
+	
+	public Iterator<ANTSCircleMenuController> getMenuIterator();
+	
 }

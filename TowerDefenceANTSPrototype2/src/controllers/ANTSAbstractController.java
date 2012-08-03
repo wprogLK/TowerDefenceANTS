@@ -1,6 +1,7 @@
 package controllers;
 
 import java.awt.event.MouseEvent;
+import java.util.Iterator;
 
 import javax.swing.SwingUtilities;
 
@@ -33,11 +34,9 @@ public abstract class ANTSAbstractController implements ANTSIController
 		this.iview = ANTSAbstractView.getEmptyView();
 	}
 	
-	
 	/////////////////////
 	//GETTERS & SETTERS//
 	/////////////////////
-	
 	
 	@Override
 	public ANTSIModel getModel()
@@ -176,12 +175,24 @@ public abstract class ANTSAbstractController implements ANTSIController
 			{
 				this.showMenu(e);
 			}
+			else
+			{
+				
+			}
 		}
 	}
 	
 	private void showMenu(MouseEvent e)
 	{
 		System.out.println("show menu"); //TODO
+		
+		Iterator<ANTSCircleMenuController> menuIterator = this.model.getMenuIterator();
+		
+		while(menuIterator.hasNext())
+		{
+			ANTSCircleMenuController c = menuIterator.next();
+			c.getModel().setMouseEntered(true);
+		}
 	}
 	
 	/////////////////////////
@@ -205,6 +216,7 @@ public abstract class ANTSAbstractController implements ANTSIController
 		{
 			this.mouseMovedANTS(e);
 		}
+		
 	}
 	
 	protected final boolean containsPoint(int x, int y)

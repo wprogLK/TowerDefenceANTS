@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import views.ANTSAbstractView;
 
 import controllers.ANTSCellController;
+import controllers.ANTSCircleMenuController;
 import controllers.ANTSGameController;
 import controllers.ANTSGridController;
 import controllers.ANTSSimpleRayLightController;
@@ -23,6 +24,8 @@ public class ANTSFactory
 	private ANTSDriver driver;
 	
 	private ArrayList<ANTSIController> controllers;
+	private ArrayList<ANTSIController> menuControllers;
+	
 	private ANTSGameController gameController;
 	private ANTSGridController gridController;
 	
@@ -31,6 +34,7 @@ public class ANTSFactory
 		this.driver = d;
 		
 		this.controllers = new ArrayList<ANTSIController>();
+		this.menuControllers = new ArrayList<ANTSIController>();
 	}
 	
 	public void createSimpleSourceLight(double posX, double posY, double radius, Color color, boolean isMouseListener)
@@ -77,9 +81,27 @@ public class ANTSFactory
 		return c;
 	}
 	
+	public ANTSCircleMenuController createCircleMenu(double posX, double posY, double radius)
+	{
+		ANTSCircleMenuController c = new ANTSCircleMenuController(posX, posY, radius, this);
+		this.addMenuController(c);
+		
+		return c;
+	}
+	
 	
 	//------------------------------------------------------//
 	
+	private void addMenuController(ANTSCircleMenuController c) 
+	{
+		if(!this.menuControllers.contains(c))
+		{
+			this.menuControllers.add(c);
+		}
+		
+		this.addToMouseListener(c);
+	}
+
 	private void addController(ANTSIController c)
 	{
 		if(!this.controllers.contains(c))
