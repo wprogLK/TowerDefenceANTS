@@ -91,7 +91,7 @@ public class ANTSMenuItemCircleController extends ANTSAbstractController impleme
 	public void mouseLeftClickedANTS(MouseEvent e) 
 	{
 		//Only an example
-		ANTSStream.print("CLICK of " + this.model.getText());
+		ANTSStream.print("CLICK item of " + this.model.getText());
 	}
 	
 	@Override 

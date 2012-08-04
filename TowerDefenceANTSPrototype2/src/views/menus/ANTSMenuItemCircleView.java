@@ -3,8 +3,12 @@ package views.menus;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
+import java.util.concurrent.Semaphore;
+
+import basics.ANTSDevelopment.ANTSStream;
 
 import interfaces.ANTSIView;
 import interfaces.menus.ANTSIMenuView;
@@ -64,10 +68,10 @@ public class ANTSMenuItemCircleView extends ANTSAbstractView implements ANTSIVie
 		
 		g2d.setColor(Color.black);
 		
+		
 		if(this.model.getMouseEntered())
 		{
 			g2d.setColor(Color.blue);
-//		
 		}
 		else
 		{
@@ -79,12 +83,17 @@ public class ANTSMenuItemCircleView extends ANTSAbstractView implements ANTSIVie
 		double segmentDegree = 360/(maxNumberOfItems);
 		
 		
-		double start = segmentDegree*(this.model.getIndex());
-		double end = segmentDegree*(this.model.getIndex());
+		double start = segmentDegree*(this.model.getIndex()-1);
 		
-		Arc2D.Double arc = new Arc2D.Double(-this.parentModel.getRadius()/2, -this.parentModel.getRadius()/2, this.parentModel.getRadius(),  this.parentModel.getRadius(), start, end, Arc2D.PIE);
+		Arc2D.Double arc = new Arc2D.Double(-this.parentModel.getRadius()/2, -this.parentModel.getRadius()/2, this.parentModel.getRadius(),  this.parentModel.getRadius(), start, segmentDegree, Arc2D.PIE);
+		
+		
 		this.shape = aT.createTransformedShape(arc);
 		g2d.draw(shape);
+		
+		
+//		ANTSStream.print(String.format("index %s: \n start: %s \n end: %s", this.model.getIndex(), start, end ));
+		
 		
 		double xPoint = -this.parentModel.getRadius()/2+aT.getTranslateX() + this.parentModel.getRadius()/2 ;
 		double yPoint = -this.parentModel.getRadius()/2+aT.getTranslateY() + this.parentModel.getRadius()/4;
@@ -92,11 +101,34 @@ public class ANTSMenuItemCircleView extends ANTSAbstractView implements ANTSIVie
 		AffineTransform t = new AffineTransform();
 		t.translate(xPoint,yPoint);
 		
-		double angle = end;
-		double angleInRadian = Math.toRadians(angle);
+//		double angle = end;
+		double angleInRadian = Math.toRadians(start+segmentDegree);
 		
 		t.rotate(angleInRadian, -this.parentModel.getRadius()+aT.getTranslateX(), -this.parentModel.getRadius()+aT.getTranslateY());
 		
 		g2d.drawString(this.model.getText(),(int) t.getTranslateX(),(int)  t.getTranslateY());
+	}
+	
+	@Override
+	public boolean containsPoint(int x, int y)
+	{
+		if(this.shape!=null)
+		{
+			if(this.shape.contains(x,y))
+			{
+				this.isMouseOver = true;
+				return true;
+			}
+			else
+			{
+				this.isMouseOver =false;
+				return false;
+			}
+		}
+		else
+		{
+			System.out.println("shape in menu item circle is null!");
+			return false;
+		}
 	}
 }
