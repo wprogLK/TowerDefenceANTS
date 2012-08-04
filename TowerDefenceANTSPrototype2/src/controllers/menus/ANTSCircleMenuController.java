@@ -32,7 +32,9 @@ public class ANTSCircleMenuController extends ANTSAbstractController implements 
 		
 		this.setIModel(this.model);
 		
-		this.addNewMenuItem("test item");
+		this.addNewMenuItem("test item 1");
+		this.addNewMenuItem("test item 2");
+		this.addNewMenuItem("test item 3");
 	}
 	
 	/////////////////////
@@ -64,9 +66,11 @@ public class ANTSCircleMenuController extends ANTSAbstractController implements 
 	//SPECIAL//
 	///////////
 	
+	@Override 
 	public void addNewMenuItem(String string) //TODO ANTSICommand
 	{
 		ANTSMenuItemCircleController c = new ANTSMenuItemCircleController(string, this.model ,this.model.getFactory());
+		this.model.getFactory().addToMouseListener(c);
 		this.model.addNewMenuItem(c);
 	}
 	
