@@ -43,7 +43,7 @@ public abstract class ANTSAbstractView  implements ANTSIView
 	@Override
 	public void paint(Graphics2D g2d, float interpolation) 
 	{
-
+		
 	}
 	
 	/////////////////////

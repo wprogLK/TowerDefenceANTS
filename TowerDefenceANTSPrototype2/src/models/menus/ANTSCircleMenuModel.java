@@ -1,9 +1,14 @@
 package models.menus;
 
 import interfaces.ANTSIModel;
+import interfaces.menus.ANTSIMenuItemController;
 import interfaces.menus.ANTSIMenuModel;
 
 import java.awt.geom.AffineTransform;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import controllers.menus.ANTSMenuItemCircleController;
 
 import models.ANTSAbstractModel;
 
@@ -13,6 +18,8 @@ public class ANTSCircleMenuModel extends ANTSAbstractModel implements ANTSIModel
 {
 	private AffineTransform matrix;
 	private double radius;
+	
+	private ArrayList<ANTSMenuItemCircleController> menuItems;
 	
 	
 	public ANTSCircleMenuModel(double posX, double posY, double radius, ANTSFactory factory )
@@ -26,6 +33,7 @@ public class ANTSCircleMenuModel extends ANTSAbstractModel implements ANTSIModel
 		
 		this.isMouseListener = true;
 		this.mouseEntered = false;
+		this.menuItems = new ArrayList<ANTSMenuItemCircleController>();
 	}
 	
 	/////////////////////
@@ -47,7 +55,29 @@ public class ANTSCircleMenuModel extends ANTSAbstractModel implements ANTSIModel
 		return this.radius;
 	}
 
+	public ANTSFactory getFactory() 
+	{
+		return this.factory;
+	}
+
+	public void addNewMenuItem(ANTSMenuItemCircleController c) 
+	{
+		this.menuItems.add(c);
+		
+		int index = this.menuItems.size();
+		
+		c.setMenuItemIndex(index);
+	}
 	
+	public Iterator<ANTSMenuItemCircleController> getIteratorMenuItems()
+	{
+		return this.menuItems.iterator();
+	}
+
+	public int getMaxIndexMenuItem() 
+	{
+		return this.menuItems.size();
+	}
 	
 	///////////
 	//SPECIAL//

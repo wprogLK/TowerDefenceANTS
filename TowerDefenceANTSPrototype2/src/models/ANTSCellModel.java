@@ -32,11 +32,6 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 	/**
 	 * in degrees!
 	 */
-	private double defaultAngle = 30;	//Angle between x-Axis and "line"
-	
-	/**
-	 * in degrees!
-	 */
 	private double angle;
 	
 	private double cellHeight;
@@ -45,9 +40,6 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 	private double lineLength;
 	
 	private AffineTransform matrix;
-	
-	private boolean mouseEntered;
-	
 	
 	public ANTSCellModel(double cellHeight, double cellAngleInDegree, int cellNrX, int cellNrY, int shiftHalf, int xGridOffset, int yGridOffset, ANTSFactory factory )
 	{

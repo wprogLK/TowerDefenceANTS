@@ -1,28 +1,20 @@
 package views.menus;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.Polygon;
-import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Line2D;
-import java.awt.geom.Path2D;
-import java.awt.geom.Rectangle2D;
+import java.util.Iterator;
 
 import interfaces.ANTSIView;
 import interfaces.menus.ANTSIMenuView;
 
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
+import controllers.menus.ANTSMenuItemCircleController;
+
 
 import views.ANTSAbstractView;
 
-import basics.ANTSDriver;
-import basics.ANTSDevelopment.ANTSStream;
-
-import models.ANTSCellModel;
 import models.menus.ANTSCircleMenuModel;
 
 public class ANTSCircleMenuView extends ANTSAbstractView implements ANTSIView, ANTSIMenuView
@@ -73,7 +65,19 @@ public class ANTSCircleMenuView extends ANTSAbstractView implements ANTSIView, A
 			this.shape = aT.createTransformedShape(circle);
 			g2d.draw(this.shape);
 			g2d.setColor(Color.black);
-			ANTSStream.print("draw menu");
+			
+			this.paintMenuItems(g2d, interpolation);
 		}
-	}	 
+	}
+	
+	private void paintMenuItems(Graphics2D g2d, float interpolation)
+	{
+		 Iterator<ANTSMenuItemCircleController> itemIterator = this.model.getIteratorMenuItems();
+		 
+		 while(itemIterator.hasNext())
+		 {
+			 ANTSMenuItemCircleController c = itemIterator.next();
+			 c.getIView().paint(g2d, interpolation);
+		 }
+	}
 }

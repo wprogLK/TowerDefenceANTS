@@ -13,7 +13,6 @@ import interfaces.menus.ANTSIMenuController;
 public class ANTSAbstractModel implements ANTSIModel
 {
 	private static ANTSAbstractModel emptyModel = new ANTSAbstractModel();
-//	private ArrayList<ANTSCircleMenuController> menus;
 	private ArrayList<ANTSIMenuController> menus;
 	
 	protected boolean isMouseListener;

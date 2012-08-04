@@ -13,26 +13,28 @@ import interfaces.ANTSIController;
 import interfaces.ANTSIModel;
 import interfaces.ANTSIView;
 import interfaces.menus.ANTSIMenuController;
+import interfaces.menus.ANTSIMenuItemController;
 import views.ANTSCellView;
 import views.menus.ANTSCircleMenuView;
+import views.menus.ANTSMenuItemCircleView;
 import models.ANTSCellModel;
 import models.menus.ANTSCircleMenuModel;
+import models.menus.ANTSMenuItemCircleModel;
 
-public class ANTSCircleMenuController extends ANTSAbstractController implements ANTSIController, ANTSIMenuController
+public class ANTSMenuItemCircleController extends ANTSAbstractController implements ANTSIController, ANTSIMenuItemController
 {
-	private ANTSCircleMenuModel model;
-	private ANTSCircleMenuView view;
+	private ANTSMenuItemCircleModel model;
+	private ANTSMenuItemCircleView view;
 	
-	
-	public ANTSCircleMenuController(double x, double y, double radius, ANTSFactory factory) 
+	public ANTSMenuItemCircleController(String string, ANTSCircleMenuModel m ,ANTSFactory factory) 
 	{
-		this.model = new ANTSCircleMenuModel(x,y, radius, factory);
-		this.view = new ANTSCircleMenuView(this.model);
+		this.model = new ANTSMenuItemCircleModel(string, factory);
+		this.view = new ANTSMenuItemCircleView(this.model, m);
+		
+		this.model.setIndex(m.getMaxIndexMenuItem()); //maybe +1 //TODO
+		
 		this.iview = view;
-		
 		this.setIModel(this.model);
-		
-		this.addNewMenuItem("test item");
 	}
 	
 	/////////////////////
@@ -44,14 +46,9 @@ public class ANTSCircleMenuController extends ANTSAbstractController implements 
 		return this.model;
 	}
 	
-	public ANTSCircleMenuModel getModel()
+	public ANTSMenuItemCircleModel getModel()
 	{
 		return this.model;
-	}
-
-	public ANTSIView getIView()
-	{
-		return this.view;
 	}
 	
 	@Override
@@ -60,19 +57,23 @@ public class ANTSCircleMenuController extends ANTSAbstractController implements 
 		return "CircleMenu CONTROLLER " + this.model;
 	}
 	
+	public void setView(ANTSIView v)
+	{
+		this.iview = v;
+	}
+	
+	public ANTSIView getView()
+	{
+		return this.iview;
+	}
+	
 	///////////
 	//SPECIAL//
 	///////////
 	
-	public void addNewMenuItem(String string) //TODO ANTSICommand
+	public void setMenuItemIndex(int index) 
 	{
-		ANTSMenuItemCircleController c = new ANTSMenuItemCircleController(string, this.model ,this.model.getFactory());
-		this.model.addNewMenuItem(c);
-	}
-	
-	public int getMaxIndexMenuItem()
-	{
-		return this.model.getMaxIndexMenuItem();
+		this.model.setIndex(index);
 	}
 	
 	//////////////////
@@ -104,4 +105,6 @@ public class ANTSCircleMenuController extends ANTSAbstractController implements 
 	{
 
 	}
+
+	
 }
