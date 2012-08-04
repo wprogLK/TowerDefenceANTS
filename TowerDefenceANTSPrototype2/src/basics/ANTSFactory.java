@@ -13,11 +13,11 @@ import java.util.ArrayList;
 import views.ANTSAbstractView;
 
 import controllers.ANTSCellController;
-import controllers.ANTSCircleMenuController;
 import controllers.ANTSGameController;
 import controllers.ANTSGridController;
 import controllers.ANTSSimpleRayLightController;
 import controllers.ANTSSimpleSourceLightController;
+import controllers.menus.ANTSCircleMenuController;
 
 public class ANTSFactory 
 {

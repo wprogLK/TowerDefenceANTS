@@ -1,8 +1,10 @@
 package interfaces;
 
+import interfaces.menus.ANTSIMenuController;
+
 import java.util.Iterator;
 
-import controllers.ANTSCircleMenuController;
+import controllers.menus.ANTSCircleMenuController;
 import layers.ANTSLayerSystem.Layer;
 
 public interface ANTSIModel
@@ -18,6 +20,10 @@ public interface ANTSIModel
 
 	void setDragged(boolean isDragged);
 	
-	public Iterator<ANTSCircleMenuController> getMenuIterator();
+	public Iterator<ANTSIMenuController> getMenuIterator();
+
+	void setMouseEntered(boolean value);
+
+	boolean getMouseEntered();
 	
 }

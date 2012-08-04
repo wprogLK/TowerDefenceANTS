@@ -5,6 +5,8 @@ import java.util.Iterator;
 
 import javax.swing.SwingUtilities;
 
+import controllers.menus.ANTSCircleMenuController;
+
 import basics.ANTSDevelopment.ANTSStream;
 
 import layers.ANTSLayerSystem.Layer;
@@ -16,6 +18,7 @@ import views.ANTSAbstractView;
 import interfaces.ANTSIController;
 import interfaces.ANTSIModel;
 import interfaces.ANTSIView;
+import interfaces.menus.ANTSIMenuController;
 
 /**
  * wrapper
@@ -186,11 +189,11 @@ public abstract class ANTSAbstractController implements ANTSIController
 	{
 		System.out.println("show menu"); //TODO
 		
-		Iterator<ANTSCircleMenuController> menuIterator = this.model.getMenuIterator();
+		Iterator<ANTSIMenuController> menuIterator = this.model.getMenuIterator();
 		
 		while(menuIterator.hasNext())
 		{
-			ANTSCircleMenuController c = menuIterator.next();
+			ANTSIMenuController c = menuIterator.next();
 			c.getModel().setMouseEntered(true);
 		}
 	}

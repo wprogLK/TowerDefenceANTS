@@ -1,4 +1,4 @@
-package views;
+package views.menus;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -10,25 +10,26 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
-import java.util.Iterator;
 
 import interfaces.ANTSIView;
-import interfaces.menus.ANTSIMenuController;
+import interfaces.menus.ANTSIMenuView;
 
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
-import controllers.menus.ANTSCircleMenuController;
+import views.ANTSAbstractView;
 
 import basics.ANTSDriver;
+import basics.ANTSDevelopment.ANTSStream;
 
 import models.ANTSCellModel;
+import models.menus.ANTSCircleMenuModel;
 
-public class ANTSCellView extends ANTSAbstractView implements ANTSIView
+public class ANTSCircleMenuView extends ANTSAbstractView implements ANTSIView, ANTSIMenuView
 {
-	private ANTSCellModel model;
+	private ANTSCircleMenuModel model;
 	
-	public ANTSCellView(ANTSCellModel m) 
+	public ANTSCircleMenuView(ANTSCircleMenuModel m) 
 	{
 		super();
 		
@@ -68,38 +69,11 @@ public class ANTSCellView extends ANTSAbstractView implements ANTSIView
 		if(this.model.getMouseEntered())
 		{
 			g2d.setColor(Color.blue);
+			Ellipse2D circle = new Ellipse2D.Double(-this.model.getRadius()/2, -this.model.getRadius()/2, this.model.getRadius(), this.model.getRadius());
+			this.shape = aT.createTransformedShape(circle);
+			g2d.draw(this.shape);
+			g2d.setColor(Color.black);
+			ANTSStream.print("draw menu");
 		}
-		
-		GeneralPath g = new GeneralPath();
-		double[][] points = this.model.getPoints();
-		g.moveTo(points[0][0],points[0][1]);
-		
-		for(int x = 0; x<4; x++)
-		{
-			g.lineTo(points[x][0],points[x][1]);
-		}
-		
-		g.closePath();
-		
-		this.shape = aT.createTransformedShape(g);
-		
-		g2d.draw(this.shape);
-		g2d.setColor(Color.black);
-		
-		this.drawMenu(g2d,interpolation);
-	}
-
-	private void drawMenu(Graphics2D g2d, float interpolation) {
-		Iterator<ANTSIMenuController> menuIterator = this.model.getMenuIterator();
-		
-		while(menuIterator.hasNext())
-		{
-			ANTSIMenuController c = menuIterator.next();
-			c.getIView().paint(g2d, interpolation);
-		}
-		
 	}	 
-	
-	
-	
 }

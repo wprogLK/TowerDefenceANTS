@@ -3,16 +3,18 @@ package models;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import controllers.ANTSCircleMenuController;
+import controllers.menus.ANTSCircleMenuController;
 
 import basics.ANTSFactory;
 import layers.ANTSLayerSystem.Layer;
 import interfaces.ANTSIModel;
+import interfaces.menus.ANTSIMenuController;
 
 public class ANTSAbstractModel implements ANTSIModel
 {
 	private static ANTSAbstractModel emptyModel = new ANTSAbstractModel();
-	private ArrayList<ANTSCircleMenuController> menus;
+//	private ArrayList<ANTSCircleMenuController> menus;
+	private ArrayList<ANTSIMenuController> menus;
 	
 	protected boolean isMouseListener;
 	
@@ -20,12 +22,15 @@ public class ANTSAbstractModel implements ANTSIModel
 	protected ANTSFactory factory;
 	
 	protected boolean isDragged;
+	protected boolean mouseEntered;
 	
 	public ANTSAbstractModel() 
 	{
 		this.isMouseListener = false;
 		this.layer = Layer.none;
-		this.menus = new ArrayList<ANTSCircleMenuController>();
+		this.menus = new ArrayList<ANTSIMenuController>();
+		
+		this.mouseEntered = false;
 	}
 	
 	public ANTSAbstractModel(ANTSFactory factory)
@@ -33,7 +38,9 @@ public class ANTSAbstractModel implements ANTSIModel
 		this.isMouseListener = false;
 		this.layer = Layer.none;
 		this.factory = factory;
-		this.menus = new ArrayList<ANTSCircleMenuController>();
+		this.menus = new ArrayList<ANTSIMenuController>();
+		
+		this.mouseEntered = false;
 	}
 	
 	public final static ANTSIModel getEmptyModel()
@@ -47,13 +54,13 @@ public class ANTSAbstractModel implements ANTSIModel
 		
 	}
 	
-	public void addMenu(ANTSCircleMenuController m)
+	public void addMenu(ANTSIMenuController m)
 	{
 		this.menus.add(m);
 	}
 	
 	
-	public Iterator<ANTSCircleMenuController> getMenuIterator()
+	public Iterator<ANTSIMenuController> getMenuIterator()
 	{
 		return this.menus.iterator();
 	}
@@ -81,6 +88,18 @@ public class ANTSAbstractModel implements ANTSIModel
 	public final void setDragged(boolean isDragged)
 	{
 		this.isDragged = isDragged;
+	}
+	
+	@Override
+	public final void setMouseEntered(boolean value) 
+	{
+		this.mouseEntered = value;
+	}
+
+	@Override
+	public final boolean getMouseEntered() 
+	{
+		return this.mouseEntered;
 	}
 	
 	//Mouse Detection
