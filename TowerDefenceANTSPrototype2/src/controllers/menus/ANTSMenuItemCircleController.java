@@ -97,7 +97,7 @@ public class ANTSMenuItemCircleController extends ANTSAbstractController impleme
 	@Override 
 	public void mouseEnteredANTS(MouseEvent e)
 	{
-
+		this.model.setMouseEntered(true);
 	}
 
 	

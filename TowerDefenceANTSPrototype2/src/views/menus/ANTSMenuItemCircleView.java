@@ -35,7 +35,6 @@ public class ANTSMenuItemCircleView extends ANTSAbstractView implements ANTSIVie
 		
 		this.model = model;
 		this.parentModel = parentModel;
-		
 	}
 		
 	public String toString()
@@ -89,11 +88,7 @@ public class ANTSMenuItemCircleView extends ANTSAbstractView implements ANTSIVie
 		
 		
 		this.shape = aT.createTransformedShape(arc);
-		g2d.draw(shape);
-		
-		
-//		ANTSStream.print(String.format("index %s: \n start: %s \n end: %s", this.model.getIndex(), start, end ));
-		
+		g2d.fill(shape);
 		
 		double xPoint = -this.parentModel.getRadius()/2+aT.getTranslateX() + this.parentModel.getRadius()/2 ;
 		double yPoint = -this.parentModel.getRadius()/2+aT.getTranslateY() + this.parentModel.getRadius()/4;
@@ -101,7 +96,6 @@ public class ANTSMenuItemCircleView extends ANTSAbstractView implements ANTSIVie
 		AffineTransform t = new AffineTransform();
 		t.translate(xPoint,yPoint);
 		
-//		double angle = end;
 		double angleInRadian = Math.toRadians(start+segmentDegree);
 		
 		t.rotate(angleInRadian, -this.parentModel.getRadius()+aT.getTranslateX(), -this.parentModel.getRadius()+aT.getTranslateY());
@@ -109,26 +103,4 @@ public class ANTSMenuItemCircleView extends ANTSAbstractView implements ANTSIVie
 		g2d.drawString(this.model.getText(),(int) t.getTranslateX(),(int)  t.getTranslateY());
 	}
 	
-	@Override
-	public boolean containsPoint(int x, int y)
-	{
-		if(this.shape!=null)
-		{
-			if(this.shape.contains(x,y))
-			{
-				this.isMouseOver = true;
-				return true;
-			}
-			else
-			{
-				this.isMouseOver =false;
-				return false;
-			}
-		}
-		else
-		{
-			System.out.println("shape in menu item circle is null!");
-			return false;
-		}
-	}
 }
