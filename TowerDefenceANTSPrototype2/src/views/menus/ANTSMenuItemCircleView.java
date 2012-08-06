@@ -4,8 +4,13 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Shape;
+import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
+import java.awt.geom.NoninvertibleTransformException;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.util.concurrent.Semaphore;
 
 import basics.ANTSDevelopment.ANTSStream;
@@ -90,17 +95,24 @@ public class ANTSMenuItemCircleView extends ANTSAbstractView implements ANTSIVie
 		this.shape = aT.createTransformedShape(arc);
 		g2d.fill(shape);
 		
-		double xPoint = -this.parentModel.getRadius()/2+aT.getTranslateX() + this.parentModel.getRadius()/2 ;
-		double yPoint = -this.parentModel.getRadius()/2+aT.getTranslateY() + this.parentModel.getRadius()/4;
-		
 		AffineTransform t = new AffineTransform();
-		t.translate(xPoint,yPoint);
+		double angleInRadian = Math.toRadians(start);
 		
-		double angleInRadian = Math.toRadians(start+segmentDegree);
+		t.rotate(angleInRadian,aT.getTranslateX(),aT.getTranslateY());
 		
-		t.rotate(angleInRadian, -this.parentModel.getRadius()+aT.getTranslateX(), -this.parentModel.getRadius()+aT.getTranslateY());
+		t.translate(aT.getTranslateX(), aT.getTranslateY());
 		
-		g2d.drawString(this.model.getText(),(int) t.getTranslateX(),(int)  t.getTranslateY());
+		g2d.setColor(this.fontColor);
+		g2d.setFont(this.font);
+		
+		AffineTransform before = g2d.getTransform();
+		
+		g2d.drawLine(0, 0, (int) t.getTranslateX(), (int) t.getTranslateY());
+		
+		g2d.setTransform(t);
+		g2d.drawString(this.model.getText(),(int)0,(int) 0);
+		g2d.setTransform(before);
+		
 	}
 	
 }
