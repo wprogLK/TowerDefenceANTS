@@ -11,11 +11,11 @@ import interfaces.ANTSIController;
 import interfaces.ANTSIModel;
 import interfaces.ANTSIView;
 import interfaces.menus.ANTSIMenuItemController;
-import views.menus.ANTSMenuItemCircleView;
+
 import views.menus.ANTSMenuItemRectangleView;
-import models.menus.ANTSCircleMenuModel;
-import models.menus.ANTSMenuItemCircleModel;
+
 import models.menus.ANTSMenuItemRectangleModel;
+
 import models.menus.ANTSRectangleMenuModel;
 
 public class ANTSMenuItemRectangleController extends ANTSAbstractController implements ANTSIController, ANTSIMenuItemController
@@ -34,9 +34,9 @@ public class ANTSMenuItemRectangleController extends ANTSAbstractController impl
 		this.setIModel(this.model);
 	}
 	
-	/////////////////////
-	//GETTERS & SETTERS//
-	/////////////////////
+	///////////
+	//GETTERS//
+	///////////
 	
 	public ANTSIModel getIModel()
 	{
@@ -54,20 +54,21 @@ public class ANTSMenuItemRectangleController extends ANTSAbstractController impl
 		return "RectangleMenu CONTROLLER " + this.model;
 	}
 	
-	public void setView(ANTSIView v)
-	{
-		this.iview = v;
-	}
-	
 	public ANTSIView getView()
 	{
 		return this.iview;
 	}
 	
-	///////////
-	//SPECIAL//
-	///////////
+	////////////
+	//SETTERES//
+	////////////
 	
+	public void setView(ANTSIView v)
+	{
+		this.iview = v;
+	}
+	
+
 	public void setMenuItemIndex(int index) 
 	{
 		this.model.setIndex(index);
@@ -86,7 +87,7 @@ public class ANTSMenuItemRectangleController extends ANTSAbstractController impl
 		}
 		else
 		{
-			this.model.setMouseEntered(false);	//TODO maybe don't do this
+			this.model.setMouseEntered(false);
 		}
 	}
 	

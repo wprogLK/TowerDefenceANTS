@@ -2,15 +2,15 @@ package controllers;
 
 import java.awt.event.MouseEvent;
 
-import basics.ANTSDevelopment;
 import basics.ANTSDevelopment.ANTSDebug;
 import basics.ANTSFactory;
-import basics.ANTSDevelopment.ANTSStream;
 
 import interfaces.ANTSIController;
 import interfaces.ANTSIModel;
 import interfaces.ANTSIView;
+
 import views.ANTSCellView;
+
 import models.ANTSCellModel;
 
 public class ANTSCellController extends ANTSAbstractController implements ANTSIController
@@ -77,13 +77,6 @@ public class ANTSCellController extends ANTSAbstractController implements ANTSIC
 		{
 			this.model.setMouseEntered(false);
 		}
-	}
-	
-	@Override
-	public void mouseLeftClickedANTS(MouseEvent e) 
-	{
-		//Only an example
-		ANTSStream.print("CLICK of " + this.model.toString());
 	}
 	
 	@Override 

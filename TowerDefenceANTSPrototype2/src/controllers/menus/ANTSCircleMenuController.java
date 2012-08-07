@@ -4,8 +4,6 @@ import java.awt.event.MouseEvent;
 
 import controllers.ANTSAbstractController;
 
-import basics.ANTSDevelopment;
-import basics.ANTSDevelopment.ANTSDebug;
 import basics.ANTSFactory;
 import basics.ANTSDevelopment.ANTSStream;
 
@@ -13,16 +11,15 @@ import interfaces.ANTSIController;
 import interfaces.ANTSIModel;
 import interfaces.ANTSIView;
 import interfaces.menus.ANTSIMenuController;
-import views.ANTSCellView;
+
 import views.menus.ANTSCircleMenuView;
-import models.ANTSCellModel;
+
 import models.menus.ANTSCircleMenuModel;
 
 public class ANTSCircleMenuController extends ANTSAbstractController implements ANTSIController, ANTSIMenuController
 {
 	private ANTSCircleMenuModel model;
 	private ANTSCircleMenuView view;
-	
 	
 	public ANTSCircleMenuController(double x, double y, double radius, ANTSFactory factory) 
 	{
@@ -37,9 +34,9 @@ public class ANTSCircleMenuController extends ANTSAbstractController implements 
 		this.addNewMenuItem("test item 3");
 	}
 	
-	/////////////////////
-	//GETTERS & SETTERS//
-	/////////////////////
+	///////////
+	//GETTERS//
+	///////////
 	
 	public ANTSIModel getIModel()
 	{

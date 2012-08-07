@@ -3,8 +3,11 @@ package controllers;
 import java.awt.Color;
 
 import basics.ANTSFactory;
+
 import views.ANTSGameView;
+
 import models.ANTSGameModel;
+
 import interfaces.ANTSIController;
 import interfaces.ANTSIModel;
 import interfaces.ANTSIView;
@@ -42,6 +45,10 @@ public class ANTSGameController extends ANTSAbstractController implements ANTSIC
 //		createSimpleTestAnt1();
 	}
 
+	////////////
+	//CREATERS//
+	////////////
+	
 	private void createGrid()
 	{
 		this.factory.createGrid(xCells, yCells);
@@ -68,11 +75,10 @@ public class ANTSGameController extends ANTSAbstractController implements ANTSIC
 	{
 //		this.factory.createSimpleTestAnt1(60,50,320,320,Color.RED,true);
 	}
-	/////////////////////
-	//GETTERS & SETTERS//
-	/////////////////////
 	
-
+	///////////
+	//GETTERS//
+	///////////
 
 	public ANTSIModel getModel()
 	{
@@ -87,13 +93,4 @@ public class ANTSGameController extends ANTSAbstractController implements ANTSIC
 	{
 		return this.view;
 	}
-	
-	//////////////////
-	//MOUSE LISTENER//
-	//////////////////
-	
-	/////////////////////////
-	//MOUSE MOTION LISTENER//
-	/////////////////////////
-
 }

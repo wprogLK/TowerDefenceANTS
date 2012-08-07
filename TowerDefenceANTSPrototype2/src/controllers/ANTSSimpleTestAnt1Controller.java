@@ -6,9 +6,9 @@ import java.awt.event.MouseEvent;
 import interfaces.ANTSIController;
 import interfaces.ANTSIModel;
 import interfaces.ANTSIView;
-import views.ANTSSimpleSourceLightView;
+
 import views.ANTSSimpleTestAnt1View;
-import models.ANTSSimpleSourceLightModel;
+
 import models.ANTSSimpleTestAnt1Model;
 
 public class ANTSSimpleTestAnt1Controller extends ANTSAbstractController implements ANTSIController
@@ -43,9 +43,9 @@ public class ANTSSimpleTestAnt1Controller extends ANTSAbstractController impleme
 		this.setIModel(this.model);
 	}
 	
-	/////////////////////
-	//GETTERS & SETTERS//
-	/////////////////////
+	///////////
+	//GETTERS//
+	///////////
 	
 	public ANTSIModel getModel()
 	{
@@ -62,18 +62,6 @@ public class ANTSSimpleTestAnt1Controller extends ANTSAbstractController impleme
 		return this.view;
 	}
 	
-	//////////////////
-	//MOUSE LISTENER//
-	//////////////////
-	
-	@Override
-	public void mouseLeftClickedANTS(MouseEvent e) 
-	{
-		//Only an example
-		this.model.switchLight();
-		System.out.println("ANTS CLICKED");
-	}	
-	
 	/////////////////////////
 	//MOUSE MOTION LISTENER//
 	/////////////////////////
@@ -81,6 +69,6 @@ public class ANTSSimpleTestAnt1Controller extends ANTSAbstractController impleme
 	@Override
 	public void mouseDraggedANTS(MouseEvent e) 
 	{
-		this.model.setPosition(e.getX(), e.getY());	//TODO: Important: test this! is it always /2 ?  //Here not /2 because the center is in the left top corner!
+		this.model.setPosition(e.getX(), e.getY());
 	}
 }

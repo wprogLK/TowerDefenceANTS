@@ -8,29 +8,15 @@ import basics.ANTSFactory;
 import interfaces.ANTSIController;
 import interfaces.ANTSIModel;
 import interfaces.ANTSIView;
+
 import views.ANTSSimpleSourceLightView;
+
 import models.ANTSSimpleSourceLightModel;
 
 public class ANTSSimpleSourceLightController extends ANTSAbstractController implements ANTSIController
 {
 	private ANTSSimpleSourceLightModel model;
 	private ANTSSimpleSourceLightView view;
-	
-//	public ANTSSimpleSourceLightController() 
-//	{
-//		this.model = new ANTSSimpleSourceLightModel();
-//		this.view = new ANTSSimpleSourceLightView(this.model);
-//	
-//		this.setIModel(this.model);
-//	}
-	
-//	public ANTSSimpleSourceLightController(double posX, double posY, double radius, Color color)
-//	{
-//		this.model = new ANTSSimpleSourceLightModel(posX,posY,radius,color);
-//		this.view = new ANTSSimpleSourceLightView(this.model);
-//		
-//		this.setIModel(this.model);
-//	}
 	
 	public ANTSSimpleSourceLightController(double posX, double posY, double radius, Color color, boolean isMouseListener, ANTSFactory factory)
 	{
@@ -41,9 +27,9 @@ public class ANTSSimpleSourceLightController extends ANTSAbstractController impl
 		this.setIModel(this.model);
 	}
 	
-	/////////////////////
-	//GETTERS & SETTERS//
-	/////////////////////
+	///////////
+	//GETTERS//
+	///////////
 	
 	public ANTSIModel getModel()
 	{
@@ -67,7 +53,6 @@ public class ANTSSimpleSourceLightController extends ANTSAbstractController impl
 	@Override
 	public void mouseLeftClickedANTS(MouseEvent e) 
 	{
-		//Only an example
 		this.model.switchLight();
 	}
 	

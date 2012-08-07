@@ -5,7 +5,6 @@ import java.awt.event.MouseEvent;
 import controllers.ANTSAbstractController;
 
 import basics.ANTSFactory;
-import basics.ANTSDevelopment.ANTSStream;
 
 import interfaces.ANTSIController;
 import interfaces.ANTSIModel;
@@ -31,9 +30,9 @@ public class ANTSMenuItemCircleController extends ANTSAbstractController impleme
 		this.setIModel(this.model);
 	}
 	
-	/////////////////////
-	//GETTERS & SETTERS//
-	/////////////////////
+	///////////
+	//GETTERS//
+	///////////
 	
 	public ANTSIModel getIModel()
 	{
@@ -51,19 +50,19 @@ public class ANTSMenuItemCircleController extends ANTSAbstractController impleme
 		return "CircleMenu CONTROLLER " + this.model;
 	}
 	
-	public void setView(ANTSIView v)
-	{
-		this.iview = v;
-	}
-	
 	public ANTSIView getView()
 	{
 		return this.iview;
 	}
 	
 	///////////
-	//SPECIAL//
+	//SETTERS//
 	///////////
+	
+	public void setView(ANTSIView v)
+	{
+		this.iview = v;
+	}
 	
 	public void setMenuItemIndex(int index) 
 	{
@@ -83,15 +82,8 @@ public class ANTSMenuItemCircleController extends ANTSAbstractController impleme
 		}
 		else
 		{
-			this.model.setMouseEntered(false);	//TODO maybe don't do this
+			this.model.setMouseEntered(false);
 		}
-	}
-	
-	@Override
-	public void mouseLeftClickedANTS(MouseEvent e) 
-	{
-		//Only an example
-		ANTSStream.print("CLICK item of " + this.model.getText());
 	}
 	
 	@Override 
@@ -99,6 +91,4 @@ public class ANTSMenuItemCircleController extends ANTSAbstractController impleme
 	{
 		this.model.setMouseEntered(true);
 	}
-
-	
 }

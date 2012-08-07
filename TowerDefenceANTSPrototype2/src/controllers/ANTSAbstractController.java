@@ -5,8 +5,6 @@ import java.util.Iterator;
 
 import javax.swing.SwingUtilities;
 
-import controllers.menus.ANTSCircleMenuController;
-
 import basics.ANTSDevelopment.ANTSStream;
 
 import layers.ANTSLayerSystem.Layer;
@@ -20,11 +18,6 @@ import interfaces.ANTSIModel;
 import interfaces.ANTSIView;
 import interfaces.menus.ANTSIMenuController;
 
-/**
- * wrapper
- * @author Lukas
- *
- */
 public abstract class ANTSAbstractController implements ANTSIController
 {
 	private static ANTSAbstractController emptyAbstractController = new ANTSAbstractController() {};
@@ -41,6 +34,9 @@ public abstract class ANTSAbstractController implements ANTSIController
 	//GETTERS & SETTERS//
 	/////////////////////
 	
+	///////////
+	//GETTERS//
+	///////////
 	@Override
 	public ANTSIModel getModel()
 	{
@@ -53,11 +49,6 @@ public abstract class ANTSAbstractController implements ANTSIController
 		return this.iview;
 	}
 	
-	protected void setIModel(ANTSIModel m)
-	{
-		this.model = m;
-	}
-	
 	public final static ANTSAbstractController getEmptyController()
 	{
 		return emptyAbstractController;
@@ -68,6 +59,15 @@ public abstract class ANTSAbstractController implements ANTSIController
 	{
 		return  this.model.getLayer();
 	}
+	
+	protected void setIModel(ANTSIModel m)
+	{
+		this.model = m;
+	}
+	
+	///////////
+	//SETTERS//
+	///////////
 	
 	@Override
 	public void setLayer(Layer layer)
@@ -178,17 +178,11 @@ public abstract class ANTSAbstractController implements ANTSIController
 			{
 				this.showMenu(e);
 			}
-			else
-			{
-				
-			}
 		}
 	}
 	
 	private void showMenu(MouseEvent e)
 	{
-		System.out.println("show menu"); //TODO
-		
 		Iterator<ANTSIMenuController> menuIterator = this.model.getMenuIterator();
 		
 		while(menuIterator.hasNext())
@@ -218,8 +212,8 @@ public abstract class ANTSAbstractController implements ANTSIController
 		if(this.containsPoint(e.getX(),e.getY()))
 		{
 			this.mouseMovedANTS(e);
+			this.model.setMouseEntered(true);
 		}
-		
 	}
 	
 	protected final boolean containsPoint(int x, int y)
@@ -230,8 +224,6 @@ public abstract class ANTSAbstractController implements ANTSIController
 	///////////////////
 	//Mouse "Actions"//
 	///////////////////
-	
-	
 	
 	public void mouseRightClickedANTS(MouseEvent e) 
 	{
@@ -287,12 +279,12 @@ public abstract class ANTSAbstractController implements ANTSIController
 	{
 
 	}
-	public void mouseDraggedANTS(MouseEvent arg0) 
+	public void mouseDraggedANTS(MouseEvent e) 
 	{
 
 	}
 
-	public void mouseMovedANTS(MouseEvent arg0) 
+	public void mouseMovedANTS(MouseEvent e) 
 	{
 
 	}

@@ -4,18 +4,15 @@ import java.awt.event.MouseEvent;
 
 import controllers.ANTSAbstractController;
 
-import basics.ANTSDevelopment;
-import basics.ANTSDevelopment.ANTSDebug;
 import basics.ANTSFactory;
-import basics.ANTSDevelopment.ANTSStream;
 
 import interfaces.ANTSIController;
 import interfaces.ANTSIModel;
 import interfaces.ANTSIView;
 import interfaces.menus.ANTSIMenuController;
-import views.ANTSCellView;
+
 import views.menus.ANTSRectangleMenuView;
-import models.ANTSCellModel;
+
 import models.menus.ANTSRectangleMenuModel;
 
 public class ANTSRectangleMenuController extends ANTSAbstractController implements ANTSIController, ANTSIMenuController
@@ -92,20 +89,7 @@ public class ANTSRectangleMenuController extends ANTSAbstractController implemen
 		}
 		else
 		{
-			this.model.setMouseEntered(false);	//TODO maybe don't do this
+			this.model.setMouseEntered(false);
 		}
-	}
-	
-	@Override
-	public void mouseLeftClickedANTS(MouseEvent e) 
-	{
-		//Only an example
-		ANTSStream.print("CLICK of " + this.model.toString());
-	}
-	
-	@Override 
-	public void mouseEnteredANTS(MouseEvent e)
-	{
-
 	}
 }

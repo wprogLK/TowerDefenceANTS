@@ -10,6 +10,7 @@ import java.awt.geom.AffineTransform;
 import basics.ANTSFactory;
 
 import views.ANTSSimpleRayLightView;
+
 import models.ANTSSimpleRayLightModel;
 
 public class ANTSSimpleRayLightController extends ANTSAbstractController implements ANTSIController{
@@ -26,9 +27,9 @@ public class ANTSSimpleRayLightController extends ANTSAbstractController impleme
 		this.setIModel(this.model);
 	}
 	
-	/////////////////////
-	//GETTERS & SETTERS//
-	/////////////////////
+	///////////
+	//GETTERS//
+	///////////
 	
 	public ANTSIModel getModel()
 	{
@@ -44,13 +45,4 @@ public class ANTSSimpleRayLightController extends ANTSAbstractController impleme
 	{
 		return this.view;
 	}
-	
-	//////////////////
-	//MOUSE LISTENER//
-	//////////////////
-	
-	/////////////////////////
-	//MOUSE MOTION LISTENER//
-	/////////////////////////
-
 }
