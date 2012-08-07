@@ -10,11 +10,6 @@ public class ANTSUpdateListener implements ActionListener
 	private static ANTSUpdateListener me;
 	private static ANTSDriver driver;
 	
-	public ANTSUpdateListener() 
-	{
-		// TODO
-	}
-	
 	public static void setDriver(ANTSDriver d)
 	{
 		driver = d;
@@ -33,7 +28,6 @@ public class ANTSUpdateListener implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
-//		driver.update();
+		
 	}
-
 }

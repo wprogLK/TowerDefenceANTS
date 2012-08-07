@@ -14,11 +14,6 @@ public class ANTSSwitchLightListener implements ActionListener
 	
 	private static ANTSSimpleSourceLightModel model;
 	
-	public ANTSSwitchLightListener() 
-	{
-		// TODO
-	}
-	
 	public static void setDriver(ANTSDriver d)
 	{
 		driver = d;
