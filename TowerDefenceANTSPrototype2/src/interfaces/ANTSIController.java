@@ -5,13 +5,20 @@ import java.awt.event.MouseMotionListener;
 
 import layers.ANTSLayerSystem;
 
-import views.ANTSSimpleRayLightView;
-
 public interface ANTSIController extends MouseListener, MouseMotionListener
 {
+	///////////
+	//Getters//
+	///////////
+	
 	public ANTSIModel getModel();
 	public ANTSIView getIView();
 	
 	public ANTSLayerSystem.Layer getLayer();
+	
+	///////////
+	//Setters//
+	///////////
+	
 	public void setLayer(ANTSLayerSystem.Layer layer);
 }

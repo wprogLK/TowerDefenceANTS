@@ -4,26 +4,31 @@ import interfaces.menus.ANTSIMenuController;
 
 import java.util.Iterator;
 
-import controllers.menus.ANTSCircleMenuController;
 import layers.ANTSLayerSystem.Layer;
 
 public interface ANTSIModel
 {
-	public void update();
+	///////////
+	//Getters//
+	///////////
 	
 	public Layer getLayer();
-	public void setLayer(Layer layer);
-
-	boolean isMouseListener();
-
-	boolean containsPoint(int x, int y);
-
-	void setDragged(boolean isDragged);
-	
+	public boolean isMouseListener();
+	public boolean containsPoint(int x, int y);
 	public Iterator<ANTSIMenuController> getMenuIterator();
-
-	void setMouseEntered(boolean value);
-
-	boolean getMouseEntered();
+	public boolean getMouseEntered();
 	
+	///////////
+	//Setters//
+	///////////
+	
+	public void setLayer(Layer layer);
+	public void setDragged(boolean isDragged);
+	public void setMouseEntered(boolean value);
+	
+	///////////
+	//Special//
+	///////////
+	
+	public void update();
 }
