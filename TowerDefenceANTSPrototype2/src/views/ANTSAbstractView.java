@@ -17,6 +17,7 @@ public abstract class ANTSAbstractView  implements ANTSIView
 {
 	protected boolean isMouseOver;
 	protected Shape shape;
+	protected static int fontSize = 12;
 	
 	private static ANTSAbstractView emptyView = new ANTSAbstractView() 
 	{

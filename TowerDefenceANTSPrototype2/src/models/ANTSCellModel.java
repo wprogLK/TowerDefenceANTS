@@ -63,7 +63,8 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 		
 		this.mouseEntered =false;
 		
-		this.addMenu(factory.createCircleMenu(absolutePosX+this.cellWidth/2, absolutePosY-cellHeight/2, 260)); //only for teseting
+		//this.addMenu(factory.createCircleMenu(absolutePosX+this.cellWidth/2, absolutePosY-cellHeight/2, 260)); //only for teseting
+		this.addMenu(factory.createRectangleMenu(absolutePosX + this.cellWidth/2, absolutePosY-cellHeight/2,260));
 	}
 	
 

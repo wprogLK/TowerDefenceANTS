@@ -3,6 +3,7 @@ package basics;
 import interfaces.ANTSIController;
 import interfaces.ANTSIModel;
 import interfaces.ANTSIView;
+import interfaces.menus.ANTSIMenuController;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -18,13 +19,14 @@ import controllers.ANTSGridController;
 import controllers.ANTSSimpleRayLightController;
 import controllers.ANTSSimpleSourceLightController;
 import controllers.menus.ANTSCircleMenuController;
+import controllers.menus.ANTSRectangleMenuController;
 
 public class ANTSFactory 
 {
 	private ANTSDriver driver;
 	
 	private ArrayList<ANTSIController> controllers;
-	private ArrayList<ANTSIController> menuControllers;
+	private ArrayList<ANTSIMenuController> menuControllers;
 	
 	private ANTSGameController gameController;
 	private ANTSGridController gridController;
@@ -34,7 +36,7 @@ public class ANTSFactory
 		this.driver = d;
 		
 		this.controllers = new ArrayList<ANTSIController>();
-		this.menuControllers = new ArrayList<ANTSIController>();
+		this.menuControllers = new ArrayList<ANTSIMenuController>();
 	}
 	
 	public void createSimpleSourceLight(double posX, double posY, double radius, Color color, boolean isMouseListener)
@@ -81,9 +83,17 @@ public class ANTSFactory
 		return c;
 	}
 	
-	public ANTSCircleMenuController createCircleMenu(double posX, double posY, double radius)
+//	public ANTSCircleMenuController createCircleMenu(double posX, double posY, double radius)
+//	{
+//		ANTSCircleMenuController c = new ANTSCircleMenuController(posX, posY, radius, this);
+//		this.addMenuController(c);
+//		
+//		return c;
+//	}
+	
+	public ANTSRectangleMenuController createRectangleMenu(double posX, double posY, double minWidth)
 	{
-		ANTSCircleMenuController c = new ANTSCircleMenuController(posX, posY, radius, this);
+		ANTSRectangleMenuController c = new ANTSRectangleMenuController(posX, posY, minWidth, this);
 		this.addMenuController(c);
 		
 		return c;
@@ -92,14 +102,14 @@ public class ANTSFactory
 	
 	//------------------------------------------------------//
 	
-	private void addMenuController(ANTSCircleMenuController c) 
+	private void addMenuController(ANTSIMenuController c) 
 	{
 		if(!this.menuControllers.contains(c))
 		{
 			this.menuControllers.add(c);
 		}
 		
-		this.addToMouseListener(c);
+		this.addToMouseListener((ANTSIController) c);
 	}
 
 	private void addController(ANTSIController c)
