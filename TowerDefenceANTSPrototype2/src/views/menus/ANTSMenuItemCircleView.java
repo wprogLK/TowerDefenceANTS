@@ -42,6 +42,18 @@ public class ANTSMenuItemCircleView extends ANTSAbstractView implements ANTSIVie
 		this.parentModel = parentModel;
 	}
 		
+	///////////
+	//Getters//
+	///////////
+	
+	///////////
+	//Setters//
+	///////////
+	
+	///////////
+	//Special//
+	///////////
+	
 	public String toString()
 	{
 		return "Cell view";

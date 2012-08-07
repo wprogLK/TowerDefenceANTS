@@ -2,25 +2,12 @@ package views;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Polygon;
-import java.awt.Shape;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.GeneralPath;
-import java.awt.geom.Line2D;
-import java.awt.geom.Path2D;
-import java.awt.geom.Rectangle2D;
 import java.util.Iterator;
 
 import interfaces.ANTSIView;
 import interfaces.menus.ANTSIMenuController;
-
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-
-import controllers.menus.ANTSCircleMenuController;
-
-import basics.ANTSDriver;
 
 import models.ANTSCellModel;
 
@@ -35,6 +22,10 @@ public class ANTSCellView extends ANTSAbstractView implements ANTSIView
 		this.model = m;
 	}
 		
+	///////////
+	//Getters//
+	///////////
+	
 	public String toString()
 	{
 		return "Cell view";
@@ -47,16 +38,24 @@ public class ANTSCellView extends ANTSAbstractView implements ANTSIView
 	}
 	
 	@Override
+	public boolean doPaintDirect()
+	{
+		return false;
+	}
+	///////////
+	//Setters//
+	///////////
+	
+	///////////
+	//Special//
+	///////////
+	
+	@Override
 	public void paint(Graphics2D g2d)
 	{
 		this.paint(g2d, 0);
 	}
 	
-	@Override
-	public boolean doPaintDirect()
-	{
-		return false;
-	}
 	
 	@Override
 	public void paint(Graphics2D g2d, float interpolation)

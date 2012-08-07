@@ -41,6 +41,18 @@ public class ANTSMenuItemRectangleView extends ANTSAbstractView implements ANTSI
 		this.parentModel = parentModel;
 	}
 		
+	///////////
+	//Getters//
+	///////////
+	
+	///////////
+	//Setters//
+	///////////
+	
+	///////////
+	//Special//
+	///////////
+	
 	public String toString()
 	{
 		return "Cell view";

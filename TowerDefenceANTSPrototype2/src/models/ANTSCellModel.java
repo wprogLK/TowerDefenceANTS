@@ -2,16 +2,10 @@ package models;
 
 import interfaces.ANTSIController;
 import interfaces.ANTSIModel;
-import interfaces.ANTSIView;
 
-import java.awt.Color;
-import java.awt.Point;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
-import java.util.Set;
 
-import basics.ANTSDriver;
 import basics.ANTSFactory;
 
 public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel 
@@ -67,7 +61,6 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 //		this.addMenu(factory.createRectangleMenu(absolutePosX + this.cellWidth/2, absolutePosY-cellHeight/2,260));	//only for testing
 	}
 	
-
 	private void calc() 
 	{
 		double angleInRadian = Math.toRadians(this.angle);
@@ -77,7 +70,6 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 		this.lineLength = halfeCellHeight/Math.sin(angleInRadian);
 		this.cellWidth = 2*Math.sqrt(this.lineLength*this.lineLength-halfeCellHeight*halfeCellHeight);
 	}
-
 
 	private void init(double cellHeight, double cellAngleInDegree, int cellNrX, int cellNrY, int xGridOffset, int yGridOffset)
 	{
@@ -97,10 +89,9 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 		this.gridOffsetY = yGridOffset;
 	}
 	
-	/////////////////////
-	//GETTERS & SETTERS//
-	/////////////////////
-	
+	///////////
+	//Getters//
+	///////////
 	public int[] getCoordRel()
 	{
 		int[] coord = {this.relativePosX, this.relativePosY};
@@ -177,9 +168,14 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 	}
 	
 	///////////
-	//SPECIAL//
+	//Setters//
 	///////////
-
+	
+	
+	///////////
+	//Special//
+	///////////
+	
 	public void addController(ANTSIController controller)
 	{
 		if(!this.controllers.contains(controller))
@@ -187,5 +183,4 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 			this.controllers.add(controller);
 		}
 	}
-	
 }

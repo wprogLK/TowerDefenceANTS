@@ -1,7 +1,6 @@
 package models.menus;
 
 import interfaces.ANTSIModel;
-import interfaces.menus.ANTSIMenuItemController;
 import interfaces.menus.ANTSIMenuModel;
 
 import java.awt.geom.AffineTransform;
@@ -36,9 +35,9 @@ public class ANTSCircleMenuModel extends ANTSAbstractModel implements ANTSIModel
 		this.menuItems = new ArrayList<ANTSMenuItemCircleController>();
 	}
 	
-	/////////////////////
-	//GETTERS & SETTERS//
-	/////////////////////
+	///////////
+	//Getters//
+	///////////
 	
 	public String toString()
 	{
@@ -59,15 +58,6 @@ public class ANTSCircleMenuModel extends ANTSAbstractModel implements ANTSIModel
 	{
 		return this.factory;
 	}
-
-	public void addNewMenuItem(ANTSMenuItemCircleController c) 
-	{
-		this.menuItems.add(c);
-		
-		int index = this.menuItems.size();
-		
-		c.setMenuItemIndex(index);
-	}
 	
 	public Iterator<ANTSMenuItemCircleController> getIteratorMenuItems()
 	{
@@ -80,7 +70,20 @@ public class ANTSCircleMenuModel extends ANTSAbstractModel implements ANTSIModel
 	}
 	
 	///////////
-	//SPECIAL//
+	//Setters//
 	///////////
+	
+	///////////
+	//Special//
+	///////////
+	
+	public void addNewMenuItem(ANTSMenuItemCircleController c) 
+	{
+		this.menuItems.add(c);
+		
+		int index = this.menuItems.size();
+		
+		c.setMenuItemIndex(index);
+	}
 	
 }

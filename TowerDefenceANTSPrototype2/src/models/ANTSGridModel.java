@@ -2,13 +2,8 @@ package models;
 
 import interfaces.ANTSIModel;
 
-import java.awt.Color;
-import java.awt.event.MouseEvent;
-import java.awt.geom.AffineTransform;
-
 import controllers.ANTSCellController;
 
-import basics.ANTSDriver;
 import basics.ANTSFactory;
 
 public class ANTSGridModel extends ANTSAbstractModel implements ANTSIModel 
@@ -75,9 +70,9 @@ public class ANTSGridModel extends ANTSAbstractModel implements ANTSIModel
 		}
 	}
 	
-	/////////////////////
-	//GETTERS & SETTERS//
-	/////////////////////
+	///////////
+	//Getters//
+	///////////
 	
 	public double getOffsetX()
 	{
@@ -98,7 +93,6 @@ public class ANTSGridModel extends ANTSAbstractModel implements ANTSIModel
 	{
 		return this.yOffset-this.cellHeight/2;
 	}
-
 	
 	public double getHeight()
 	{
@@ -130,27 +124,12 @@ public class ANTSGridModel extends ANTSAbstractModel implements ANTSIModel
 		return this.grid[x][y];
 	}
 	
-//	public ANTSCellController getCellControllerAtMousePos(MouseEvent e)
-//	{
-//		
-//		int x = 0;
-//		int y = 0;
-//		
-//		int mouseX = e.getX();
-//		int mouseY = e.getY();
-//		
-//		x = (int)( mouseX/this.cellWidth);
-//		y = (int) (mouseY/this.cellHeight);
-//		
-//		
-//		return this.grid[x][y];
-//	}
-
-	
-	
 	///////////
-	//SPECIAL//
+	//Setters//
 	///////////
 	
 	
+	///////////
+	//Special//
+	///////////
 }

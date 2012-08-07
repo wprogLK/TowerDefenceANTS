@@ -2,16 +2,8 @@ package views;
 
 import interfaces.ANTSIView;
 
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.Graphics2D;
 import java.awt.Shape;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
 
 public abstract class ANTSAbstractView  implements ANTSIView
 {
@@ -30,7 +22,6 @@ public abstract class ANTSAbstractView  implements ANTSIView
 	
 	public ANTSAbstractView()
 	{
-		//TODO
 		this.isMouseOver = false;
 	}
 	
@@ -38,7 +29,7 @@ public abstract class ANTSAbstractView  implements ANTSIView
 	@Override
 	public void paint(Graphics2D g2d) 
 	{
-		// TODO Auto-generated method stub
+		this.paint(g2d, 0);
 	}
 
 	@Override
@@ -50,6 +41,10 @@ public abstract class ANTSAbstractView  implements ANTSIView
 	/////////////////////
 	//GETTERS & SETTERS//
 	/////////////////////
+	
+	///////////
+	//Getters//
+	///////////
 	
 	public final static ANTSIView getEmptyView()
 	{
@@ -94,4 +89,14 @@ public abstract class ANTSAbstractView  implements ANTSIView
 	{
 		return this.isMouseOver;
 	}
+	
+	///////////
+	//Setters//
+	///////////
+	
+	///////////
+	//Special//
+	///////////
+	
+	
 }

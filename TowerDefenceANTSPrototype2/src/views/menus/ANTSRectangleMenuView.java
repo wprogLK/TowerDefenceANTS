@@ -36,6 +36,18 @@ public class ANTSRectangleMenuView extends ANTSAbstractView implements ANTSIView
 		return "Cell view";
 	}
 
+	///////////
+	//Getters//
+	///////////
+	
+	///////////
+	//Setters//
+	///////////
+	
+	///////////
+	//Special//
+	///////////
+	
 	@Override
 	public boolean isMouseListener() 
 	{

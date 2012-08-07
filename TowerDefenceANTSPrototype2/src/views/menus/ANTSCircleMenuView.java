@@ -28,6 +28,18 @@ public class ANTSCircleMenuView extends ANTSAbstractView implements ANTSIView, A
 		this.model = m;
 	}
 		
+	///////////
+	//Getters//
+	///////////
+	
+	///////////
+	//Setters//
+	///////////
+	
+	///////////
+	//Special//
+	///////////
+	
 	public String toString()
 	{
 		return "Cell view";

@@ -3,8 +3,6 @@ package models.menus;
 import interfaces.ANTSIModel;
 import interfaces.menus.ANTSIMenuModel;
 
-import java.awt.geom.AffineTransform;
-
 import models.ANTSAbstractModel;
 
 import basics.ANTSFactory;
@@ -28,6 +26,10 @@ public class ANTSMenuItemCircleModel extends ANTSAbstractModel implements ANTSIM
 	//GETTERS & SETTERS//
 	/////////////////////
 	
+	///////////
+	//Getters//
+	///////////
+	
 	public String toString()
 	{
 		return "menu item : " + text;
@@ -47,9 +49,14 @@ public class ANTSMenuItemCircleModel extends ANTSAbstractModel implements ANTSIM
 	{
 		return this.index;
 	}
+	
+	///////////
+	//Setters//
+	///////////
+	
+	///////////
+	//Special//
+	///////////
 
-	///////////
-	//SPECIAL//
-	///////////
 	
 }

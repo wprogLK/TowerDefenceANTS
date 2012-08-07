@@ -3,8 +3,6 @@ package models.menus;
 import interfaces.ANTSIModel;
 import interfaces.menus.ANTSIMenuModel;
 
-import java.awt.geom.AffineTransform;
-
 import models.ANTSAbstractModel;
 
 import basics.ANTSFactory;
@@ -27,6 +25,18 @@ public class ANTSMenuItemRectangleModel extends ANTSAbstractModel implements ANT
 	/////////////////////
 	//GETTERS & SETTERS//
 	/////////////////////
+	
+	///////////
+	//Getters//
+	///////////
+	
+	///////////
+	//Setters//
+	///////////
+	
+	///////////
+	//Special//
+	///////////
 	
 	public String toString()
 	{

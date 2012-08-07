@@ -68,10 +68,10 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 		this.matrixForInterpolation.concatenate(tmpVelocityMatrix);
 	}
 	
+	///////////
+	//Getters//
+	///////////
 	
-	/////////////////////
-	//GETTERS & SETTERS//
-	/////////////////////
 	public AffineTransform getInterpolationMatrix()
 	{
 		return this.matrixForInterpolation;
@@ -91,4 +91,14 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 	{
 		return this.length;
 	}
+	
+	///////////
+	//Setters//
+	///////////
+	
+	///////////
+	//Special//
+	///////////
+	
+	
 }

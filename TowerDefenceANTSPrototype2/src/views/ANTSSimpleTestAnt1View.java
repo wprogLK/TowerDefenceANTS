@@ -2,27 +2,16 @@ package views;
 
 import interfaces.ANTSIView;
 
-import java.awt.AlphaComposite;
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.Shape;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 
 import javax.imageio.ImageIO;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
 
-import models.ANTSSimpleSourceLightModel;
 import models.ANTSSimpleTestAnt1Model;
 
 public class ANTSSimpleTestAnt1View extends ANTSAbstractView implements ANTSIView
@@ -51,6 +40,18 @@ public class ANTSSimpleTestAnt1View extends ANTSAbstractView implements ANTSIVie
 		this.setupAnimation();
 	}
 	
+	///////////
+	//Getters//
+	///////////
+	
+	///////////
+	//Setters//
+	///////////
+	
+	///////////
+	//Special//
+	///////////
+	
 	private void setupAnimation()
 	{
 		this.animation = new ArrayList<BufferedImage>();
@@ -76,7 +77,7 @@ public class ANTSSimpleTestAnt1View extends ANTSAbstractView implements ANTSIVie
 		} 
 		catch (IOException e)
 		{
-//			//TODO
+
 		}
 	}
 	
@@ -161,14 +162,12 @@ public class ANTSSimpleTestAnt1View extends ANTSAbstractView implements ANTSIVie
 		else
 		{
 //			System.out.println("Image IS NULL");
-			//TODO
 		}
 	}
 	
 	@Override
 	public void paint(Graphics2D g2d, float interpolation) 
 	{
-		//TODO
 		this.paint(g2d);
 	}
 	

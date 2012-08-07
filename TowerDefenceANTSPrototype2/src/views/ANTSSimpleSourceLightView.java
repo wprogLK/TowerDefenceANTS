@@ -5,11 +5,8 @@ import interfaces.ANTSIView;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
 
 import models.ANTSSimpleSourceLightModel;
 
@@ -27,6 +24,29 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 		
 		this.createCircle();
 	}
+	
+	///////////
+	//Getters//
+	///////////
+	
+	public String toString()
+	{
+		return "SOURCE light " + this.model.getPosX() + " " + this.model.getPosY() + " " + this.model.getColor();
+	}
+
+	@Override
+	public boolean isMouseListener() 
+	{
+		return this.model.isMouseListener();
+	}
+	
+	///////////
+	//Setters//
+	///////////
+	
+	///////////
+	//Special//
+	///////////
 	
 	private void createCircle()
 	{
@@ -63,6 +83,7 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 				dash_array, //Strichelung
 				0 //offset in Pixeln f. Strichelung
 				);
+			
 			g2d.setStroke(dashStroke);
 			g2d.draw(shape.getBounds2D());
 			
@@ -85,18 +106,8 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 	@Override
 	public void paint(Graphics2D g2d, float interpolation) 
 	{
-		//interpolation not needed for this view!
 		this.paint(g2d);
 	}
 	
-	public String toString()
-	{
-		return "SOURCE light " + this.model.getPosX() + " " + this.model.getPosY() + " " + this.model.getColor();
-	}
 
-	@Override
-	public boolean isMouseListener() 
-	{
-		return this.model.isMouseListener();
-	}
 }

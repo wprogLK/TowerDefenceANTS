@@ -5,13 +5,10 @@ import interfaces.ANTSIModel;
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
 
-import basics.ANTSDriver;
-
 public class ANTSSimpleTestAnt1Model extends ANTSAbstractModel implements ANTSIModel 
 {
 	private AffineTransform matrix;
 	
-	private boolean on;
 	private Color color;
 	
 	private int width;
@@ -25,7 +22,6 @@ public class ANTSSimpleTestAnt1Model extends ANTSAbstractModel implements ANTSIM
 		this.width = 100;
 		this.height = 100;
 		
-		this.on = true;
 		this.color = Color.yellow;
 		
 		this.isDragged = false;
@@ -40,7 +36,6 @@ public class ANTSSimpleTestAnt1Model extends ANTSAbstractModel implements ANTSIM
 		this.width = 100;
 		this.height = 100;
 		
-		this.on = true;
 		this.color = color;
 		
 		this.isDragged = false;
@@ -55,24 +50,17 @@ public class ANTSSimpleTestAnt1Model extends ANTSAbstractModel implements ANTSIM
 		this.width = width;
 		this.height = height;
 		
-		this.on = true;
 		this.color = color;
 		
 		this.isDragged = false;
 		this.isMouseListener = isMouseListener;
 	}
 	
-	@Override
-	public void update()
-	{
 
-	}
 	
-	
-	/////////////////////
-	//GETTERS & SETTERS//
-	/////////////////////
-	
+	///////////
+	//Getters//
+	///////////
 	public boolean isDragged()
 	{
 		return this.isDragged;
@@ -114,11 +102,6 @@ public class ANTSSimpleTestAnt1Model extends ANTSAbstractModel implements ANTSIM
 		return "Model: ANT X: " + this.matrix.getTranslateX() + " Y: " + this.matrix.getTranslateY() + " COLOR: " + this.color;
 	}
 	
-	public void setPosition(int x, int y)
-	{
-		this.matrix.setToTranslation(x, y);
-	}
-	
 	/**
 	 * calculates an affineTransform with an additional scaling factor for the image
 	 * @param widthImage
@@ -136,13 +119,18 @@ public class ANTSSimpleTestAnt1Model extends ANTSAbstractModel implements ANTSIM
 		
 		return aTImage;
 	}
-	
 	///////////
-	//SPECIAL//
+	//Setters//
 	///////////
 	
-	public void switchLight()
+	public void setPosition(int x, int y)
 	{
-		this.on = !this.on;
+		this.matrix.setToTranslation(x, y);
 	}
+	
+	///////////
+	//Special//
+	///////////
+	
+	
 }

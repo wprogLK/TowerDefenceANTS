@@ -21,6 +21,24 @@ public class ANTSSimpleRayLightView extends ANTSAbstractView implements ANTSIVie
 		this.setupRay();
 	}
 	
+	///////////
+	//Getters//
+	///////////
+
+	@Override
+	public boolean isMouseListener() 
+	{
+		return this.model.isMouseListener();
+	}
+	
+	///////////
+	//Setters//
+	///////////
+	
+	///////////
+	//Special//
+	///////////
+	
 	private void setupRay() 
 	{
 		double length = this.model.getLength();
@@ -49,9 +67,4 @@ public class ANTSSimpleRayLightView extends ANTSAbstractView implements ANTSIVie
 		g2d.draw(s);
 	}
 	
-	@Override
-	public boolean isMouseListener() 
-	{
-		return this.model.isMouseListener();
-	}
 }

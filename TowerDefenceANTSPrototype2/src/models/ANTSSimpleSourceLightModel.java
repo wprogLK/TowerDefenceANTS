@@ -5,9 +5,6 @@ import interfaces.ANTSIModel;
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
 
-import layers.ANTSLayerSystem;
-
-import basics.ANTSDriver;
 import basics.ANTSFactory;
 
 public class ANTSSimpleSourceLightModel extends ANTSAbstractModel implements ANTSIModel 
@@ -26,37 +23,6 @@ public class ANTSSimpleSourceLightModel extends ANTSAbstractModel implements ANT
 	private int angle = 360;
 	private double angleOffset = 0;
 	
-//	public ANTSSimpleSourceLightModel() 
-//	{
-//		this.matrix = new AffineTransform();
-//		this.matrix.setToTranslation(100, 100);
-//		this.radius = 50;
-//		
-//		this.on = true;
-//		this.color = Color.yellow;
-//		this.tickCounter = 0;
-//		
-//		this.isDragged = false;
-//		this.isMouseListener = true;
-//	}
-	
-//	public ANTSSimpleSourceLightModel(double posX, double posY, double radius, Color color)
-//	{
-//		this.matrix = new AffineTransform();
-//		
-//		this.matrix.setToTranslation(posX, posY);
-//		
-//		this.radius = radius;
-//		
-//		this.on = true;
-//		this.color = color;
-//		
-//		this.tickCounter = 0;
-//		
-//		this.isDragged = false;
-//		this.isMouseListener = true;
-//	}
-//	
 	public ANTSSimpleSourceLightModel(double posX, double posY, double radius, Color color, boolean isMouseListener, ANTSFactory factory)
 	{
 		super(factory);
@@ -74,6 +40,81 @@ public class ANTSSimpleSourceLightModel extends ANTSAbstractModel implements ANT
 		
 		this.isDragged = false;
 		this.isMouseListener = isMouseListener;
+	}
+	
+	///////////
+	//Getters//
+	///////////
+
+	private double getAngleBetweetTwoRays()
+	{	
+		Double d = (double) this.numberOfRaysPer360Degrees;
+		Double tmpAngle = 360/d;
+		
+		return tmpAngle;
+	}
+	
+	public int getNumberOfRays()
+	{
+		return this.numberOfRaysPer360Degrees/(360/this.angle);
+	}
+	
+	public boolean isDragged()
+	{
+		return this.isDragged;
+	}
+	
+	public double getPosX()
+	{
+		return this.matrix.getTranslateX();
+	}
+
+	public double getPosY()
+	{
+		return this.matrix.getTranslateY();
+	}
+	
+	public double getRadius()
+	{
+		return this.radius;
+	}
+	
+	public AffineTransform getMatrix()
+	{
+		return this.matrix;
+	}
+	
+	public Color getColor()
+	{
+		return this.color;
+	}
+	
+	public boolean isOn()
+	{
+		return this.on;
+	}
+	
+	public String toString()
+	{
+		return "Model: X: " + this.matrix.getTranslateX() + " Y: " + this.matrix.getTranslateY() + " Radius : " +this.radius + " COLOR: " + this.color;
+	}
+	
+	///////////
+	//Setters//
+	///////////
+	
+	public void setPosition(int x, int y)
+	{
+		this.matrix.setToTranslation(x, y);
+	}
+	
+	///////////
+	//Special//
+	///////////
+	
+	public void switchLight()
+	{
+		this.on = !this.on;
 	}
 	
 	@Override
@@ -121,76 +162,5 @@ public class ANTSSimpleSourceLightModel extends ANTSAbstractModel implements ANT
 			tmpAngle+=this.getAngleBetweetTwoRays();
 		}
 	}
-	
-	private double getAngleBetweetTwoRays()
-	{	
-		Double d = (double) this.numberOfRaysPer360Degrees;
-		Double tmpAngle = 360/d;
-		
-		return tmpAngle;
-	}
-	
-	public int getNumberOfRays()
-	{
-		return this.numberOfRaysPer360Degrees/(360/this.angle);
-	}
-	
-	
-	/////////////////////
-	//GETTERS & SETTERS//
-	/////////////////////
-	
-	public boolean isDragged()
-	{
-		return this.isDragged;
-	}
-	
-	public double getPosX()
-	{
-		return this.matrix.getTranslateX();
-	}
 
-	public double getPosY()
-	{
-		return this.matrix.getTranslateY();
-	}
-	
-	public double getRadius()
-	{
-		return this.radius;
-	}
-	
-	public AffineTransform getMatrix()
-	{
-		return this.matrix;
-	}
-	
-	public Color getColor()
-	{
-		return this.color;
-	}
-	
-	public boolean isOn()
-	{
-		return this.on;
-	}
-	
-	public String toString()
-	{
-		return "Model: X: " + this.matrix.getTranslateX() + " Y: " + this.matrix.getTranslateY() + " Radius : " +this.radius + " COLOR: " + this.color;
-	}
-	
-	public void setPosition(int x, int y)
-	{
-		this.matrix.setToTranslation(x, y);
-	}
-		
-	///////////
-	//SPECIAL//
-	///////////
-	
-	public void switchLight()
-	{
-		this.on = !this.on;
-	}
 }

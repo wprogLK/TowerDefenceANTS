@@ -1,14 +1,12 @@
 package models.menus;
 
 import interfaces.ANTSIModel;
-import interfaces.menus.ANTSIMenuItemController;
 import interfaces.menus.ANTSIMenuModel;
 
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import controllers.menus.ANTSMenuItemCircleController;
 import controllers.menus.ANTSMenuItemRectangleController;
 
 import models.ANTSAbstractModel;
@@ -19,7 +17,6 @@ public class ANTSRectangleMenuModel extends ANTSAbstractModel implements ANTSIMo
 {
 	private AffineTransform matrix;
 	private double minWidth;
-	private double height;
 	
 	private ArrayList<ANTSMenuItemRectangleController> menuItems;
 	
@@ -32,7 +29,6 @@ public class ANTSRectangleMenuModel extends ANTSAbstractModel implements ANTSIMo
 		this.matrix.translate(posX, posY);
 		
 		this.minWidth = minWidth;
-		this.height = 0;
 		
 		this.isMouseListener = true;
 		this.mouseEntered = false;
@@ -42,6 +38,18 @@ public class ANTSRectangleMenuModel extends ANTSAbstractModel implements ANTSIMo
 	/////////////////////
 	//GETTERS & SETTERS//
 	/////////////////////
+	
+	///////////
+	//Getters//
+	///////////
+	
+	///////////
+	//Setters//
+	///////////
+	
+	///////////
+	//Special//
+	///////////
 	
 	public String toString()
 	{

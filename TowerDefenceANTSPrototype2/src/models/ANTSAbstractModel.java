@@ -3,10 +3,10 @@ package models;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import controllers.menus.ANTSCircleMenuController;
-
 import basics.ANTSFactory;
+
 import layers.ANTSLayerSystem.Layer;
+
 import interfaces.ANTSIModel;
 import interfaces.menus.ANTSIMenuController;
 
@@ -42,46 +42,44 @@ public class ANTSAbstractModel implements ANTSIModel
 		this.mouseEntered = false;
 	}
 	
+	///////////
+	//Getters//
+	///////////
 	public final static ANTSIModel getEmptyModel()
 	{
 		return emptyModel;
 	}
-
-	@Override
-	public void update() 
-	{
-		
-	}
-	
-	public void addMenu(ANTSIMenuController m)
-	{
-		this.menus.add(m);
-	}
-	
 	
 	public Iterator<ANTSIMenuController> getMenuIterator()
 	{
 		return this.menus.iterator();
-	}
-	
+	}	
 	@Override
 	public boolean isMouseListener()
 	{
 		return this.isMouseListener;
 	}
-	
 	@Override
 	public Layer getLayer()
 	{
 		return this.layer;
+	}	
+	
+	@Override
+	public final boolean getMouseEntered() 
+	{
+		return this.mouseEntered;
 	}
+
+	///////////
+	//Setters//
+	///////////
 	
 	@Override
 	public void setLayer(Layer layer)
 	{
 		this.layer = layer;
 	}
-	
 	
 	@Override
 	public final void setDragged(boolean isDragged)
@@ -95,10 +93,14 @@ public class ANTSAbstractModel implements ANTSIModel
 		this.mouseEntered = value;
 	}
 
+	///////////
+	//Special//
+	///////////
+	
 	@Override
-	public final boolean getMouseEntered() 
+	public void update() 
 	{
-		return this.mouseEntered;
+		
 	}
 	
 	//Mouse Detection
@@ -107,4 +109,19 @@ public class ANTSAbstractModel implements ANTSIModel
 	{
 		return false;
 	}
+
+	public void addMenu(ANTSIMenuController m)
+	{
+		this.menus.add(m);
+	}
+
+		
+	
+
+	
+	
+	
+	
+	
+
 }

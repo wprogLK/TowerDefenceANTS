@@ -21,17 +21,9 @@ public class ANTSGameView extends ANTSAbstractView implements ANTSIView
 		this.buttonUpdate.addActionListener(ANTSUpdateListener.getInstance());
 	}
 	
-	@Override
-	public void paint(Graphics2D g2d)
-	{
-		
-	}
-	
-	@Override
-	public void paint(Graphics2D g2d, float interpolation) 
-	{
-		
-	}
+	///////////
+	//Getters//
+	///////////
 	
 	@Override
 	public boolean isMouseListener() 
@@ -44,4 +36,25 @@ public class ANTSGameView extends ANTSAbstractView implements ANTSIView
 	{
 		return "Game view";
 	}
+	///////////
+	//Setters//
+	///////////
+	
+	///////////
+	//Special//
+	///////////
+	
+	@Override
+	public void paint(Graphics2D g2d)
+	{
+		
+	}
+	
+	@Override
+	public void paint(Graphics2D g2d, float interpolation) 
+	{
+		
+	}
+	
+	
 }
