@@ -10,14 +10,9 @@ package basics;
  */
 public class ANTSMain
 {
-	
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) 
 	{
 		ANTSDriver driver = new ANTSDriver();
 		driver.start();
 	}
-
 }

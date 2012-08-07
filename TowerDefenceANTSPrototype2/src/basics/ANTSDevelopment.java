@@ -12,7 +12,12 @@ import controllers.ANTSCellController;
 
 public class ANTSDevelopment
 {
-	private static boolean debugMode = true;
+	private static boolean debugModeOn = true;
+	
+	
+	///////////////
+	//DEBUG CLASS//
+	///////////////
 	
 	public static class ANTSDebug
 	{
@@ -29,18 +34,20 @@ public class ANTSDevelopment
 		private static int[] startPos = {fontSize, fontSize};
 		private static int[] currentPos = {10, 10};
 		
-		
 		private static ANTSIController currentHoveringCell = ANTSCellController.getEmptyController();
 		private static ANTSFPS fps;
 		
 		
+		////////////////
+		//SHOW METHODS//
+		////////////////
 		
 		public static void showDebugScreen()
 		{
 			currentPos[0] = startPos[0];
 			currentPos[1] = startPos[1];
 			
-			if(doShowDebugScreenAll)
+			if(doShowDebugScreenAll && debugModeOn)
 			{	
 				g2d.setFont( font );
 				g2d.setColor( fontColor );
@@ -50,14 +57,13 @@ public class ANTSDevelopment
 			}
 		}
 		
-		public static void setGraphics2D(Graphics2D g)
-		{
-			g2d = g;
-		}
+		///////////////////
+		//PRIVATE METHODS//
+		///////////////////
 		
 		private static void showCurrentHoveringCell()
 		{
-			if(showCurrentHoveringCellInfo)
+			if(showCurrentHoveringCellInfo && debugModeOn)
 			{
 				drawString(String.format("currentHoveringCell: %s", currentHoveringCell));
 				updatePos();
@@ -66,15 +72,11 @@ public class ANTSDevelopment
 		
 		private static void showFPS()
 		{
-			if(showFPS)
+			if(showFPS  && debugModeOn)
 			{
 				drawString(String.format("FPS: %s", fps.getFPS()));
 				updatePos();
 			}
-		}
-		public static void setCurrentHoveringCell(ANTSCellController c)
-		{
-			currentHoveringCell = c;
 		}
 		
 		private static void drawString(String s)
@@ -82,18 +84,34 @@ public class ANTSDevelopment
 			 g2d.drawString(s,currentPos[0], currentPos[1] );
 		}
 		
-		public static void setFPS(ANTSFPS fpsIn)
-		{
-			fps = fpsIn;
-		}
-		
 		private static void updatePos()
 		{
 			currentPos[1] += fontSize+5;
 		}
+		
+		///////////
+		//SETTERS//
+		//////////
+		
+		public static void setCurrentHoveringCell(ANTSCellController c)
+		{
+			currentHoveringCell = c;
+		}
+		
+		public static void setGraphics2D(Graphics2D g)
+		{
+			g2d = g;
+		}
+		
+		public static void setFPS(ANTSFPS fpsIn)
+		{
+			fps = fpsIn;
+		}
 	}
 	
-	
+	////////////////
+	//STREAM CLASS//
+	////////////////
 	
 	public static class ANTSStream
 	{
@@ -118,5 +136,12 @@ public class ANTSDevelopment
 			}
 		}
 		
+		public static void printDebug(String output)
+		{
+			if(debugModeOn && doPrintAll)
+			{
+				System.out.println(output);
+			}
+		}
 	}
 }

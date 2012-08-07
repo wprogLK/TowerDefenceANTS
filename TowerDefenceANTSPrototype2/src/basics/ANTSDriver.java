@@ -3,47 +3,23 @@
  */
 package basics;
 
-import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
+import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.awt.PopupMenu;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.awt.geom.AffineTransform;
+
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 
 import basics.ANTSDevelopment.ANTSDebug;
 
-import views.ANTSAbstractView;
-
-import listeners.ANTSSwitchLightListener;
 import listeners.ANTSUpdateListener;
-import models.ANTSSimpleSourceLightModel;
 
 import interfaces.ANTSIController;
 import interfaces.ANTSIDriver;
-import interfaces.ANTSIModel;
-import interfaces.ANTSIView;
-import controllers.ANTSAbstractController;
-import controllers.ANTSCellController;
-import controllers.ANTSGameController;
-import controllers.ANTSGridController;
-import controllers.ANTSSimpleRayLightController;
-import controllers.ANTSSimpleSourceLightController;
-import controllers.ANTSSimpleTestAnt1Controller;
 
 /**
  * @author Lukas
@@ -51,31 +27,26 @@ import controllers.ANTSSimpleTestAnt1Controller;
  */
 public class ANTSDriver extends Thread implements ANTSIDriver
 {
+	private ANTSFactory factory;
+	private ANTSFPS fps;
+	
+	
 	private ANTSWindow window;
 	
-	private ANTSFactory factory;
-	
 	private Canvas canvas;
-	
 	private Color backgroundColor = Color.white;
-	
-	private final int TICKS_PER_SECOND = 25;
-	private final int SKIP_TICKS = 1000/TICKS_PER_SECOND;
-	private final int MAX_FRAMESKIP = 5;
-	
-	private ANTSFPS fps;
 	
 	//Active Rendering:
 	private Graphics graphics;
 	private Graphics2D g2d;
-	private BufferedImage bi;
+	private BufferedImage bufferedImage;
 	private BufferStrategy buffer;
-	private GraphicsConfiguration gC;
+	private GraphicsConfiguration graphicsConfig;
 	
 	public ANTSDriver()
 	{	
-		window = new ANTSWindow();
-		window.setVisible(true);
+		this.window = new ANTSWindow();
+		this.window.setVisible(true);
 		
 		this.canvas = new Canvas();
 		
@@ -104,10 +75,10 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		//graphics config
 		GraphicsEnvironment gE = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		GraphicsDevice gD = gE.getDefaultScreenDevice();
-		this.gC = gD.getDefaultConfiguration();
+		this.graphicsConfig = gD.getDefaultConfiguration();
 		
 		//Create off-screen drawing surface
-		this.bi = this.gC.createCompatibleImage(this.window.getWidthOfGraphics(),this.window.getHeightOfGraphics());
+		this.bufferedImage = this.graphicsConfig.createCompatibleImage(this.window.getWidthOfGraphics(),this.window.getHeightOfGraphics());
 	}
 	
 	private void initAllListeners() 
@@ -142,14 +113,14 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		while(gameIsRunning)
 		{
 			loops = 0;
-			while(System.currentTimeMillis() >nextGameTick && loops<MAX_FRAMESKIP)
+			while(System.currentTimeMillis() >nextGameTick && loops<this.fps.getMaxFrameSkip())
 			{
 				this.factory.updateAllModels();
-				nextGameTick +=SKIP_TICKS;
+				nextGameTick +=this.fps.getSkiptTicks();
 				loops++;
 			}
 			
-			interpolation =(System.currentTimeMillis() + SKIP_TICKS - nextGameTick) /(SKIP_TICKS); //TODO Float
+			interpolation =(System.currentTimeMillis() + this.fps.getSkiptTicks() - nextGameTick) /(this.fps.getSkiptTicks());
 			this.paint(interpolation);
 		}
 	}
@@ -158,8 +129,8 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	{
 		this.fps.update();
 		
-		this.bi = this.gC.createCompatibleImage(this.window.getWidthOfGraphics(),this.window.getHeightOfGraphics());
-		this.g2d = bi.createGraphics();
+		this.bufferedImage = this.graphicsConfig.createCompatibleImage(this.window.getWidthOfGraphics(),this.window.getHeightOfGraphics());
+		this.g2d = bufferedImage.createGraphics();
 		
 		ANTSDebug.setGraphics2D(this.g2d);
 		ANTSDebug.setFPS(fps);
@@ -174,7 +145,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		
 		//Blit image and flip
 		this.graphics = this.buffer.getDrawGraphics();
-		graphics.drawImage(this.bi, 0, 0, null);
+		graphics.drawImage(this.bufferedImage, 0, 0, null);
 		
 		if(!buffer.contentsLost())
 		{
@@ -207,6 +178,10 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		private long currentTime;
 		private long lastTime;
 		
+		private final int TICKS_PER_SECOND = 25;
+		private final int SKIP_TICKS = 1000/TICKS_PER_SECOND;
+		private final int MAX_FRAMESKIP = 5;
+		
 		public ANTSFPS()
 		{
 			this.fps = 0;
@@ -236,6 +211,21 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		public int getFPS()
 		{
 			return this.fps;
+		}
+		
+		public int getTicksPerSecond()
+		{
+			return this.TICKS_PER_SECOND;
+		}
+		
+		public int getSkiptTicks()
+		{
+			return this.SKIP_TICKS;
+		}
+		
+		public int getMaxFrameSkip()
+		{
+			return this.MAX_FRAMESKIP;
 		}
 	}
 }
