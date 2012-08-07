@@ -1,5 +1,6 @@
 package layers;
 
+import basics.ANTSDevelopment.ANTSStream;
 import layers.ANTSLayerSystem.Layer;
 import interfaces.ANTSIController;
 
@@ -36,7 +37,7 @@ public class ANTSLayer
 			}
 		}
 		
-		System.out.println("Shift layer up from " + layerBefore + " to layer " + this.layer);
+		ANTSStream.printDebug("Shift layer up from " + layerBefore + " to layer " + this.layer);
 	}
 	
 	public void shiftDown()
@@ -61,7 +62,7 @@ public class ANTSLayer
 			}
 		}
 		
-		System.out.println("Shift layer down from " + layerBefore + " to layer " + this.layer);
+		ANTSStream.printDebug("Shift layer down from " + layerBefore + " to layer " + this.layer);
 	}
 	
 	
