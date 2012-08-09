@@ -16,8 +16,6 @@ import java.awt.image.BufferedImage;
 
 import basics.ANTSDevelopment.ANTSDebug;
 
-import listeners.ANTSUpdateListener;
-
 import interfaces.ANTSIController;
 import interfaces.ANTSIDriver;
 
@@ -50,8 +48,6 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		
 		this.canvas = new Canvas();
 		
-		this.initAllListeners();
-		
 		this.factory = new ANTSFactory(this);
 		
 		this.createGame();
@@ -81,11 +77,6 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		this.bufferedImage = this.graphicsConfig.createCompatibleImage(this.window.getWidthOfGraphics(),this.window.getHeightOfGraphics());
 	}
 	
-	private void initAllListeners() 
-	{
-		ANTSUpdateListener.setDriver(this);
-	}
-
 	public void addControllerToMouseListener(ANTSIController c)
 	{
 		this.canvas.addMouseListener(c);

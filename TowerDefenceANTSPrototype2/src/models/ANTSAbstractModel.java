@@ -3,14 +3,17 @@ package models;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import basics.ANTSDevelopment.ANTSStream;
 import basics.ANTSFactory;
 
 import layers.ANTSLayerSystem.Layer;
 
+import interfaces.ANTSIEvent;
+import interfaces.ANTSIEventListener;
 import interfaces.ANTSIModel;
 import interfaces.menus.ANTSIMenuController;
 
-public class ANTSAbstractModel implements ANTSIModel
+public class ANTSAbstractModel implements ANTSIModel, ANTSIEventListener
 {
 	private static ANTSAbstractModel emptyModel = new ANTSAbstractModel();
 	private ArrayList<ANTSIMenuController> menus;
@@ -71,6 +74,13 @@ public class ANTSAbstractModel implements ANTSIModel
 		return this.mouseEntered;
 	}
 
+	@Override
+	public ANTSFactory getFactory() 
+	{
+		return this.factory;
+	}
+
+
 	///////////
 	//Setters//
 	///////////
@@ -113,6 +123,13 @@ public class ANTSAbstractModel implements ANTSIModel
 	public void addMenu(ANTSIMenuController m)
 	{
 		this.menus.add(m);
+	}
+
+	@Override
+	public void doEvent(ANTSIEvent event) 
+	{
+		ANTSStream.printDebug("Event source: " + event.getSource());
+		
 	}
 
 		

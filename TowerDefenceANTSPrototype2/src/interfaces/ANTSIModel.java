@@ -4,6 +4,8 @@ import interfaces.menus.ANTSIMenuController;
 
 import java.util.Iterator;
 
+import basics.ANTSFactory;
+
 import layers.ANTSLayerSystem.Layer;
 
 public interface ANTSIModel
@@ -17,6 +19,7 @@ public interface ANTSIModel
 	public boolean containsPoint(int x, int y);
 	public Iterator<ANTSIMenuController> getMenuIterator();
 	public boolean getMouseEntered();
+	public ANTSFactory getFactory();
 	
 	///////////
 	//Setters//

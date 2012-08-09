@@ -18,7 +18,7 @@ import controllers.ANTSSimpleSourceLightController;
 import controllers.menus.ANTSCircleMenuController;
 import controllers.menus.ANTSRectangleMenuController;
 
-public class ANTSFactory 
+public class ANTSFactory
 {
 	private ANTSDriver driver;
 	
@@ -30,15 +30,17 @@ public class ANTSFactory
 	
 	public ANTSFactory(ANTSDriver d) 
 	{
+		super();
 		this.driver = d;
 		
 		this.controllers = new ArrayList<ANTSIController>();
 		this.menuControllers = new ArrayList<ANTSIMenuController>();
 	}
 	
+
 	//////////////////
 	//Create methods//
-	/////////////////
+	//////////////////
 	
 	public void createSimpleSourceLight(double posX, double posY, double radius, Color color, boolean isMouseListener)
 	{

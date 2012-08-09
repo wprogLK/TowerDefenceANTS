@@ -4,7 +4,7 @@ import interfaces.ANTSIView;
 
 import java.awt.Graphics2D;
 import javax.swing.JButton;
-import listeners.ANTSUpdateListener;
+//import listeners.ANTSUpdateListener;
 import models.ANTSGameModel;
 
 public class ANTSGameView extends ANTSAbstractView implements ANTSIView
@@ -17,8 +17,8 @@ public class ANTSGameView extends ANTSAbstractView implements ANTSIView
 		super();
 		this.model = m;
 		
-		this.buttonUpdate = new JButton("Update");
-		this.buttonUpdate.addActionListener(ANTSUpdateListener.getInstance());
+//		this.buttonUpdate = new JButton("Update");
+//		this.buttonUpdate.addActionListener(ANTSUpdateListener.getInstance());
 	}
 	
 	///////////

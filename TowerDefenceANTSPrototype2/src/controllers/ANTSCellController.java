@@ -2,6 +2,8 @@ package controllers;
 
 import java.awt.event.MouseEvent;
 
+import events.ANTSFooEvent;
+
 import basics.ANTSDevelopment.ANTSDebug;
 import basics.ANTSFactory;
 

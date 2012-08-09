@@ -6,6 +6,7 @@ import java.util.Iterator;
 import javax.swing.SwingUtilities;
 
 import basics.ANTSDevelopment.ANTSStream;
+import basics.ANTSEventListenerHandler;
 
 import layers.ANTSLayerSystem.Layer;
 
@@ -18,7 +19,7 @@ import interfaces.ANTSIModel;
 import interfaces.ANTSIView;
 import interfaces.menus.ANTSIMenuController;
 
-public abstract class ANTSAbstractController implements ANTSIController
+public abstract class ANTSAbstractController extends ANTSEventListenerHandler implements ANTSIController
 {
 	private static ANTSAbstractController emptyAbstractController = new ANTSAbstractController() {};
 	private ANTSIModel model;

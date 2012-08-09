@@ -11,14 +11,12 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import listeners.ANTSSwitchLightListener;
-
 public class ANTSWindow extends JFrame implements ComponentListener
 {
 	private JPanel navigation;	//Panel for buttons and other stuff
 	private JPanel graphic;		//Panel for graphics
 	
-	private JButton buttonUpdate;
+//	private JButton buttonUpdate;
 	private Canvas canvas;
 	
 	public ANTSWindow() 
@@ -34,12 +32,12 @@ public class ANTSWindow extends JFrame implements ComponentListener
 		this.getContentPane().setLayout(new BorderLayout());
 		
 		//Test button:
-		this.buttonUpdate = new JButton("Switch light");
-		this.buttonUpdate.addActionListener(ANTSSwitchLightListener.getInstance());
+//		this.buttonUpdate = new JButton("Switch light");
+//		this.buttonUpdate.addActionListener(ANTSSwitchLightListener.getInstance());
 		
 		this.getContentPane().add(this.navigation, BorderLayout.PAGE_START);
 		this.getContentPane().add(this.graphic, BorderLayout.CENTER);
-		this.navigation.add(this.buttonUpdate);
+//		this.navigation.add(this.buttonUpdate);
 		
 		this.graphic.setSize(600,600);
 		

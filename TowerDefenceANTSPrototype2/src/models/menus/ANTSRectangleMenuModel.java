@@ -66,11 +66,6 @@ public class ANTSRectangleMenuModel extends ANTSAbstractModel implements ANTSIMo
 		return this.minWidth;
 	}
 
-	public ANTSFactory getFactory() 
-	{
-		return this.factory;
-	}
-
 	public void addNewMenuItem(ANTSMenuItemRectangleController c) 
 	{
 		this.menuItems.add(c);

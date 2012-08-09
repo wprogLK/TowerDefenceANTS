@@ -54,11 +54,6 @@ public class ANTSCircleMenuModel extends ANTSAbstractModel implements ANTSIModel
 		return this.radius;
 	}
 
-	public ANTSFactory getFactory() 
-	{
-		return this.factory;
-	}
-	
 	public Iterator<ANTSMenuItemCircleController> getIteratorMenuItems()
 	{
 		return this.menuItems.iterator();
