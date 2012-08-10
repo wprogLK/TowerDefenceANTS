@@ -14,8 +14,8 @@ public class ANTSGridModel extends ANTSAbstractModel implements ANTSIModel
 	private int xCells;	
 	private int yCells;
 	
-	private int xOffset = 30;
-	private int yOffset = 60;
+	private int xOffset = 300;
+	private int yOffset = 120;
 	
 	private double height;
 	private double width;

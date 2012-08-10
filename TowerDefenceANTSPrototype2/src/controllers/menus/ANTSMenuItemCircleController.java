@@ -91,4 +91,9 @@ public class ANTSMenuItemCircleController extends ANTSAbstractController impleme
 	{
 		this.model.setMouseEntered(true);
 	}
+	@Override 
+	public void mouseLeftClickedANTS(MouseEvent e)
+	{
+		System.out.println("menu item: " + this.model.getIndex());
+	}
 }

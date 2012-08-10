@@ -99,7 +99,7 @@ public class ANTSMenuItemCircleView extends ANTSAbstractView implements ANTSIVie
 		double segmentDegree = 360/(maxNumberOfItems);
 		
 		
-		double start = segmentDegree*(this.model.getIndex()-1);
+		double start = -segmentDegree*(this.model.getIndex()-1);
 		
 		Arc2D.Double arc = new Arc2D.Double(-this.parentModel.getRadius()/2, -this.parentModel.getRadius()/2, this.parentModel.getRadius(),  this.parentModel.getRadius(), start, segmentDegree, Arc2D.PIE);
 		
@@ -117,14 +117,93 @@ public class ANTSMenuItemCircleView extends ANTSAbstractView implements ANTSIVie
 		g2d.setColor(this.fontColor);
 		g2d.setFont(this.font);
 		
-		AffineTransform before = g2d.getTransform();
 		
-		g2d.drawLine(0, 0, (int) t.getTranslateX(), (int) t.getTranslateY());
+		Double[] centerCircle = {aT.getTranslateX(),aT.getTranslateY()};
 		
-		g2d.setTransform(t);
-		g2d.drawString(this.model.getText(),(int)0,(int) 0);
+//		this.drawText(start, g2d, centerCircle);
+		this.paintRec(start, g2d, centerCircle);
+		
+		
+	}
+
+//	private void drawText(double angle, Graphics2D g2d, Double[] centerCircle) 
+//	{
+//		double xOffset = 0;
+//		double yOffset = 0;
+//		
+//		double width = 100;
+//		double height = 20;
+//		
+//		AffineTransform t = new AffineTransform();
+//		t.translate(centerCircle[0], centerCircle[1]);
+//		Rectangle2D.Double rec = new Rectangle2D.Double(-this.parentModel.getRadius()/2, -this.parentModel.getRadius()/2, width, height);
+//		Shape s = t.createTransformedShape(rec);
+//		
+//		g2d.setColor(Color.BLACK);
+////		g2d.draw(s);
+//		
+////		ANTSStream.printDebug(String.valueOf(180-angle) + "index: " +this.model.getIndex() );
+//		t.rotate(-Math.toRadians(angle));
+//		s = t.createTransformedShape(rec);
+//		
+//		Rectangle2D.Double rec2 = new Rectangle2D.Double(s.getBounds2D().getCenterX(),s.getBounds2D().getCenterY(),10,10);
+//			
+//		s = t.createTransformedShape(rec);
+//		
+//	
+//		g2d.draw(rec2);
+//		
+////
+//	
+//	
+////		g2d.draw(s);
+//	
+//		t.rotate(-Math.toRadians(10),s.getBounds2D().getCenterX(),s.getBounds2D().getCenterY());
+//
+//		s = t.createTransformedShape(rec);
+//		g2d.draw(s);
+//		
+//	}
+	
+	private void paintRec(double angle, Graphics2D g2d, Double[] centerCircle)
+	{
+		if(this.model.getMouseEntered())
+		{
+			g2d.setColor(Color.blue);
+		}
+		else
+		{
+			g2d.setColor(Color.red);
+		}
+		
+		double xCenter = centerCircle[0];
+		double yCenter = centerCircle[1];
+		
+		g2d.drawRect((int) xCenter, (int) yCenter, 1, 1);	//center
+		
+		AffineTransform aT = new AffineTransform();
+		aT.rotate(Math.toRadians(angle), xCenter, yCenter);
+		
+		Rectangle2D.Double  rec = new Rectangle2D.Double(250, 250, 150, 50);
+		
+		Shape s  = aT.createTransformedShape(rec);
+//		g2d.draw(s);
+		g2d.draw(rec);
+		
+		AffineTransform aT2 = new AffineTransform();
+		aT2.rotate(Math.toRadians(180-angle), s.getBounds2D().getCenterX(), s.getBounds2D().getCenterY());
+		
+		Shape s2 = aT2.createTransformedShape(s);
+		g2d.draw(s2);
+		
+		AffineTransform before =g2d.getTransform();
+		aT2.concatenate(aT);
+		aT2.rotate(Math.toRadians(180), s.getBounds2D().getCenterX(), s.getBounds2D().getCenterY());
+		g2d.setTransform(aT2);
+		
+		
+		g2d.drawString(this.model.getText(), 250,250);
 		g2d.setTransform(before);
-		
 	}
 	
 }
