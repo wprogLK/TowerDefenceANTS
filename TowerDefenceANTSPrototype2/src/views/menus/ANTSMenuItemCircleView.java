@@ -99,13 +99,18 @@ public class ANTSMenuItemCircleView extends ANTSAbstractView implements ANTSIVie
 		double segmentDegree = 360/(maxNumberOfItems);
 		
 		
-		double start = -segmentDegree*(this.model.getIndex()-1);
+		double start = segmentDegree*(this.model.getIndex()-1);
 		
-		Arc2D.Double arc = new Arc2D.Double(-this.parentModel.getRadius()/2, -this.parentModel.getRadius()/2, this.parentModel.getRadius(),  this.parentModel.getRadius(), start, segmentDegree, Arc2D.PIE);
+		Arc2D.Double arc = new Arc2D.Double(-this.parentModel.getRadius()/2, -this.parentModel.getRadius()/2, this.parentModel.getRadius(),  this.parentModel.getRadius(), -start-segmentDegree, -segmentDegree, Arc2D.PIE);
 		
-		
+//		System.out.println("r " + this.parentModel.getRadius());
 		this.shape = aT.createTransformedShape(arc);
-		g2d.fill(shape);
+		
+//		if(this.model.getIndex()==4)
+		{
+			g2d.fill(shape);
+		}
+	
 		
 		AffineTransform t = new AffineTransform();
 		double angleInRadian = Math.toRadians(start);
@@ -167,6 +172,8 @@ public class ANTSMenuItemCircleView extends ANTSAbstractView implements ANTSIVie
 	
 	private void paintRec(double angle, Graphics2D g2d, Double[] centerCircle)
 	{
+		
+//		System.out.println("x: " + (centerCircle[0]) + " y: "+ (centerCircle[1]));
 		if(this.model.getMouseEntered())
 		{
 			g2d.setColor(Color.blue);
@@ -176,8 +183,8 @@ public class ANTSMenuItemCircleView extends ANTSAbstractView implements ANTSIVie
 			g2d.setColor(Color.red);
 		}
 		
-		double xCenter = centerCircle[0];
-		double yCenter = centerCircle[1];
+		double xCenter = centerCircle[0]-(centerCircle[0]-403.923484541);
+		double yCenter = centerCircle[1]-(centerCircle[1]-180);
 		
 		g2d.drawRect((int) xCenter, (int) yCenter, 1, 1);	//center
 		
@@ -185,10 +192,9 @@ public class ANTSMenuItemCircleView extends ANTSAbstractView implements ANTSIVie
 		aT.rotate(Math.toRadians(angle), xCenter, yCenter);
 		
 		Rectangle2D.Double  rec = new Rectangle2D.Double(250, 250, 150, 50);
+//		System.out.println("new x: " + (xCenter) + " y: "+ (yCenter));
 		
 		Shape s  = aT.createTransformedShape(rec);
-//		g2d.draw(s);
-		g2d.draw(rec);
 		
 		AffineTransform aT2 = new AffineTransform();
 		aT2.rotate(Math.toRadians(180-angle), s.getBounds2D().getCenterX(), s.getBounds2D().getCenterY());
@@ -196,14 +202,15 @@ public class ANTSMenuItemCircleView extends ANTSAbstractView implements ANTSIVie
 		Shape s2 = aT2.createTransformedShape(s);
 		g2d.draw(s2);
 		
-		AffineTransform before =g2d.getTransform();
-		aT2.concatenate(aT);
-		aT2.rotate(Math.toRadians(180), s.getBounds2D().getCenterX(), s.getBounds2D().getCenterY());
-		g2d.setTransform(aT2);
+		g2d.drawString(this.model.getText(),(int) s2.getBounds2D().getMinX(),(int) s2.getBounds2D().getMinY());
 		
-		
-		g2d.drawString(this.model.getText(), 250,250);
-		g2d.setTransform(before);
+//		AffineTransform before =g2d.getTransform();
+//		aT2.concatenate(aT);
+//		aT2.rotate(Math.toRadians(180), s.getBounds2D().getCenterX(), s.getBounds2D().getCenterY());
+//		g2d.setTransform(aT2);
+//		
+//		g2d.drawString(this.model.getText(), 250,250);
+//		g2d.setTransform(before);
 	}
 	
 }

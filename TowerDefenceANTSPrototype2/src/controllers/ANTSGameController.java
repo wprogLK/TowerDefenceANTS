@@ -19,8 +19,8 @@ public class ANTSGameController extends ANTSAbstractController implements ANTSIC
 	private ANTSFactory factory;
 	
 	//Grid Config
-	private int xCells = 1;
-	private int yCells = 1;
+	private int xCells = 10;
+	private int yCells = 10;
 	
 	public ANTSGameController(ANTSFactory factory)
 	{
