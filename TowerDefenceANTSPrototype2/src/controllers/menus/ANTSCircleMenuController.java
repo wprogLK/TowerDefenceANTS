@@ -31,7 +31,7 @@ public class ANTSCircleMenuController extends ANTSAbstractController implements 
 		
 		this.addNewMenuItem("test item 1");
 		this.addNewMenuItem("test item 2");
-//		this.addNewMenuItem("test item 3");
+		this.addNewMenuItem("test item 3");
 //		this.addNewMenuItem("test item 4");
 //		this.addNewMenuItem("test item 5");
 
