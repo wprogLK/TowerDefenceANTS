@@ -27,7 +27,7 @@ public class ANTSMenuItemCircleView extends ANTSAbstractView implements ANTSIVie
 {
 	private ANTSCircleMenuModel parentModel;
 	private ANTSMenuItemCircleModel model;
-	private final double offsetAngle = 0;
+	private final double offsetAngle = 45;
 	
 	private static int fontSize = 12;
 	private static Font font = new Font("Courier New", Font.PLAIN, fontSize );
@@ -38,6 +38,7 @@ public class ANTSMenuItemCircleView extends ANTSAbstractView implements ANTSIVie
 	//for the correct position
 	private double dx = 403.9230484541;	
 	private double dy = 180;
+	
 	
 	public ANTSMenuItemCircleView(ANTSMenuItemCircleModel model, ANTSCircleMenuModel parentModel) 
 	{
@@ -104,7 +105,7 @@ public class ANTSMenuItemCircleView extends ANTSAbstractView implements ANTSIVie
 		double segmentDegree = 360/(maxNumberOfItems);
 		
 		
-		double start = segmentDegree*(this.model.getIndex()-1);
+		double start = segmentDegree*(this.model.getIndex()-1)+this.offsetAngle;
 		
 		Arc2D.Double arc = new Arc2D.Double(-this.parentModel.getRadius()/2, -this.parentModel.getRadius()/2, this.parentModel.getRadius(),  this.parentModel.getRadius(), -start-segmentDegree, -segmentDegree, Arc2D.PIE);
 		
