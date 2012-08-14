@@ -17,6 +17,7 @@ import controllers.ANTSGameController;
 import controllers.ANTSGridController;
 import controllers.ANTSSimpleMediumController;
 import controllers.ANTSSimpleRayLightController;
+import controllers.ANTSSimpleRayLightController2;
 import controllers.ANTSSimpleSourceLightController;
 import controllers.menus.ANTSCircleMenuController;
 import controllers.menus.ANTSRectangleMenuController;
@@ -51,14 +52,14 @@ public class ANTSFactory
 	{
 		
 		
-		this.collisionDetection  = new ANTSCollisionDetection(this.driver.getHeight(), this.driver.getWidth(),cellsX,cellsY);
+		this.collisionDetection  = new ANTSCollisionDetection(this.driver.getHeight(), this.driver.getWidth(),cellsX,cellsY, this);
 		return this.collisionDetection;
 	}
 	
 	public ANTSCollisionDetection createCollisionDetection()
 	{
 		ANTSStream.printDebug("h " + this.driver.getHeight() + " w " + this.driver.getWidth());
-		this.collisionDetection  = new ANTSCollisionDetection(this.driver.getHeight(), this.driver.getWidth());
+		this.collisionDetection  = new ANTSCollisionDetection(this.driver.getHeight(), this.driver.getWidth(), this);
 		return this.collisionDetection;
 	}
 	
@@ -72,6 +73,12 @@ public class ANTSFactory
 	{
 		ANTSSimpleRayLightController c = new ANTSSimpleRayLightController(sourceMatrix, velocity, angle, sourceColor, this);
 		this.addController(c);
+	}
+	
+	public void createSimpleRayLight2(Double[] center,double velocity, double angle, Color sourceColor) {
+		ANTSSimpleRayLightController2 c = new ANTSSimpleRayLightController2(center, velocity, angle, sourceColor, this);
+		this.addController(c);
+		
 	}
 	
 	public void createGame()
@@ -166,7 +173,7 @@ public class ANTSFactory
 			this.controllers.add(c);
 		}
 		
-		if(c.getModel().isCollisionDetected())
+		if(c.getModel().isCollisionDetected() )
 		{
 			this.collisionDetection.addController(c);
 		}
@@ -218,4 +225,20 @@ public class ANTSFactory
 			}
 		}
 	}
+	
+	public void removeController(ANTSIController c)
+	{
+		ANTSStream.printDebug("remove " + c);
+		
+		boolean value = this.controllers.remove(c);
+		
+		if(!value)
+		{
+			ANTSStream.printErr("Error: The gameObject " + c + "couldn't remove in the ANTSFactory Class!" );	//TODO (check this)
+		}
+		
+	}
+
+
+	
 }

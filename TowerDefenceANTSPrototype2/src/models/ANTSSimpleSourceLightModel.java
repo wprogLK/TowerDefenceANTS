@@ -162,5 +162,20 @@ public class ANTSSimpleSourceLightModel extends ANTSAbstractModel implements ANT
 			tmpAngle+=this.getAngleBetweetTwoRays();
 		}
 	}
+	
+//	private void createRays()
+//	{
+//		double tmpAngle = this.angleOffset;
+//		
+//		for(int numberRay = 0; numberRay<this.getNumberOfRays(); numberRay++)
+//		{
+//			//this.factory.createSimpleRayLight(this.matrix, 10, tmpAngle, this.color);
+//			
+//			Double[] center = {this.matrix.getTranslateX()-this.radius/2, this.matrix.getTranslateY()-this.radius/2};
+//			
+//			this.factory.createSimpleRayLight2(center,10,tmpAngle,this.color);
+//			tmpAngle+=this.getAngleBetweetTwoRays();
+//		}
+//	}
 
 }

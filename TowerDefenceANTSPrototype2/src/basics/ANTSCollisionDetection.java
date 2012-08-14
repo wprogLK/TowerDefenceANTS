@@ -20,12 +20,14 @@ public class ANTSCollisionDetection
 	private int cellsY;
 	
 	private LinkedList<ANTSIController>[][] hashTable;
+	private ANTSFactory factory;
 	
-	
-	public ANTSCollisionDetection(int height, int width, int cellsX, int cellsY)
+	public ANTSCollisionDetection(int height, int width, int cellsX, int cellsY, ANTSFactory antsFactory)
 	{
 		this.height = height;
 		this.width = width;
+		
+		this.factory = antsFactory;
 		
 		this.cellsX = cellsX;
 		this.cellsY = cellsY;
@@ -41,10 +43,12 @@ public class ANTSCollisionDetection
 		}
 	}
 	
-	public ANTSCollisionDetection(int height, int width)
+	public ANTSCollisionDetection(int height, int width, ANTSFactory antsFactory)
 	{
 		this.height = height;
 		this.width = width;
+		
+		this.factory = antsFactory;
 		
 		this.cellsX = defaultCellsX;
 		this.cellsY = defaultCellsY;
@@ -63,7 +67,7 @@ public class ANTSCollisionDetection
 	
 	public int calculateHash(double pos, int sizeHashTable, int max)
 	{
-		int hashValue = (int) Math.floor((pos * (sizeHashTable - 1)) / max);
+		int hashValue= (int) Math.floor((pos * (sizeHashTable - 1)) / max);
 		
 		if(hashValue<0)
 		{	
@@ -107,26 +111,54 @@ public class ANTSCollisionDetection
 					int xHash = this.calculateHash(controller.getPosX(), this.cellsX, this.width);
 					int yHash = this.calculateHash(controller.getPosY(), this.cellsY, this.height);
 					
-					this.checkOutOfRange(xHash,controller,iterator);
-					this.checkOutOfRange(yHash,controller,iterator);
+//					boolean isOutOfRangeX = this.isOutOfRange(xHash, this.cellsX);
+//					boolean isOutOfRangeY = this.isOutOfRange(yHash, this.cellsY);
 					
-//					ANTSStream.printDebug(controller + " hashValue " + xHash + " | " + yHash);
-					if(xHash != cellX || yHash!= cellY)
+					boolean isOutOfRange = this.isOutOfRangeN(controller);
+					
+					if(isOutOfRange)//isOutOfRangeX || isOutOfRangeY)
 					{
-//						ANTSStream.printDebug("change " + controller + " hashValue " + xHash + " | " + yHash);
-						
+						System.out.println("out of range" + width + " h  " + height);
 						iterator.remove();
-						this.hashTable[xHash][yHash].add(controller);
+						this.factory.removeController(controller);
+					}
+					else
+					{
+						if(xHash != cellX || yHash!= cellY)
+						{
+//							ANTSStream.printDebug("change " + controller + " hashValue " + xHash + " | " + yHash);
+							
+							iterator.remove();
+							this.hashTable[xHash][yHash].add(controller);
+						}
 					}
 				}
 			}
 		}
 	}
 	
-	private void checkOutOfRange(int yHash, ANTSIController controller,
-			ListIterator<ANTSIController> iterator) {
-		// TODO Auto-generated method stub
+	private boolean isOutOfRangeN(ANTSIController controller) {
+		if(controller.getPosX()<0 || controller.getPosX()>=this.width || controller.getPosY()<0 || controller.getPosY()>=this.height)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 		
+	}
+
+	private boolean isOutOfRange(int hashValue, int max) 
+	{
+		if(hashValue<0 || hashValue>=max)
+		{	
+			return true;			//TODO object left/is leaving the window
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	private void lookingForCollision() 
@@ -140,8 +172,17 @@ public class ANTSCollisionDetection
 		int xHash = this.calculateHash(c.getPosX(), this.cellsX, this.width);
 		int yHash = this.calculateHash(c.getPosY(), this.cellsY, this.height);
 		
-		this.hashTable[xHash][yHash].add(c);
-//		ANTSStream.print("Controller " + c + " added to hashMap at " + xHash + " | " + yHash);
+		boolean isOutOfRangeX = this.isOutOfRange(xHash, this.cellsX);
+		boolean isOutOfRangeY = this.isOutOfRange(yHash, this.cellsY);
+		
+		if(!(isOutOfRangeX || isOutOfRangeY))
+		{
+			this.hashTable[xHash][yHash].add(c);
+		}
+		
+		
+		
+	
 	}
 	
 	private void resteAllUpdatedModels()
@@ -160,6 +201,8 @@ public class ANTSCollisionDetection
 			}
 		}
 	}
+	
+	
 
 	
 	

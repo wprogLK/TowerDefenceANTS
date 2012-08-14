@@ -8,13 +8,14 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 
 import models.ANTSSimpleRayLightModel;
+import models.ANTSSimpleRayLightModel2;
 
-public class ANTSSimpleRayLightView extends ANTSAbstractView implements ANTSIView
+public class ANTSSimpleRayLightView2 extends ANTSAbstractView implements ANTSIView
 {
-	private ANTSSimpleRayLightModel model;
+	private ANTSSimpleRayLightModel2 model;
 	private	Line2D.Double ray;
 	
-	public ANTSSimpleRayLightView(ANTSSimpleRayLightModel m)
+	public ANTSSimpleRayLightView2(ANTSSimpleRayLightModel2 m)
 	{
 		super();
 		this.model = m;

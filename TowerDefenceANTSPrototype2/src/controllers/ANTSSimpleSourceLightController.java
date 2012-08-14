@@ -64,5 +64,6 @@ public class ANTSSimpleSourceLightController extends ANTSAbstractController impl
 	public void mouseDraggedANTS(MouseEvent e) 
 	{
 		this.model.setPosition(e.getX()/2, e.getY()/2);	// /2 because of the the center of the source is in the center of the ellipse
+//		this.model.setPosition((int) (e.getX()-this.model.getRadius()/4), (int) (e.getY()-this.model.getRadius()/4));
 	}
 }

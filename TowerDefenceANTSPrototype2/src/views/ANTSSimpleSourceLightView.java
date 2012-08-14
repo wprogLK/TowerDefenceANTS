@@ -54,6 +54,8 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 		double radius = this.model.getRadius();
 		
 		this.circle = new Ellipse2D.Double(aT.getTranslateX()-(radius/2), aT.getTranslateY()-(radius/2), radius, radius);
+		this.shape = aT.createTransformedShape(circle);
+		
 		this.shape = circle;
 	}
 	

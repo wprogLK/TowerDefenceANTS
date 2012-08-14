@@ -61,6 +61,7 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 	 */
 	public void update(float interpolation)
 	{
+		
 		this.matrixForInterpolation.setTransform(this.sourceMatrix);
 		
 		AffineTransform tmpVelocityMatrix = new AffineTransform(this.velocityMatrix);
