@@ -29,6 +29,7 @@ public class ANTSAbstractModel implements ANTSIModel, ANTSIEventListener
 	public ANTSAbstractModel() 
 	{
 		this.isMouseListener = false;
+		this.isDragged = false;
 		this.layer = Layer.none;
 		this.menus = new ArrayList<ANTSIMenuController>();
 		
@@ -38,6 +39,7 @@ public class ANTSAbstractModel implements ANTSIModel, ANTSIEventListener
 	public ANTSAbstractModel(ANTSFactory factory)
 	{
 		this.isMouseListener = false;
+		this.isDragged = false;
 		this.layer = Layer.none;
 		this.factory = factory;
 		this.menus = new ArrayList<ANTSIMenuController>();
@@ -78,6 +80,12 @@ public class ANTSAbstractModel implements ANTSIModel, ANTSIEventListener
 	public ANTSFactory getFactory() 
 	{
 		return this.factory;
+	}
+	
+	@Override
+	public boolean isDragged()
+	{
+		return this.isDragged;
 	}
 
 

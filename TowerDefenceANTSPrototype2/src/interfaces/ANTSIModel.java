@@ -20,6 +20,7 @@ public interface ANTSIModel
 	public Iterator<ANTSIMenuController> getMenuIterator();
 	public boolean getMouseEntered();
 	public ANTSFactory getFactory();
+	public boolean isDragged();
 	
 	///////////
 	//Setters//
@@ -34,4 +35,5 @@ public interface ANTSIModel
 	///////////
 	
 	public void update();
+	
 }

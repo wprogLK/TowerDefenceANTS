@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import controllers.ANTSCellController;
 import controllers.ANTSGameController;
 import controllers.ANTSGridController;
+import controllers.ANTSSimpleMediumController;
 import controllers.ANTSSimpleRayLightController;
 import controllers.ANTSSimpleSourceLightController;
 import controllers.menus.ANTSCircleMenuController;
@@ -84,6 +85,18 @@ public class ANTSFactory
 		return c;
 	}
 	
+	public ANTSSimpleMediumController createSimpleMedium(double posX, double posY, double height, double width, boolean isMouseListener)
+	{
+		ANTSSimpleMediumController c = new ANTSSimpleMediumController(posX, posY, height, width, isMouseListener, this);
+		this.addController(c);
+		
+		return c;
+	}
+	
+	////////////////
+	//Create menus//
+	////////////////
+	
 	public ANTSCircleMenuController createCircleMenu(double posX, double posY, double radius)
 	{
 		ANTSCircleMenuController c = new ANTSCircleMenuController(posX, posY, radius, this);
@@ -99,6 +112,8 @@ public class ANTSFactory
 		
 		return c;
 	}
+	
+
 	
 	
 	///////////////
