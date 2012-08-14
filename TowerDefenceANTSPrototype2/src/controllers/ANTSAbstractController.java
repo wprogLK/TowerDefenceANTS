@@ -66,6 +66,20 @@ public abstract class ANTSAbstractController extends ANTSEventListenerHandler im
 		this.model = m;
 	}
 	
+
+	@Override
+	public double getPosX() 
+	{
+		return this.model.getMatrix().getTranslateX();
+	}
+
+	@Override
+	public double getPosY() 
+	{
+		return this.model.getMatrix().getTranslateY();
+	}
+
+	
 	///////////
 	//SETTERS//
 	///////////
@@ -75,6 +89,18 @@ public abstract class ANTSAbstractController extends ANTSEventListenerHandler im
 	{
 		 this.model.setLayer(layer);
 	}
+	
+	///////////
+	//Special//
+	///////////
+	
+	@Override
+	public void update() 
+	{
+		this.model.update();
+		this.model.setIsAlreadyUpdated(true);
+	}
+	
 	
 	//////////////////
 	//MOUSE LISTENER//
@@ -289,5 +315,5 @@ public abstract class ANTSAbstractController extends ANTSEventListenerHandler im
 	{
 
 	}
-	
+
 }

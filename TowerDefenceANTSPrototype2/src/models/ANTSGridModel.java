@@ -84,14 +84,14 @@ public class ANTSGridModel extends ANTSAbstractModel implements ANTSIModel
 		return this.yOffset;
 	}
 	
-	public double getPosX()
+	public int getPosX()
 	{
 		return this.xOffset;
 	}
 	
-	public double getPosY()
+	public int getPosY()
 	{
-		return this.yOffset-this.cellHeight/2;
+		return (int) (this.yOffset-this.cellHeight/2);
 	}
 	
 	public double getHeight()

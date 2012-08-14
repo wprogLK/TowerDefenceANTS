@@ -23,8 +23,13 @@ public class ANTSWindow extends JFrame implements ComponentListener
 	
 	public ANTSWindow() 
 	{
+		this.init(600,600);
+	}
+	
+	private void init(int width, int height)
+	{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(600,600);
+		this.setSize(width,height);
 		this.navigation = new JPanel();
 		this.graphic = new JPanel();
 		
@@ -41,7 +46,7 @@ public class ANTSWindow extends JFrame implements ComponentListener
 		this.getContentPane().add(this.graphic, BorderLayout.CENTER);
 //		this.navigation.add(this.buttonUpdate);
 		
-		this.graphic.setSize(600,600);
+		this.graphic.setSize(width,height);
 		
 		this.addComponentListener(this);
 		
@@ -55,6 +60,10 @@ public class ANTSWindow extends JFrame implements ComponentListener
 							  );
 	}
 	
+	public ANTSWindow(int width, int height) {
+		this.init(width, height);
+	}
+
 	//Do it only once!
 	public void addCanvas(Canvas c)
 	{

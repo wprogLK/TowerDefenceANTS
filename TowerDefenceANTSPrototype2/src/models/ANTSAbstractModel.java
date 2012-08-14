@@ -1,5 +1,6 @@
 package models;
 
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -24,10 +25,16 @@ public class ANTSAbstractModel implements ANTSIModel, ANTSIEventListener
 	protected ANTSFactory factory;
 	
 	protected boolean isDragged;
+	protected boolean isCollisionDetected;
+	protected boolean isAlreadyUpdated;
+	
+	
 	protected boolean mouseEntered;
+	protected AffineTransform matrix;
 	
 	public ANTSAbstractModel() 
 	{
+		this.matrix = new AffineTransform();
 		this.isMouseListener = false;
 		this.isDragged = false;
 		this.layer = Layer.none;
@@ -38,6 +45,8 @@ public class ANTSAbstractModel implements ANTSIModel, ANTSIEventListener
 	
 	public ANTSAbstractModel(ANTSFactory factory)
 	{
+		this.isAlreadyUpdated = false;
+		this.matrix = new AffineTransform();
 		this.isMouseListener = false;
 		this.isDragged = false;
 		this.layer = Layer.none;
@@ -87,6 +96,17 @@ public class ANTSAbstractModel implements ANTSIModel, ANTSIEventListener
 	{
 		return this.isDragged;
 	}
+	
+	@Override
+	public boolean isCollisionDetected()
+	{
+		return this.isCollisionDetected;
+	}
+
+	@Override
+	public boolean isAlreadyUpdated() {
+		return this.isAlreadyUpdated;
+	}
 
 
 	///////////
@@ -111,6 +131,15 @@ public class ANTSAbstractModel implements ANTSIModel, ANTSIEventListener
 		this.mouseEntered = value;
 	}
 
+	@Override
+	public void setIsAlreadyUpdated(boolean u) 
+	{
+		this.isAlreadyUpdated = u;
+		
+	}
+
+
+
 	///////////
 	//Special//
 	///////////
@@ -119,6 +148,12 @@ public class ANTSAbstractModel implements ANTSIModel, ANTSIEventListener
 	public void update() 
 	{
 		
+	}
+	
+	@Override
+	public AffineTransform getMatrix() 
+	{
+		return this.matrix;
 	}
 	
 	//Mouse Detection

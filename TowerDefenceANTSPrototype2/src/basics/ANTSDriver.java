@@ -41,9 +41,29 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	private BufferStrategy buffer;
 	private GraphicsConfiguration graphicsConfig;
 	
+	private int width;
+	private int height;
+	
 	public ANTSDriver()
 	{	
 		this.window = new ANTSWindow();
+		this.window.setVisible(true);
+		
+		this.canvas = new Canvas();
+		
+		this.factory = new ANTSFactory(this);
+		
+		this.createGame();
+		
+		this.initActiveRendering();
+	}
+	
+	public ANTSDriver(int width, int height)
+	{	
+		this.width = width;
+		this.height = height;
+		
+		this.window = new ANTSWindow(width,height);
 		this.window.setVisible(true);
 		
 		this.canvas = new Canvas();
@@ -155,6 +175,16 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		{
 			this.g2d.dispose();
 		}
+	}
+	
+	public int getWidth()
+	{
+		return this.window.getWidth();
+	}
+	
+	public int getHeight()
+	{
+		return this.window.getHeight();
 	}
 	
 	//////////////////

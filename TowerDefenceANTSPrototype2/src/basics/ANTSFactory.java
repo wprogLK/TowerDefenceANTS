@@ -10,6 +10,8 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
+import basics.ANTSDevelopment.ANTSStream;
+
 import controllers.ANTSCellController;
 import controllers.ANTSGameController;
 import controllers.ANTSGridController;
@@ -28,6 +30,7 @@ public class ANTSFactory
 	
 	private ANTSGameController gameController;
 	private ANTSGridController gridController;
+	private ANTSCollisionDetection collisionDetection;
 	
 	public ANTSFactory(ANTSDriver d) 
 	{
@@ -36,12 +39,28 @@ public class ANTSFactory
 		
 		this.controllers = new ArrayList<ANTSIController>();
 		this.menuControllers = new ArrayList<ANTSIMenuController>();
+		this.createCollisionDetection();
 	}
 	
 
 	//////////////////
 	//Create methods//
 	//////////////////
+	
+	public ANTSCollisionDetection createCollisionDetection(int cellsX, int cellsY)
+	{
+		
+		
+		this.collisionDetection  = new ANTSCollisionDetection(this.driver.getHeight(), this.driver.getWidth(),cellsX,cellsY);
+		return this.collisionDetection;
+	}
+	
+	public ANTSCollisionDetection createCollisionDetection()
+	{
+		ANTSStream.printDebug("h " + this.driver.getHeight() + " w " + this.driver.getWidth());
+		this.collisionDetection  = new ANTSCollisionDetection(this.driver.getHeight(), this.driver.getWidth());
+		return this.collisionDetection;
+	}
 	
 	public void createSimpleSourceLight(double posX, double posY, double radius, Color color, boolean isMouseListener)
 	{
@@ -132,9 +151,24 @@ public class ANTSFactory
 
 	private void addController(ANTSIController c)
 	{
+//		if(!this.controllers.contains(c) && !c.getModel().isCollisionDetected())
+//		{
+//			this.controllers.add(c);
+//		}
+//		else if(c.getModel().isCollisionDetected())
+//		{
+//			System.out.println("add to cd" + c);
+//			this.collisionDetection.addController(c);
+//		}
+		
 		if(!this.controllers.contains(c))
 		{
 			this.controllers.add(c);
+		}
+		
+		if(c.getModel().isCollisionDetected())
+		{
+			this.collisionDetection.addController(c);
 		}
 		
 		this.addToMouseListener(c);
@@ -155,12 +189,18 @@ public class ANTSFactory
 	
 	public void updateAllModels()
 	{
-		this.gridController.getModel().update();
+		this.collisionDetection.update();
+		
+		this.gridController.getModel().update();			//TODO: IMPORTANT: disabled models update in gridController if isCollisionDetected == true!!!! Otherwise some gameObjects are updates twice in one gameLoop
 		
 		for(int i = 0; i<this.controllers.size();i++)
 		{
-			ANTSIModel model = this.controllers.get(i).getModel();
-			model.update();
+			ANTSIModel model = this.controllers.get(i).getModel();	
+			
+			if(!model.isCollisionDetected())
+			{
+				model.update();
+			}
 		} 
 	}
 	

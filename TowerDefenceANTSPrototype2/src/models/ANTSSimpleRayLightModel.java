@@ -24,6 +24,8 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 	{
 		super(factory);
 		
+		this.isCollisionDetected = true;
+		
 		this.matrix = new AffineTransform();
 		this.velocityMatrix = new AffineTransform();
 		this.rotateMatrix = new AffineTransform();
@@ -36,7 +38,7 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 		
 		this.rotateMatrix.rotate(Math.toRadians(angle), this.matrix.getTranslateX(), this.matrix.getTranslateY());
 		
-		this.length = 100;
+		this.length = 10;
 		this.color = sourceColor;
 		this.velocity = velocity;
 	}

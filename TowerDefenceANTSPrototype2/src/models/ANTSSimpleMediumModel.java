@@ -19,6 +19,8 @@ public class ANTSSimpleMediumModel extends ANTSAbstractModel implements ANTSIMod
 	{
 		super(factory);
 		
+		this.isCollisionDetected = true;
+		
 		this.matrix = new AffineTransform();
 		
 		this.matrix.setToTranslation(posX, posY);

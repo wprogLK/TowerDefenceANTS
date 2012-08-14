@@ -2,6 +2,7 @@ package interfaces;
 
 import interfaces.menus.ANTSIMenuController;
 
+import java.awt.geom.AffineTransform;
 import java.util.Iterator;
 
 import basics.ANTSFactory;
@@ -20,7 +21,13 @@ public interface ANTSIModel
 	public Iterator<ANTSIMenuController> getMenuIterator();
 	public boolean getMouseEntered();
 	public ANTSFactory getFactory();
+	
+	boolean isCollisionDetected();
 	public boolean isDragged();
+	public boolean isAlreadyUpdated();
+	
+	public AffineTransform getMatrix();
+	
 	
 	///////////
 	//Setters//
@@ -29,11 +36,13 @@ public interface ANTSIModel
 	public void setLayer(Layer layer);
 	public void setDragged(boolean isDragged);
 	public void setMouseEntered(boolean value);
+	public void setIsAlreadyUpdated(boolean u);
 	
 	///////////
 	//Special//
 	///////////
 	
 	public void update();
+
 	
 }

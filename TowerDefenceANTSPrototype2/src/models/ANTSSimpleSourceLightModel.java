@@ -33,7 +33,7 @@ public class ANTSSimpleSourceLightModel extends ANTSAbstractModel implements ANT
 		
 		this.radius = radius;
 		
-		this.on = true;
+		this.on = false;		//TODO
 		this.color = color;
 		
 		this.tickCounter = 0;

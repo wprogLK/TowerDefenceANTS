@@ -59,7 +59,7 @@ public class ANTSGameController extends ANTSAbstractController implements ANTSIC
 	
 	public void createSimpleSourceLight()
 	{
-		this.factory.createSimpleSourceLight(200,200,60,Color.yellow,true);
+		this.factory.createSimpleSourceLight(200,200,60,Color.black,true);
 
 //		ANTSSwitchLightListener.addLight((ANTSSimpleSourceLightModel) c.getModel());	//only for testing
 	}
