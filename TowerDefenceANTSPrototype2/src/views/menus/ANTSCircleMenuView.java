@@ -77,8 +77,6 @@ public class ANTSCircleMenuView extends ANTSAbstractView implements ANTSIView, A
 			this.shape = aT.createTransformedShape(circle);
 			g2d.setColor(Color.cyan);
 			
-			g2d.draw(shape);
-			
 			this.paintMenuItems(g2d, interpolation);
 		}
 	}
