@@ -75,7 +75,9 @@ public class ANTSCircleMenuView extends ANTSAbstractView implements ANTSIView, A
 			g2d.setColor(Color.blue);
 			Ellipse2D circle = new Ellipse2D.Double(-this.model.getRadius()/2, -this.model.getRadius()/2, this.model.getRadius(), this.model.getRadius());
 			this.shape = aT.createTransformedShape(circle);
-			g2d.setColor(Color.black);
+			g2d.setColor(Color.cyan);
+			
+			g2d.draw(shape);
 			
 			this.paintMenuItems(g2d, interpolation);
 		}
