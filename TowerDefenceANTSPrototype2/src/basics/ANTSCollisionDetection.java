@@ -5,21 +5,25 @@ import interfaces.ANTSIController;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
-import basics.ANTSDevelopment.ANTSDebug;
+import controllers.ANTSSimpleMediumController;
+import controllers.ANTSSimpleRayLightController;
+
 import basics.ANTSDevelopment.ANTSStream;
+
 
 public class ANTSCollisionDetection 
 {
 	private int height;
 	private int width;
 	
-	private final int defaultCellsX = 100;
-	private final int defaultCellsY = 100;
+	private final int defaultCellsX = 25;		//TODO: IMPORTANT: If you have big objects the number of cells should be small! Otherwise the detection is not really working
+	private final int defaultCellsY = 25;
 	
 	private int cellsX;
 	private int cellsY;
 	
-	private LinkedList<ANTSIController>[][] hashTable;
+	private ANTSHashMapCell[][] hashMap;
+	
 	private ANTSFactory factory;
 	
 	public ANTSCollisionDetection(int height, int width, int cellsX, int cellsY, ANTSFactory antsFactory)
@@ -32,13 +36,13 @@ public class ANTSCollisionDetection
 		this.cellsX = cellsX;
 		this.cellsY = cellsY;
 		
-		this.hashTable = new LinkedList[cellsX][cellsY];
+		this.hashMap = new ANTSHashMapCell[cellsX][cellsY];
 		
-		for(int x=0; x<this.hashTable.length; x++)
+		for(int x=0; x<this.hashMap.length; x++)
 		{
-			for(int y = 0; y < this.hashTable[x].length; y++)
+			for(int y = 0; y < this.hashMap[x].length; y++)
 			{
-				this.hashTable[x][y] = new LinkedList<ANTSIController>();
+				this.hashMap[x][y] = new ANTSHashMapCell();
 			}
 		}
 	}
@@ -53,13 +57,13 @@ public class ANTSCollisionDetection
 		this.cellsX = defaultCellsX;
 		this.cellsY = defaultCellsY;
 		
-		this.hashTable = new LinkedList[cellsX][cellsY];
+		this.hashMap = new ANTSHashMapCell[cellsX][cellsY];
 		
-		for(int x=0; x<this.hashTable.length; x++)
+		for(int x=0; x<this.hashMap.length; x++)
 		{
-			for(int y = 0; y < this.hashTable[x].length; y++)
+			for(int y = 0; y < this.hashMap[x].length; y++)
 			{
-				this.hashTable[x][y] = new LinkedList<ANTSIController>();
+				this.hashMap[x][y] = new ANTSHashMapCell();
 			}
 		}
 	}
@@ -67,26 +71,11 @@ public class ANTSCollisionDetection
 	
 	public int calculateHash(double pos, int sizeHashTable, int max)
 	{
-		int hashValue= (int) Math.floor((pos * (sizeHashTable - 1)) / max);
-		
-		if(hashValue<0)
-		{	
-			return 0;			//TODO object left/is leaving the window
-		}
-		
-		if(hashValue>=sizeHashTable)
-		{
-			return sizeHashTable-1;			//TODO object left/is leaving the window
-		}
-		else
-		{
-			return hashValue;
-		}
+		return (int) Math.floor((pos * (sizeHashTable - 1)) / max);
 	}
 	
 	public void update()
 	{
-//		ANTSStream.printDebug("start update in CD");
 		this.updateHashMap();
 		this.lookingForCollision();
 		this.resteAllUpdatedModels();
@@ -98,7 +87,8 @@ public class ANTSCollisionDetection
 		{
 			for(int cellY = 0; cellY < this.cellsY; cellY++)
 			{
-				ListIterator<ANTSIController> iterator = this.hashTable[cellX][cellY].listIterator();
+				ListIterator<ANTSIController> iterator = this.hashMap[cellX][cellY].getIteratorAll();
+				
 				while(iterator.hasNext())
 				{
 					ANTSIController controller = iterator.next();
@@ -111,14 +101,13 @@ public class ANTSCollisionDetection
 					int xHash = this.calculateHash(controller.getPosX(), this.cellsX, this.width);
 					int yHash = this.calculateHash(controller.getPosY(), this.cellsY, this.height);
 					
-//					boolean isOutOfRangeX = this.isOutOfRange(xHash, this.cellsX);
-//					boolean isOutOfRangeY = this.isOutOfRange(yHash, this.cellsY);
+					boolean isOutOfRangeX = this.isOutOfRange(xHash, this.cellsX);
+					boolean isOutOfRangeY = this.isOutOfRange(yHash, this.cellsY);
 					
-					boolean isOutOfRange = this.isOutOfRangeN(controller);
-					
-					if(isOutOfRange)//isOutOfRangeX || isOutOfRangeY)
+					if(isOutOfRangeX || isOutOfRangeY)
 					{
-//						ANTSStream.printDebug("out of range" + width + " h  " + height);
+						this.hashMap[cellX][cellY].remove(controller);
+						
 						iterator.remove();
 						this.factory.removeController(controller);
 					}
@@ -126,10 +115,10 @@ public class ANTSCollisionDetection
 					{
 						if(xHash != cellX || yHash!= cellY)
 						{
-//							ANTSStream.printDebug("change " + controller + " hashValue " + xHash + " | " + yHash);
+							this.hashMap[cellX][cellY].remove(controller);
 							
 							iterator.remove();
-							this.hashTable[xHash][yHash].add(controller);
+							this.hashMap[xHash][yHash].add(controller);
 						}
 					}
 				}
@@ -137,23 +126,11 @@ public class ANTSCollisionDetection
 		}
 	}
 	
-	private boolean isOutOfRangeN(ANTSIController controller) {
-		if(controller.getPosX()<0 || controller.getPosX()>=this.width || controller.getPosY()<0 || controller.getPosY()>=this.height)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-		
-	}
-
 	private boolean isOutOfRange(int hashValue, int max) 
 	{
 		if(hashValue<0 || hashValue>=max)
 		{	
-			return true;			//TODO object left/is leaving the window
+			return true;
 		}
 		else
 		{
@@ -163,8 +140,69 @@ public class ANTSCollisionDetection
 
 	private void lookingForCollision() 
 	{
-		// TODO Auto-generated method stub
 //		ANTSStream.printDebug("TODO: looking for collision");
+		
+		for(int cellX = 0; cellX<this.cellsX; cellX++)
+		{
+			for(int cellY = 0; cellY<this.cellsY; cellY++)
+			{
+				LinkedList<ANTSIController> colliderRays = new LinkedList<ANTSIController>();
+				
+				// Add balls in current cell
+				colliderRays.addAll(this.hashMap[cellX][cellY].getRays());
+
+				// Lower Cell
+				if (cellY > 0) {
+					colliderRays.addAll(this.hashMap[cellX][cellY - 1].getRays());
+
+					// Lower right cell
+					if (cellX < this.cellsX - 1) {
+						colliderRays.addAll(this.hashMap[cellX + 1][cellY - 1].getRays());
+					}
+
+					// Lower left cell
+					if (cellX > 0) {
+						colliderRays.addAll(this.hashMap[cellX - 1][cellY - 1].getRays());
+					}
+				}
+
+				// Upper Cell
+				if (cellY < this.cellsY - 1) {
+					colliderRays.addAll(this.hashMap[cellX][cellY + 1].getRays());
+
+					// Upper right cell
+					if (cellX < this.cellsX - 1) {
+						colliderRays.addAll(this.hashMap[cellX + 1][cellY + 1].getRays());
+					}
+
+					// Upper left cell
+					if (cellX > 0) {
+						colliderRays.addAll(this.hashMap[cellX - 1][cellY + 1].getRays());
+					}
+				}
+
+				// Left Cell
+				if (cellX > 0) {
+					colliderRays.addAll(this.hashMap[cellX - 1][cellY].getRays());
+				}
+				// Right Cell
+				if (cellX < this.cellsX - 1) {
+					colliderRays.addAll(this.hashMap[cellX + 1][cellY].getRays());
+				}
+				
+				for(ANTSIController colliderObject : this.hashMap[cellX][cellY].getObjects())
+				{
+					for(ANTSIController colliderRay : colliderRays)
+					{
+						if(colliderRay.doesCollideWith(colliderObject))
+						{
+							ANTSStream.printDebug("collision");
+						}
+					}
+				}
+				
+			}
+		}
 	}
 
 	public void addController(ANTSIController c) 
@@ -177,13 +215,12 @@ public class ANTSCollisionDetection
 		
 		if(!(isOutOfRangeX || isOutOfRangeY))
 		{
-			this.hashTable[xHash][yHash].add(c);
+			this.hashMap[xHash][yHash].add(c);
 		}
-		
-		
-		
-	
 	}
+	
+	
+
 	
 	private void resteAllUpdatedModels()
 	{
@@ -191,7 +228,7 @@ public class ANTSCollisionDetection
 		{
 			for(int cellY = 0; cellY < this.cellsY; cellY++)
 			{
-				ListIterator<ANTSIController> iterator = this.hashTable[cellX][cellY].listIterator();
+				ListIterator<ANTSIController> iterator = this.hashMap[cellX][cellY].getIteratorAll();
 				while(iterator.hasNext())
 				{
 					ANTSIController controller = iterator.next();
@@ -203,7 +240,80 @@ public class ANTSCollisionDetection
 	}
 	
 	
+	private class ANTSHashMapCell
+	{
+		private LinkedList<ANTSIController> rays;
+		private LinkedList<ANTSIController> objects;	//not rays!
+		
+		public ANTSHashMapCell()
+		{
+			this.rays = new LinkedList<ANTSIController>();
+			this.objects = new LinkedList<ANTSIController>();
+		}
+		
+		public LinkedList<ANTSIController> getRays() 
+		{
+			return this.rays;
+		}
+		
+		public LinkedList<ANTSIController> getObjects() 
+		{
+			return this.objects;
+		}
 
+		public void add(ANTSIController c)
+		{
+			if(c.getClass().equals(ANTSSimpleRayLightController.class))
+			{
+				this.rays.add(c);
+			}
+			else if(c.getClass().equals(ANTSSimpleMediumController.class))
+			{
+				this.objects.add(c);
+			}
+		}
+		
+		public boolean remove(ANTSIController c)
+		{
+			if(c.getClass().equals(ANTSSimpleRayLightController.class))
+			{
+				return this.rays.remove(c);
+			}
+			else if(c.getClass().equals(ANTSSimpleMediumController.class))
+			{
+				return this.objects.remove(c);
+			}
+			else
+			{
+				return false;
+			}
+		}
+		
+		public ListIterator<ANTSIController> getIteratorRays()
+		{
+			return this.rays.listIterator();
+		}
+		
+		public ListIterator<ANTSIController> getIteratorObjects()
+		{
+			return this.objects.listIterator();
+		}
+		
+		public ListIterator<ANTSIController> getIteratorAll()
+		{
+			LinkedList<ANTSIController> total = new LinkedList<ANTSIController>();
+			total.addAll(this.objects);
+			total.addAll(this.rays);
+			
+			return total.listIterator();
+		}
+		
+//		public void remove(ANTSIController c)
+//		{
+//			this.objects.remove(c);
+//			this.rays.remove(c);
+//		}
+	}
 	
 	
 	

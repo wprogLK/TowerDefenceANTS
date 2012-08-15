@@ -17,8 +17,6 @@ import controllers.ANTSGameController;
 import controllers.ANTSGridController;
 import controllers.ANTSSimpleMediumController;
 import controllers.ANTSSimpleRayLightController;
-import controllers.ANTSSimpleRayLightController2;
-import controllers.ANTSSimpleSourceLight2Controller;
 import controllers.ANTSSimpleSourceLightController;
 import controllers.menus.ANTSCircleMenuController;
 import controllers.menus.ANTSRectangleMenuController;
@@ -64,27 +62,15 @@ public class ANTSFactory
 		return this.collisionDetection;
 	}
 	
+	
 	public void createSimpleSourceLight(double posX, double posY, double radius, Color color, boolean isMouseListener)
 	{
 		ANTSSimpleSourceLightController c = new ANTSSimpleSourceLightController(posX, posY, radius, color, isMouseListener, this);
 		this.addController(c);
 	}
 	
-	
-	public void createSimpleSourceLight2(double posX, double posY, double radius, Color color, boolean isMouseListener)
-	{
-		ANTSSimpleSourceLight2Controller c = new ANTSSimpleSourceLight2Controller(posX, posY, radius, color, isMouseListener, this);
-		this.addController(c);
-	}
-	
-	public void createSimpleRayLight(AffineTransform sourceMatrix, double velocity, double angle, Color sourceColor)
-	{
-		ANTSSimpleRayLightController c = new ANTSSimpleRayLightController(sourceMatrix, velocity, angle, sourceColor, this);
-		this.addController(c);
-	}
-	
 	public void createSimpleRayLight2(double[] center, double velocity, double angle, Color sourceColor) {
-		ANTSSimpleRayLightController2 c = new ANTSSimpleRayLightController2(center, velocity, angle, sourceColor, this);
+		ANTSSimpleRayLightController c = new ANTSSimpleRayLightController(center, velocity, angle, sourceColor, this);
 		this.addController(c);
 		
 	}
@@ -166,16 +152,6 @@ public class ANTSFactory
 
 	private void addController(ANTSIController c)
 	{
-//		if(!this.controllers.contains(c) && !c.getModel().isCollisionDetected())
-//		{
-//			this.controllers.add(c);
-//		}
-//		else if(c.getModel().isCollisionDetected())
-//		{
-//			System.out.println("add to cd" + c);
-//			this.collisionDetection.addController(c);
-//		}
-		
 		if(!this.controllers.contains(c))
 		{
 			this.controllers.add(c);
@@ -236,8 +212,6 @@ public class ANTSFactory
 	
 	public void removeController(ANTSIController c)
 	{
-		ANTSStream.printDebug("remove " + c);
-		
 		boolean value = this.controllers.remove(c);
 		
 		if(!value)

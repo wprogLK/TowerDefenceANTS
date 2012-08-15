@@ -31,6 +31,6 @@ public interface ANTSIController extends MouseListener, MouseMotionListener
 	///////////
 	
 	public void update();
-	
+	public boolean doesCollideWith(ANTSIController c);
 
 }

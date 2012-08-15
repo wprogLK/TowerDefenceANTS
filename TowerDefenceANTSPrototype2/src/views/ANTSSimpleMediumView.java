@@ -79,6 +79,7 @@ public class ANTSSimpleMediumView extends ANTSAbstractView implements ANTSIView
 		
 			g2d.setColor(Color.GREEN);
 			g2d.fill(shape);
+			this.paintBounds(g2d);
 	}
 	
 	@Override

@@ -19,7 +19,7 @@ import interfaces.ANTSIModel;
 import interfaces.ANTSIView;
 import interfaces.menus.ANTSIMenuController;
 
-public abstract class ANTSAbstractController extends ANTSEventListenerHandler implements ANTSIController
+public class ANTSAbstractController extends ANTSEventListenerHandler implements ANTSIController
 {
 	private static ANTSAbstractController emptyAbstractController = new ANTSAbstractController() {};
 	private ANTSIModel model;
@@ -100,6 +100,13 @@ public abstract class ANTSAbstractController extends ANTSEventListenerHandler im
 		this.model.update();
 		this.model.setIsAlreadyUpdated(true);
 	}
+	
+	@Override
+	public boolean doesCollideWith(ANTSIController c) 
+	{
+		return  this.iview.doesCollideWith(c.getIView().getShape());
+	}
+
 	
 	
 	//////////////////
@@ -315,5 +322,4 @@ public abstract class ANTSAbstractController extends ANTSEventListenerHandler im
 	{
 
 	}
-
 }

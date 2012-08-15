@@ -53,7 +53,7 @@ public class ANTSGameView extends ANTSAbstractView implements ANTSIView
 	@Override
 	public void paint(Graphics2D g2d, float interpolation) 
 	{
-		
+		this.paintBounds(g2d);
 	}
 	
 	

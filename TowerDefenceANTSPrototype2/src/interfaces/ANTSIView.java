@@ -1,6 +1,7 @@
 package interfaces;
 
 import java.awt.Graphics2D;
+import java.awt.Shape;
 
 public interface ANTSIView 
 {
@@ -18,6 +19,7 @@ public interface ANTSIView
 	public boolean doPaintDirect();
 	public boolean containsPoint(int x, int y);
 	public boolean isMouseOver();
+	public Shape getShape();
 	
 	///////////
 	//Special//
@@ -25,4 +27,8 @@ public interface ANTSIView
 	
 	public void paint(Graphics2D g2d);
 	public void paint(Graphics2D g2d, float interpolation);
+
+	public boolean doesCollideWith(Shape shape);
+
+
 }

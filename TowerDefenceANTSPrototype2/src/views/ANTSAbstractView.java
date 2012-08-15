@@ -2,8 +2,11 @@ package views;
 
 import interfaces.ANTSIView;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Shape;
+
+import basics.ANTSDevelopment.ANTSDebug;
 
 public abstract class ANTSAbstractView  implements ANTSIView
 {
@@ -38,6 +41,17 @@ public abstract class ANTSAbstractView  implements ANTSIView
 		
 	}
 	
+	public final void paintBounds(Graphics2D g2d)
+	{
+		if(ANTSDebug.isShowBounds())
+		{
+			g2d.setColor(Color.BLUE);
+			
+			g2d.draw(this.shape.getBounds2D());
+		}
+	}
+	
+	
 	/////////////////////
 	//GETTERS & SETTERS//
 	/////////////////////
@@ -60,6 +74,12 @@ public abstract class ANTSAbstractView  implements ANTSIView
 	public boolean doPaintDirect()
 	{
 		return true;
+	}
+	
+	@Override
+	public Shape getShape()
+	{
+		return this.shape;
 	}
 	
 	@Override
@@ -97,6 +117,12 @@ public abstract class ANTSAbstractView  implements ANTSIView
 	///////////
 	//Special//
 	///////////
+	
+	public boolean doesCollideWith(Shape shape)
+	{
+		return this.shape.intersects(shape.getBounds2D());
+	}
+	
 	
 	
 }

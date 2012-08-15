@@ -9,6 +9,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 
 import models.ANTSSimpleSourceLightModel;
+import models.ANTSSimpleSourceLightModel;
 
 public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSIView
 {
@@ -18,7 +19,7 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 	public ANTSSimpleSourceLightView(ANTSSimpleSourceLightModel m) 
 	{
 		super();
-
+		
 		this.model = m;
 		
 		this.createCircle();
@@ -52,19 +53,14 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 		AffineTransform aT = this.model.getMatrix();
 		double radius = this.model.getRadius();
 		
-		this.circle = new Ellipse2D.Double(aT.getTranslateX()-(radius/2), aT.getTranslateY()-(radius/2), radius, radius);
+		this.circle = new Ellipse2D.Double(0, 0, radius, radius);
 		this.shape = aT.createTransformedShape(circle);
-		
-		this.shape = circle;
 	}
 	
 	@Override
 	public void paint(Graphics2D g2d) 
 	{
 		this.createCircle();			//TODO CHECK IF position and radius has changed
-		
-		AffineTransform aT = this.model.getMatrix();
-		this.shape = aT.createTransformedShape(circle);
 		
 		if(this.model.isDragged())
 		{
@@ -102,6 +98,8 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 			g2d.setColor(Color.black);
 			g2d.draw(shape);
 		}
+		
+		this.paintBounds(g2d);
 	}
 	
 	@Override

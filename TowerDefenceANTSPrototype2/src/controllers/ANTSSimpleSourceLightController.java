@@ -10,7 +10,9 @@ import interfaces.ANTSIModel;
 import interfaces.ANTSIView;
 
 import views.ANTSSimpleSourceLightView;
+import views.ANTSSimpleSourceLightView;
 
+import models.ANTSSimpleSourceLightModel;
 import models.ANTSSimpleSourceLightModel;
 
 public class ANTSSimpleSourceLightController extends ANTSAbstractController implements ANTSIController
@@ -63,7 +65,8 @@ public class ANTSSimpleSourceLightController extends ANTSAbstractController impl
 	@Override
 	public void mouseDraggedANTS(MouseEvent e) 
 	{
-		this.model.setPosition(e.getX()/2, e.getY()/2);	// /2 because of the the center of the source is in the center of the ellipse
-//		this.model.setPosition((int) (e.getX()-this.model.getRadius()/4), (int) (e.getY()-this.model.getRadius()/4));
+//		this.model.setPosition(e.getX()/2, e.getY()/2);	// /2 because of the the center of the source is in the center of the ellipse
+//		this.model.setPosition((int) (e.getX()-this.model.getRadius()), (int) (e.getY()-this.model.getRadius()));
+		this.model.setPosition((int) (e.getX()-this.model.getRadius()/2), (int) (e.getY()-this.model.getRadius()/2));
 	}
 }

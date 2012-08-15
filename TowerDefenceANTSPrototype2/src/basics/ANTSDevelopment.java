@@ -27,6 +27,8 @@ public class ANTSDevelopment
 		private static boolean showCurrentHoveringCellInfo = true;
 		private static boolean showCurrentInterpolation = true;
 		
+		private  static boolean showBounds = false;
+		
 		private static Graphics2D g2d;
 		
 		private static int fontSize = 12;
@@ -121,9 +123,18 @@ public class ANTSDevelopment
 			fps = fpsIn;
 		}
 
-		public static void setInterpolation(float interpolation) {
-			
-			
+		public static void setInterpolation(float in) 
+		{
+			interpolation = in;
+		}
+		
+		///////////
+		//GETTERS//
+		//////////
+		
+		public static boolean isShowBounds()
+		{
+			return showBounds;
 		}
 	}
 	

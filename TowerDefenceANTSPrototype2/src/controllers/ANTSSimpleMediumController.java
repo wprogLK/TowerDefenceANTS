@@ -10,10 +10,8 @@ import interfaces.ANTSIModel;
 import interfaces.ANTSIView;
 
 import views.ANTSSimpleMediumView;
-import views.ANTSSimpleSourceLightView;
 
 import models.ANTSSimpleMediumModel;
-import models.ANTSSimpleSourceLightModel;
 
 public class ANTSSimpleMediumController extends ANTSAbstractController implements ANTSIController
 {

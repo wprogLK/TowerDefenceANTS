@@ -15,13 +15,13 @@ public class ANTSSimpleSourceLightModel extends ANTSAbstractModel implements ANT
 	private boolean on;
 	private Color color;
 	
-	private int ticksBetweenTwoRays = 10;
+	private int ticksBetweenTwoRays = 1;
 	private int tickCounter;
 	
 	//RayProperties:
-	private int numberOfRaysPer360Degrees = 18;
+	private int numberOfRaysPer360Degrees = 360;
 	private int angle = 360;
-	private double angleOffset = 0;
+	private double angleOffset = -90;
 	
 	public ANTSSimpleSourceLightModel(double posX, double posY, double radius, Color color, boolean isMouseListener, ANTSFactory factory)
 	{
@@ -158,7 +158,9 @@ public class ANTSSimpleSourceLightModel extends ANTSAbstractModel implements ANT
 		
 		for(int numberRay = 0; numberRay<this.getNumberOfRays(); numberRay++)
 		{
-			this.factory.createSimpleRayLight(this.matrix, 10, tmpAngle, this.color);
+			double[] center = {this.matrix.getTranslateX()+this.radius/2, this.matrix.getTranslateY()+this.radius/2};
+			
+			this.factory.createSimpleRayLight2(center, 10, tmpAngle, this.color);
 			tmpAngle+=this.getAngleBetweetTwoRays();
 		}
 	}

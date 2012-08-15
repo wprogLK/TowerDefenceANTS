@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.geom.AffineTransform;
 
 import basics.ANTSFactory;
+import basics.ANTSDevelopment.ANTSStream;
 
 public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIModel
 {
@@ -18,9 +19,11 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 	
 	private double length;
 	private double velocity;
+	private double[] center;
+	private double angle;
 	private Color color;
 	
-	public ANTSSimpleRayLightModel(AffineTransform sourceMatrix, double velocity, double angle, Color sourceColor, ANTSFactory factory)
+	public ANTSSimpleRayLightModel(double[] center, double velocity, double angle, Color sourceColor, ANTSFactory factory)
 	{
 		super(factory);
 		
@@ -33,12 +36,14 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 		
 		this.matrixForInterpolation = new AffineTransform();
 		
-		this.matrix.setTransform(sourceMatrix);
-		this.sourceMatrix.setTransform(sourceMatrix);
+		this.matrix.translate(center[0], center[1]);
+		this.sourceMatrix.translate(center[0], center[1]);
 		
-		this.rotateMatrix.rotate(Math.toRadians(angle), this.matrix.getTranslateX(), this.matrix.getTranslateY());
+		this.rotateMatrix.rotate(Math.toRadians(angle), 0,0);
 		
-		this.length = 10;
+		this.angle = angle;
+		this.center = center;
+		this.length = 100;
 		this.color = sourceColor;
 		this.velocity = velocity;
 	}
@@ -61,14 +66,13 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 	 */
 	public void update(float interpolation)
 	{
-		
 		this.matrixForInterpolation.setTransform(this.sourceMatrix);
 		
 		AffineTransform tmpVelocityMatrix = new AffineTransform(this.velocityMatrix);
 		tmpVelocityMatrix.translate(this.velocity*interpolation, 0);
 		
 		this.matrixForInterpolation.concatenate(this.rotateMatrix);
-		this.matrixForInterpolation.concatenate(tmpVelocityMatrix);
+		this.matrixForInterpolation.concatenate(tmpVelocityMatrix);	
 	}
 	
 	///////////
