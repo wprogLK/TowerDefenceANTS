@@ -145,6 +145,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		
 		ANTSDebug.setGraphics2D(this.g2d);
 		ANTSDebug.setFPS(fps);
+		ANTSDebug.setInterpolation(interpolation);
 		
 		//Clear:
 		g2d.setColor(this.backgroundColor); 

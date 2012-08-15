@@ -20,7 +20,7 @@ public class ANTSSimpleRayLightController2 extends ANTSAbstractController implem
 	private ANTSSimpleRayLightModel2 model;
 	private ANTSSimpleRayLightView2 view;
 	
-	public ANTSSimpleRayLightController2(Double[] center, double velocity, double angle, Color sourceColor, ANTSFactory factory) 
+	public ANTSSimpleRayLightController2(double[] center, double velocity, double angle, Color sourceColor, ANTSFactory factory) 
 	{
 		this.model = new ANTSSimpleRayLightModel2(center, velocity, angle, sourceColor, factory);
 		this.view = new ANTSSimpleRayLightView2(this.model);

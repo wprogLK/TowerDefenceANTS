@@ -7,18 +7,22 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
 
-import models.ANTSSimpleMediumModel;
+import models.ANTSSimpleSourceLight2Model;
+import models.ANTSSimpleSourceLightModel;
 
-public class ANTSSimpleMediumView extends ANTSAbstractView implements ANTSIView
+public class ANTSSimpleSourceLight2View extends ANTSAbstractView implements ANTSIView
 {
-	private ANTSSimpleMediumModel model;
+	private ANTSSimpleSourceLight2Model model;
+	private Ellipse2D circle;
 	
-	public ANTSSimpleMediumView(ANTSSimpleMediumModel m) 
+	public ANTSSimpleSourceLight2View(ANTSSimpleSourceLight2Model m) 
 	{
 		super();
+		
 		this.model = m;
+		
+		this.createCircle();
 	}
 	
 	///////////
@@ -27,7 +31,7 @@ public class ANTSSimpleMediumView extends ANTSAbstractView implements ANTSIView
 	
 	public String toString()
 	{
-		return "medium";
+		return "SOURCE light " + this.model.getPosX() + " " + this.model.getPosY() + " " + this.model.getColor();
 	}
 
 	@Override
@@ -44,12 +48,19 @@ public class ANTSSimpleMediumView extends ANTSAbstractView implements ANTSIView
 	//Special//
 	///////////
 	
+	private void createCircle()
+	{
+		AffineTransform aT = this.model.getMatrix();
+		double radius = this.model.getRadius();
+		
+		this.circle = new Ellipse2D.Double(0, 0, radius, radius);
+		this.shape = aT.createTransformedShape(circle);
+	}
+	
 	@Override
 	public void paint(Graphics2D g2d) 
 	{
-		Rectangle2D.Double rec = new Rectangle2D.Double(0, 0, this.model.getWidth(), this.model.getHeight());
-		AffineTransform aT = this.model.getMatrix();
-		this.shape = aT.createTransformedShape(rec);
+		this.createCircle();			//TODO CHECK IF position and radius has changed
 		
 		if(this.model.isDragged())
 		{
@@ -77,8 +88,16 @@ public class ANTSSimpleMediumView extends ANTSAbstractView implements ANTSIView
 		}
 		
 		
-			g2d.setColor(Color.GREEN);
+		if(this.model.isOn())
+		{
+			g2d.setColor(this.model.getColor());
 			g2d.fill(shape);
+		}
+		else
+		{
+			g2d.setColor(Color.black);
+			g2d.draw(shape);
+		}
 	}
 	
 	@Override

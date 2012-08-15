@@ -18,6 +18,7 @@ import controllers.ANTSGridController;
 import controllers.ANTSSimpleMediumController;
 import controllers.ANTSSimpleRayLightController;
 import controllers.ANTSSimpleRayLightController2;
+import controllers.ANTSSimpleSourceLight2Controller;
 import controllers.ANTSSimpleSourceLightController;
 import controllers.menus.ANTSCircleMenuController;
 import controllers.menus.ANTSRectangleMenuController;
@@ -69,13 +70,20 @@ public class ANTSFactory
 		this.addController(c);
 	}
 	
+	
+	public void createSimpleSourceLight2(double posX, double posY, double radius, Color color, boolean isMouseListener)
+	{
+		ANTSSimpleSourceLight2Controller c = new ANTSSimpleSourceLight2Controller(posX, posY, radius, color, isMouseListener, this);
+		this.addController(c);
+	}
+	
 	public void createSimpleRayLight(AffineTransform sourceMatrix, double velocity, double angle, Color sourceColor)
 	{
 		ANTSSimpleRayLightController c = new ANTSSimpleRayLightController(sourceMatrix, velocity, angle, sourceColor, this);
 		this.addController(c);
 	}
 	
-	public void createSimpleRayLight2(Double[] center,double velocity, double angle, Color sourceColor) {
+	public void createSimpleRayLight2(double[] center, double velocity, double angle, Color sourceColor) {
 		ANTSSimpleRayLightController2 c = new ANTSSimpleRayLightController2(center, velocity, angle, sourceColor, this);
 		this.addController(c);
 		

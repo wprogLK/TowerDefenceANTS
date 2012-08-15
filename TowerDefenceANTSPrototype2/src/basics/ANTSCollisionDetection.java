@@ -118,7 +118,7 @@ public class ANTSCollisionDetection
 					
 					if(isOutOfRange)//isOutOfRangeX || isOutOfRangeY)
 					{
-						System.out.println("out of range" + width + " h  " + height);
+//						ANTSStream.printDebug("out of range" + width + " h  " + height);
 						iterator.remove();
 						this.factory.removeController(controller);
 					}

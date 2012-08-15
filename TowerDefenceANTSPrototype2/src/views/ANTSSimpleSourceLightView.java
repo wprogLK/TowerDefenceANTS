@@ -18,8 +18,7 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 	public ANTSSimpleSourceLightView(ANTSSimpleSourceLightModel m) 
 	{
 		super();
-		
-		
+
 		this.model = m;
 		
 		this.createCircle();

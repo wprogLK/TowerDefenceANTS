@@ -25,6 +25,7 @@ public class ANTSDevelopment
 		
 		private static boolean showFPS = true;
 		private static boolean showCurrentHoveringCellInfo = true;
+		private static boolean showCurrentInterpolation = true;
 		
 		private static Graphics2D g2d;
 		
@@ -36,6 +37,7 @@ public class ANTSDevelopment
 		
 		private static ANTSIController currentHoveringCell = ANTSCellController.getEmptyController();
 		private static ANTSFPS fps;
+		private static float interpolation;
 		
 		
 		////////////////
@@ -54,6 +56,7 @@ public class ANTSDevelopment
 				
 				showCurrentHoveringCell();
 				showFPS();
+				showInterpolation();
 			}
 		}
 		
@@ -61,6 +64,16 @@ public class ANTSDevelopment
 		//PRIVATE METHODS//
 		///////////////////
 		
+		private static void showInterpolation() 
+		{
+			if(showCurrentInterpolation && debugModeOn)
+			{
+				drawString(String.format("current interpolation: %s", interpolation));
+				updatePos();
+			}
+			
+		}
+
 		private static void showCurrentHoveringCell()
 		{
 			if(showCurrentHoveringCellInfo && debugModeOn)
@@ -106,6 +119,11 @@ public class ANTSDevelopment
 		public static void setFPS(ANTSFPS fpsIn)
 		{
 			fps = fpsIn;
+		}
+
+		public static void setInterpolation(float interpolation) {
+			
+			
 		}
 	}
 	
