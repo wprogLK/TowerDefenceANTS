@@ -98,6 +98,13 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 	{
 		return this.length;
 	}
+
+	public void addAngle(double angle) 
+	{
+		this.angle+=angle;
+		this.rotateMatrix.rotate(Math.toRadians(angle), 0,0);
+		
+	}
 	
 	///////////
 	//Setters//

@@ -106,6 +106,12 @@ public class ANTSAbstractController extends ANTSEventListenerHandler implements 
 	{
 		return  this.iview.doesCollideWith(c.getIView().getShape());
 	}
+	
+	@Override
+	public void handleCollision(ANTSIController c)
+	{
+		
+	}
 
 	
 	
@@ -254,6 +260,7 @@ public class ANTSAbstractController extends ANTSEventListenerHandler implements 
 	{
 		return this.model.containsPoint(x, y) || this.iview.containsPoint(x,y);
 	}
+	
 	
 	///////////////////
 	//Mouse "Actions"//

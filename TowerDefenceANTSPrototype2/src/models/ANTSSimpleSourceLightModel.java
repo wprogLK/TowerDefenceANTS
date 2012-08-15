@@ -19,9 +19,9 @@ public class ANTSSimpleSourceLightModel extends ANTSAbstractModel implements ANT
 	private int tickCounter;
 	
 	//RayProperties:
-	private int numberOfRaysPer360Degrees = 360;
+	private int numberOfRaysPer360Degrees = 4;
 	private int angle = 360;
-	private double angleOffset = -90;
+	private double angleOffset = 0;
 	
 	public ANTSSimpleSourceLightModel(double posX, double posY, double radius, Color color, boolean isMouseListener, ANTSFactory factory)
 	{

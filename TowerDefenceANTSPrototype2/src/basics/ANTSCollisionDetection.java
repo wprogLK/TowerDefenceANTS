@@ -8,7 +8,6 @@ import java.util.ListIterator;
 import controllers.ANTSSimpleMediumController;
 import controllers.ANTSSimpleRayLightController;
 
-import basics.ANTSDevelopment.ANTSStream;
 
 
 public class ANTSCollisionDetection 
@@ -16,8 +15,8 @@ public class ANTSCollisionDetection
 	private int height;
 	private int width;
 	
-	private final int defaultCellsX = 25;		//TODO: IMPORTANT: If you have big objects the number of cells should be small! Otherwise the detection is not really working
-	private final int defaultCellsY = 25;
+	private final int defaultCellsX = 10;		//TODO: IMPORTANT: If you have big objects the number of cells should be small! Otherwise the detection is not really working
+	private final int defaultCellsY = 10;
 	
 	private int cellsX;
 	private int cellsY;
@@ -140,15 +139,12 @@ public class ANTSCollisionDetection
 
 	private void lookingForCollision() 
 	{
-//		ANTSStream.printDebug("TODO: looking for collision");
-		
 		for(int cellX = 0; cellX<this.cellsX; cellX++)
 		{
 			for(int cellY = 0; cellY<this.cellsY; cellY++)
 			{
 				LinkedList<ANTSIController> colliderRays = new LinkedList<ANTSIController>();
 				
-				// Add balls in current cell
 				colliderRays.addAll(this.hashMap[cellX][cellY].getRays());
 
 				// Lower Cell
@@ -196,7 +192,7 @@ public class ANTSCollisionDetection
 					{
 						if(colliderRay.doesCollideWith(colliderObject))
 						{
-							ANTSStream.printDebug("collision");
+							colliderObject.handleCollision(colliderRay);
 						}
 					}
 				}
@@ -219,9 +215,6 @@ public class ANTSCollisionDetection
 		}
 	}
 	
-	
-
-	
 	private void resteAllUpdatedModels()
 	{
 		for(int cellX=0; cellX < this.cellsX; cellX++)
@@ -233,7 +226,6 @@ public class ANTSCollisionDetection
 				{
 					ANTSIController controller = iterator.next();
 					controller.getModel().setIsAlreadyUpdated(false);
-					
 				}
 			}
 		}

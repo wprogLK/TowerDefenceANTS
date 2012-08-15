@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.MouseEvent;
 
 import basics.ANTSFactory;
+import basics.ANTSDevelopment.ANTSStream;
 
 import interfaces.ANTSIController;
 import interfaces.ANTSIModel;
@@ -44,6 +45,49 @@ public class ANTSSimpleMediumController extends ANTSAbstractController implement
 	public ANTSIView getIView()
 	{
 		return this.view;
+	}
+	
+	
+	
+	///////////
+	//SPECIAL//
+	///////////
+	
+	@Override
+	public void handleCollision(ANTSIController c)
+	{
+		
+		
+		if(c.getClass().equals(ANTSSimpleRayLightController.class))
+		{
+			ANTSStream.printDebug("handle collision");
+			
+			ANTSSimpleRayLightController rayLightController = (ANTSSimpleRayLightController) c;
+		}
+		else
+		{
+			ANTSStream.printDebug("it's not a ray");
+		}
+		
+		c.getModel().getMatrix().rotate(Math.toRadians(30));
+	}
+	
+	@Override
+	public boolean doesCollideWith(ANTSIController c)
+	{
+		if(this.iview.doesCollideWith(c.getIView().getShape()))
+		{
+			if(c.getClass().equals(ANTSSimpleRayLightController.class))
+			{
+				ANTSSimpleRayLightController rayLightController = (ANTSSimpleRayLightController) c;
+				this.model.addRay(rayLightController);
+				rayLightController.addAngle(this.model.getAngle(1));	//TODO change input
+				return true;
+			}
+		}
+		
+			return false;
+		
 	}
 	
 	//////////////////

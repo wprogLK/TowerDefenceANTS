@@ -3,6 +3,9 @@ package models;
 import interfaces.ANTSIModel;
 
 import java.awt.geom.AffineTransform;
+import java.util.ArrayList;
+
+import controllers.ANTSSimpleRayLightController;
 
 import basics.ANTSFactory;
 
@@ -14,6 +17,8 @@ public class ANTSSimpleMediumModel extends ANTSAbstractModel implements ANTSIMod
 	private double height = 100;
 	private double width = 100;
 	
+	private ArrayList<ANTSSimpleRayLightController> rays;
+	
 	
 	public ANTSSimpleMediumModel(double posX, double posY, double height, double width, boolean isMouseListener, ANTSFactory factory)
 	{
@@ -22,6 +27,7 @@ public class ANTSSimpleMediumModel extends ANTSAbstractModel implements ANTSIMod
 		this.isCollisionDetected = true;
 		
 		this.matrix = new AffineTransform();
+		this.rays = new ArrayList<ANTSSimpleRayLightController>();
 		
 		this.matrix.setToTranslation(posX, posY);
 		
@@ -76,6 +82,17 @@ public class ANTSSimpleMediumModel extends ANTSAbstractModel implements ANTSIMod
 		return "Model simple medium";
 	}
 	
+	public boolean containsRay(ANTSSimpleRayLightController c)
+	{
+		return this.rays.contains(c);
+	}
+	
+	public double getAngle(double refractionIndexOtherMedium)
+	{
+		//TODO
+		return 45;
+	}
+	
 	///////////
 	//Setters//
 	///////////
@@ -93,5 +110,12 @@ public class ANTSSimpleMediumModel extends ANTSAbstractModel implements ANTSIMod
 	public void update()
 	{
 
+	}
+
+	public void addRay(ANTSSimpleRayLightController rayLightController) {
+		if(!this.containsRay(rayLightController))
+		{
+			this.rays.add(rayLightController);
+		}
 	}
 }
