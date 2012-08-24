@@ -64,6 +64,17 @@ public class ANTSSimpleRayLightView extends ANTSAbstractView implements ANTSIVie
 		g2d.draw(this.shape);
 		
 		this.paintBounds(g2d);
+		
+		p(g2d);
+	}
+	
+	private void p(Graphics2D d)
+	{
+		Rectangle2D.Double rec = new Rectangle2D.Double(0, 0, 10, 10);
+		
+		Shape s = this.model.getM2().createTransformedShape(rec);
+		
+		d.draw(s);
 	}
 	
 	@Override
@@ -80,6 +91,8 @@ public class ANTSSimpleRayLightView extends ANTSAbstractView implements ANTSIVie
 		g2d.draw(this.shape);
 		
 		this.paintBounds(g2d);
+		
+		p(g2d);
 	}
 	
 

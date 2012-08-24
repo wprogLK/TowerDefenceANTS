@@ -52,9 +52,9 @@ public class ANTSSimpleRayLightController extends ANTSAbstractController impleme
 	//SPECIAL//
 	///////////
 	
-	public void addAngle(double angle) 
+	public void addAngle(double angle, double[] center) 
 	{
-		this.model.addAngle(angle);
+		this.model.addAngle(angle, center);
 		
 	}
 }

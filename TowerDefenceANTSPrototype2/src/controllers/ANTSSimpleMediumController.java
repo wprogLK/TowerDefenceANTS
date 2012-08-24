@@ -56,20 +56,18 @@ public class ANTSSimpleMediumController extends ANTSAbstractController implement
 	@Override
 	public void handleCollision(ANTSIController c)
 	{
-		
-		
 		if(c.getClass().equals(ANTSSimpleRayLightController.class))
 		{
-			ANTSStream.printDebug("handle collision");
-			
 			ANTSSimpleRayLightController rayLightController = (ANTSSimpleRayLightController) c;
+			double[] center = {this.model.getPosX()+this.model.getWidth()/2,this.model.getPosY()+this.model.getHeight()/2};
+			
+			rayLightController.addAngle(this.model.getAngle(1), center);	//TODO
 		}
 		else
 		{
 			ANTSStream.printDebug("it's not a ray");
 		}
 		
-		c.getModel().getMatrix().rotate(Math.toRadians(30));
 	}
 	
 	@Override
@@ -79,9 +77,7 @@ public class ANTSSimpleMediumController extends ANTSAbstractController implement
 		{
 			if(c.getClass().equals(ANTSSimpleRayLightController.class))
 			{
-				ANTSSimpleRayLightController rayLightController = (ANTSSimpleRayLightController) c;
-				this.model.addRay(rayLightController);
-				rayLightController.addAngle(this.model.getAngle(1));	//TODO change input
+				this.handleCollision(c);
 				return true;
 			}
 		}

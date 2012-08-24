@@ -15,7 +15,7 @@ public class ANTSSimpleSourceLightModel extends ANTSAbstractModel implements ANT
 	private boolean on;
 	private Color color;
 	
-	private int ticksBetweenTwoRays = 1;
+	private int ticksBetweenTwoRays = 10;
 	private int tickCounter;
 	
 	//RayProperties:
