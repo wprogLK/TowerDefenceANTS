@@ -17,6 +17,7 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 	private AffineTransform velocityMatrix;
 	private AffineTransform rotateMatrix;
 	private AffineTransform sourceMatrix;
+	private AffineTransform localRotateMatrix;
 	
 	private AffineTransform matrixForInterpolation;
 	
@@ -37,6 +38,7 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 		this.velocityMatrix = new AffineTransform();
 		this.rotateMatrix = new AffineTransform();
 		this.sourceMatrix = new AffineTransform();
+		this.localRotateMatrix = new AffineTransform();
 		
 		this.matrixForInterpolation = new AffineTransform();
 		
@@ -76,10 +78,11 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 		AffineTransform tmpVelocityMatrix = new AffineTransform(this.velocityMatrix);
 		tmpVelocityMatrix.translate(this.velocity*interpolation, 0);
 		
+		this.matrixForInterpolation.preConcatenate(this.localRotateMatrix);
 		this.matrixForInterpolation.concatenate(this.rotateMatrix);
 		this.matrixForInterpolation.concatenate(tmpVelocityMatrix);	
 		
-		this.matrix.setTransform(this.matrix);
+		this.matrix.setTransform(this.matrixForInterpolation);
 	}
 	
 	///////////
@@ -109,16 +112,9 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 	public void addAngle(double angle,double[] center) 
 	{
 		this.angle+=angle;
-		ANTSStream.printDebug("new angle rotate @ " + this.matrix.getTranslateX() + " | " + this.matrix.getTranslateY() );
 		
-//		this.matrix2.setToTranslation(this.matrix.getTranslateX(), this.matrix.getTranslateY());
-		this.matrix2.setToTranslation(center[0], center[1]);
-		
-		this.rotateMatrix.setToRotation(Math.toRadians(this.angle),center[0],center[1]);
-//		this.rotateMatrix.setToRotation(theta, anchorx, anchory)
-//		this.matrixForInterpolation.concatenate(rotateMatrix);
-//		this.rotateMatrix.rotate(Math.toRadians(this.angle), this.matrix.getTranslateX(),this.matrix.getTranslateY());
-//		this.rotateMatrix.rotate(Math.toRadians(this.angle),s.getBounds2D().getCenterX(),s.getBounds2D().getCenterY());
+		this.localRotateMatrix.rotate(Math.toRadians(angle),this.matrix.getTranslateX(), this.matrix.getTranslateY());
+
 	}
 	
 	public AffineTransform getM2()
