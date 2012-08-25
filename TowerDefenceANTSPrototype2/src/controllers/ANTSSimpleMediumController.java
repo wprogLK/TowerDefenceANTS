@@ -7,6 +7,7 @@ import basics.ANTSFactory;
 import basics.ANTSDevelopment.ANTSStream;
 
 import interfaces.ANTSIController;
+import interfaces.ANTSIMediumController;
 import interfaces.ANTSIModel;
 import interfaces.ANTSIView;
 
@@ -14,7 +15,7 @@ import views.ANTSSimpleMediumView;
 
 import models.ANTSSimpleMediumModel;
 
-public class ANTSSimpleMediumController extends ANTSAbstractController implements ANTSIController
+public class ANTSSimpleMediumController extends ANTSAbstractController implements ANTSIMediumController
 {
 	private ANTSSimpleMediumModel model;
 	private ANTSSimpleMediumView view;
@@ -59,16 +60,30 @@ public class ANTSSimpleMediumController extends ANTSAbstractController implement
 		if(c.getClass().equals(ANTSSimpleRayLightController.class))
 		{
 			ANTSSimpleRayLightController rayLightController = (ANTSSimpleRayLightController) c;
-			double[] center = {this.model.getPosX()+this.model.getWidth()/2,this.model.getPosY()+this.model.getHeight()/2};
 			
-			rayLightController.addAngle(this.model.getAngle(1), center);	//TODO
+			rayLightController.addAngle(this.model.getAngle(1));
 		}
 		else
 		{
 			ANTSStream.printDebug("it's not a ray");
 		}
-		
 	}
+	
+	@Override
+	public void addCollisionRay(ANTSIController c)
+	{
+		if(c.getClass().equals(ANTSSimpleRayLightController.class))
+		{
+			ANTSSimpleRayLightController rayLightController = (ANTSSimpleRayLightController) c;
+			
+			this.model.addRay(rayLightController,1);	//TODO refractionIndex
+		}
+		else
+		{
+			ANTSStream.printDebug("it's not a ray");
+		}
+	}
+	
 	
 	@Override
 	public boolean doesCollideWith(ANTSIController c)

@@ -1,9 +1,13 @@
 package basics;
 
 import interfaces.ANTSIController;
+import interfaces.ANTSIMediumController;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.ListIterator;
+
+import basics.ANTSDevelopment.ANTSStream;
 
 import controllers.ANTSSimpleMediumController;
 import controllers.ANTSSimpleRayLightController;
@@ -186,13 +190,14 @@ public class ANTSCollisionDetection
 					colliderRays.addAll(this.hashMap[cellX + 1][cellY].getRays());
 				}
 				
-				for(ANTSIController colliderObject : this.hashMap[cellX][cellY].getObjects())
+				for(ANTSIMediumController colliderObject : this.hashMap[cellX][cellY].getObjects())
 				{
 					for(ANTSIController colliderRay : colliderRays)
 					{
 						if(colliderRay.doesCollideWith(colliderObject))
 						{
-							colliderObject.handleCollision(colliderRay);
+//							colliderObject.handleCollision(colliderRay);
+							colliderObject.addCollisionRay(colliderRay);
 						}
 					}
 				}
@@ -211,6 +216,7 @@ public class ANTSCollisionDetection
 		
 		if(!(isOutOfRangeX || isOutOfRangeY))
 		{
+			ANTSStream.printDebug("do");
 			this.hashMap[xHash][yHash].add(c);
 		}
 	}
@@ -235,12 +241,12 @@ public class ANTSCollisionDetection
 	private class ANTSHashMapCell
 	{
 		private LinkedList<ANTSIController> rays;
-		private LinkedList<ANTSIController> objects;	//not rays!
+		private LinkedList<ANTSIMediumController> medium;
 		
 		public ANTSHashMapCell()
 		{
 			this.rays = new LinkedList<ANTSIController>();
-			this.objects = new LinkedList<ANTSIController>();
+			this.medium = new LinkedList<ANTSIMediumController>();
 		}
 		
 		public LinkedList<ANTSIController> getRays() 
@@ -248,9 +254,9 @@ public class ANTSCollisionDetection
 			return this.rays;
 		}
 		
-		public LinkedList<ANTSIController> getObjects() 
+		public LinkedList<ANTSIMediumController> getObjects() 
 		{
-			return this.objects;
+			return this.medium;
 		}
 
 		public void add(ANTSIController c)
@@ -259,9 +265,13 @@ public class ANTSCollisionDetection
 			{
 				this.rays.add(c);
 			}
-			else if(c.getClass().equals(ANTSSimpleMediumController.class))
+			else if(Arrays.asList(c.getClass().getInterfaces()).contains(ANTSIMediumController.class))
 			{
-				this.objects.add(c);
+				this.medium.add((ANTSIMediumController) c);
+			}
+			else
+			{
+				ANTSStream.printErr("The controller " + c.toString() + " couldn't add to the collision dedection unit"); //TODO
 			}
 		}
 		
@@ -271,40 +281,25 @@ public class ANTSCollisionDetection
 			{
 				return this.rays.remove(c);
 			}
-			else if(c.getClass().equals(ANTSSimpleMediumController.class))
+			else if(Arrays.asList(c.getClass().getInterfaces()).contains(ANTSIMediumController.class))
 			{
-				return this.objects.remove(c);
+				return this.medium.remove((ANTSIMediumController) c);
 			}
 			else
 			{
+				ANTSStream.printErr("The controller " + c.toString() + " couldn't add to the collision dedection unit"); //TODO
 				return false;
 			}
-		}
-		
-		public ListIterator<ANTSIController> getIteratorRays()
-		{
-			return this.rays.listIterator();
-		}
-		
-		public ListIterator<ANTSIController> getIteratorObjects()
-		{
-			return this.objects.listIterator();
 		}
 		
 		public ListIterator<ANTSIController> getIteratorAll()
 		{
 			LinkedList<ANTSIController> total = new LinkedList<ANTSIController>();
-			total.addAll(this.objects);
+			total.addAll(this.medium);
 			total.addAll(this.rays);
 			
 			return total.listIterator();
 		}
-		
-//		public void remove(ANTSIController c)
-//		{
-//			this.objects.remove(c);
-//			this.rays.remove(c);
-//		}
 	}
 	
 	

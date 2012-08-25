@@ -13,7 +13,6 @@ import basics.ANTSDevelopment.ANTSStream;
 public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIModel
 {
 	private AffineTransform matrix;
-	private AffineTransform matrix2;
 	private AffineTransform velocityMatrix;
 	private AffineTransform rotateMatrix;
 	private AffineTransform sourceMatrix;
@@ -34,7 +33,6 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 		this.isCollisionDetected = true;
 		
 		this.matrix = new AffineTransform();
-		this.matrix2 = new AffineTransform();
 		this.velocityMatrix = new AffineTransform();
 		this.rotateMatrix = new AffineTransform();
 		this.sourceMatrix = new AffineTransform();
@@ -109,17 +107,12 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 		return this.length;
 	}
 
-	public void addAngle(double angle,double[] center) 
+	public void addAngle(double angle) 
 	{
 		this.angle+=angle;
 		
 		this.localRotateMatrix.rotate(Math.toRadians(angle),this.matrix.getTranslateX(), this.matrix.getTranslateY());
 
-	}
-	
-	public AffineTransform getM2()
-	{
-		return this.matrix2;
 	}
 	
 	///////////

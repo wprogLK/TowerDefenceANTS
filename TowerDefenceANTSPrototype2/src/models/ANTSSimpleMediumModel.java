@@ -112,10 +112,11 @@ public class ANTSSimpleMediumModel extends ANTSAbstractModel implements ANTSIMod
 
 	}
 
-	public void addRay(ANTSSimpleRayLightController rayLightController) {
+	public void addRay(ANTSSimpleRayLightController rayLightController, double refractoringIndexOfOtherMedium) {
 		if(!this.containsRay(rayLightController))
 		{
 			this.rays.add(rayLightController);
+			rayLightController.addAngle(this.getAngle(refractoringIndexOfOtherMedium));
 		}
 	}
 }
