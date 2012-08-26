@@ -84,6 +84,21 @@ public class ANTSSimpleMediumController extends ANTSAbstractController implement
 		}
 	}
 	
+	@Override
+	public void removeCollisionRay(ANTSIController c)
+	{
+		if(c.getClass().equals(ANTSSimpleRayLightController.class))
+		{
+			ANTSSimpleRayLightController rayLightController = (ANTSSimpleRayLightController) c;
+			
+			this.model.removeRay(rayLightController,1);	//TODO refractionIndex
+		}
+		else
+		{
+			ANTSStream.printDebug("it's not a ray");
+		}
+	}
+	
 	
 	@Override
 	public boolean doesCollideWith(ANTSIController c)

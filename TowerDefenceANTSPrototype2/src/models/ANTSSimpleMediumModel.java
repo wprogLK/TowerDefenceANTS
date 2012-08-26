@@ -119,4 +119,13 @@ public class ANTSSimpleMediumModel extends ANTSAbstractModel implements ANTSIMod
 			rayLightController.addAngle(this.getAngle(refractoringIndexOfOtherMedium));
 		}
 	}
+
+	public void removeRay(ANTSSimpleRayLightController rayLightController, int refractoringIndexOfOtherMedium) 
+	{	
+		if(this.containsRay(rayLightController))
+		{
+			this.rays.remove(rayLightController);
+			rayLightController.addAngle(-this.getAngle(refractoringIndexOfOtherMedium));	//TODO check this
+		}
+	}
 }

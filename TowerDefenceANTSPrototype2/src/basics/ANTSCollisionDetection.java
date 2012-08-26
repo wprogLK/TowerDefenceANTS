@@ -196,8 +196,11 @@ public class ANTSCollisionDetection
 					{
 						if(colliderRay.doesCollideWith(colliderObject))
 						{
-//							colliderObject.handleCollision(colliderRay);
 							colliderObject.addCollisionRay(colliderRay);
+						}
+						else
+						{
+							colliderObject.removeCollisionRay(colliderRay);
 						}
 					}
 				}
