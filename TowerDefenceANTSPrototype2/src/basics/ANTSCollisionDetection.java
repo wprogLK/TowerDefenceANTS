@@ -219,7 +219,6 @@ public class ANTSCollisionDetection
 		
 		if(!(isOutOfRangeX || isOutOfRangeY))
 		{
-			ANTSStream.printDebug("do");
 			this.hashMap[xHash][yHash].add(c);
 		}
 	}

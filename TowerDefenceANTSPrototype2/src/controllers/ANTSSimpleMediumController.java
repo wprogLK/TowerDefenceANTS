@@ -48,7 +48,10 @@ public class ANTSSimpleMediumController extends ANTSAbstractController implement
 		return this.view;
 	}
 	
-	
+	@Override
+	public double getRefractionIndex() {
+		return this.model.getRefractionIndex();
+	}
 	
 	///////////
 	//SPECIAL//
@@ -134,4 +137,6 @@ public class ANTSSimpleMediumController extends ANTSAbstractController implement
 	{
 		this.model.setPosition((int) (e.getX()-this.model.getWidth()/2), (int) (e.getY()-this.model.getHeight()/2));
 	}
+
+	
 }

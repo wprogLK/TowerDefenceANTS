@@ -1,5 +1,6 @@
 package models;
 
+import interfaces.ANTSIMediumController;
 import interfaces.ANTSIModel;
 
 import java.awt.Color;
@@ -25,6 +26,8 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 	private double[] center;
 	private double angle;
 	private Color color;
+	
+	private ANTSIMediumController medium;
 	
 	public ANTSSimpleRayLightModel(double[] center, double velocity, double angle, Color sourceColor, ANTSFactory factory)
 	{
@@ -107,20 +110,32 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 		return this.length;
 	}
 
-	public void addAngle(double angle) 
+	
+
+	public ANTSIMediumController getCurrentMedium()
 	{
-		this.angle+=angle;
-		
-		this.localRotateMatrix.rotate(Math.toRadians(angle),this.matrix.getTranslateX(), this.matrix.getTranslateY());
+		return this.medium;
 	}
 	
 	///////////
 	//Setters//
 	///////////
 	
+	public void setCurrentMedium(ANTSIMediumController c) 
+	{
+		this.medium = c;
+	}
+	
 	///////////
 	//Special//
 	///////////
-	
+	public void addAngle(double angle) 
+	{
+		this.angle+=angle;
+		
+		this.localRotateMatrix.rotate(Math.toRadians(angle),this.matrix.getTranslateX(), this.matrix.getTranslateY());
+	}
+
+
 	
 }

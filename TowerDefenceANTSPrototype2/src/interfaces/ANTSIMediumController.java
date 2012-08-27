@@ -4,5 +4,6 @@ public interface ANTSIMediumController extends ANTSIController
 {
 	public void addCollisionRay(ANTSIController c);
 
-	void removeCollisionRay(ANTSIController c);
+	public void removeCollisionRay(ANTSIController c);
+	public double getRefractionIndex();
 }

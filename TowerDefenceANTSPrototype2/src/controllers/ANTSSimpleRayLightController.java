@@ -1,7 +1,9 @@
 package controllers;
 
 import interfaces.ANTSIController;
+import interfaces.ANTSIMediumController;
 import interfaces.ANTSIModel;
+import interfaces.ANTSIRayController;
 import interfaces.ANTSIView;
 
 import java.awt.Color;
@@ -15,7 +17,7 @@ import views.ANTSSimpleRayLightView;
 import models.ANTSSimpleRayLightModel;
 import models.ANTSSimpleRayLightModel;
 
-public class ANTSSimpleRayLightController extends ANTSAbstractController implements ANTSIController{
+public class ANTSSimpleRayLightController extends ANTSAbstractController implements ANTSIRayController{
 
 	private ANTSSimpleRayLightModel model;
 	private ANTSSimpleRayLightView view;
@@ -47,6 +49,22 @@ public class ANTSSimpleRayLightController extends ANTSAbstractController impleme
 	{
 		return this.view;
 	}
+	
+	@Override
+	public double getRefractionIndex() 
+	{
+		return this.model.getCurrentMedium().getRefractionIndex();
+	}
+	
+	//////////
+	//SETTER//
+	//////////
+	
+	@Override
+	public void setCurrentMedium(ANTSIMediumController c) 
+	{
+		this.model.setCurrentMedium(c);
+	}
 
 	///////////
 	//SPECIAL//
@@ -57,4 +75,7 @@ public class ANTSSimpleRayLightController extends ANTSAbstractController impleme
 		this.model.addAngle(angle);
 		
 	}
+
+
+
 }
