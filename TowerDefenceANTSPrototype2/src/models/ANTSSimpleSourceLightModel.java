@@ -15,11 +15,11 @@ public class ANTSSimpleSourceLightModel extends ANTSAbstractModel implements ANT
 	private boolean on;
 	private Color color;
 	
-	private int ticksBetweenTwoRays = 10;
+	private int ticksBetweenTwoRays = 2;
 	private int tickCounter;
 	
 	//RayProperties:
-	private int numberOfRaysPer360Degrees = 4;
+	private int numberOfRaysPer360Degrees = 90;
 	private int angle = 360;
 	private double angleOffset = 0;
 	

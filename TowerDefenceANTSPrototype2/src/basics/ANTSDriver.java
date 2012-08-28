@@ -132,6 +132,12 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 			}
 			
 			interpolation =(System.currentTimeMillis() + this.fps.getSkiptTicks() - nextGameTick) /(this.fps.getSkiptTicks());
+			
+			if(!ANTSDebug.getInterpolationOn())
+			{
+				interpolation = 0;
+			}
+			
 			this.paint(interpolation);
 		}
 	}
@@ -200,6 +206,13 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		private long currentTime;
 		private long lastTime;
 		
+		private int maxFPS;
+		private int minFPS;
+		private int averageFPS;
+		private int counter;
+		private int totalFPS;
+		
+		
 		private final int TICKS_PER_SECOND = 25;
 		private final int SKIP_TICKS = 1000/TICKS_PER_SECOND;
 		private final int MAX_FRAMESKIP = 5;
@@ -211,6 +224,13 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 			this.totalTime = 0;
 			this.currentTime = System.currentTimeMillis();
 			this.lastTime = this.currentTime;
+			
+			this.maxFPS = 0;
+			this.minFPS = 1000;
+			this.averageFPS = 0;
+			this.counter = 0;
+			this.totalFPS = 0;
+			
 		}
 		
 		public void update()
@@ -225,14 +245,58 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 				this.totalTime -= 1000;
 				this.fps = this.frames;
 				this.frames = 0;
+				
+				this.stats();
 			}
 			
 			++this.frames;
 		}
 		
+		private void stats() 
+		{
+			this.counter++;
+			this.totalFPS+= this.fps;
+			
+			this.averageFPS = this.totalFPS/counter;
+			
+			this.calculateMax(this.fps);
+			this.calculateMin(this.fps);
+			
+		}
+
+		private void calculateMin(int fps)
+		{
+			if(fps<this.minFPS)
+			{
+				this.minFPS = fps;
+			}
+		}
+
+		private void calculateMax(int fps) {
+			if(fps>this.maxFPS)
+			{
+				this.maxFPS = fps;
+			}
+		}
+
 		public int getFPS()
 		{
 			return this.fps;
+		}
+		
+		public int getAverageFPS()
+		{
+			return this.averageFPS;
+		}
+		
+		public int getMaxFPS()
+		{
+			return this.maxFPS;
+		}
+		
+		public int getMinFPS()
+		{
+			return this.minFPS;
 		}
 		
 		public int getTicksPerSecond()

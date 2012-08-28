@@ -120,7 +120,16 @@ public abstract class ANTSAbstractView  implements ANTSIView
 	
 	public boolean doesCollideWith(Shape shape)
 	{
-		return this.shape.intersects(shape.getBounds2D());
+		try
+		{
+			return this.shape.intersects(shape.getBounds2D());
+		}
+		catch(NullPointerException e)
+		{
+			return true;
+		}
+		
+		
 	}
 	
 	

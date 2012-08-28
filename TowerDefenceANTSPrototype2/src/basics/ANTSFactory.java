@@ -57,7 +57,6 @@ public class ANTSFactory
 	
 	public ANTSCollisionDetection createCollisionDetection()
 	{
-		ANTSStream.printDebug("h " + this.driver.getHeight() + " w " + this.driver.getWidth());
 		this.collisionDetection  = new ANTSCollisionDetection(this.driver.getHeight(), this.driver.getWidth(), this);
 		return this.collisionDetection;
 	}
@@ -133,7 +132,14 @@ public class ANTSFactory
 		return c;
 	}
 	
-
+	///////////
+	//GETTERS//
+	///////////
+	
+	public int getNumberOfObjects()
+	{
+		return this.controllers.size();
+	}
 	
 	
 	///////////////
@@ -213,12 +219,20 @@ public class ANTSFactory
 	public void removeController(ANTSIController c)
 	{
 		boolean value = this.controllers.remove(c);
-		
+		ANTSStream.print("remove");
 		if(!value)
 		{
 			ANTSStream.printErr("Error: The gameObject " + c + "couldn't remove in the ANTSFactory Class!" );	//TODO (check this)
 		}
 		
+	}
+	
+	public void resetUpdate()
+	{
+		for(ANTSIController c:this.controllers)
+		{
+			c.getModel().setIsAlreadyUpdated(false);
+		}
 	}
 
 

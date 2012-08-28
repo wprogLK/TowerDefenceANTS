@@ -24,10 +24,16 @@ public class ANTSDevelopment
 		private static boolean doShowDebugScreenAll = true;
 		
 		private static boolean showFPS = true;
+		private static boolean showExtraInformation = true;
 		private static boolean showCurrentHoveringCellInfo = true;
 		private static boolean showCurrentInterpolation = true;
+		private static boolean showInterpolationStatus = true;
+		private  static boolean showBounds = true;
+		private static boolean showNrOfObjects = true;
 		
-		private  static boolean showBounds = false;
+		private static boolean interpolationOn = false;
+		
+		private static boolean recordFPS = false;
 		
 		private static Graphics2D g2d;
 		
@@ -39,8 +45,8 @@ public class ANTSDevelopment
 		
 		private static ANTSIController currentHoveringCell = ANTSCellController.getEmptyController();
 		private static ANTSFPS fps;
-		private static float interpolation;
 		
+		private static float interpolation;
 		
 		////////////////
 		//SHOW METHODS//
@@ -59,9 +65,25 @@ public class ANTSDevelopment
 				showCurrentHoveringCell();
 				showFPS();
 				showInterpolation();
+				showInterpolationStatus();
+				showFPSExtraInformation();
 			}
 		}
 		
+		private static void showFPSExtraInformation() 
+		{
+			if(showExtraInformation && debugModeOn)
+			{
+				drawString(String.format("average fps: %s", fps.getAverageFPS()));
+				updatePos();
+				drawString(String.format("min fps: %s", fps.getMinFPS()));
+				updatePos();
+				drawString(String.format("max fps: %s", fps.getMaxFPS()));
+				updatePos();
+			}
+			
+		}
+
 		///////////////////
 		//PRIVATE METHODS//
 		///////////////////
@@ -90,6 +112,15 @@ public class ANTSDevelopment
 			if(showFPS  && debugModeOn)
 			{
 				drawString(String.format("FPS: %s", fps.getFPS()));
+				updatePos();
+			}
+		}
+		
+		private static void showInterpolationStatus()
+		{
+			if(showInterpolationStatus && debugModeOn)
+			{
+				drawString(String.format("Interpolation status: %s", interpolationOn));
 				updatePos();
 			}
 		}
@@ -135,6 +166,11 @@ public class ANTSDevelopment
 		public static boolean isShowBounds()
 		{
 			return showBounds;
+		}
+
+		public static boolean getInterpolationOn() 
+		{
+			return interpolationOn;
 		}
 	}
 	

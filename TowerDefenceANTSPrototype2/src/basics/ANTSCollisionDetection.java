@@ -19,8 +19,8 @@ public class ANTSCollisionDetection
 	private int height;
 	private int width;
 	
-	private final int defaultCellsX = 1;		//TODO: IMPORTANT: If you have big objects the number of cells should be small! Otherwise the detection is not really working
-	private final int defaultCellsY = 1;
+	private final int defaultCellsX = 10;		//TODO: IMPORTANT: If you have big objects the number of cells should be small! Otherwise the detection is not really working
+	private final int defaultCellsY = 10;
 	
 	private int cellsX;
 	private int cellsY;
@@ -81,7 +81,7 @@ public class ANTSCollisionDetection
 	{
 		this.updateHashMap();
 		this.lookingForCollision();
-		this.resteAllUpdatedModels();
+		this.factory.resetUpdate();
 	}
 
 	private void updateHashMap() 
@@ -131,6 +131,7 @@ public class ANTSCollisionDetection
 	
 	private boolean isOutOfRange(int hashValue, int max) 
 	{
+		
 		if(hashValue<0 || hashValue>=max)
 		{	
 			return true;
@@ -204,7 +205,6 @@ public class ANTSCollisionDetection
 						}
 					}
 				}
-				
 			}
 		}
 	}
@@ -223,21 +223,21 @@ public class ANTSCollisionDetection
 		}
 	}
 	
-	private void resteAllUpdatedModels()
-	{
-		for(int cellX=0; cellX < this.cellsX; cellX++)
-		{
-			for(int cellY = 0; cellY < this.cellsY; cellY++)
-			{
-				ListIterator<ANTSIController> iterator = this.hashMap[cellX][cellY].getIteratorAll();
-				while(iterator.hasNext())
-				{
-					ANTSIController controller = iterator.next();
-					controller.getModel().setIsAlreadyUpdated(false);
-				}
-			}
-		}
-	}
+//	private void resteAllUpdatedModels()
+//	{
+//		for(int cellX=0; cellX < this.cellsX; cellX++)
+//		{
+//			for(int cellY = 0; cellY < this.cellsY; cellY++)
+//			{
+//				ListIterator<ANTSIController> iterator = this.hashMap[cellX][cellY].getIteratorAll();
+//				while(iterator.hasNext())
+//				{
+//					ANTSIController controller = iterator.next();
+//					controller.getModel().setIsAlreadyUpdated(false);
+//				}
+//			}
+//		}
+//	}
 	
 	
 	private class ANTSHashMapCell
