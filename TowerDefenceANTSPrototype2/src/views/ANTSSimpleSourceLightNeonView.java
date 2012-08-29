@@ -5,6 +5,7 @@ import interfaces.ANTSIView;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
@@ -89,6 +90,18 @@ public class ANTSSimpleSourceLightNeonView extends ANTSAbstractView implements A
 			g2d.setStroke(new BasicStroke());
 		}
 		
+		//Debug ROTATION CENTER:
+		
+		AffineTransform at = this.model.getCenter();
+		
+		Rectangle2D c = new Rectangle2D.Double(0,0,10,10);
+		
+		Shape s = at.createTransformedShape(c);
+		
+		g2d.setColor(Color.BLUE);
+		g2d.draw(s);
+		
+		//-------------
 		
 		if(this.model.isOn())
 		{

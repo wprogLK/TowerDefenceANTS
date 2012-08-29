@@ -11,6 +11,7 @@ import basics.ANTSDevelopment.ANTSStream;
 public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements ANTSIModel 
 {
 	private AffineTransform matrix;
+	private AffineTransform rotation;
 	private double length;
 	private double height;
 	private double angle;
@@ -21,7 +22,7 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 	private int ticksBetweenTwoRays = 2;
 	private int tickCounter;
 	
-	private double rotationStep = 1;
+	private double rotationStep = 0.5;
 	
 	//RayProperties:
 //	private int numberOfRaysPer360Degrees = 90;
@@ -35,6 +36,7 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 		super(factory);
 		
 		this.matrix = new AffineTransform();
+		this.rotation = new AffineTransform();
 		
 		this.matrix.setToTranslation(posX, posY);
 		
@@ -49,6 +51,8 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 		
 		this.isDragged = false;
 		this.isMouseListener = isMouseListener;
+		
+		this.updateCenter();
 	}
 	
 	///////////
@@ -63,6 +67,8 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 //		return tmpAngle;
 //	}
 	
+	
+
 	private double getDistanceBetweenTwoRays()
 	{
 		return ((double) this.length)/((double) this.numberOfRaysPerLength);
@@ -126,11 +132,16 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 	public void setPosition(int x, int y)
 	{
 		this.matrix.setToTranslation(x, y);
+//		this.matrix.concatenate(this.rotation);
 	}
 	
 	public void rotate(int direction)
 	{
-		this.matrix.rotate(direction*this.rotationStep);
+		this.angle+=direction*this.rotationStep;
+		
+		this.rotation.rotate(Math.toRadians(direction*this.rotationStep),length/2,height/2);
+		
+		this.matrix.concatenate(this.rotation);
 	}
 	
 	///////////
@@ -191,5 +202,11 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 			
 			tmpPosX += this.getDistanceBetweenTwoRays();
 		}
+	}
+	
+	private void updateCenter() 
+	{
+		this.center[0] = this.matrix.getTranslateX()+this.length/2;
+		this.center[1] = this.matrix.getTranslateY()+this.height/2;
 	}
 }

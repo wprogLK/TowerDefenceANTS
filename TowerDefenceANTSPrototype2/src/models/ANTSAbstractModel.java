@@ -32,6 +32,8 @@ public class ANTSAbstractModel implements ANTSIModel, ANTSIEventListener
 	protected boolean mouseEntered;
 	protected AffineTransform matrix;
 	
+	protected double[] center;
+	
 	public ANTSAbstractModel() 
 	{
 		this.matrix = new AffineTransform();
@@ -41,6 +43,8 @@ public class ANTSAbstractModel implements ANTSIModel, ANTSIEventListener
 		this.menus = new ArrayList<ANTSIMenuController>();
 		
 		this.mouseEntered = false;
+		
+		this.center =  new double[2];
 	}
 	
 	public ANTSAbstractModel(ANTSFactory factory)
@@ -54,6 +58,8 @@ public class ANTSAbstractModel implements ANTSIModel, ANTSIEventListener
 		this.menus = new ArrayList<ANTSIMenuController>();
 		
 		this.mouseEntered = false;
+		
+		this.center =  new double[2];
 	}
 	
 	///////////
@@ -106,6 +112,14 @@ public class ANTSAbstractModel implements ANTSIModel, ANTSIEventListener
 	@Override
 	public boolean isAlreadyUpdated() {
 		return this.isAlreadyUpdated;
+	}
+	
+	public final AffineTransform getCenter()
+	{
+		AffineTransform centerAT = new AffineTransform();
+		centerAT.setToTranslation(center[0], center[1]);
+		
+		return centerAT;
 	}
 
 
