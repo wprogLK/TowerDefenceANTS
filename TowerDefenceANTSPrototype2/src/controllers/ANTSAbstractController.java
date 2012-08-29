@@ -1,6 +1,7 @@
 package controllers;
 
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import java.util.Iterator;
 
 import javax.swing.SwingUtilities;
@@ -256,11 +257,17 @@ public class ANTSAbstractController extends ANTSEventListenerHandler implements 
 		}
 	}
 	
-	protected final boolean containsPoint(int x, int y)
-	{
-		return this.model.containsPoint(x, y) || this.iview.containsPoint(x,y);
-	}
 	
+	
+	@Override
+	public final void mouseWheelMoved(MouseWheelEvent e) 
+	{
+		if(this.containsPoint(e.getX(),e.getY()))
+		{
+			this.mouseWheelMovedANTS(e);
+		}
+		
+	}
 	
 	///////////////////
 	//Mouse "Actions"//
@@ -329,4 +336,20 @@ public class ANTSAbstractController extends ANTSEventListenerHandler implements 
 	{
 
 	}
+	
+	public void mouseWheelMovedANTS(MouseWheelEvent e)
+	{
+		
+	}
+	
+	///////////
+	//SPECIAL//
+	///////////
+	
+	protected final boolean containsPoint(int x, int y)
+	{
+		return this.model.containsPoint(x, y) || this.iview.containsPoint(x,y);
+	}
+
+
 }

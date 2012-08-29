@@ -2,6 +2,7 @@ package controllers;
 
 import java.awt.Color;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 
 import basics.ANTSFactory;
 
@@ -68,5 +69,17 @@ public class ANTSSimpleSourceLightNeonController extends ANTSAbstractController 
 //		this.model.setPosition(e.getX()/2, e.getY()/2);	// /2 because of the the center of the source is in the center of the ellipse
 //		this.model.setPosition((int) (e.getX()-this.model.getRadius()), (int) (e.getY()-this.model.getRadius()));
 		this.model.setPosition((int) (e.getX()-this.model.getLength()/2), (int) (e.getY()-this.model.getLength()/4));
+	}
+	
+	@Override
+	public void mouseWheelMovedANTS(MouseWheelEvent e)
+	{
+		this.model.rotate(e.getWheelRotation());
+		
+	}
+	
+	
+	{
+		
 	}
 }

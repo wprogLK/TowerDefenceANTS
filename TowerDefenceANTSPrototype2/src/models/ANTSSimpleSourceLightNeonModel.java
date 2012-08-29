@@ -21,6 +21,8 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 	private int ticksBetweenTwoRays = 2;
 	private int tickCounter;
 	
+	private double rotationStep = 1;
+	
 	//RayProperties:
 //	private int numberOfRaysPer360Degrees = 90;
 //	private int angle = 360;
@@ -124,6 +126,11 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 	public void setPosition(int x, int y)
 	{
 		this.matrix.setToTranslation(x, y);
+	}
+	
+	public void rotate(int direction)
+	{
+		this.matrix.rotate(direction*this.rotationStep);
 	}
 	
 	///////////

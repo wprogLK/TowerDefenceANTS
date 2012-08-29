@@ -101,6 +101,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	{
 		this.canvas.addMouseListener(c);
 		this.canvas.addMouseMotionListener(c);
+		this.canvas.addMouseWheelListener(c);
 	}
 	
 	//Create new objects
