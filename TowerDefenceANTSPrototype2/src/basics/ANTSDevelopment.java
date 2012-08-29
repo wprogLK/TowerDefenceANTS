@@ -28,12 +28,13 @@ public class ANTSDevelopment
 		private static boolean showCurrentHoveringCellInfo = true;
 		private static boolean showCurrentInterpolation = true;
 		private static boolean showInterpolationStatus = true;
-		private  static boolean showBounds = true;
-		private static boolean showNrOfObjects = true;
+		private  static boolean showBounds = false;
+		private static boolean showNrOfObjects = true;		//TODO
+		private static boolean showDetectionGrid = true;
 		
 		private static boolean interpolationOn = false;
 		
-		private static boolean recordFPS = false;
+		private static boolean recordFPS = false;			//TODO
 		
 		private static Graphics2D g2d;
 		
@@ -171,6 +172,11 @@ public class ANTSDevelopment
 		public static boolean getInterpolationOn() 
 		{
 			return interpolationOn;
+		}
+
+		public static boolean isShowDetectionGrid() 
+		{
+			return showDetectionGrid;
 		}
 	}
 	

@@ -6,11 +6,14 @@ import java.awt.Color;
 import java.awt.geom.AffineTransform;
 
 import basics.ANTSFactory;
+import basics.ANTSDevelopment.ANTSStream;
 
-public class ANTSSimpleSourceLightModel extends ANTSAbstractModel implements ANTSIModel 
+public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements ANTSIModel 
 {
 	private AffineTransform matrix;
-	private double radius;
+	private double length;
+	private double height;
+	private double angle;
 	
 	private boolean on;
 	private Color color;
@@ -19,11 +22,13 @@ public class ANTSSimpleSourceLightModel extends ANTSAbstractModel implements ANT
 	private int tickCounter;
 	
 	//RayProperties:
-	private int numberOfRaysPer360Degrees = 90;
-	private int angle = 360;
-	private double angleOffset = 0;
+//	private int numberOfRaysPer360Degrees = 90;
+//	private int angle = 360;
+//	private double angleOffset = 0;
 	
-	public ANTSSimpleSourceLightModel(double posX, double posY, double radius, Color color, boolean isMouseListener, ANTSFactory factory)
+	private int numberOfRaysPerLength = 10;
+	
+	public ANTSSimpleSourceLightNeonModel(double posX, double posY, double length, Color color, boolean isMouseListener, ANTSFactory factory)
 	{
 		super(factory);
 		
@@ -31,7 +36,9 @@ public class ANTSSimpleSourceLightModel extends ANTSAbstractModel implements ANT
 		
 		this.matrix.setToTranslation(posX, posY);
 		
-		this.radius = radius;
+		this.length = length;
+		this.height = 50;		//TODO
+		this.angle = 0;
 		
 		this.on = false;		//TODO
 		this.color = color;
@@ -46,17 +53,23 @@ public class ANTSSimpleSourceLightModel extends ANTSAbstractModel implements ANT
 	//Getters//
 	///////////
 
-	private double getAngleBetweetTwoRays()
-	{	
-		Double d = (double) this.numberOfRaysPer360Degrees;
-		Double tmpAngle = 360/d;
-		
-		return tmpAngle;
+//	private double getAngleBetweetTwoRays()
+//	{	
+//		Double d = (double) this.numberOfRaysPer360Degrees;
+//		Double tmpAngle = 360/d;
+//		
+//		return tmpAngle;
+//	}
+	
+	private double getDistanceBetweenTwoRays()
+	{
+		return ((double) this.length)/((double) this.numberOfRaysPerLength);
 	}
 	
 	public int getNumberOfRays()
 	{
-		return this.numberOfRaysPer360Degrees/(360/this.angle);
+		return this.numberOfRaysPerLength;
+//		return (int) (this.length/this.numberOfRaysPerLength);
 	}
 	
 	public boolean isDragged()
@@ -74,9 +87,14 @@ public class ANTSSimpleSourceLightModel extends ANTSAbstractModel implements ANT
 		return this.matrix.getTranslateY();
 	}
 	
-	public double getRadius()
+	public double getLength()
 	{
-		return this.radius;
+		return this.length;
+	}
+	
+	public double getHeight()
+	{
+		return this.height;
 	}
 	
 	public AffineTransform getMatrix()
@@ -96,7 +114,7 @@ public class ANTSSimpleSourceLightModel extends ANTSAbstractModel implements ANT
 	
 	public String toString()
 	{
-		return "Model: X: " + this.matrix.getTranslateX() + " Y: " + this.matrix.getTranslateY() + " Radius : " +this.radius + " COLOR: " + this.color;
+		return "Model: X: " + this.matrix.getTranslateX() + " Y: " + this.matrix.getTranslateY() + " Length : " +this.length + " COLOR: " + this.color;
 	}
 	
 	///////////
@@ -154,30 +172,17 @@ public class ANTSSimpleSourceLightModel extends ANTSAbstractModel implements ANT
 	
 	private void createRays()
 	{
-		double tmpAngle = this.angleOffset;
+		double tmpPosX = 0;
+		
+		//TODO rays in both directions
 		
 		for(int numberRay = 0; numberRay<this.getNumberOfRays(); numberRay++)
 		{
-			double[] center = {this.matrix.getTranslateX()+this.radius/2, this.matrix.getTranslateY()+this.radius/2};
 			
-			this.factory.createSimpleRayLight(center, 10, tmpAngle, this.color);
-			tmpAngle+=this.getAngleBetweetTwoRays();
+			double[] pos = {this.matrix.getTranslateX()+tmpPosX, this.matrix.getTranslateY()+this.height/2};
+			this.factory.createSimpleRayLight(pos, 10, this.angle-90, this.color);
+			
+			tmpPosX += this.getDistanceBetweenTwoRays();
 		}
 	}
-	
-//	private void createRays()
-//	{
-//		double tmpAngle = this.angleOffset;
-//		
-//		for(int numberRay = 0; numberRay<this.getNumberOfRays(); numberRay++)
-//		{
-//			//this.factory.createSimpleRayLight(this.matrix, 10, tmpAngle, this.color);
-//			
-//			Double[] center = {this.matrix.getTranslateX()-this.radius/2, this.matrix.getTranslateY()-this.radius/2};
-//			
-//			this.factory.createSimpleRayLight2(center,10,tmpAngle,this.color);
-//			tmpAngle+=this.getAngleBetweetTwoRays();
-//		}
-//	}
-
 }

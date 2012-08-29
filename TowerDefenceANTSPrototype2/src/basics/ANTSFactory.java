@@ -18,6 +18,7 @@ import controllers.ANTSGridController;
 import controllers.ANTSSimpleMediumController;
 import controllers.ANTSSimpleRayLightController;
 import controllers.ANTSSimpleSourceLightController;
+import controllers.ANTSSimpleSourceLightNeonController;
 import controllers.menus.ANTSCircleMenuController;
 import controllers.menus.ANTSRectangleMenuController;
 
@@ -68,10 +69,15 @@ public class ANTSFactory
 		this.addController(c);
 	}
 	
-	public void createSimpleRayLight2(double[] center, double velocity, double angle, Color sourceColor) {
-		ANTSSimpleRayLightController c = new ANTSSimpleRayLightController(center, velocity, angle, sourceColor, this);
+	public void createSimpeSourceLigthNeon(double posX, double posY, double length, Color color, boolean isMouseListener)
+	{
+		ANTSSimpleSourceLightNeonController c = new ANTSSimpleSourceLightNeonController(posX, posY, length, color, isMouseListener, this);
 		this.addController(c);
-		
+	}
+	
+	public void createSimpleRayLight(double[] center, double velocity, double angle, Color sourceColor) {
+		ANTSSimpleRayLightController c = new ANTSSimpleRayLightController(center, 5, angle, sourceColor, this);
+		this.addController(c);
 	}
 	
 	public void createGame()
@@ -214,12 +220,16 @@ public class ANTSFactory
 				view.paint(g2d, interpolation);
 			}
 		}
+		
+		this.collisionDetection.paintDetectionGrid(g2d);
+		
+		
 	}
 	
 	public void removeController(ANTSIController c)
 	{
 		boolean value = this.controllers.remove(c);
-		ANTSStream.print("remove");
+		
 		if(!value)
 		{
 			ANTSStream.printErr("Error: The gameObject " + c + "couldn't remove in the ANTSFactory Class!" );	//TODO (check this)

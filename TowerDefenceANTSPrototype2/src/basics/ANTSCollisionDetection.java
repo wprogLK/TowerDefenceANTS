@@ -3,24 +3,26 @@ package basics;
 import interfaces.ANTSIController;
 import interfaces.ANTSIMediumController;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.geom.Rectangle2D;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
+import basics.ANTSDevelopment.ANTSDebug;
 import basics.ANTSDevelopment.ANTSStream;
 
-import controllers.ANTSSimpleMediumController;
 import controllers.ANTSSimpleRayLightController;
-
-
 
 public class ANTSCollisionDetection 
 {
 	private int height;
 	private int width;
 	
-	private final int defaultCellsX = 10;		//TODO: IMPORTANT: If you have big objects the number of cells should be small! Otherwise the detection is not really working
-	private final int defaultCellsY = 10;
+	private final int defaultCellsX = 5;		//TODO: IMPORTANT: If you have big objects the number of cells should be small! Otherwise the detection is not really working
+	private final int defaultCellsY = 5;
 	
 	private int cellsX;
 	private int cellsY;
@@ -39,13 +41,16 @@ public class ANTSCollisionDetection
 		this.cellsX = cellsX;
 		this.cellsY = cellsY;
 		
+		double cellHeight = this.height/cellsY;
+		double cellWidth = this.width/cellsX;
+		
 		this.hashMap = new ANTSHashMapCell[cellsX][cellsY];
 		
 		for(int x=0; x<this.hashMap.length; x++)
 		{
 			for(int y = 0; y < this.hashMap[x].length; y++)
 			{
-				this.hashMap[x][y] = new ANTSHashMapCell();
+				this.hashMap[x][y] = new ANTSHashMapCell(x,y,cellHeight,cellWidth);
 			}
 		}
 	}
@@ -60,13 +65,16 @@ public class ANTSCollisionDetection
 		this.cellsX = defaultCellsX;
 		this.cellsY = defaultCellsY;
 		
+		double cellHeight = this.height/cellsY;
+		double cellWidth = this.width/cellsX;
+		
 		this.hashMap = new ANTSHashMapCell[cellsX][cellsY];
 		
 		for(int x=0; x<this.hashMap.length; x++)
 		{
 			for(int y = 0; y < this.hashMap[x].length; y++)
 			{
-				this.hashMap[x][y] = new ANTSHashMapCell();
+				this.hashMap[x][y] = new ANTSHashMapCell(x,y,cellHeight,cellWidth);
 			}
 		}
 	}
@@ -223,32 +231,45 @@ public class ANTSCollisionDetection
 		}
 	}
 	
-//	private void resteAllUpdatedModels()
-//	{
-//		for(int cellX=0; cellX < this.cellsX; cellX++)
-//		{
-//			for(int cellY = 0; cellY < this.cellsY; cellY++)
-//			{
-//				ListIterator<ANTSIController> iterator = this.hashMap[cellX][cellY].getIteratorAll();
-//				while(iterator.hasNext())
-//				{
-//					ANTSIController controller = iterator.next();
-//					controller.getModel().setIsAlreadyUpdated(false);
-//				}
-//			}
-//		}
-//	}
-	
+	public void paintDetectionGrid(Graphics2D g2d)
+	{
+		if(ANTSDebug.isShowDetectionGrid())
+		{
+			for(int cellX = 0; cellX<this.cellsX; cellX++)
+			{
+				for(int cellY = 0; cellY<this.cellsY; cellY++)
+				{
+					this.hashMap[cellX][cellY].paint(g2d);
+				}
+			}
+		}
+	}
 	
 	private class ANTSHashMapCell
 	{
 		private LinkedList<ANTSIController> rays;
 		private LinkedList<ANTSIMediumController> medium;
 		
-		public ANTSHashMapCell()
+		private int x;
+		private int y;
+		
+		private double height;
+		private double width;
+		
+		private Shape shape;
+		
+		public ANTSHashMapCell(int x, int y, double height, double width)
 		{
 			this.rays = new LinkedList<ANTSIController>();
 			this.medium = new LinkedList<ANTSIMediumController>();
+
+			this.x = (int) (x*width);
+			this.y = (int) (y*height);
+			this.height = height;
+			this.width = width;
+			
+			this.shape = new Rectangle2D.Double(this.x, this.y, this.width, this.height);
+			
 		}
 		
 		public LinkedList<ANTSIController> getRays() 
@@ -301,6 +322,22 @@ public class ANTSCollisionDetection
 			total.addAll(this.rays);
 			
 			return total.listIterator();
+		}
+		
+		public void paint(Graphics2D g2d)
+		{
+			if(!this.medium.isEmpty())
+			{
+				g2d.setColor(Color.RED);
+			}
+			else
+			{
+				g2d.setColor(Color.BLUE);
+			}
+		
+			g2d.draw(this.shape);
+			
+			
 		}
 	}
 	
