@@ -1,7 +1,7 @@
 package models;
 
-import interfaces.ANTSIMediumController;
 import interfaces.ANTSIModel;
+import interfaces.medium.ANTSIMediumController;
 
 import java.awt.Color;
 import java.awt.Shape;

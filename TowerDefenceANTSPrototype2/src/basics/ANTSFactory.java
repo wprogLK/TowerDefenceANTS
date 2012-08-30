@@ -15,12 +15,12 @@ import basics.ANTSDevelopment.ANTSStream;
 import controllers.ANTSCellController;
 import controllers.ANTSGameController;
 import controllers.ANTSGridController;
-import controllers.ANTSSimpleMediumController;
 import controllers.ANTSSimpleRayLightController;
-import controllers.ANTSSimpleSourceLightController;
-import controllers.ANTSSimpleSourceLightNeonController;
+import controllers.medium.ANTSSimpleMediumController;
 import controllers.menus.ANTSCircleMenuController;
 import controllers.menus.ANTSRectangleMenuController;
+import controllers.sourceLight.ANTSSimpleSourceLightController;
+import controllers.sourceLight.ANTSSimpleSourceLightNeonController;
 
 public class ANTSFactory
 {

@@ -1,7 +1,7 @@
 package basics;
 
 import interfaces.ANTSIController;
-import interfaces.ANTSIMediumController;
+import interfaces.medium.ANTSIMediumController;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
