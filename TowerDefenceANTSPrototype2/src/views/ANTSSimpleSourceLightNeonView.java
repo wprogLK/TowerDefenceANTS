@@ -91,34 +91,6 @@ public class ANTSSimpleSourceLightNeonView extends ANTSAbstractView implements A
 			g2d.setStroke(new BasicStroke());
 		}
 		
-		//Debug rotate a point:
-		
-		AffineTransform atC = this.model.getCenter();
-		AffineTransform atM = this.model.getMatrix();
-		
-		Rectangle2D cRec = new Rectangle2D.Double(0,0,1,1);	//center
-		Rectangle2D pPreRec = new Rectangle2D.Double(10,10,1,1);	//previous point
-		
-		Point2D pPrev = new Point2D.Double(10, 10);
-		Point2D pAfter = new Point2D.Double(10,10);
-		
-		atM.transform(pPrev,pAfter );
-//		at.transform(ptSrc, ptDst)
-		
-		Rectangle2D pAfterRec = new Rectangle2D.Double(pAfter.getX(),pAfter.getY(),10,10);
-		
-		Shape sCenter = atC.createTransformedShape(cRec);
-		Shape sPrevPoint = atM.createTransformedShape(pPreRec);
-//		Shape sAfterPoint = at.createTransformedShape(pAfterRec);
-		
-		g2d.setColor(Color.BLUE);
-		g2d.draw(sCenter);
-		g2d.draw(sPrevPoint);
-		
-		g2d.setColor(Color.RED);
-		g2d.draw(pAfterRec);
-		
-		//-------------
 		
 		if(this.model.isOn())
 		{
@@ -133,30 +105,6 @@ public class ANTSSimpleSourceLightNeonView extends ANTSAbstractView implements A
 		
 		this.paintBounds(g2d);
 	}
-	
-	
-public Point2D rotatePoint(Point2D punkt, Point2D ursprung, double rot)
-{
-		double x = punkt.getX();
-		double y = punkt.getY();
-	
-		x-=ursprung.getX();
-        y-=ursprung.getY();
-        
-        double radius=Math.sqrt(punkt.getX()*punkt.getX()+punkt.getY()*punkt.getY());
-        
-        rot+=Math.atan2(punkt.getY(), punkt.getX()) * 180 / Math.PI;
-        
-       // double radWinkel = rot / 180.0 * Math.PI;
-        double radWinkel = Math.toRadians(rot);
-        
-        Point2D.Double point = new Point2D.Double();
-        
-        point.x = Math.cos(radWinkel) * radius + ursprung.getX();
-        point.y = Math.sin(radWinkel) * radius + ursprung.getY();
-        
-        return point;
-    }
 	
 	@Override
 	public void paint(Graphics2D g2d, float interpolation) 

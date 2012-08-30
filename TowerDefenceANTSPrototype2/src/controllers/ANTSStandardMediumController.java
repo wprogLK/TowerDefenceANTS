@@ -1,5 +1,6 @@
 package controllers;
 
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 
 import basics.ANTSFactory;
@@ -11,22 +12,23 @@ import interfaces.ANTSIModel;
 import interfaces.ANTSIView;
 
 import views.ANTSSimpleMediumView;
+import views.ANTSStandardMediumView;
 
 import models.ANTSSimpleMediumModel;
+import models.ANTSStandardMediumModel;
 
-public class ANTSSimpleMediumController extends ANTSAbstractMediumController implements ANTSIMediumController
+public class ANTSStandardMediumController extends ANTSAbstractMediumController implements ANTSIMediumController
 {
-	private ANTSSimpleMediumModel model;
-	private ANTSSimpleMediumView view;
+	private ANTSStandardMediumModel model;
+	private ANTSStandardMediumView view;
 	
-	public ANTSSimpleMediumController(double posX, double posY, double height, double width, boolean isMouseListener, ANTSFactory factory)
+	public ANTSStandardMediumController(ANTSFactory factory)
 	{
-		this.model = new ANTSSimpleMediumModel(posX,posY,height,width,isMouseListener, factory);
-		this.view = new ANTSSimpleMediumView(this.model);
+		this.model = new ANTSStandardMediumModel(factory);
+		this.view = new ANTSStandardMediumView(this.model);
 		
 		this.iview = view;
 		this.setIModel(this.model);
-		this.setModel(this.model);
 	}
 	
 	///////////
@@ -38,11 +40,6 @@ public class ANTSSimpleMediumController extends ANTSAbstractMediumController imp
 		return this.model;
 	}
 	
-	public ANTSSimpleMediumView getView()
-	{
-		return this.view;
-	}
-
 	public ANTSIView getIView()
 	{
 		return this.view;
@@ -57,7 +54,7 @@ public class ANTSSimpleMediumController extends ANTSAbstractMediumController imp
 	//SPECIAL//
 	///////////
 	
-	@Override
+//	@Override
 //	public void handleCollision(ANTSIController c)
 //	{
 //		if(c.getClass().equals(ANTSSimpleRayLightController.class))
@@ -118,25 +115,4 @@ public class ANTSSimpleMediumController extends ANTSAbstractMediumController imp
 //			return false;
 //		
 //	}
-	
-	//////////////////
-	//MOUSE LISTENER//
-	//////////////////
-	
-//	@Override
-//	public void mouseLeftClickedANTS(MouseEvent e) 
-//	{
-//	}
-	
-	/////////////////////////
-	//MOUSE MOTION LISTENER//
-	/////////////////////////
-	
-	
-	public void mouseDraggedANTS(MouseEvent e) 
-	{
-		this.model.setPosition((int) (e.getX()-this.model.getWidth()/2), (int) (e.getY()-this.model.getHeight()/2));
-	}
-
-	
 }

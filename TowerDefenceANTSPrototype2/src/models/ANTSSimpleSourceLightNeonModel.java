@@ -20,15 +20,12 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 	private boolean on;
 	private Color color;
 	
-	private int ticksBetweenTwoRays = 2;
+	private int ticksBetweenTwoRays = 10;
 	private int tickCounter;
 	
 	private double rotationStep = 0.5;
 	
 	//RayProperties:
-//	private int numberOfRaysPer360Degrees = 90;
-//	private int angle = 360;
-//	private double angleOffset = 0;
 	
 	private int numberOfRaysPerLength = 10;
 	
@@ -60,16 +57,6 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 	//Getters//
 	///////////
 
-//	private double getAngleBetweetTwoRays()
-//	{	
-//		Double d = (double) this.numberOfRaysPer360Degrees;
-//		Double tmpAngle = 360/d;
-//		
-//		return tmpAngle;
-//	}
-	
-	
-
 	private double getDistanceBetweenTwoRays()
 	{
 		return ((double) this.length)/((double) this.numberOfRaysPerLength);
@@ -78,7 +65,6 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 	public int getNumberOfRays()
 	{
 		return this.numberOfRaysPerLength;
-//		return (int) (this.length/this.numberOfRaysPerLength);
 	}
 	
 	public boolean isDragged()
@@ -193,11 +179,9 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 	{
 		double tmpPosX = 0;
 		
-		//TODO rays in both directions
-		
 		for(int numberRay = 0; numberRay<this.getNumberOfRays(); numberRay++)
 		{
-			Point2D.Double pointUp = new Point2D.Double(tmpPosX, 0);
+			Point2D.Double pointUp = new Point2D.Double(tmpPosX,  this.height);
 			Point2D.Double pointDown = new Point2D.Double(tmpPosX, this.height);
 			
 			this.matrix.transform(pointUp, pointUp);
@@ -208,6 +192,7 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 			
 			this.factory.createSimpleRayLight(posUp, 10, this.angle-90, this.color);
 			this.factory.createSimpleRayLight(posDown, 10, this.angle+90, this.color);
+			
 			tmpPosX += this.getDistanceBetweenTwoRays();
 		}
 	}
@@ -217,6 +202,6 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 		this.center[0] = this.matrix.getTranslateX()+this.length/2;
 		this.center[1] = this.matrix.getTranslateY()+this.height/2;
 		
-		this.matrix.concatenate(this.rotation);
+//		this.matrix.concatenate(this.rotation);
 	}
 }

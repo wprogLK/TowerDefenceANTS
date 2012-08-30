@@ -9,11 +9,10 @@ import controllers.ANTSSimpleRayLightController;
 
 import basics.ANTSFactory;
 
-public class ANTSSimpleMediumModel extends ANTSAbstractModel implements ANTSIModel 
+public class ANTSSimpleMediumModel extends ANTSAbstractMediumModel implements ANTSIModel 
 {
 	private AffineTransform matrix;
 	
-	private double refractionIndex = 1;
 	private double height = 100;
 	private double width = 100;
 	
@@ -22,9 +21,7 @@ public class ANTSSimpleMediumModel extends ANTSAbstractModel implements ANTSIMod
 	
 	public ANTSSimpleMediumModel(double posX, double posY, double height, double width, boolean isMouseListener, ANTSFactory factory)
 	{
-		super(factory);
-		
-		this.isCollisionDetected = true;
+		super(true,factory);
 		
 		this.matrix = new AffineTransform();
 		this.rays = new ArrayList<ANTSSimpleRayLightController>();
@@ -72,25 +69,10 @@ public class ANTSSimpleMediumModel extends ANTSAbstractModel implements ANTSIMod
 		return this.matrix;
 	}
 		
-	public double getRefractionIndex()
-	{
-		return this.refractionIndex;
-	}
 	
 	public String toString()
 	{
 		return "Model simple medium";
-	}
-	
-	public boolean containsRay(ANTSSimpleRayLightController c)
-	{
-		return this.rays.contains(c);
-	}
-	
-	public double getAngle(double refractionIndexOtherMedium)
-	{
-		//TODO
-		return 45;
 	}
 	
 	///////////
@@ -110,22 +92,5 @@ public class ANTSSimpleMediumModel extends ANTSAbstractModel implements ANTSIMod
 	public void update()
 	{
 
-	}
-
-	public void addRay(ANTSSimpleRayLightController rayLightController, double refractoringIndexOfOtherMedium) {
-		if(!this.containsRay(rayLightController))
-		{
-			this.rays.add(rayLightController);
-			rayLightController.addAngle(this.getAngle(refractoringIndexOfOtherMedium));
-		}
-	}
-
-	public void removeRay(ANTSSimpleRayLightController rayLightController, int refractoringIndexOfOtherMedium) 
-	{	
-		if(this.containsRay(rayLightController))
-		{
-			this.rays.remove(rayLightController);
-			rayLightController.addAngle(-this.getAngle(refractoringIndexOfOtherMedium));	//TODO check this
-		}
 	}
 }

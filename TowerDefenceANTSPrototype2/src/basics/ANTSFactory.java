@@ -76,7 +76,7 @@ public class ANTSFactory
 	}
 	
 	public void createSimpleRayLight(double[] center, double velocity, double angle, Color sourceColor) {
-		ANTSSimpleRayLightController c = new ANTSSimpleRayLightController(center, 5, angle, sourceColor, this);
+		ANTSSimpleRayLightController c = new ANTSSimpleRayLightController(center, velocity, angle, sourceColor, this);
 		this.addController(c);
 	}
 	
