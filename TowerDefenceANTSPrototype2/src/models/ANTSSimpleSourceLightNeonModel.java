@@ -4,6 +4,7 @@ import interfaces.ANTSIModel;
 
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 
 import basics.ANTSFactory;
 import basics.ANTSDevelopment.ANTSStream;
@@ -132,7 +133,7 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 	public void setPosition(int x, int y)
 	{
 		this.matrix.setToTranslation(x, y);
-//		this.matrix.concatenate(this.rotation);
+		this.updateCenter();
 	}
 	
 	public void rotate(int direction)
@@ -196,10 +197,17 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 		
 		for(int numberRay = 0; numberRay<this.getNumberOfRays(); numberRay++)
 		{
+			Point2D.Double pointUp = new Point2D.Double(tmpPosX, 0);
+			Point2D.Double pointDown = new Point2D.Double(tmpPosX, this.height);
 			
-			double[] pos = {this.matrix.getTranslateX()+tmpPosX, this.matrix.getTranslateY()+this.height/2};
-			this.factory.createSimpleRayLight(pos, 10, this.angle-90, this.color);
+			this.matrix.transform(pointUp, pointUp);
+			this.matrix.transform(pointDown, pointDown);
 			
+			double[] posUp = {pointUp.getX(),pointUp.getY()};
+			double[] posDown = {pointDown.getX(),pointDown.getY()};
+			
+			this.factory.createSimpleRayLight(posUp, 10, this.angle-90, this.color);
+			this.factory.createSimpleRayLight(posDown, 10, this.angle+90, this.color);
 			tmpPosX += this.getDistanceBetweenTwoRays();
 		}
 	}
@@ -208,5 +216,7 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 	{
 		this.center[0] = this.matrix.getTranslateX()+this.length/2;
 		this.center[1] = this.matrix.getTranslateY()+this.height/2;
+		
+		this.matrix.concatenate(this.rotation);
 	}
 }
