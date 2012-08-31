@@ -72,6 +72,12 @@ public class ANTSSimpleRayLightController extends ANTSAbstractController impleme
 		
 	}
 
+	@Override
+	public double getAngle() 
+	{
+		return this.model.getAngle();
+	}
+
 
 
 }

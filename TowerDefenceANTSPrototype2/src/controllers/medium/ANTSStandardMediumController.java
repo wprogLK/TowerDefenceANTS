@@ -46,13 +46,20 @@ public class ANTSStandardMediumController extends ANTSAbstractMediumController i
 	}
 	
 	@Override
-	public double getRefractionIndex() {
+	public double getRefractionIndex() 
+	{
 		return this.model.getRefractionIndex();
 	}
 	
 	///////////
 	//SPECIAL//
 	///////////
+	
+	@Override
+	protected void calculatePlumbAngle(ANTSIController c) 
+	{
+		//TODO or do nothing
+	}
 	
 //	@Override
 //	public void handleCollision(ANTSIController c)

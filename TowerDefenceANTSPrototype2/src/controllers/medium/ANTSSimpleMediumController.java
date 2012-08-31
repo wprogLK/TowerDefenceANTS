@@ -1,12 +1,16 @@
 package controllers.medium;
 
 import java.awt.event.MouseEvent;
+import java.util.Arrays;
+
+import controllers.ANTSSimpleRayLightController;
 
 import basics.ANTSFactory;
 import basics.ANTSDevelopment.ANTSStream;
 
 import interfaces.ANTSIController;
 import interfaces.ANTSIModel;
+import interfaces.ANTSIRayController;
 import interfaces.ANTSIView;
 import interfaces.medium.ANTSIMediumController;
 
@@ -57,35 +61,19 @@ public class ANTSSimpleMediumController extends ANTSAbstractMediumController imp
 	//SPECIAL//
 	///////////
 	
-	@Override
-//	public void handleCollision(ANTSIController c)
-//	{
-//		if(c.getClass().equals(ANTSSimpleRayLightController.class))
-//		{
-//			ANTSSimpleRayLightController rayLightController = (ANTSSimpleRayLightController) c;
-//			
-//			rayLightController.addAngle(this.model.getAngle(1));
-//		}
-//		else
-//		{
-//			ANTSStream.printDebug("it's not a ray");
-//		}
-//	}
+	protected void calculatePlumbAngle(ANTSIController c)
+	{
+		ANTSStream.printDebug("calc plumb angle");
+		if(Arrays.asList(c.getClass().getInterfaces()).contains(ANTSIRayController.class))
+		{
+			ANTSIRayController ray = (ANTSIRayController) c;
+			this.view.calculatePlumbAngle(ray);
+		}
+		
+
+	}
+	
 //	
-//	@Override
-//	public void addCollisionRay(ANTSIController c)
-//	{
-//		if(c.getClass().equals(ANTSSimpleRayLightController.class))
-//		{
-//			ANTSSimpleRayLightController rayLightController = (ANTSSimpleRayLightController) c;
-//			
-//			this.model.addRay(rayLightController);	//TODO refractionIndex
-//		}
-//		else
-//		{
-//			ANTSStream.printDebug("it's not a ray");
-//		}
-//	}
 //	
 //	@Override
 //	public void removeCollisionRay(ANTSIController c)

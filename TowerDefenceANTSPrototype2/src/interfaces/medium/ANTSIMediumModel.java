@@ -8,10 +8,13 @@ public interface ANTSIMediumModel
 
 	boolean containsRay(ANTSSimpleRayLightController c);
 
-	double getAngle(double refractionIndexOtherMedium);
-
 	void addRay(ANTSSimpleRayLightController rayLightController);
 
 	void removeRay(ANTSSimpleRayLightController rayLightController);
+	
+	public double getPlumbAngle();
+	public void setPlumbAngle(double angle);
+
+	double getAngle(ANTSSimpleRayLightController rayLightController);
 
 }

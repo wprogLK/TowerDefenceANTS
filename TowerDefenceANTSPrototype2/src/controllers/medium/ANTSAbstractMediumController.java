@@ -12,7 +12,7 @@ import interfaces.ANTSIController;
 import interfaces.medium.ANTSIMediumController;
 import interfaces.medium.ANTSIMediumModel;
 
-public class ANTSAbstractMediumController extends ANTSAbstractController implements ANTSIMediumController
+public abstract class ANTSAbstractMediumController extends ANTSAbstractController implements ANTSIMediumController
 {
 	protected ANTSIMediumModel model;
 	
@@ -53,11 +53,21 @@ public class ANTSAbstractMediumController extends ANTSAbstractController impleme
 //		}
 //	}
 	
+	protected abstract void calculatePlumbAngle(ANTSIController c);
+
+	@Override
+	public boolean doesCollideWith(ANTSIController c) 
+	{
+		;
+		return  this.iview.doesCollideWith(c.getIView().getShape());
+	}
+	
 	@Override
 	public final void addCollisionRay(ANTSIController c)
 	{
 		if(c.getClass().equals(ANTSSimpleRayLightController.class))
 		{
+			calculatePlumbAngle(c);
 			ANTSSimpleRayLightController rayLightController = (ANTSSimpleRayLightController) c;
 			
 			rayLightController.setCurrentMedium(this);
@@ -74,7 +84,10 @@ public class ANTSAbstractMediumController extends ANTSAbstractController impleme
 	{
 		if(c.getClass().equals(ANTSSimpleRayLightController.class))
 		{
+			calculatePlumbAngle(c);
 			ANTSSimpleRayLightController rayLightController = (ANTSSimpleRayLightController) c;
+			
+			//TODO setStandardMedium to ray!!!
 			
 			this.model.removeRay(rayLightController);	//TODO refractionIndex
 		}
