@@ -109,6 +109,11 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 	{
 		return this.length;
 	}
+	
+	public double getAngle()
+	{
+		return this.angle;
+	}
 
 	
 

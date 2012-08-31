@@ -1,6 +1,7 @@
 package models.medium;
 
 import interfaces.ANTSIModel;
+import interfaces.ANTSIView;
 import interfaces.medium.ANTSIMediumModel;
 
 import java.util.ArrayList;
@@ -11,12 +12,11 @@ import controllers.ANTSSimpleRayLightController;
 
 import basics.ANTSFactory;
 
-public class ANTSAbstractMediumModel extends ANTSAbstractModel implements ANTSIModel, ANTSIMediumModel
+public abstract class ANTSAbstractMediumModel extends ANTSAbstractModel implements ANTSIModel, ANTSIMediumModel
 {
 	private double refractionIndex = 1;
 	
 	private ArrayList<ANTSSimpleRayLightController> rays;
-	
 	
 	public ANTSAbstractMediumModel(boolean isCollisionDetection ,ANTSFactory factory)
 	{
@@ -54,6 +54,7 @@ public class ANTSAbstractMediumModel extends ANTSAbstractModel implements ANTSIM
 		//TODO
 		return 45;
 	}
+	
 	
 	///////////
 	//Special//

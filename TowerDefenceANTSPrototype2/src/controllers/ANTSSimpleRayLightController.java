@@ -1,20 +1,16 @@
 package controllers;
 
-import interfaces.ANTSIController;
 import interfaces.ANTSIModel;
 import interfaces.ANTSIRayController;
 import interfaces.ANTSIView;
 import interfaces.medium.ANTSIMediumController;
 
 import java.awt.Color;
-import java.awt.geom.AffineTransform;
 
 import basics.ANTSFactory;
 
 import views.ANTSSimpleRayLightView;
-import views.ANTSSimpleRayLightView;
 
-import models.ANTSSimpleRayLightModel;
 import models.ANTSSimpleRayLightModel;
 
 public class ANTSSimpleRayLightController extends ANTSAbstractController implements ANTSIRayController{

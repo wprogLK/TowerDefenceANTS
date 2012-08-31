@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 
 import basics.ANTSDevelopment.ANTSDebug;
+import basics.ANTSDevelopment.ANTSStream;
 
 public abstract class ANTSAbstractView  implements ANTSIView
 {
@@ -122,10 +123,11 @@ public abstract class ANTSAbstractView  implements ANTSIView
 	{
 		try
 		{
-			return this.shape.intersects(shape.getBounds2D());
+			return shape.intersects(this.shape.getBounds2D());
 		}
 		catch(NullPointerException e)
 		{
+			ANTSStream.printDebug("null pointer");
 			return true;
 		}
 		

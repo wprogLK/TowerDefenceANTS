@@ -108,13 +108,7 @@ public class ANTSAbstractController extends ANTSEventListenerHandler implements 
 		return  this.iview.doesCollideWith(c.getIView().getShape());
 	}
 	
-	@Override
-	public void handleCollision(ANTSIController c)
-	{
-		
-	}
 
-	
 	
 	//////////////////
 	//MOUSE LISTENER//

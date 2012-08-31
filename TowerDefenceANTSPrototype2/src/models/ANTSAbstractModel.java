@@ -114,12 +114,17 @@ public class ANTSAbstractModel implements ANTSIModel, ANTSIEventListener
 		return this.isAlreadyUpdated;
 	}
 	
-	public final AffineTransform getCenter()
+//	public final AffineTransform getCenter()
+//	{
+//		AffineTransform centerAT = new AffineTransform();
+//		centerAT.setToTranslation(center[0], center[1]);
+//		
+//		return centerAT;
+//	}
+	
+	public final double[] getCenter()
 	{
-		AffineTransform centerAT = new AffineTransform();
-		centerAT.setToTranslation(center[0], center[1]);
-		
-		return centerAT;
+		return this.center;
 	}
 
 

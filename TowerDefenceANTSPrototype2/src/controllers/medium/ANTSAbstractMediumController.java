@@ -37,21 +37,21 @@ public class ANTSAbstractMediumController extends ANTSAbstractController impleme
 	///////////
 	//SPECIAL//
 	///////////
-	
-	@Override
-	public final void handleCollision(ANTSIController c)
-	{
-		if(c.getClass().equals(ANTSSimpleRayLightController.class))
-		{
-			ANTSSimpleRayLightController rayLightController = (ANTSSimpleRayLightController) c;
-			
-			rayLightController.addAngle(this.model.getAngle(1));	//TODO refractionIndex
-		}
-		else
-		{
-			ANTSStream.printDebug("it's not a ray");
-		}
-	}
+//	
+//	@Override
+//	public final void handleCollision(ANTSIController c)
+//	{
+//		if(c.getClass().equals(ANTSSimpleRayLightController.class))
+//		{
+//			ANTSSimpleRayLightController rayLightController = (ANTSSimpleRayLightController) c;
+//			
+//			rayLightController.addAngle(this.model.getAngle(1));	//TODO refractionIndex
+//		}
+//		else
+//		{
+//			ANTSStream.printDebug("it's not a ray");
+//		}
+//	}
 	
 	@Override
 	public final void addCollisionRay(ANTSIController c)
@@ -62,7 +62,6 @@ public class ANTSAbstractMediumController extends ANTSAbstractController impleme
 			
 			rayLightController.setCurrentMedium(this);
 			this.model.addRay(rayLightController);	//TODO refractionIndex
-			
 		}
 		else
 		{
@@ -86,21 +85,23 @@ public class ANTSAbstractMediumController extends ANTSAbstractController impleme
 	}
 	
 	
-	@Override
-	public final boolean doesCollideWith(ANTSIController c)
-	{
-		if(this.iview.doesCollideWith(c.getIView().getShape()))
-		{
-			if(c.getClass().equals(ANTSSimpleRayLightController.class))
-			{
-				this.handleCollision(c);
-				return true;
-			}
-		}
-		
-			return false;
-		
-	}
+//	@Override
+//	public final boolean doesCollideWith(ANTSIController c)
+//	{
+//		
+//		if(this.iview.doesCollideWith(c.getIView().getShape()))
+//		{
+//			ANTSStream.printDebug("h");
+//			if(c.getClass().equals(ANTSSimpleRayLightController.class))
+//			{
+//				this.handleCollision(c);
+//				return true;
+//			}
+//		}
+//		
+//			return false;
+//		
+//	}
 	
 	//////////////////
 	//MOUSE LISTENER//

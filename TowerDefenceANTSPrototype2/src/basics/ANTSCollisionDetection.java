@@ -203,7 +203,7 @@ public class ANTSCollisionDetection
 				{
 					for(ANTSIController colliderRay : colliderRays)
 					{
-						if(colliderRay.doesCollideWith(colliderObject))
+						if(colliderObject.doesCollideWith(colliderRay))
 						{
 							colliderObject.addCollisionRay(colliderRay);
 						}
