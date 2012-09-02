@@ -1,6 +1,7 @@
 package basics;
 
 import interfaces.ANTSIController;
+import interfaces.ANTSIRayController;
 import interfaces.medium.ANTSIMediumController;
 
 import java.awt.Color;
@@ -156,7 +157,7 @@ public class ANTSCollisionDetection
 		{
 			for(int cellY = 0; cellY<this.cellsY; cellY++)
 			{
-				LinkedList<ANTSIController> colliderRays = new LinkedList<ANTSIController>();
+				LinkedList<ANTSIRayController> colliderRays = new LinkedList<ANTSIRayController>();
 				
 				colliderRays.addAll(this.hashMap[cellX][cellY].getRays());
 
@@ -201,8 +202,12 @@ public class ANTSCollisionDetection
 				
 				for(ANTSIMediumController colliderObject : this.hashMap[cellX][cellY].getObjects())
 				{
-					for(ANTSIController colliderRay : colliderRays)
+					for(ANTSIRayController colliderRay : colliderRays)
 					{
+						if(this.checkForCollision(colliderRay,colliderObject))
+						{
+							
+						}
 //						if(colliderObject.doesCollideWith(colliderRay))
 //						{
 //							colliderObject.addCollisionRay(colliderRay);
@@ -217,6 +222,11 @@ public class ANTSCollisionDetection
 				}
 			}
 		}
+	}
+	
+	public boolean checkForCollision(ANTSIRayController ray, ANTSIMediumController medium)
+	{
+		return false;
 	}
 
 	public void addController(ANTSIController c) 
@@ -249,7 +259,7 @@ public class ANTSCollisionDetection
 	
 	private class ANTSHashMapCell
 	{
-		private LinkedList<ANTSIController> rays;
+		private LinkedList<ANTSIRayController> rays;
 		private LinkedList<ANTSIMediumController> medium;
 		
 		private int x;
@@ -262,7 +272,7 @@ public class ANTSCollisionDetection
 		
 		public ANTSHashMapCell(int x, int y, double height, double width)
 		{
-			this.rays = new LinkedList<ANTSIController>();
+			this.rays = new LinkedList<ANTSIRayController>();
 			this.medium = new LinkedList<ANTSIMediumController>();
 
 			this.x = (int) (x*width);
@@ -274,7 +284,7 @@ public class ANTSCollisionDetection
 			
 		}
 		
-		public LinkedList<ANTSIController> getRays() 
+		public LinkedList<ANTSIRayController> getRays() 
 		{
 			return this.rays;
 		}
@@ -286,9 +296,9 @@ public class ANTSCollisionDetection
 
 		public void add(ANTSIController c)
 		{
-			if(c.getClass().equals(ANTSSimpleRayLightController.class))
+			if(Arrays.asList(c.getClass().getInterfaces()).contains(ANTSIRayController.class))
 			{
-				this.rays.add(c);
+				this.rays.add((ANTSIRayController) c);
 			}
 			else if(Arrays.asList(c.getClass().getInterfaces()).contains(ANTSIMediumController.class))
 			{
@@ -302,9 +312,9 @@ public class ANTSCollisionDetection
 		
 		public boolean remove(ANTSIController c)
 		{
-			if(c.getClass().equals(ANTSSimpleRayLightController.class))
+			if(Arrays.asList(c.getClass().getInterfaces()).contains(ANTSIRayController.class))
 			{
-				return this.rays.remove(c);
+				return this.rays.remove((ANTSIRayController) c);
 			}
 			else if(Arrays.asList(c.getClass().getInterfaces()).contains(ANTSIMediumController.class))
 			{

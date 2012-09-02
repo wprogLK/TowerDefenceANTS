@@ -202,6 +202,8 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 			this.factory.createSimpleRayLight(posDown, this.velocityRay, this.angle+90 , this.color);
 			
 			tmpPosX += this.getDistanceBetweenTwoRays();
+			
+			this.switchLight(); 	//only for debugging
 		}
 	}
 	
