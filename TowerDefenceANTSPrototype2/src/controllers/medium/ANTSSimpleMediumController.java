@@ -61,51 +61,7 @@ public class ANTSSimpleMediumController extends ANTSAbstractMediumController imp
 	//SPECIAL//
 	///////////
 	
-	protected void calculatePlumbAngle(ANTSIController c)
-	{
-		ANTSStream.printDebug("calc plumb angle");
-		if(Arrays.asList(c.getClass().getInterfaces()).contains(ANTSIRayController.class))
-		{
-			ANTSIRayController ray = (ANTSIRayController) c;
-			this.view.calculatePlumbAngle(ray);
-		}
-		
 
-	}
-	
-//	
-//	
-//	@Override
-//	public void removeCollisionRay(ANTSIController c)
-//	{
-//		if(c.getClass().equals(ANTSSimpleRayLightController.class))
-//		{
-//			ANTSSimpleRayLightController rayLightController = (ANTSSimpleRayLightController) c;
-//			
-//			this.model.removeRay(rayLightController);	//TODO refractionIndex
-//		}
-//		else
-//		{
-//			ANTSStream.printDebug("it's not a ray");
-//		}
-//	}
-//	
-//	
-//	@Override
-//	public boolean doesCollideWith(ANTSIController c)
-//	{
-//		if(this.iview.doesCollideWith(c.getIView().getShape()))
-//		{
-//			if(c.getClass().equals(ANTSSimpleRayLightController.class))
-//			{
-//				this.handleCollision(c);
-//				return true;
-//			}
-//		}
-//		
-//			return false;
-//		
-//	}
 	
 	//////////////////
 	//MOUSE LISTENER//

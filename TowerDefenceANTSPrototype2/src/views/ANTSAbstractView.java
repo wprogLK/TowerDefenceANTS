@@ -134,24 +134,4 @@ public abstract class ANTSAbstractView  implements ANTSIView
 	 * @param interpolation if the interpolation is -1, it's definitely not an interpolation
 	 */
 	protected abstract void updateShape(float interpolation);
-	
-	public boolean doesCollideWith(Shape shape)
-	{
-		try
-		{
-			this.updateShape(-1);
-			
-			return shape.intersects(this.shape.getBounds2D());
-		}
-		catch(NullPointerException e)
-		{
-			ANTSStream.printDebug("null pointer");
-			return true;
-		}
-		
-		
-	}
-	
-	
-	
 }

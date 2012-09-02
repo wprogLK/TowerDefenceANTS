@@ -101,13 +101,6 @@ public class ANTSAbstractController extends ANTSEventListenerHandler implements 
 		this.model.update();
 		this.model.setIsAlreadyUpdated(true);
 	}
-	
-	@Override
-	public boolean doesCollideWith(ANTSIController c) 
-	{
-		return  this.iview.doesCollideWith(c.getIView().getShape());
-	}
-	
 
 	
 	//////////////////

@@ -203,14 +203,16 @@ public class ANTSCollisionDetection
 				{
 					for(ANTSIController colliderRay : colliderRays)
 					{
-						if(colliderObject.doesCollideWith(colliderRay))
-						{
-							colliderObject.addCollisionRay(colliderRay);
-						}
-						else
-						{
-							colliderObject.removeCollisionRay(colliderRay);
-						}
+//						if(colliderObject.doesCollideWith(colliderRay))
+//						{
+//							colliderObject.addCollisionRay(colliderRay);
+//						}
+//						else
+//						{
+//							colliderObject.removeCollisionRay(colliderRay);
+//						}
+						
+						//TODO
 					}
 				}
 			}
