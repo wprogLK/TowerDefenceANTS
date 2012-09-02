@@ -210,6 +210,11 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 		this.center[0] = this.matrix.getTranslateX()+this.length/2;
 		this.center[1] = this.matrix.getTranslateY()+this.height/2;
 		
-//		this.matrix.concatenate(this.rotation);
+		this.rotation = new AffineTransform();
+		
+		this.rotation.rotate(Math.toRadians(this.angle),length/2,height/2);
+		
+		this.matrix.concatenate(this.rotation);
+		
 	}
 }
