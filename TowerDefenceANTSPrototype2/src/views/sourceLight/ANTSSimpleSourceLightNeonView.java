@@ -28,7 +28,7 @@ public class ANTSSimpleSourceLightNeonView extends ANTSAbstractView implements A
 		
 		this.model = m;
 		
-		this.createRectangle();
+		this.updateShape(-1);
 	}
 	
 	///////////
@@ -53,19 +53,21 @@ public class ANTSSimpleSourceLightNeonView extends ANTSAbstractView implements A
 	///////////
 	//Special//
 	///////////
-	
-	private void createRectangle()
+
+	@Override
+	protected void updateShape(float interpolation) 
 	{
 		AffineTransform aT = this.model.getMatrix();
 		
 		this.rectangle = new Rectangle2D.Double(0, 0, this.model.getLength(), this.model.getHeight());
 		this.shape = aT.createTransformedShape(this.rectangle);
-	}
+	}	
+	
 	
 	@Override
 	public void paint(Graphics2D g2d) 
 	{
-		this.createRectangle();			//TODO CHECK IF position and radius has changed
+		this.updateShape(-1);
 		
 		if(this.model.isDragged())
 		{

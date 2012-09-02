@@ -23,7 +23,7 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 		
 		this.model = m;
 		
-		this.createCircle();
+		this.updateShape(-1);
 	}
 	
 	///////////
@@ -49,19 +49,20 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 	//Special//
 	///////////
 	
-	private void createCircle()
+	@Override
+	protected void updateShape(float interpolation) 
 	{
 		AffineTransform aT = this.model.getMatrix();
 		double radius = this.model.getRadius();
 		
 		this.circle = new Ellipse2D.Double(0, 0, radius, radius);
 		this.shape = aT.createTransformedShape(circle);
-	}
+	}	
 	
 	@Override
 	public void paint(Graphics2D g2d) 
 	{
-		this.createCircle();			//TODO CHECK IF position and radius has changed
+		this.updateShape(-1);	
 		
 		if(this.model.isDragged())
 		{

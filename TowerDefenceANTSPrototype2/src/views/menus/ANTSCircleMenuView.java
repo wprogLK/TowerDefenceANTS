@@ -39,6 +39,15 @@ public class ANTSCircleMenuView extends ANTSAbstractView implements ANTSIView, A
 	///////////
 	//Special//
 	///////////
+
+	@Override
+	protected void updateShape(float interpolation) 
+	{
+		AffineTransform aT = this.model.getMatrix();
+		
+		Ellipse2D circle = new Ellipse2D.Double(-this.model.getRadius()/2, -this.model.getRadius()/2, this.model.getRadius(), this.model.getRadius());
+		this.shape = aT.createTransformedShape(circle);
+	}	
 	
 	public String toString()
 	{
@@ -66,15 +75,16 @@ public class ANTSCircleMenuView extends ANTSAbstractView implements ANTSIView, A
 	@Override
 	public void paint(Graphics2D g2d, float interpolation)
 	{
-		AffineTransform aT = this.model.getMatrix();
+		
 		
 		g2d.setColor(Color.black);
 		
 		if(this.model.getMouseEntered())
 		{
 			g2d.setColor(Color.blue);
-			Ellipse2D circle = new Ellipse2D.Double(-this.model.getRadius()/2, -this.model.getRadius()/2, this.model.getRadius(), this.model.getRadius());
-			this.shape = aT.createTransformedShape(circle);
+			
+			this.updateShape(interpolation);
+			
 			g2d.setColor(Color.cyan);
 			
 			this.paintMenuItems(g2d, interpolation);

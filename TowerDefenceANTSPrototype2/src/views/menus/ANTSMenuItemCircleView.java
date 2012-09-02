@@ -46,6 +46,36 @@ public class ANTSMenuItemCircleView extends ANTSAbstractView implements ANTSIVie
 	//Special//
 	///////////
 	
+	@Override
+	protected void updateShape(float interpolation) 
+	{
+		double recWidth = this.parentModel.getRadius()/2-20;
+		double recHeight = 25;
+		
+		
+		AffineTransform aT = this.parentModel.getMatrix();
+		this.centerCircle[0] = aT.getTranslateX();
+		this.centerCircle[1] = aT.getTranslateY();
+		
+		int maxNumbersOfItems = this.parentModel.getMaxIndexMenuItem();
+		this.segmentAngleDeg = -360/((double) maxNumbersOfItems);
+		
+		this.rotateAngleDeg = segmentAngleDeg*(this.model.getIndex()-1)+this.offsetAngle;
+		
+		Arc2D.Double arc = new Arc2D.Double(centerCircle[0], centerCircle[1], this.parentModel.getRadius(),  this.parentModel.getRadius(), 0, segmentAngleDeg, Arc2D.PIE);
+		Rectangle2D.Double rec = new Rectangle2D.Double(centerCircle[0]+20, centerCircle[1]-this.parentModel.getRadius()/2-recHeight, recWidth, recHeight);
+		
+		arc.setArcByCenter(centerCircle[0], centerCircle[1], this.parentModel.getRadius()/2, 90, segmentAngleDeg, 2);
+		
+		AffineTransform rT = new AffineTransform();
+		rT.rotate(Math.toRadians(rotateAngleDeg), centerCircle[0], centerCircle[1]);
+		
+		Shape rArc = rT.createTransformedShape(arc);
+		Shape rRec = rT.createTransformedShape(rec);
+		
+		this.shape = rArc;
+	}	
+	
 	public String toString()
 	{
 		return "Cell view";
@@ -60,7 +90,7 @@ public class ANTSMenuItemCircleView extends ANTSAbstractView implements ANTSIVie
 	@Override
 	public void paint(Graphics2D g2d)
 	{
-		this.paint(g2d, 0);
+		this.paint(g2d, -1);
 	}
 	
 	@Override
@@ -73,6 +103,10 @@ public class ANTSMenuItemCircleView extends ANTSAbstractView implements ANTSIVie
 	@Override
 	public void paint(Graphics2D g2d, float interpolation)
 	{
+		this.updateShape(interpolation);
+		
+		//TODO: refactoring this (similar code like updateShape)
+		
 		double recWidth = this.parentModel.getRadius()/2-20;
 		double recHeight = 25;
 		

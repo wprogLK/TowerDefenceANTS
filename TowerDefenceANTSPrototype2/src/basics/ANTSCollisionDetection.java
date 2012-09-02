@@ -21,8 +21,8 @@ public class ANTSCollisionDetection
 	private int height;
 	private int width;
 	
-	private final int defaultCellsX = 5;		//TODO: IMPORTANT: If you have big objects the number of cells should be small! Otherwise the detection is not really working
-	private final int defaultCellsY = 5;
+	private final int defaultCellsX = 4;		//TODO: IMPORTANT: If you have big objects the number of cells should be small! Otherwise the detection is not really working
+	private final int defaultCellsY = 4;
 	
 	private int cellsX;
 	private int cellsY;

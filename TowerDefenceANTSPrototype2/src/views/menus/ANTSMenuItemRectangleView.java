@@ -53,6 +53,25 @@ public class ANTSMenuItemRectangleView extends ANTSAbstractView implements ANTSI
 	//Special//
 	///////////
 	
+
+	@Override
+	protected void updateShape(float interpolation) 
+	{
+		AffineTransform aT = this.model.getMatrix();
+		
+		Rectangle2D.Double rec = new Rectangle2D.Double(0,0,this.parentModel.getMinWidth(),this.fontSize);
+		
+		AffineTransform t = new AffineTransform(aT);
+		
+		double posX = 0;
+		double posY = this.model.getIndex()*this.fontSize ;
+		
+		t.translate(posX, posY-this.fontSize);
+		
+		
+		this.shape = t.createTransformedShape(rec);
+	}	
+	
 	public String toString()
 	{
 		return "Cell view";
@@ -93,19 +112,15 @@ public class ANTSMenuItemRectangleView extends ANTSAbstractView implements ANTSI
 			g2d.setColor(Color.red);
 		}
 		
-		int maxNumberOfItems = this.parentModel.getMaxIndexMenuItem();
-		
-		Rectangle2D.Double rec = new Rectangle2D.Double(0,0,this.parentModel.getMinWidth(),this.fontSize);
+		this.updateShape(interpolation);
 		
 		AffineTransform t = new AffineTransform(aT);
-		
+//		
 		double posX = 0;
 		double posY = this.model.getIndex()*this.fontSize ;
-		
+
 		t.translate(posX, posY-this.fontSize);
-		
-		
-		this.shape = t.createTransformedShape(rec);
+
 		g2d.fill(shape);
 		
 		g2d.setColor(this.fontColor);

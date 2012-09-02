@@ -55,14 +55,21 @@ public class ANTSSimpleMediumView extends ANTSAbstractView implements ANTSIView
 	//Special//
 	///////////
 	
+
+	@Override
+	protected void updateShape(float interpolation) 
+	{
+		Rectangle2D.Double rec = new Rectangle2D.Double(0, 0, this.model.getWidth(), this.model.getHeight());
+		AffineTransform aT = this.model.getMatrix();
+		this.shape = aT.createTransformedShape(rec);
+	}	
+	
 	@Override
 	public void paint(Graphics2D g2d) 
 	{
 //		this.prepareDetectionLines();
 		
-		Rectangle2D.Double rec = new Rectangle2D.Double(0, 0, this.model.getWidth(), this.model.getHeight());
-		AffineTransform aT = this.model.getMatrix();
-		this.shape = aT.createTransformedShape(rec);
+		this.updateShape(-1);
 		
 		if(this.model.isDragged())
 		{
@@ -136,30 +143,67 @@ public class ANTSSimpleMediumView extends ANTSAbstractView implements ANTSIView
 	 */
 	public double calculatePlumbAngle(ANTSIRayController ray)	//TODO test this!! 
 	{
-		if((315<=ray.getAngle() && ray.getAngle()<45) || ((-45>=ray.getAngle() && ray.getAngle()<=0) || (-315>=ray.getAngle() && ray.getAngle()>-360)))
+		double angle;
+		
+		if(ray.getAngle()<0)
+		{
+			angle = 360 + ray.getAngle();
+		}
+		else
+		{
+			angle = ray.getAngle();
+		}
+		//TODO case if ray.getAngle>360 and <-360
+		
+		if((315<=angle && angle<45))
 		{
 			ANTSStream.printDebug("area A");
 			return 0;
 		}
-		else if((45<=ray.getAngle() && ray.getAngle()<135) || (-45>=ray.getAngle() && ray.getAngle()>-135))
+		else if((45<=angle && angle<135))
 		{
 			ANTSStream.printDebug("area B");
 			return 90;
 		}
-		else if((135<=ray.getAngle() && ray.getAngle()<225) || (-135>=ray.getAngle() && ray.getAngle()>-225))
+		else if((135<=angle && angle<225))
 		{
 			ANTSStream.printDebug("area C");
 			return 180;
 		}
-		else if((225<=ray.getAngle() && ray.getAngle()<315) || (-225>=ray.getAngle() && ray.getAngle()>-315))
+		else if((225<=angle && angle<315))
 		{
 			ANTSStream.printDebug("area D");
 			return 270;
 		}
 		else
 		{
-			ANTSStream.printDebug("no idea what happened except the angle of the ray was " + ray.getAngle());
+			ANTSStream.printDebug("no idea what happened except the angle of the ray was " + angle);
 			return 0;
+		
+//		if((315<=ray.getAngle() && ray.getAngle()<45) || ((-45>=ray.getAngle() && ray.getAngle()<=0) || (-315>=ray.getAngle() && ray.getAngle()>-360)))
+//		{
+//			ANTSStream.printDebug("area A");
+//			return 0;
+//		}
+//		else if((45<=ray.getAngle() && ray.getAngle()<135) || (-45>=ray.getAngle() && ray.getAngle()>-135))
+//		{
+//			ANTSStream.printDebug("area B");
+//			return 90;
+//		}
+//		else if((135<=ray.getAngle() && ray.getAngle()<225) || (-135>=ray.getAngle() && ray.getAngle()>-225))
+//		{
+//			ANTSStream.printDebug("area C");
+//			return 180;
+//		}
+//		else if((225<=ray.getAngle() && ray.getAngle()<315) || (-225>=ray.getAngle() && ray.getAngle()>-315))
+//		{
+//			ANTSStream.printDebug("area D");
+//			return 270;
+//		}
+//		else
+//		{
+//			ANTSStream.printDebug("no idea what happened except the angle of the ray was " + ray.getAngle());
+//			return 0;
 		}
 		
 		

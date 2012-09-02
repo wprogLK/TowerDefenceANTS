@@ -27,9 +27,11 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 	
 	private double rotationStep = 0.5;
 	
+	private double velocityRay = 1;
+	
 	//RayProperties:
 	
-	private int numberOfRaysPerLength = 10;
+	private int numberOfRaysPerLength = 1;
 	
 	public ANTSSimpleSourceLightNeonModel(double posX, double posY, double length, Color color, boolean isMouseListener, ANTSFactory factory)
 	{
@@ -128,9 +130,13 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 	{
 		this.angle+=direction*this.rotationStep;
 		
+		this.rotation = new AffineTransform();
+		
 		this.rotation.rotate(Math.toRadians(direction*this.rotationStep),length/2,height/2);
 		
 		this.matrix.concatenate(this.rotation);
+		
+		ANTSStream.printDebug("angle" + this.angle);
 	}
 	
 	///////////
@@ -183,7 +189,7 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 		
 		for(int numberRay = 0; numberRay<this.getNumberOfRays(); numberRay++)
 		{
-			Point2D.Double pointUp = new Point2D.Double(tmpPosX,  this.height);
+			Point2D.Double pointUp = new Point2D.Double(tmpPosX, 0);
 			Point2D.Double pointDown = new Point2D.Double(tmpPosX, this.height);
 			
 			this.matrix.transform(pointUp, pointUp);
@@ -192,8 +198,8 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 			double[] posUp = {pointUp.getX(),pointUp.getY()};
 			double[] posDown = {pointDown.getX(),pointDown.getY()};
 			
-			this.factory.createSimpleRayLight(posUp, 10, this.angle-90, this.color);
-			this.factory.createSimpleRayLight(posDown, 10, this.angle+90, this.color);
+			this.factory.createSimpleRayLight(posUp, this.velocityRay, this.angle-90, this.color);
+			this.factory.createSimpleRayLight(posDown, this.velocityRay, this.angle+90 , this.color);
 			
 			tmpPosX += this.getDistanceBetweenTwoRays();
 		}

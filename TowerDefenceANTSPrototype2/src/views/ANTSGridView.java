@@ -41,6 +41,12 @@ public class ANTSGridView extends ANTSAbstractView implements ANTSIView
 	//Special//
 	///////////
 	
+
+	@Override
+	protected void updateShape(float interpolation) 
+	{
+		//do nothing
+	}	
 	
 	@Override
 	public void paint(Graphics2D g2d, float interpolation)

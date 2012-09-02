@@ -52,6 +52,13 @@ public class ANTSSimpleTestAnt1View extends ANTSAbstractView implements ANTSIVie
 	//Special//
 	///////////
 	
+
+	@Override
+	protected void updateShape(float interpolation) 
+	{
+		//TODO shape
+	}
+	
 	private void setupAnimation()
 	{
 		this.animation = new ArrayList<BufferedImage>();

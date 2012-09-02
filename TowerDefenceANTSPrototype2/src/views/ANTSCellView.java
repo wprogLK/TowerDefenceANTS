@@ -51,23 +51,9 @@ public class ANTSCellView extends ANTSAbstractView implements ANTSIView
 	///////////
 	
 	@Override
-	public void paint(Graphics2D g2d)
-	{
-		this.paint(g2d, 0);
-	}
-	
-	
-	@Override
-	public void paint(Graphics2D g2d, float interpolation)
+	protected void updateShape(float interpolation) 
 	{
 		AffineTransform aT = this.model.getMatrix();
-		
-		g2d.setColor(Color.black);
-		
-		if(this.model.getMouseEntered())
-		{
-			g2d.setColor(Color.blue);
-		}
 		
 		GeneralPath g = new GeneralPath();
 		double[][] points = this.model.getPoints();
@@ -81,6 +67,28 @@ public class ANTSCellView extends ANTSAbstractView implements ANTSIView
 		g.closePath();
 		
 		this.shape = aT.createTransformedShape(g);
+	}	
+	
+	@Override
+	public void paint(Graphics2D g2d)
+	{
+		this.paint(g2d, 0);
+	}
+	
+	
+	@Override
+	public void paint(Graphics2D g2d, float interpolation)
+	{
+	
+		
+		g2d.setColor(Color.black);
+		
+		if(this.model.getMouseEntered())
+		{
+			g2d.setColor(Color.blue);
+		}
+		
+		this.updateShape(interpolation);
 		
 		g2d.draw(this.shape);
 		g2d.setColor(Color.black);
@@ -97,8 +105,6 @@ public class ANTSCellView extends ANTSAbstractView implements ANTSIView
 			c.getIView().paint(g2d, interpolation);
 		}
 		
-	}	 
-	
-	
-	
+	}
+
 }

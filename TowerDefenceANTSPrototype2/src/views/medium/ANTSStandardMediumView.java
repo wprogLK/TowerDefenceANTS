@@ -30,4 +30,15 @@ public class ANTSStandardMediumView extends ANTSAbstractView implements ANTSIVie
 	{
 		return this.model.isMouseListener();
 	}
-}
+	
+	///////////
+	//SPECIAL//
+	///////////
+	
+
+	@Override
+	protected void updateShape(float interpolation) 
+	{
+		//Do nothing
+	}
+	}

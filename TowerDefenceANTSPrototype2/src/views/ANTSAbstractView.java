@@ -22,6 +22,14 @@ public abstract class ANTSAbstractView  implements ANTSIView
 		{
 			return false;
 		}
+
+		@Override
+		protected void updateShape(float interpolation) 
+		{
+			
+		}
+
+	
 	};
 	
 	public ANTSAbstractView()
@@ -80,6 +88,8 @@ public abstract class ANTSAbstractView  implements ANTSIView
 	@Override
 	public Shape getShape()
 	{
+		this.updateShape(-1);
+		
 		return this.shape;
 	}
 	
@@ -119,10 +129,18 @@ public abstract class ANTSAbstractView  implements ANTSIView
 	//Special//
 	///////////
 	
+	/**
+	 * 
+	 * @param interpolation if the interpolation is -1, it's definitely not an interpolation
+	 */
+	protected abstract void updateShape(float interpolation);
+	
 	public boolean doesCollideWith(Shape shape)
 	{
 		try
 		{
+			this.updateShape(-1);
+			
 			return shape.intersects(this.shape.getBounds2D());
 		}
 		catch(NullPointerException e)

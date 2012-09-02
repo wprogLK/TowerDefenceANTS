@@ -24,7 +24,7 @@ public class ANTSSimpleRayLightView extends ANTSAbstractView implements ANTSIVie
 	{
 		super();
 		this.model = m;
-		this.setupRay();
+		this.updateShape(-1);
 	}
 	
 	///////////
@@ -45,21 +45,37 @@ public class ANTSSimpleRayLightView extends ANTSAbstractView implements ANTSIVie
 	//Special//
 	///////////
 	
-	private void setupRay() 
+
+	@Override
+	protected void updateShape(float interpolation) 
 	{
+		AffineTransform aT = new AffineTransform();
+		
+		if(interpolation<0)
+		{
+			//no interpolation
+			aT = this.model.getMatrix();
+		}
+		else
+		{
+			//iterpolation
+			aT = this.model.getInterpolationMatrix();
+		}
+		
 		double length = this.model.getLength();
 		
 		this.ray = new Line2D.Double(0,0,length,0);
-	}
+		
+		
+		this.shape = aT.createTransformedShape(this.ray);
+	}	
 	
 	@Override
 	public void paint(Graphics2D g2d) 
 	{		
 		g2d.setColor(this.model.getColor());
 
-		AffineTransform aT = this.model.getMatrix();
-		
-		this.shape = aT.createTransformedShape(this.ray);
+		this.updateShape(-1);
 		
 		g2d.draw(this.shape);
 		
@@ -73,9 +89,7 @@ public class ANTSSimpleRayLightView extends ANTSAbstractView implements ANTSIVie
 		
 		this.model.update(interpolation);
 
-		AffineTransform aT = this.model.getInterpolationMatrix();
-
-		this.shape = aT.createTransformedShape(this.ray);
+		this.updateShape(interpolation);
 
 		g2d.draw(this.shape);
 		

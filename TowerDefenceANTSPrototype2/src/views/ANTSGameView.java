@@ -45,6 +45,12 @@ public class ANTSGameView extends ANTSAbstractView implements ANTSIView
 	///////////
 	
 	@Override
+	protected void updateShape(float interpolation) 
+	{
+		//Do nothing
+	}	
+	
+	@Override
 	public void paint(Graphics2D g2d)
 	{
 		
