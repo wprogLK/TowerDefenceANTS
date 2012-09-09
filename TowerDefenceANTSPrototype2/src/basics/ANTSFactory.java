@@ -17,6 +17,7 @@ import controllers.ANTSGameController;
 import controllers.ANTSGridController;
 import controllers.ANTSSimpleRayLightController;
 import controllers.medium.ANTSSimpleMediumController;
+import controllers.medium.ANTSStandardMediumController;
 import controllers.menus.ANTSCircleMenuController;
 import controllers.menus.ANTSRectangleMenuController;
 import controllers.sourceLight.ANTSSimpleSourceLightController;
@@ -32,6 +33,7 @@ public class ANTSFactory
 	private ANTSGameController gameController;
 	private ANTSGridController gridController;
 	private ANTSCollisionDetection collisionDetection;
+	private ANTSStandardMediumController standardMediumController;
 	
 	public ANTSFactory(ANTSDriver d) 
 	{
@@ -41,6 +43,7 @@ public class ANTSFactory
 		this.controllers = new ArrayList<ANTSIController>();
 		this.menuControllers = new ArrayList<ANTSIMenuController>();
 		this.createCollisionDetection();
+		this.standardMediumController = new ANTSStandardMediumController(this);
 	}
 	
 
@@ -50,8 +53,6 @@ public class ANTSFactory
 	
 	public ANTSCollisionDetection createCollisionDetection(int cellsX, int cellsY)
 	{
-		
-		
 		this.collisionDetection  = new ANTSCollisionDetection(this.driver.getHeight(), this.driver.getWidth(),cellsX,cellsY, this);
 		return this.collisionDetection;
 	}
@@ -118,6 +119,10 @@ public class ANTSFactory
 		return c;
 	}
 	
+	public ANTSStandardMediumController createStandardMediumController()
+	{
+		return this.standardMediumController;
+	}
 	////////////////
 	//Create menus//
 	////////////////
@@ -245,6 +250,11 @@ public class ANTSFactory
 		}
 	}
 
+	//TODO only for debugging
+	public void stopGame()
+	{
+		Thread.currentThread().suspend();
+	}
 
 	
 }

@@ -132,6 +132,11 @@ public class ANTSAbstractModel implements ANTSIModel, ANTSIEventListener
 	//Setters//
 	///////////
 	
+	public final void setCenter(double[] center)
+	{
+		this.center = center;
+	}
+	
 	@Override
 	public void setLayer(Layer layer)
 	{

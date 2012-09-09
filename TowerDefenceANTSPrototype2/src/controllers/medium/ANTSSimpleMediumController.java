@@ -6,6 +6,7 @@ import java.util.Arrays;
 import controllers.ANTSSimpleRayLightController;
 
 import basics.ANTSFactory;
+import basics.ANTSDevelopment.ANTSDebug;
 import basics.ANTSDevelopment.ANTSStream;
 
 import interfaces.ANTSIController;
@@ -67,10 +68,11 @@ public class ANTSSimpleMediumController extends ANTSAbstractMediumController imp
 	//MOUSE LISTENER//
 	//////////////////
 	
-//	@Override
-//	public void mouseLeftClickedANTS(MouseEvent e) 
-//	{
-//	}
+	@Override
+	public void mouseRightClickedANTS(MouseEvent e) 
+	{
+		ANTSDebug.setStopIfNoCollision(true);
+	}
 	
 	/////////////////////////
 	//MOUSE MOTION LISTENER//

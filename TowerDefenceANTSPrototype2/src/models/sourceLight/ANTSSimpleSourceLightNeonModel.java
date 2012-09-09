@@ -199,7 +199,7 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 			double[] posDown = {pointDown.getX(),pointDown.getY()};
 			
 			this.factory.createSimpleRayLight(posUp, this.velocityRay, this.angle-90, this.color);
-			this.factory.createSimpleRayLight(posDown, this.velocityRay, this.angle+90 , this.color);
+//			this.factory.createSimpleRayLight(posDown, this.velocityRay, this.angle+90 , this.color);
 			
 			tmpPosX += this.getDistanceBetweenTwoRays();
 			

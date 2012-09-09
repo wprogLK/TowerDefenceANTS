@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 import basics.ANTSDevelopment.ANTSDebug;
@@ -19,6 +20,7 @@ public class ANTSSimpleRayLightView extends ANTSAbstractView implements ANTSIVie
 {
 	private ANTSSimpleRayLightModel model;
 	private	Line2D.Double ray;
+	private Line2D.Double line;
 	
 	public ANTSSimpleRayLightView(ANTSSimpleRayLightModel m)
 	{
@@ -78,7 +80,7 @@ public class ANTSSimpleRayLightView extends ANTSAbstractView implements ANTSIVie
 		this.updateShape(-1);
 		
 		g2d.draw(this.shape);
-		
+
 		this.paintBounds(g2d);
 	}
 	
@@ -93,8 +95,10 @@ public class ANTSSimpleRayLightView extends ANTSAbstractView implements ANTSIVie
 
 		g2d.draw(this.shape);
 		
+		Rectangle2D rec = new Rectangle2D.Double(0,0,10,10);
+		Shape s = this.model.getInterpolationMatrix().createTransformedShape(rec);
+		g2d.draw(s);
+		
 		this.paintBounds(g2d);
 	}
-	
-
 }

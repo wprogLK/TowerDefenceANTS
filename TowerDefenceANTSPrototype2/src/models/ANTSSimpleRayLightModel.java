@@ -23,7 +23,6 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 	
 	private double length;
 	private double velocity;
-	private double[] center;
 	private double angle;
 	private Color color;
 	
@@ -52,7 +51,9 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 		this.center = center;
 		this.length = 10;
 		this.color = sourceColor;
-		this.velocity = velocity;
+		this.velocity = -velocity;
+		
+		this.medium = factory.createStandardMediumController();
 	}
 	
 	@Override
@@ -60,9 +61,9 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 	{
 		this.matrix.setTransform(this.sourceMatrix);
 		
-		this.velocityMatrix.translate(this.velocity, 0);
-		
-		this.matrix.concatenate(this.rotateMatrix);
+//		this.velocityMatrix.translate(this.velocity, 0);
+		this.velocityMatrix.translate(0, this.velocity);
+//		this.matrix.concatenate(this.rotateMatrix);
 		this.matrix.concatenate(this.velocityMatrix);
 		this.matrix.setTransform(this.matrix);
 	}
@@ -77,12 +78,12 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 		this.matrixForInterpolation.setTransform(this.sourceMatrix);
 		
 		AffineTransform tmpVelocityMatrix = new AffineTransform(this.velocityMatrix);
-		tmpVelocityMatrix.translate(this.velocity*interpolation, 0);
+//		tmpVelocityMatrix.translate(this.velocity*interpolation, 0);
+		tmpVelocityMatrix.translate(0, this.velocity*interpolation);
 		
-		this.matrixForInterpolation.preConcatenate(this.localRotateMatrix);
-		this.matrixForInterpolation.concatenate(this.rotateMatrix);
+//		this.matrixForInterpolation.preConcatenate(this.localRotateMatrix);
+//		this.matrixForInterpolation.concatenate(this.rotateMatrix);
 		this.matrixForInterpolation.concatenate(tmpVelocityMatrix);	
-		
 		this.matrix.setTransform(this.matrixForInterpolation);
 	}
 	

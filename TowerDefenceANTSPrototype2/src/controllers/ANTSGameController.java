@@ -45,7 +45,7 @@ public class ANTSGameController extends ANTSAbstractController implements ANTSIC
 //		createSimpleSourceLight2();
 //		createSimpleSourceLight3();
 //		createSimpleTestAnt1();
-		createSimpleMedium1();
+//		createSimpleMedium1();
 		createSimpleMedium2();
 	}
 

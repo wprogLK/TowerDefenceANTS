@@ -28,9 +28,10 @@ public class ANTSDevelopment
 		private static boolean showCurrentHoveringCellInfo = true;
 		private static boolean showCurrentInterpolation = true;
 		private static boolean showInterpolationStatus = true;
-		private  static boolean showBounds = false;
+		private  static boolean showBounds = true;
 		private static boolean showNrOfObjects = true;		//TODO
 		private static boolean showDetectionGrid = true;
+		private static boolean showStopIfNoCollision = true;
 		
 		private static boolean interpolationOn = false;
 		
@@ -48,6 +49,10 @@ public class ANTSDevelopment
 		private static ANTSFPS fps;
 		
 		private static float interpolation;
+		
+		//FOR DEBUGGING:
+		private static boolean stopIfNoCollision = false;
+		
 		
 		////////////////
 		//SHOW METHODS//
@@ -68,6 +73,7 @@ public class ANTSDevelopment
 				showInterpolation();
 				showInterpolationStatus();
 				showFPSExtraInformation();
+				showStopIfNoCollision();
 			}
 		}
 		
@@ -117,6 +123,15 @@ public class ANTSDevelopment
 			}
 		}
 		
+		private static void showStopIfNoCollision()
+		{
+			if(showStopIfNoCollision && debugModeOn)
+			{
+				drawString(String.format("stopIfNoCollision: %s", stopIfNoCollision));
+				updatePos();
+			}
+		}
+		
 		private static void showInterpolationStatus()
 		{
 			if(showInterpolationStatus && debugModeOn)
@@ -160,6 +175,11 @@ public class ANTSDevelopment
 			interpolation = in;
 		}
 		
+		public static void setStopIfNoCollision(boolean b) {
+			
+			stopIfNoCollision = b;
+		}
+		
 		///////////
 		//GETTERS//
 		//////////
@@ -177,6 +197,11 @@ public class ANTSDevelopment
 		public static boolean isShowDetectionGrid() 
 		{
 			return showDetectionGrid;
+		}
+
+		public static boolean getStopIfNoCollision() {
+			
+			return stopIfNoCollision;
 		}
 	}
 	

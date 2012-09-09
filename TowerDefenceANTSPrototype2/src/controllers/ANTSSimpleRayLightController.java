@@ -6,7 +6,10 @@ import interfaces.ANTSIView;
 import interfaces.medium.ANTSIMediumController;
 
 import java.awt.Color;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
 
+import basics.ANTSDevelopment.ANTSStream;
 import basics.ANTSFactory;
 
 import views.ANTSSimpleRayLightView;
@@ -57,9 +60,13 @@ public class ANTSSimpleRayLightController extends ANTSAbstractController impleme
 	//////////
 	
 	@Override
-	public void setCurrentMedium(ANTSIMediumController c) 
+	public boolean setCurrentMedium(ANTSIMediumController c) 
 	{
+		boolean sameMedium = this.model.getCurrentMedium().equals(c);
+		
 		this.model.setCurrentMedium(c);
+		
+		return sameMedium;
 	}
 
 	///////////
@@ -78,6 +85,29 @@ public class ANTSSimpleRayLightController extends ANTSAbstractController impleme
 		return this.model.getAngle();
 	}
 
-
+	@Override
+	public double[] getCenter()
+	{
+		
+		
+		double[] center = new double[2];
+		Rectangle2D bound = this.view.getShape().getBounds2D();
+//		
+		center[0] = bound.getCenterX();
+		center[1] = bound.getCenterY();
+//		
+//		this.model.setCenter(center);
+//		
+//		return this.model.getCenter();
+		
+//		double[] center = new double[2];
+		
+//		center[0] = this.model.getMatrix().getTranslateX();
+//		center[1] = this.model.getMatrix().getTranslateY();
+		
+//		ANTSStream.printDebug("center " + center[0] + " // "  + center[1]);
+		
+		return center;
+	}
 
 }

@@ -2,11 +2,14 @@ package basics;
 
 import interfaces.ANTSIController;
 import interfaces.ANTSIRayController;
+import interfaces.ANTSIView;
 import interfaces.medium.ANTSIMediumController;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Shape;
+import java.awt.geom.Area;
+import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -16,14 +19,15 @@ import basics.ANTSDevelopment.ANTSDebug;
 import basics.ANTSDevelopment.ANTSStream;
 
 import controllers.ANTSSimpleRayLightController;
+import controllers.medium.ANTSStandardMediumController;
 
 public class ANTSCollisionDetection 
 {
 	private int height;
 	private int width;
 	
-	private final int defaultCellsX = 4;		//TODO: IMPORTANT: If you have big objects the number of cells should be small! Otherwise the detection is not really working
-	private final int defaultCellsY = 4;
+	private final int defaultCellsX = 1;		//TODO: IMPORTANT: If you have big objects the number of cells should be small! Otherwise the detection is not really working
+	private final int defaultCellsY = 1;
 	
 	private int cellsX;
 	private int cellsY;
@@ -200,13 +204,21 @@ public class ANTSCollisionDetection
 					colliderRays.addAll(this.hashMap[cellX + 1][cellY].getRays());
 				}
 				
-				for(ANTSIMediumController colliderObject : this.hashMap[cellX][cellY].getObjects())
+				for(ANTSIMediumController medium : this.hashMap[cellX][cellY].getObjects())
 				{
-					for(ANTSIRayController colliderRay : colliderRays)
+					for(ANTSIRayController ray : colliderRays)
 					{
-						if(this.checkForCollision(colliderRay,colliderObject))
+						
+						if(this.checkForCollision(ray,medium))
 						{
+							ANTSStream.printDebug("yes");
 							
+							this.calculateAngle(ray, medium);
+						}
+						else
+						{
+							this.calculateAngle(ray, this.factory.createStandardMediumController());
+//							ANTSStream.printDebug("no");
 						}
 //						if(colliderObject.doesCollideWith(colliderRay))
 //						{
@@ -224,9 +236,64 @@ public class ANTSCollisionDetection
 		}
 	}
 	
+	public void calculateAngle(ANTSIRayController ray, ANTSIMediumController mediumIn)
+	{
+		ANTSIMediumController mediumOut;
+		double angle = 45;
+		
+		if(!ray.setCurrentMedium(mediumIn))
+		{
+			if(mediumIn.equals(this.factory.createStandardMediumController()))	//TODO: only for debugging
+			{
+				ANTSStream.printDebug("MINUS");
+				ray.addAngle(-angle);
+			}
+			else
+			{
+				ray.addAngle(angle);
+			}
+			
+		}
+	}
+	
 	public boolean checkForCollision(ANTSIRayController ray, ANTSIMediumController medium)
 	{
-		return false;
+		ANTSIView rayView = ray.getIView();
+		ANTSIView mediumView = medium.getIView();
+		
+		Shape rayShape = rayView.getShape();
+		Shape mediumShape = mediumView.getShape();
+		
+		double[] centerRay = ray.getCenter();
+		
+		ANTSStream.printDebug("Medium "  + mediumView.toString());
+		
+//		return mediumShape.contains(centerRay[0], centerRay[1]);//rayShape.intersects(mediumShape.getBounds2D());
+		
+		double maxXMedium = mediumShape.getBounds2D().getMaxX();
+		double minXMedium = mediumShape.getBounds2D().getMinX();
+		double maxYMedium = mediumShape.getBounds2D().getMaxY();
+		double minYMedium = mediumShape.getBounds2D().getMinY();
+		
+		ANTSStream.printDebug("Medium: max x " + maxXMedium +" |  min x " + minXMedium + " || max y  " + maxYMedium + " | min y " + minYMedium);
+		ANTSStream.printDebug("Ray : x " + centerRay[0] + " y " + centerRay[1]);
+		boolean xValue;
+		boolean yValue;
+		
+		xValue = centerRay[0]>=minXMedium && centerRay[0]<=maxXMedium;
+		yValue = centerRay[1]>=minYMedium && centerRay[1]<=maxYMedium;
+		
+		ANTSStream.printDebug("xVal " + xValue + " yVal " + yValue + " Result: " +( xValue && yValue));
+			
+		if(!(xValue && yValue ) && ANTSDebug.getStopIfNoCollision())
+		{
+//			System.exit(0);
+			this.factory.stopGame();
+		}
+		
+		return xValue && yValue;
+	
+	
 	}
 
 	public void addController(ANTSIController c) 
