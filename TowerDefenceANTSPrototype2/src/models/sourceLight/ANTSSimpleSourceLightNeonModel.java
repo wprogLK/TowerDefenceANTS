@@ -27,7 +27,7 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 	
 	private double rotationStep = 0.5;
 	
-	private double velocityRay = 1;
+	private double velocityRay = 0.1;
 	
 	//RayProperties:
 	
@@ -200,8 +200,6 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 //			this.factory.createSimpleRayLight(posDown, this.velocityRay, this.angle+90 , this.color);
 			
 			tmpPosX += this.getDistanceBetweenTwoRays();
-			
-			this.switchLight(); 	//only for debugging
 		}
 	}
 	

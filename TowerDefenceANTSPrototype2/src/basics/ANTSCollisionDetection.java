@@ -260,41 +260,42 @@ public class ANTSCollisionDetection
 	
 	public boolean checkForCollision(ANTSIRayController ray, ANTSIMediumController medium)
 	{
+		
+//OLD
+//		ANTSIView rayView = ray.getIView();
+//		ANTSIView mediumView = medium.getIView();
+//		
+//		Shape rayShape = rayView.getShape();
+//		Shape mediumShape = mediumView.getShape();
+//		
+//		double[] centerRay = ray.getCenter();
+//		
+//		double maxXMedium = mediumShape.getBounds2D().getMaxX();
+//		double minXMedium = mediumShape.getBounds2D().getMinX();
+//		double maxYMedium = mediumShape.getBounds2D().getMaxY();
+//		double minYMedium = mediumShape.getBounds2D().getMinY();
+//
+//		boolean xValue;
+//		boolean yValue;
+//		
+//		xValue = centerRay[0]>=minXMedium && centerRay[0]<=maxXMedium;
+//		yValue = centerRay[1]>=minYMedium && centerRay[1]<=maxYMedium;
+//		
+//			
+//		if(!(xValue && yValue ) && ANTSDebug.getStopIfNoCollision())
+//		{
+//			this.factory.stopGame();
+//		}
+//		
+//		return xValue && yValue;
+	
 		ANTSIView rayView = ray.getIView();
 		ANTSIView mediumView = medium.getIView();
 		
 		Shape rayShape = rayView.getShape();
 		Shape mediumShape = mediumView.getShape();
 		
-		double[] centerRay = ray.getCenter();
-		
-		
-//		return mediumShape.contains(centerRay[0], centerRay[1]);//rayShape.intersects(mediumShape.getBounds2D());
-		
-		double maxXMedium = mediumShape.getBounds2D().getMaxX();
-		double minXMedium = mediumShape.getBounds2D().getMinX();
-		double maxYMedium = mediumShape.getBounds2D().getMaxY();
-		double minYMedium = mediumShape.getBounds2D().getMinY();
-//		
-//		ANTSStream.printDebug("Medium: max x " + maxXMedium +" |  min x " + minXMedium + " || max y  " + maxYMedium + " | min y " + minYMedium);
-//		ANTSStream.printDebug("Ray : x " + centerRay[0] + " y " + centerRay[1]);
-		boolean xValue;
-		boolean yValue;
-		
-		xValue = centerRay[0]>=minXMedium && centerRay[0]<=maxXMedium;
-		yValue = centerRay[1]>=minYMedium && centerRay[1]<=maxYMedium;
-		
-//		ANTSStream.printDebug("xVal " + xValue + " yVal " + yValue + " Result: " +( xValue && yValue));
-			
-		if(!(xValue && yValue ) && ANTSDebug.getStopIfNoCollision())
-		{
-//			System.exit(0);
-			this.factory.stopGame();
-		}
-		
-		return xValue && yValue;
-	
-	
+		return rayShape.intersects(mediumShape.getBounds2D());
 	}
 
 	public void addController(ANTSIController c) 

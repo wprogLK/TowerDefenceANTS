@@ -53,7 +53,7 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 		this.center = center;
 		this.length = 10;
 		this.color = sourceColor;
-		this.velocity =0.1;
+		this.velocity =velocity;
 		
 		this.medium = factory.createStandardMediumController();
 		
