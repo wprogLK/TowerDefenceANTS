@@ -99,19 +99,8 @@ public class ANTSSimpleMediumView extends ANTSAbstractView implements ANTSIView
 			g2d.setColor(Color.GREEN);
 			g2d.fill(shape);
 			this.paintBounds(g2d);
-			
-			this.paintLines(g2d);
 	}
 
-	private void paintLines(Graphics2D g2d) {
-		double x = this.model.getMatrix().getTranslateX();
-		double y = this.model.getMatrix().getTranslateY();
-		
-		Line2D line = new Line2D.Double(x-50,299,x+this.model.getWidth()+50,299);
-		
-		g2d.draw(line);
-		
-	}
 
 	@Override
 	public void paint(Graphics2D g2d, float interpolation) 

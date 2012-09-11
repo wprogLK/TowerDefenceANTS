@@ -95,10 +95,6 @@ public class ANTSSimpleRayLightView extends ANTSAbstractView implements ANTSIVie
 
 		g2d.draw(this.shape);
 		
-		Rectangle2D rec = new Rectangle2D.Double(0,0,10,10);
-		Shape s = this.model.getInterpolationMatrix().createTransformedShape(rec);
-		g2d.draw(s);
-		
 		this.paintBounds(g2d);
 	}
 }

@@ -26,8 +26,8 @@ public class ANTSCollisionDetection
 	private int height;
 	private int width;
 	
-	private final int defaultCellsX = 1;		//TODO: IMPORTANT: If you have big objects the number of cells should be small! Otherwise the detection is not really working
-	private final int defaultCellsY = 1;
+	private final int defaultCellsX = 4;		//TODO: IMPORTANT: If you have big objects the number of cells should be small! Otherwise the detection is not really working
+	private final int defaultCellsY = 4;
 	
 	private int cellsX;
 	private int cellsY;
@@ -126,6 +126,8 @@ public class ANTSCollisionDetection
 						
 						iterator.remove();
 						this.factory.removeController(controller);
+						
+						
 					}
 					else
 					{
@@ -274,16 +276,16 @@ public class ANTSCollisionDetection
 		double minXMedium = mediumShape.getBounds2D().getMinX();
 		double maxYMedium = mediumShape.getBounds2D().getMaxY();
 		double minYMedium = mediumShape.getBounds2D().getMinY();
-		
-		ANTSStream.printDebug("Medium: max x " + maxXMedium +" |  min x " + minXMedium + " || max y  " + maxYMedium + " | min y " + minYMedium);
-		ANTSStream.printDebug("Ray : x " + centerRay[0] + " y " + centerRay[1]);
+//		
+//		ANTSStream.printDebug("Medium: max x " + maxXMedium +" |  min x " + minXMedium + " || max y  " + maxYMedium + " | min y " + minYMedium);
+//		ANTSStream.printDebug("Ray : x " + centerRay[0] + " y " + centerRay[1]);
 		boolean xValue;
 		boolean yValue;
 		
 		xValue = centerRay[0]>=minXMedium && centerRay[0]<=maxXMedium;
 		yValue = centerRay[1]>=minYMedium && centerRay[1]<=maxYMedium;
 		
-		ANTSStream.printDebug("xVal " + xValue + " yVal " + yValue + " Result: " +( xValue && yValue));
+//		ANTSStream.printDebug("xVal " + xValue + " yVal " + yValue + " Result: " +( xValue && yValue));
 			
 		if(!(xValue && yValue ) && ANTSDebug.getStopIfNoCollision())
 		{

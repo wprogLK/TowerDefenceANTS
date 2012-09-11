@@ -28,7 +28,7 @@ public class ANTSDevelopment
 		private static boolean showCurrentHoveringCellInfo = true;
 		private static boolean showCurrentInterpolation = true;
 		private static boolean showInterpolationStatus = true;
-		private  static boolean showBounds = true;
+		private  static boolean showBounds = false;
 		private static boolean showNrOfObjects = true;		//TODO
 		private static boolean showDetectionGrid = true;
 		private static boolean showStopIfNoCollision = true;

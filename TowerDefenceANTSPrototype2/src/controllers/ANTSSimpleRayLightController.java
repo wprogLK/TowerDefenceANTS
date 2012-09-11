@@ -95,8 +95,9 @@ public class ANTSSimpleRayLightController extends ANTSAbstractController impleme
 //		
 		center[0] = bound.getCenterX();
 		center[1] = bound.getCenterY();
+		
 //		
-//		this.model.setCenter(center);
+//	this.model.setCenter(center);
 //		
 //		return this.model.getCenter();
 		

@@ -7,6 +7,8 @@ import java.awt.Color;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
+import java.awt.geom.Point2D.Double;
 
 import basics.ANTSFactory;
 import basics.ANTSDevelopment.ANTSStream;
@@ -15,7 +17,7 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 {
 	private AffineTransform matrix;
 	private AffineTransform velocityMatrix;
-	private AffineTransform rotateMatrix;
+	private AffineTransform sourcePivotRotateMatrix;
 	private AffineTransform sourceMatrix;
 	private AffineTransform localRotateMatrix;
 	
@@ -25,6 +27,14 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 	private double velocity;
 	private double angle;
 	private Color color;
+	
+	
+	private Point2D start;
+	private Point2D end;
+	
+	private Point2D defaultStart;
+	private Point2D defaultEnd;
+	
 	
 	private ANTSIMediumController medium;
 	
@@ -36,7 +46,7 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 		
 		this.matrix = new AffineTransform();
 		this.velocityMatrix = new AffineTransform();
-		this.rotateMatrix = new AffineTransform();
+		this.sourcePivotRotateMatrix = new AffineTransform();
 		this.sourceMatrix = new AffineTransform();
 		this.localRotateMatrix = new AffineTransform();
 		
@@ -45,27 +55,27 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 		this.matrix.translate(center[0], center[1]);
 		this.sourceMatrix.translate(center[0], center[1]);
 		
-		this.rotateMatrix.rotate(Math.toRadians(angle), 0,0);
+		this.sourcePivotRotateMatrix.rotate(Math.toRadians(angle), 0,0);
 		
 		this.angle = angle;
 		this.center = center;
 		this.length = 10;
 		this.color = sourceColor;
-		this.velocity = -velocity;
+		this.velocity =1;
 		
 		this.medium = factory.createStandardMediumController();
 	}
 	
 	@Override
 	public void update()
-	{
+	{	
 		this.matrix.setTransform(this.sourceMatrix);
 		
-//		this.velocityMatrix.translate(this.velocity, 0);
-		this.velocityMatrix.translate(0, this.velocity);
-//		this.matrix.concatenate(this.rotateMatrix);
+		this.velocityMatrix.translate(this.velocity, 0);
+		
+		this.matrix.concatenate(this.localRotateMatrix);
+		this.matrix.concatenate(this.sourcePivotRotateMatrix);
 		this.matrix.concatenate(this.velocityMatrix);
-		this.matrix.setTransform(this.matrix);
 	}
 	
 	/**
@@ -75,16 +85,18 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 	 */
 	public void update(float interpolation)
 	{
-		this.matrixForInterpolation.setTransform(this.sourceMatrix);
-		
-		AffineTransform tmpVelocityMatrix = new AffineTransform(this.velocityMatrix);
+//		this.matrixForInterpolation.setTransform(this.sourceMatrix);
+//		
+//		AffineTransform tmpVelocityMatrix = new AffineTransform(this.velocityMatrix); //BUG
 //		tmpVelocityMatrix.translate(this.velocity*interpolation, 0);
-		tmpVelocityMatrix.translate(0, this.velocity*interpolation);
+////		tmpVelocityMatrix.translate(0, this.velocity*interpolation);
+//		
+////		this.matrixForInterpolation.preConcatenate(this.localRotateMatrix);
+////		this.matrixForInterpolation.concatenate(this.rotateMatrix);
+////		this.matrixForInterpolation.concatenate(tmpVelocityMatrix);	
+////		this.matrix.setTransform(this.matrixForInterpolation);
 		
-//		this.matrixForInterpolation.preConcatenate(this.localRotateMatrix);
-//		this.matrixForInterpolation.concatenate(this.rotateMatrix);
-		this.matrixForInterpolation.concatenate(tmpVelocityMatrix);	
-		this.matrix.setTransform(this.matrixForInterpolation);
+		update();
 	}
 	
 	///////////
@@ -93,7 +105,7 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 	
 	public AffineTransform getInterpolationMatrix()
 	{
-		return this.matrixForInterpolation;
+		return this.matrix;//this.matrixForInterpolation;
 	}
 	
 	public AffineTransform getMatrix()
@@ -139,7 +151,12 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 	{
 		this.angle+=angle;
 		
-		this.localRotateMatrix.rotate(Math.toRadians(angle),this.matrix.getTranslateX(), this.matrix.getTranslateY());
+		ANTSStream.printDebug("angle "  + angle + " tot " + this.angle);
+//		this.localRotateMatrix = new AffineTransform();
+		
+		
+		
+		this.localRotateMatrix.rotate(Math.toRadians(angle),this.matrix.getTranslateX(),this.matrix.getTranslateY());
 	}
 
 
