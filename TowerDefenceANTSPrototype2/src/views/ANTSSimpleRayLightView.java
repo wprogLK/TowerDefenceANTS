@@ -47,6 +47,17 @@ public class ANTSSimpleRayLightView extends ANTSAbstractView implements ANTSIVie
 	//Special//
 	///////////
 	
+	public double[] getCenter()
+	{
+		this.updateShape(-1);
+		
+		double[] center = new double[2];
+		
+		center[0] = this.shape.getBounds2D().getCenterX();
+		center[1] = this.shape.getBounds2D().getCenterY();
+		
+		return center;
+	}
 
 	@Override
 	protected void updateShape(float interpolation) 
@@ -82,6 +93,8 @@ public class ANTSSimpleRayLightView extends ANTSAbstractView implements ANTSIVie
 		g2d.draw(this.shape);
 
 		this.paintBounds(g2d);
+		
+//		paintCenter(g2d);
 	}
 	
 	@Override
@@ -96,5 +109,16 @@ public class ANTSSimpleRayLightView extends ANTSAbstractView implements ANTSIVie
 		g2d.draw(this.shape);
 		
 		this.paintBounds(g2d);
+		
+//		paintCenter(g2d);
+	}
+	
+	private void paintCenter(Graphics2D g2d)
+	{
+		double[] c = this.getCenter();
+		Rectangle2D rec = new Rectangle2D.Double(c[0], c[1], 5, 5);
+		
+		g2d.setColor(Color.red);
+		g2d.draw(rec);
 	}
 }

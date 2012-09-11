@@ -199,7 +199,7 @@ public class ANTSFactory
 	{
 		this.collisionDetection.update();
 		
-		this.gridController.getModel().update();			//TODO: IMPORTANT: disabled models update in gridController if isCollisionDetected == true!!!! Otherwise some gameObjects are updates twice in one gameLoop
+		this.gridController.update();			//TODO: IMPORTANT: disabled models update in gridController if isCollisionDetected == true!!!! Otherwise some gameObjects are updates twice in one gameLoop
 		
 		for(int i = 0; i<this.controllers.size();i++)
 		{
@@ -207,7 +207,9 @@ public class ANTSFactory
 			
 			if(!model.isCollisionDetected())
 			{
-				model.update();
+//				model.update();
+				ANTSIController controller = this.controllers.get(i);
+				controller.update();
 			}
 		} 
 	}

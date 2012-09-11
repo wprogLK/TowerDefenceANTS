@@ -135,8 +135,6 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 		this.rotation.rotate(Math.toRadians(direction*this.rotationStep),length/2,height/2);
 		
 		this.matrix.concatenate(this.rotation);
-		
-		ANTSStream.printDebug("angle" + this.angle);
 	}
 	
 	///////////

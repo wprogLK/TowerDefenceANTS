@@ -28,14 +28,6 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 	private double angle;
 	private Color color;
 	
-	
-	private Point2D start;
-	private Point2D end;
-	
-	private Point2D defaultStart;
-	private Point2D defaultEnd;
-	
-	
 	private ANTSIMediumController medium;
 	
 	public ANTSSimpleRayLightModel(double[] center, double velocity, double angle, Color sourceColor, ANTSFactory factory)
@@ -61,21 +53,31 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 		this.center = center;
 		this.length = 10;
 		this.color = sourceColor;
-		this.velocity =1;
+		this.velocity =0.1;
 		
 		this.medium = factory.createStandardMediumController();
+		
+		this.matrix.concatenate(this.sourcePivotRotateMatrix);
 	}
 	
 	@Override
 	public void update()
 	{	
-		this.matrix.setTransform(this.sourceMatrix);
+//		this.matrix.setTransform(this.sourceMatrix);
 		
+		this.velocityMatrix = new AffineTransform();
 		this.velocityMatrix.translate(this.velocity, 0);
 		
-		this.matrix.concatenate(this.localRotateMatrix);
-		this.matrix.concatenate(this.sourcePivotRotateMatrix);
+//		this.matrix.concatenate(this.sourcePivotRotateMatrix);
+//		this.matrix.concatenate(this.localRotateMatrix);
 		this.matrix.concatenate(this.velocityMatrix);
+		
+//		Point2D center = new Point2D.Double(this.center[0], this.center[1]);
+//		
+//		this.matrix.transform(center, center);
+//		
+//		this.center[0] = center.getX();
+//		this.center[1] = center.getY();
 	}
 	
 	/**
@@ -128,8 +130,6 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 		return this.angle;
 	}
 
-	
-
 	public ANTSIMediumController getCurrentMedium()
 	{
 		return this.medium;
@@ -151,12 +151,11 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 	{
 		this.angle+=angle;
 		
-		ANTSStream.printDebug("angle "  + angle + " tot " + this.angle);
-//		this.localRotateMatrix = new AffineTransform();
+		this.localRotateMatrix = new AffineTransform();
 		
+		this.localRotateMatrix.rotate(Math.toRadians(angle));
 		
-		
-		this.localRotateMatrix.rotate(Math.toRadians(angle),this.matrix.getTranslateX(),this.matrix.getTranslateY());
+		this.matrix.concatenate(this.localRotateMatrix);
 	}
 
 

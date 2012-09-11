@@ -213,7 +213,7 @@ public class ANTSCollisionDetection
 						
 						if(this.checkForCollision(ray,medium))
 						{
-							ANTSStream.printDebug("yes");
+//							ANTSStream.printDebug("yes");
 							
 							this.calculateAngle(ray, medium);
 						}
@@ -247,7 +247,7 @@ public class ANTSCollisionDetection
 		{
 			if(mediumIn.equals(this.factory.createStandardMediumController()))	//TODO: only for debugging
 			{
-				ANTSStream.printDebug("MINUS");
+//				ANTSStream.printDebug("MINUS");
 				ray.addAngle(-angle);
 			}
 			else
@@ -268,7 +268,6 @@ public class ANTSCollisionDetection
 		
 		double[] centerRay = ray.getCenter();
 		
-		ANTSStream.printDebug("Medium "  + mediumView.toString());
 		
 //		return mediumShape.contains(centerRay[0], centerRay[1]);//rayShape.intersects(mediumShape.getBounds2D());
 		

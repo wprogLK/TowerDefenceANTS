@@ -6,6 +6,7 @@ import interfaces.ANTSIView;
 import interfaces.medium.ANTSIMediumController;
 
 import java.awt.Color;
+import java.awt.Shape;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 
@@ -73,6 +74,20 @@ public class ANTSSimpleRayLightController extends ANTSAbstractController impleme
 	//SPECIAL//
 	///////////
 	
+	@Override
+	public void update() 
+	{
+		this.updateCenter();
+		
+		this.model.update();
+		this.model.setIsAlreadyUpdated(true);
+	}
+	
+	private void updateCenter() 
+	{
+		this.model.setCenter(this.view.getCenter());
+	}
+
 	public void addAngle(double angle) 
 	{
 		this.model.addAngle(angle);
@@ -88,27 +103,27 @@ public class ANTSSimpleRayLightController extends ANTSAbstractController impleme
 	@Override
 	public double[] getCenter()
 	{
-		
-		
-		double[] center = new double[2];
-		Rectangle2D bound = this.view.getShape().getBounds2D();
+		return this.model.getCenter();
 //		
-		center[0] = bound.getCenterX();
-		center[1] = bound.getCenterY();
-		
-//		
-//	this.model.setCenter(center);
-//		
-//		return this.model.getCenter();
-		
 //		double[] center = new double[2];
-		
-//		center[0] = this.model.getMatrix().getTranslateX();
-//		center[1] = this.model.getMatrix().getTranslateY();
-		
-//		ANTSStream.printDebug("center " + center[0] + " // "  + center[1]);
-		
-		return center;
+//		Rectangle2D bound = this.view.getShape().getBounds2D();
+////		
+//		center[0] = bound.getCenterX();
+//		center[1] = bound.getCenterY();
+//		
+////		
+////	this.model.setCenter(center);
+////		
+////		return this.model.getCenter();
+//		
+////		double[] center = new double[2];
+//		
+////		center[0] = this.model.getMatrix().getTranslateX();
+////		center[1] = this.model.getMatrix().getTranslateY();
+//		
+////		ANTSStream.printDebug("center " + center[0] + " // "  + center[1]);
+//		
+//		return center;
 	}
 
 }
