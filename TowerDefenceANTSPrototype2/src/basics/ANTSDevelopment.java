@@ -1,10 +1,13 @@
 package basics;
 
 import interfaces.ANTSIController;
+import interfaces.ANTSIRayController;
+import interfaces.medium.ANTSIMediumController;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.util.Arrays;
 
 import basics.ANTSDriver.ANTSFPS;
 
@@ -47,6 +50,7 @@ public class ANTSDevelopment
 		
 		private static ANTSIController currentHoveringCell = ANTSCellController.getEmptyController();
 		private static ANTSFPS fps;
+		private static ANTSFactory factory;
 		
 		private static float interpolation;
 		
@@ -74,9 +78,27 @@ public class ANTSDevelopment
 				showInterpolationStatus();
 				showFPSExtraInformation();
 				showStopIfNoCollision();
+				showNumberOfObjects();
 			}
 		}
 		
+		private static void showNumberOfObjects() 
+		{
+			if(showNrOfObjects && debugModeOn)
+			{
+					ANTSObjectCounter counter = factory.getObjectCounter();
+					drawString(counter.getNumberOfMedium());
+					updatePos();
+					drawString(counter.getNumberOfRays());
+					updatePos();
+					drawString(counter.getNumberOfSourceOfLights());
+					updatePos();
+					drawString(counter.getNumberOfGameObjectsTotal());
+					updatePos();
+			}
+			
+		}
+
 		private static void showFPSExtraInformation() 
 		{
 			if(showExtraInformation && debugModeOn)
@@ -169,6 +191,11 @@ public class ANTSDevelopment
 		{
 			fps = fpsIn;
 		}
+		
+		public static void setFactory(ANTSFactory factoryIn)
+		{
+			factory = factoryIn;
+		}
 
 		public static void setInterpolation(float in) 
 		{
@@ -240,4 +267,10 @@ public class ANTSDevelopment
 			}
 		}
 	}
+	
+	////////////////////////
+	//OBJECT COUNTER CLASS//
+	////////////////////////
+	
+
 }

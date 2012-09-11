@@ -2,13 +2,16 @@ package basics;
 
 import interfaces.ANTSIController;
 import interfaces.ANTSIModel;
+import interfaces.ANTSIRayController;
 import interfaces.ANTSIView;
+import interfaces.medium.ANTSIMediumController;
 import interfaces.menus.ANTSIMenuController;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import basics.ANTSDevelopment.ANTSStream;
 
@@ -25,6 +28,7 @@ import controllers.sourceLight.ANTSSimpleSourceLightNeonController;
 
 public class ANTSFactory
 {
+
 	private ANTSDriver driver;
 	
 	private ArrayList<ANTSIController> controllers;
@@ -35,6 +39,7 @@ public class ANTSFactory
 	private ANTSCollisionDetection collisionDetection;
 	private ANTSStandardMediumController standardMediumController;
 	
+	private ANTSObjectCounter objectCounter;
 	public ANTSFactory(ANTSDriver d) 
 	{
 		super();
@@ -44,6 +49,8 @@ public class ANTSFactory
 		this.menuControllers = new ArrayList<ANTSIMenuController>();
 		this.createCollisionDetection();
 		this.standardMediumController = new ANTSStandardMediumController(this);
+		
+		this.objectCounter = new ANTSObjectCounter();
 	}
 	
 
@@ -180,6 +187,8 @@ public class ANTSFactory
 		}
 		
 		this.addToMouseListener(c);
+		
+		this.objectCounter.add(c);
 	}
 	
 	public void addToMouseListener(ANTSIController c) 
@@ -216,6 +225,7 @@ public class ANTSFactory
 	
 	public void paintAllViews(Graphics2D g2d, float interpolation)
 	{
+		ANTSDevelopment.ANTSDebug.setFactory(this);
 		this.gridController.getIView().paint(g2d, interpolation);
 		
 		for(int i = 0; i<this.controllers.size(); i++)
@@ -236,6 +246,7 @@ public class ANTSFactory
 	public void removeController(ANTSIController c)
 	{
 		boolean value = this.controllers.remove(c);
+		this.objectCounter.remove(c);
 		
 		if(!value)
 		{
@@ -257,6 +268,14 @@ public class ANTSFactory
 	{
 		Thread.currentThread().suspend();
 	}
+	
+	
+	public ANTSObjectCounter getObjectCounter()
+	{
+		return this.objectCounter;
+	}
+	
+	
 
 	
 }
