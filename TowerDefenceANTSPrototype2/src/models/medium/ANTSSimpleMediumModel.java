@@ -19,9 +19,9 @@ public class ANTSSimpleMediumModel extends ANTSAbstractMediumModel implements AN
 	private ArrayList<ANTSSimpleRayLightController> rays;
 	
 	
-	public ANTSSimpleMediumModel(double posX, double posY, double height, double width, boolean isMouseListener, ANTSFactory factory)
+	public ANTSSimpleMediumModel(double posX, double posY, double height, double width, double refractionIndex, boolean isMouseListener, ANTSFactory factory)
 	{
-		super(true,factory);
+		super(true, refractionIndex, factory);
 		
 		this.matrix = new AffineTransform();
 		this.rays = new ArrayList<ANTSSimpleRayLightController>();

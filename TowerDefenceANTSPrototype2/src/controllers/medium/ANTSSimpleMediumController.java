@@ -24,9 +24,9 @@ public class ANTSSimpleMediumController extends ANTSAbstractMediumController imp
 	private ANTSSimpleMediumModel model;
 	private ANTSSimpleMediumView view;
 	
-	public ANTSSimpleMediumController(double posX, double posY, double height, double width, boolean isMouseListener, ANTSFactory factory)
+	public ANTSSimpleMediumController(double posX, double posY, double height, double width, double refractionIndex, boolean isMouseListener, ANTSFactory factory)
 	{
-		this.model = new ANTSSimpleMediumModel(posX,posY,height,width,isMouseListener, factory);
+		this.model = new ANTSSimpleMediumModel(posX,posY,height,width, refractionIndex, isMouseListener, factory);
 		this.view = new ANTSSimpleMediumView(this.model);
 		
 		this.iview = view;

@@ -118,9 +118,9 @@ public class ANTSFactory
 		return c;
 	}
 	
-	public ANTSSimpleMediumController createSimpleMedium(double posX, double posY, double height, double width, boolean isMouseListener)
+	public ANTSSimpleMediumController createSimpleMedium(double posX, double posY, double height, double width, double refractionIndex, boolean isMouseListener)
 	{
-		ANTSSimpleMediumController c = new ANTSSimpleMediumController(posX, posY, height, width, isMouseListener, this);
+		ANTSSimpleMediumController c = new ANTSSimpleMediumController(posX, posY, height, width, refractionIndex, isMouseListener, this);
 		this.addController(c);
 		
 		return c;

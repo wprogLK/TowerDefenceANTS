@@ -15,7 +15,7 @@ public class ANTSStandardMediumModel extends ANTSAbstractMediumModel implements 
 	
 	public ANTSStandardMediumModel(ANTSFactory factory)
 	{
-		super(true,factory);
+		super(true,0,factory);
 		
 		this.matrix = new AffineTransform();
 		this.rays = new ArrayList<ANTSSimpleRayLightController>();

@@ -19,11 +19,12 @@ public abstract class ANTSAbstractMediumModel extends ANTSAbstractModel implemen
 	protected double angleOfPlumb;
 	
 	private ArrayList<ANTSSimpleRayLightController> rays;
-	
-	public ANTSAbstractMediumModel(boolean isCollisionDetection ,ANTSFactory factory)
+	 
+	public ANTSAbstractMediumModel(boolean isCollisionDetection, double refractionIndex, ANTSFactory factory)
 	{
 		super(factory);
 		
+		this.refractionIndex = refractionIndex;
 		this.isCollisionDetected = isCollisionDetection;
 		
 		this.rays = new ArrayList<ANTSSimpleRayLightController>();

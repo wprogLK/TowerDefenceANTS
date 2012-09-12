@@ -26,8 +26,8 @@ public class ANTSCollisionDetection
 	private int height;
 	private int width;
 	
-	private final int defaultCellsX = 4;		//TODO: IMPORTANT: If you have big objects the number of cells should be small! Otherwise the detection is not really working
-	private final int defaultCellsY = 4;
+	private final int defaultCellsX = 1;		//TODO: IMPORTANT: If you have big objects the number of cells should be small! Otherwise the detection is not really working
+	private final int defaultCellsY = 1;
 	
 	private int cellsX;
 	private int cellsY;
@@ -240,11 +240,12 @@ public class ANTSCollisionDetection
 	
 	public void calculateAngle(ANTSIRayController ray, ANTSIMediumController mediumIn)
 	{
-		ANTSIMediumController mediumOut;
-		double angle = 45;
+		double angle =  15;
 		
 		if(!ray.setCurrentMedium(mediumIn))
 		{
+			ANTSStream.printDebug("refractionIndex is " + mediumIn.getRefractionIndex());
+			
 			if(mediumIn.equals(this.factory.createStandardMediumController()))	//TODO: only for debugging
 			{
 //				ANTSStream.printDebug("MINUS");
@@ -256,6 +257,7 @@ public class ANTSCollisionDetection
 			}
 			
 		}
+		
 	}
 	
 	public boolean checkForCollision(ANTSIRayController ray, ANTSIMediumController medium)

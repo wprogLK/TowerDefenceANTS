@@ -151,6 +151,8 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 	{
 		this.angle+=angle;
 		
+		ANTSStream.printDebug("angle add " + angle + " total " + this.angle);
+		
 		this.localRotateMatrix = new AffineTransform();
 		
 		this.localRotateMatrix.rotate(Math.toRadians(angle));
