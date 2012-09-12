@@ -78,6 +78,8 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 //		
 //		this.center[0] = center.getX();
 //		this.center[1] = center.getY();
+		
+		ANTSStream.printDebug("normal update");
 	}
 	
 	/**
@@ -98,17 +100,25 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 ////		this.matrixForInterpolation.concatenate(tmpVelocityMatrix);	
 ////		this.matrix.setTransform(this.matrixForInterpolation);
 		
-		update();
+		
+		//NEW:
+//		this.matrixForInterpolation.setTransform(matrix);
+		this.velocityMatrix = new AffineTransform();
+		this.velocityMatrix.translate(this.velocity*interpolation, 0);
+		this.matrix.concatenate(this.velocityMatrix);
+//		this.matrix.setTransform(matrixForInterpolation);
+		
+		ANTSStream.printDebug("interpolation update");
 	}
 	
 	///////////
 	//Getters//
 	///////////
 	
-	public AffineTransform getInterpolationMatrix()
-	{
-		return this.matrix;//this.matrixForInterpolation;
-	}
+//	public AffineTransform getInterpolationMatrix()
+//	{
+//		return this.matrixForInterpolation;
+//	}
 	
 	public AffineTransform getMatrix()
 	{
@@ -151,15 +161,10 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 	{
 		this.angle+=angle;
 		
-		ANTSStream.printDebug("angle add " + angle + " total " + this.angle);
-		
 		this.localRotateMatrix = new AffineTransform();
 		
 		this.localRotateMatrix.rotate(Math.toRadians(angle));
 		
 		this.matrix.concatenate(this.localRotateMatrix);
 	}
-
-
-	
 }

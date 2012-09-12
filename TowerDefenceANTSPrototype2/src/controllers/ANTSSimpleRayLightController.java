@@ -64,7 +64,6 @@ public class ANTSSimpleRayLightController extends ANTSAbstractController impleme
 	public boolean setCurrentMedium(ANTSIMediumController c) 
 	{
 		boolean sameMedium = this.model.getCurrentMedium().equals(c);
-		
 		this.model.setCurrentMedium(c);
 		
 		return sameMedium;

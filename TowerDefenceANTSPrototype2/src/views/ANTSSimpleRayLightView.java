@@ -62,23 +62,11 @@ public class ANTSSimpleRayLightView extends ANTSAbstractView implements ANTSIVie
 	@Override
 	protected void updateShape(float interpolation) 
 	{
-		AffineTransform aT = new AffineTransform();
-		
-		if(interpolation<0)
-		{
-			//no interpolation
-			aT = this.model.getMatrix();
-		}
-		else
-		{
-			//iterpolation
-			aT = this.model.getInterpolationMatrix();
-		}
+		AffineTransform aT = this.model.getMatrix();
 		
 		double length = this.model.getLength();
 		
 		this.ray = new Line2D.Double(0,0,length,0);
-		
 		
 		this.shape = aT.createTransformedShape(this.ray);
 	}	

@@ -206,32 +206,50 @@ public class ANTSCollisionDetection
 					colliderRays.addAll(this.hashMap[cellX + 1][cellY].getRays());
 				}
 				
-				for(ANTSIMediumController medium : this.hashMap[cellX][cellY].getObjects())
-				{
-					for(ANTSIRayController ray : colliderRays)
-					{
-						
-						if(this.checkForCollision(ray,medium))
-						{
-//							ANTSStream.printDebug("yes");
-							
-							this.calculateAngle(ray, medium);
-						}
-						else
-						{
-							this.calculateAngle(ray, this.factory.createStandardMediumController());
-//							ANTSStream.printDebug("no");
-						}
-//						if(colliderObject.doesCollideWith(colliderRay))
+//				boolean noCollisionWithMedium = true;
+//				
+//				for(ANTSIMediumController medium : this.hashMap[cellX][cellY].getObjects())
+//				{
+//					
+//					for(ANTSIRayController ray : colliderRays)
+//					{
+//						
+//						if(this.checkForCollision(ray,medium))
 //						{
-//							colliderObject.addCollisionRay(colliderRay);
+//							ANTSStream.printDebug("yes with " + medium.getRefractionIndex());
+//							
+//							this.calculateAngle(ray, medium);
+//							
+//							noCollisionWithMedium = false;
+//							
+//							break;
 //						}
 //						else
 //						{
-//							colliderObject.removeCollisionRay(colliderRay);
+//							this.calculateAngle(ray, this.factory.createStandardMediumController());
 //						}
-						
-						//TODO
+//					}
+//				}
+				
+				
+				for(ANTSIRayController ray : colliderRays)
+				{
+					boolean noCollisionWithNonStandardMedium = true;
+					
+					for(ANTSIMediumController medium : this.hashMap[cellX][cellY].getObjects())
+					{
+		
+						if(this.checkForCollision(ray,medium))
+						{
+							this.calculateAngle(ray, medium);
+							noCollisionWithNonStandardMedium = false;
+							break;
+						}
+					}
+					
+					if(noCollisionWithNonStandardMedium)
+					{
+						this.calculateAngle(ray, this.factory.createStandardMediumController());
 					}
 				}
 			}
@@ -244,11 +262,8 @@ public class ANTSCollisionDetection
 		
 		if(!ray.setCurrentMedium(mediumIn))
 		{
-			ANTSStream.printDebug("refractionIndex is " + mediumIn.getRefractionIndex());
-			
 			if(mediumIn.equals(this.factory.createStandardMediumController()))	//TODO: only for debugging
 			{
-//				ANTSStream.printDebug("MINUS");
 				ray.addAngle(-angle);
 			}
 			else
@@ -257,40 +272,10 @@ public class ANTSCollisionDetection
 			}
 			
 		}
-		
 	}
 	
 	public boolean checkForCollision(ANTSIRayController ray, ANTSIMediumController medium)
 	{
-		
-//OLD
-//		ANTSIView rayView = ray.getIView();
-//		ANTSIView mediumView = medium.getIView();
-//		
-//		Shape rayShape = rayView.getShape();
-//		Shape mediumShape = mediumView.getShape();
-//		
-//		double[] centerRay = ray.getCenter();
-//		
-//		double maxXMedium = mediumShape.getBounds2D().getMaxX();
-//		double minXMedium = mediumShape.getBounds2D().getMinX();
-//		double maxYMedium = mediumShape.getBounds2D().getMaxY();
-//		double minYMedium = mediumShape.getBounds2D().getMinY();
-//
-//		boolean xValue;
-//		boolean yValue;
-//		
-//		xValue = centerRay[0]>=minXMedium && centerRay[0]<=maxXMedium;
-//		yValue = centerRay[1]>=minYMedium && centerRay[1]<=maxYMedium;
-//		
-//			
-//		if(!(xValue && yValue ) && ANTSDebug.getStopIfNoCollision())
-//		{
-//			this.factory.stopGame();
-//		}
-//		
-//		return xValue && yValue;
-	
 		ANTSIView rayView = ray.getIView();
 		ANTSIView mediumView = medium.getIView();
 		
@@ -419,8 +404,6 @@ public class ANTSCollisionDetection
 			}
 		
 			g2d.draw(this.shape);
-			
-			
 		}
 	}
 	
