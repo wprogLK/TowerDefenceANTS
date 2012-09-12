@@ -2,16 +2,12 @@ package basics;
 
 import interfaces.ANTSIController;
 import interfaces.ANTSIModel;
-import interfaces.ANTSIRayController;
 import interfaces.ANTSIView;
-import interfaces.medium.ANTSIMediumController;
 import interfaces.menus.ANTSIMenuController;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import basics.ANTSDevelopment.ANTSStream;
 
@@ -28,7 +24,6 @@ import controllers.sourceLight.ANTSSimpleSourceLightNeonController;
 
 public class ANTSFactory
 {
-
 	private ANTSDriver driver;
 	
 	private ArrayList<ANTSIController> controllers;
@@ -43,6 +38,7 @@ public class ANTSFactory
 	public ANTSFactory(ANTSDriver d) 
 	{
 		super();
+		
 		this.driver = d;
 		
 		this.controllers = new ArrayList<ANTSIController>();
@@ -53,7 +49,6 @@ public class ANTSFactory
 		this.objectCounter = new ANTSObjectCounter();
 	}
 	
-
 	//////////////////
 	//Create methods//
 	//////////////////
@@ -68,30 +63,6 @@ public class ANTSFactory
 	{
 		this.collisionDetection  = new ANTSCollisionDetection(this.driver.getHeight(), this.driver.getWidth(), this);
 		return this.collisionDetection;
-	}
-	
-	
-	public void createSimpleSourceLight(double posX, double posY, double radius, Color color, boolean isMouseListener)
-	{
-		ANTSSimpleSourceLightController c = new ANTSSimpleSourceLightController(posX, posY, radius, color, isMouseListener, this);
-		this.addController(c);
-	}
-	
-	public void createSimpeSourceLigthNeon(double posX, double posY, double length, Color color, boolean isMouseListener)
-	{
-		ANTSSimpleSourceLightNeonController c = new ANTSSimpleSourceLightNeonController(posX, posY, length, color, isMouseListener, this);
-		this.addController(c);
-	}
-	
-	public void createSimpleRayLight(double[] center, double velocity, double angle, Color sourceColor) {
-		ANTSSimpleRayLightController c = new ANTSSimpleRayLightController(center, velocity, angle, sourceColor, this);
-		this.addController(c);
-	}
-	
-	public void createGame()
-	{
-		ANTSGameController c = new ANTSGameController(this);
-		this.gameController = c;
 	}
 	
 	public void createGrid(int xCellsIn, int yCellsIn)
@@ -118,6 +89,42 @@ public class ANTSFactory
 		return c;
 	}
 	
+	////////////////////////
+	//Create source lights//
+	////////////////////////
+	
+	public void createSimpleSourceLight(double posX, double posY, double radius, Color color, boolean isMouseListener)
+	{
+		ANTSSimpleSourceLightController c = new ANTSSimpleSourceLightController(posX, posY, radius, color, isMouseListener, this);
+		this.addController(c);
+	}
+	
+	public void createSimpeSourceLigthNeon(double posX, double posY, double length, Color color, boolean isMouseListener)
+	{
+		ANTSSimpleSourceLightNeonController c = new ANTSSimpleSourceLightNeonController(posX, posY, length, color, isMouseListener, this);
+		this.addController(c);
+	}
+	
+	///////////////
+	//Create rays//
+	///////////////
+	
+	public void createSimpleRayLight(double[] center, double velocity, double angle, Color sourceColor) 
+	{
+		ANTSSimpleRayLightController c = new ANTSSimpleRayLightController(center, velocity, angle, sourceColor, this);
+		this.addController(c);
+	}
+	
+	public void createGame()
+	{
+		ANTSGameController c = new ANTSGameController(this);
+		this.gameController = c;
+	}
+	
+	/////////////////
+	//Create medium//
+	/////////////////
+	
 	public ANTSSimpleMediumController createSimpleMedium(double posX, double posY, double height, double width, double refractionIndex, boolean isMouseListener)
 	{
 		ANTSSimpleMediumController c = new ANTSSimpleMediumController(posX, posY, height, width, refractionIndex, isMouseListener, this);
@@ -130,6 +137,7 @@ public class ANTSFactory
 	{
 		return this.standardMediumController;
 	}
+	
 	////////////////
 	//Create menus//
 	////////////////
@@ -154,15 +162,14 @@ public class ANTSFactory
 	//GETTERS//
 	///////////
 	
-	public int getNumberOfObjects()
+	public ANTSObjectCounter getObjectCounter()
 	{
-		return this.controllers.size();
+		return this.objectCounter;
 	}
 	
-	
-	///////////////
-	//Add methods//
-	///////////////
+	//////////////////////
+	//Add/remove methods//
+	//////////////////////
 	
 	private void addMenuController(ANTSIMenuController c) 
 	{
@@ -191,41 +198,33 @@ public class ANTSFactory
 		this.objectCounter.add(c);
 	}
 	
+	public void removeController(ANTSIController c)
+	{
+		boolean value = this.controllers.remove(c);
+		this.objectCounter.remove(c);
+		
+		if(!value)
+		{
+			ANTSStream.printErr("Error: The gameObject " + c + "couldn't remove in the ANTSFactory Class!" );	//TODO (check this)
+		}
+	}
+	
 	public void addToMouseListener(ANTSIController c) 
 	{
 		if(c.getModel().isMouseListener())
 		{
 			this.driver.addControllerToMouseListener(c);
 		}
-		
 	}
 	
 	///////////
 	//Special//
 	///////////
 	
-	public void updateAllModels()
-	{
-		this.collisionDetection.update();
-		
-		this.gridController.update();			//TODO: IMPORTANT: disabled models update in gridController if isCollisionDetected == true!!!! Otherwise some gameObjects are updates twice in one gameLoop
-		
-		for(int i = 0; i<this.controllers.size();i++)
-		{
-			ANTSIModel model = this.controllers.get(i).getModel();	
-			
-			if(!model.isCollisionDetected())
-			{
-//				model.update();
-				ANTSIController controller = this.controllers.get(i);
-				controller.update();
-			}
-		} 
-	}
-	
 	public void paintAllViews(Graphics2D g2d, float interpolation)
 	{
 		ANTSDevelopment.ANTSDebug.setFactory(this);
+		
 		this.gridController.getIView().paint(g2d, interpolation);
 		
 		for(int i = 0; i<this.controllers.size(); i++)
@@ -239,20 +238,24 @@ public class ANTSFactory
 		}
 		
 		this.collisionDetection.paintDetectionGrid(g2d);
-		
-		
 	}
 	
-	public void removeController(ANTSIController c)
+	public void updateAllModels()
 	{
-		boolean value = this.controllers.remove(c);
-		this.objectCounter.remove(c);
+		this.collisionDetection.update();
 		
-		if(!value)
+		this.gridController.update();			//TODO: IMPORTANT: disabled models update in gridController if isCollisionDetected == true!!!! Otherwise some gameObjects are updates twice in one gameLoop
+		
+		for(int i = 0; i<this.controllers.size();i++)
 		{
-			ANTSStream.printErr("Error: The gameObject " + c + "couldn't remove in the ANTSFactory Class!" );	//TODO (check this)
-		}
-		
+			ANTSIController controller = this.controllers.get(i);
+			ANTSIModel model = controller.getModel();	
+			
+			if(!model.isCollisionDetected())
+			{
+				controller.update();
+			}
+		} 
 	}
 	
 	public void resetUpdate()
@@ -262,20 +265,4 @@ public class ANTSFactory
 			c.getModel().setIsAlreadyUpdated(false);
 		}
 	}
-
-	//TODO only for debugging
-	public void stopGame()
-	{
-		Thread.currentThread().suspend();
-	}
-	
-	
-	public ANTSObjectCounter getObjectCounter()
-	{
-		return this.objectCounter;
-	}
-	
-	
-
-	
 }

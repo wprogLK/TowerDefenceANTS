@@ -9,7 +9,6 @@ import java.awt.geom.Point2D;
 import models.ANTSAbstractModel;
 
 import basics.ANTSFactory;
-import basics.ANTSDevelopment.ANTSStream;
 
 public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements ANTSIModel 
 {
@@ -27,10 +26,8 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 	
 	private double rotationStep = 0.5;
 	
-	private double velocityRay = 1;
-	
 	//RayProperties:
-	
+	private double velocityRay = 1;
 	private int numberOfRaysPerLength = 1;
 	
 	public ANTSSimpleSourceLightNeonModel(double posX, double posY, double length, Color color, boolean isMouseListener, ANTSFactory factory)
@@ -111,6 +108,7 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 		return this.on;
 	}
 	
+	@Override
 	public String toString()
 	{
 		return "Model: X: " + this.matrix.getTranslateX() + " Y: " + this.matrix.getTranslateY() + " Length : " +this.length + " COLOR: " + this.color;
@@ -200,8 +198,6 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 //			this.factory.createSimpleRayLight(posDown, this.velocityRay, this.angle+90 , this.color);
 			
 			tmpPosX += this.getDistanceBetweenTwoRays();
-			
-			
 		}
 	}
 	

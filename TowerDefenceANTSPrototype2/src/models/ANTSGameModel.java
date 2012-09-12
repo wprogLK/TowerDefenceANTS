@@ -10,11 +10,4 @@ public class ANTSGameModel extends ANTSAbstractModel implements ANTSIModel
 	{
 		super(factory);
 	}
-
-	@Override
-	public void update() 
-	{
-		
-	}
-
 }

@@ -1,7 +1,6 @@
 package models.medium;
 
 import interfaces.ANTSIModel;
-import interfaces.ANTSIView;
 import interfaces.medium.ANTSIMediumModel;
 
 import java.util.ArrayList;
@@ -33,6 +32,7 @@ public abstract class ANTSAbstractMediumModel extends ANTSAbstractModel implemen
 	///////////
 	//SETTERS//
 	///////////
+	
 	public void setPlumbAngle(double angle)
 	{
 		this.angleOfPlumb = angle;

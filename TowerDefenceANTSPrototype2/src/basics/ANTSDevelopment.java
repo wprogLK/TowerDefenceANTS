@@ -1,13 +1,10 @@
 package basics;
 
 import interfaces.ANTSIController;
-import interfaces.ANTSIRayController;
-import interfaces.medium.ANTSIMediumController;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.util.Arrays;
 
 import basics.ANTSDriver.ANTSFPS;
 
@@ -16,7 +13,6 @@ import controllers.ANTSCellController;
 public class ANTSDevelopment
 {
 	private static boolean debugModeOn = true;
-	
 	
 	///////////////
 	//DEBUG CLASS//
@@ -32,9 +28,8 @@ public class ANTSDevelopment
 		private static boolean showCurrentInterpolation = true;
 		private static boolean showInterpolationStatus = true;
 		private  static boolean showBounds = false;
-		private static boolean showNrOfObjects = true;		//TODO
+		private static boolean showNrOfObjects = true;
 		private static boolean showDetectionGrid = true;
-		private static boolean showStopIfNoCollision = true;
 		
 		private static boolean interpolationOn = false;
 		
@@ -53,10 +48,6 @@ public class ANTSDevelopment
 		private static ANTSFactory factory;
 		
 		private static float interpolation;
-		
-		//FOR DEBUGGING:
-		private static boolean stopIfNoCollision = false;
-		
 		
 		////////////////
 		//SHOW METHODS//
@@ -77,7 +68,6 @@ public class ANTSDevelopment
 				showInterpolation();
 				showInterpolationStatus();
 				showFPSExtraInformation();
-				showStopIfNoCollision();
 				showNumberOfObjects();
 			}
 		}
@@ -88,15 +78,10 @@ public class ANTSDevelopment
 			{
 					ANTSObjectCounter counter = factory.getObjectCounter();
 					drawString(counter.getNumberOfMedium());
-					updatePos();
 					drawString(counter.getNumberOfRays());
-					updatePos();
 					drawString(counter.getNumberOfSourceOfLights());
-					updatePos();
 					drawString(counter.getNumberOfGameObjectsTotal());
-					updatePos();
 			}
-			
 		}
 
 		private static void showFPSExtraInformation() 
@@ -104,13 +89,9 @@ public class ANTSDevelopment
 			if(showExtraInformation && debugModeOn)
 			{
 				drawString(String.format("average fps: %s", fps.getAverageFPS()));
-				updatePos();
 				drawString(String.format("min fps: %s", fps.getMinFPS()));
-				updatePos();
 				drawString(String.format("max fps: %s", fps.getMaxFPS()));
-				updatePos();
 			}
-			
 		}
 
 		///////////////////
@@ -122,7 +103,6 @@ public class ANTSDevelopment
 			if(showCurrentInterpolation && debugModeOn)
 			{
 				drawString(String.format("current interpolation: %s", interpolation));
-				updatePos();
 			}
 			
 		}
@@ -132,7 +112,6 @@ public class ANTSDevelopment
 			if(showCurrentHoveringCellInfo && debugModeOn)
 			{
 				drawString(String.format("currentHoveringCell: %s", currentHoveringCell));
-				updatePos();
 			}
 		}
 		
@@ -141,16 +120,6 @@ public class ANTSDevelopment
 			if(showFPS  && debugModeOn)
 			{
 				drawString(String.format("FPS: %s", fps.getFPS()));
-				updatePos();
-			}
-		}
-		
-		private static void showStopIfNoCollision()
-		{
-			if(showStopIfNoCollision && debugModeOn)
-			{
-				drawString(String.format("stopIfNoCollision: %s", stopIfNoCollision));
-				updatePos();
 			}
 		}
 		
@@ -159,13 +128,13 @@ public class ANTSDevelopment
 			if(showInterpolationStatus && debugModeOn)
 			{
 				drawString(String.format("Interpolation status: %s", interpolationOn));
-				updatePos();
 			}
 		}
 		
 		private static void drawString(String s)
 		{
 			 g2d.drawString(s,currentPos[0], currentPos[1] );
+			 updatePos();
 		}
 		
 		private static void updatePos()
@@ -202,11 +171,6 @@ public class ANTSDevelopment
 			interpolation = in;
 		}
 		
-		public static void setStopIfNoCollision(boolean b) {
-			
-			stopIfNoCollision = b;
-		}
-		
 		///////////
 		//GETTERS//
 		//////////
@@ -224,11 +188,6 @@ public class ANTSDevelopment
 		public static boolean isShowDetectionGrid() 
 		{
 			return showDetectionGrid;
-		}
-
-		public static boolean getStopIfNoCollision() {
-			
-			return stopIfNoCollision;
 		}
 	}
 	
@@ -267,10 +226,4 @@ public class ANTSDevelopment
 			}
 		}
 	}
-	
-	////////////////////////
-	//OBJECT COUNTER CLASS//
-	////////////////////////
-	
-
 }

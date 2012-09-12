@@ -5,10 +5,10 @@ import java.awt.Shape;
 
 public interface ANTSIView 
 {
-	
 	///////////
 	//Getters//
 	///////////
+	
 	public boolean isMouseListener();
 	
 	/**
@@ -18,13 +18,7 @@ public interface ANTSIView
 	
 	public boolean doPaintDirect();
 	
-	/**
-	 * for mouse detection
-	 * @param x
-	 * @param y
-	 * @return
-	 */
-	public boolean containsPoint(int x, int y);
+
 	public boolean isMouseOver();
 	public Shape getShape();
 	
@@ -34,6 +28,14 @@ public interface ANTSIView
 	
 	public void paint(Graphics2D g2d);
 	public void paint(Graphics2D g2d, float interpolation);
+	
+	/**
+	 * for mouse detection
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public boolean containsPoint(int x, int y);
 
 
 }

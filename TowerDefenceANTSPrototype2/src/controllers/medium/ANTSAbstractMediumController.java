@@ -3,12 +3,7 @@ package controllers.medium;
 import java.awt.event.MouseEvent;
 
 import controllers.ANTSAbstractController;
-import controllers.ANTSSimpleRayLightController;
 
-import basics.ANTSFactory;
-import basics.ANTSDevelopment.ANTSStream;
-
-import interfaces.ANTSIController;
 import interfaces.medium.ANTSIMediumController;
 import interfaces.medium.ANTSIMediumModel;
 
@@ -21,7 +16,8 @@ public abstract class ANTSAbstractMediumController extends ANTSAbstractControlle
 	///////////
 	
 	@Override
-	public double getRefractionIndex() {
+	public double getRefractionIndex() 
+	{
 		return this.model.getRefractionIndex();
 	}
 	
@@ -43,15 +39,8 @@ public abstract class ANTSAbstractMediumController extends ANTSAbstractControlle
 	//MOUSE LISTENER//
 	//////////////////
 	
-	@Override
-	public void mouseLeftClickedANTS(MouseEvent e) 
-	{
-	}
 	
 	/////////////////////////
 	//MOUSE MOTION LISTENER//
 	/////////////////////////
-	
-
-	
 }

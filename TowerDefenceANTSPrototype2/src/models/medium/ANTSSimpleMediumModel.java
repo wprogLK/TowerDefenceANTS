@@ -3,9 +3,6 @@ package models.medium;
 import interfaces.ANTSIModel;
 
 import java.awt.geom.AffineTransform;
-import java.util.ArrayList;
-
-import controllers.ANTSSimpleRayLightController;
 
 import basics.ANTSFactory;
 
@@ -16,15 +13,11 @@ public class ANTSSimpleMediumModel extends ANTSAbstractMediumModel implements AN
 	private double height = 100;
 	private double width = 100;
 	
-	private ArrayList<ANTSSimpleRayLightController> rays;
-	
-	
 	public ANTSSimpleMediumModel(double posX, double posY, double height, double width, double refractionIndex, boolean isMouseListener, ANTSFactory factory)
 	{
 		super(true, refractionIndex, factory);
 		
 		this.matrix = new AffineTransform();
-		this.rays = new ArrayList<ANTSSimpleRayLightController>();
 		
 		this.matrix.setToTranslation(posX, posY);
 		
@@ -69,7 +62,7 @@ public class ANTSSimpleMediumModel extends ANTSAbstractMediumModel implements AN
 		return this.matrix;
 	}
 		
-	
+	@Override
 	public String toString()
 	{
 		return "Model simple medium";
@@ -93,6 +86,4 @@ public class ANTSSimpleMediumModel extends ANTSAbstractMediumModel implements AN
 	{
 
 	}
-
-	
 }

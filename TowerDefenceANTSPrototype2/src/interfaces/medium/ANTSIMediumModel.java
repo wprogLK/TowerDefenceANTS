@@ -4,17 +4,30 @@ import controllers.ANTSSimpleRayLightController;
 
 public interface ANTSIMediumModel 
 {
-	double getRefractionIndex();
-
-	boolean containsRay(ANTSSimpleRayLightController c);
-
-	void addRay(ANTSSimpleRayLightController rayLightController);
-
-	void removeRay(ANTSSimpleRayLightController rayLightController);
-	
+	///////////
+	//GETTERS//
+	///////////
+	public double getRefractionIndex();
 	public double getPlumbAngle();
+	public double getAngle(ANTSSimpleRayLightController rayLightController);
+	
+	///////////
+	//SETTERS//
+	///////////
+	
 	public void setPlumbAngle(double angle);
+	
+	//////////////
+	//ADD/REMOVE//
+	//////////////
+	
+	public void addRay(ANTSSimpleRayLightController rayLightController);
 
-	double getAngle(ANTSSimpleRayLightController rayLightController);
+	public void removeRay(ANTSSimpleRayLightController rayLightController);
+		
+	///////////
+	//SPECIAL//
+	///////////
 
+	public boolean containsRay(ANTSSimpleRayLightController c);
 }

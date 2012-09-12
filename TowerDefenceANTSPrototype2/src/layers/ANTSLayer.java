@@ -64,7 +64,4 @@ public class ANTSLayer
 		
 		ANTSStream.printDebug("Shift layer down from " + layerBefore + " to layer " + this.layer);
 	}
-	
-	
-	
 }

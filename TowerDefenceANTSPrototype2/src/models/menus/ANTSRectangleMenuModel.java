@@ -20,7 +20,6 @@ public class ANTSRectangleMenuModel extends ANTSAbstractModel implements ANTSIMo
 	
 	private ArrayList<ANTSMenuItemRectangleController> menuItems;
 	
-	
 	public ANTSRectangleMenuModel(double posX, double posY, double minWidth, ANTSFactory factory )
 	{
 		super(factory);
@@ -51,6 +50,7 @@ public class ANTSRectangleMenuModel extends ANTSAbstractModel implements ANTSIMo
 	//Special//
 	///////////
 	
+	@Override
 	public String toString()
 	{
 		return "rectangle menu";
@@ -85,9 +85,7 @@ public class ANTSRectangleMenuModel extends ANTSAbstractModel implements ANTSIMo
 		return this.menuItems.size();
 	}
 	
-	
 	///////////
 	//SPECIAL//
 	///////////
-	
 }

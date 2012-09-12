@@ -33,7 +33,8 @@ public class ANTSGridController extends ANTSAbstractController implements ANTSIC
 	{
 		return "GRID CONTROLLER";
 	}
-
+	
+	@Override
 	public ANTSIModel getModel()
 	{
 		return this.model;
@@ -44,6 +45,7 @@ public class ANTSGridController extends ANTSAbstractController implements ANTSIC
 		return this.view;
 	}
 
+	@Override
 	public ANTSIView getIView()
 	{
 		return this.view;

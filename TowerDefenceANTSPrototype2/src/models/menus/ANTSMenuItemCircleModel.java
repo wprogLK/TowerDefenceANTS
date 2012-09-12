@@ -30,6 +30,7 @@ public class ANTSMenuItemCircleModel extends ANTSAbstractModel implements ANTSIM
 	//Getters//
 	///////////
 	
+	@Override
 	public String toString()
 	{
 		return "menu item : " + text;
@@ -57,6 +58,5 @@ public class ANTSMenuItemCircleModel extends ANTSAbstractModel implements ANTSIM
 	///////////
 	//Special//
 	///////////
-
 	
 }

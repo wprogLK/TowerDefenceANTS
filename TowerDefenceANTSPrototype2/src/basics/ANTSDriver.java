@@ -231,7 +231,6 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 			this.averageFPS = 0;
 			this.counter = 0;
 			this.totalFPS = 0;
-			
 		}
 		
 		public void update()
@@ -262,7 +261,6 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 			
 			this.calculateMax(this.fps);
 			this.calculateMin(this.fps);
-			
 		}
 
 		private void calculateMin(int fps)

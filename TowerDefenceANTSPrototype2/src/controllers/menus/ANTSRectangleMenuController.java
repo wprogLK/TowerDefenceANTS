@@ -20,7 +20,6 @@ public class ANTSRectangleMenuController extends ANTSAbstractController implemen
 	private ANTSRectangleMenuModel model;
 	private ANTSRectangleMenuView view;
 	
-	
 	public ANTSRectangleMenuController(double posX, double PosY, double minWidth, ANTSFactory factory) 
 	{
 		this.model = new ANTSRectangleMenuModel(posX,PosY, minWidth, factory);

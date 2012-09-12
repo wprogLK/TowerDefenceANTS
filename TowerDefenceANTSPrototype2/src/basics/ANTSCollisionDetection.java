@@ -206,7 +206,6 @@ public class ANTSCollisionDetection
 					
 					for(ANTSIMediumController medium : colliderMedium)//this.hashMap[cellX][cellY].getObjects())
 					{
-		
 						if(this.checkForCollision(ray,medium))
 						{
 							this.calculateAngle(ray, medium);
@@ -238,7 +237,6 @@ public class ANTSCollisionDetection
 			{
 				ray.addAngle(angle);
 			}
-			
 		}
 	}
 	
@@ -305,7 +303,6 @@ public class ANTSCollisionDetection
 			this.width = width;
 			
 			this.shape = new Rectangle2D.Double(this.x, this.y, this.width, this.height);
-			
 		}
 		
 		public LinkedList<ANTSIRayController> getRays() 
@@ -374,7 +371,4 @@ public class ANTSCollisionDetection
 			g2d.draw(this.shape);
 		}
 	}
-	
-	
-	
 }

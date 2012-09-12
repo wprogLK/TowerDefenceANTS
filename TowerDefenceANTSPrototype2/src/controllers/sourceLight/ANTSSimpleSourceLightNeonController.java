@@ -13,9 +13,7 @@ import interfaces.ANTSIModel;
 import interfaces.ANTSIView;
 
 import views.sourceLight.ANTSSimpleSourceLightNeonView;
-import views.sourceLight.ANTSSimpleSourceLightView;
 
-import models.sourceLight.ANTSSimpleSourceLightModel;
 import models.sourceLight.ANTSSimpleSourceLightNeonModel;
 
 public class ANTSSimpleSourceLightNeonController extends ANTSAbstractController implements ANTSIController
@@ -36,6 +34,7 @@ public class ANTSSimpleSourceLightNeonController extends ANTSAbstractController 
 	//GETTERS//
 	///////////
 	
+	@Override
 	public ANTSIModel getModel()
 	{
 		return this.model;
@@ -46,6 +45,7 @@ public class ANTSSimpleSourceLightNeonController extends ANTSAbstractController 
 		return this.view;
 	}
 
+	@Override
 	public ANTSIView getIView()
 	{
 		return this.view;
@@ -68,8 +68,6 @@ public class ANTSSimpleSourceLightNeonController extends ANTSAbstractController 
 	@Override
 	public void mouseDraggedANTS(MouseEvent e) 
 	{
-//		this.model.setPosition(e.getX()/2, e.getY()/2);	// /2 because of the the center of the source is in the center of the ellipse
-//		this.model.setPosition((int) (e.getX()-this.model.getRadius()), (int) (e.getY()-this.model.getRadius()));
 		this.model.setPosition((int) (e.getX()-this.model.getLength()/2), (int) (e.getY()-this.model.getLength()/4));
 	}
 	
@@ -77,11 +75,6 @@ public class ANTSSimpleSourceLightNeonController extends ANTSAbstractController 
 	public void mouseWheelMovedANTS(MouseWheelEvent e)
 	{
 		this.model.rotate(e.getWheelRotation());
-		
-	}
-	
-	
-	{
 		
 	}
 }

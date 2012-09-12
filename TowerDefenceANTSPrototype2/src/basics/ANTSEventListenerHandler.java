@@ -1,12 +1,11 @@
 package basics;
 
-import java.util.Arrays;
-
 import interfaces.ANTSIEvent;
 import interfaces.ANTSIEventListener;
-import interfaces.ANTSIView;
 
 import javax.swing.event.EventListenerList;
+
+import basics.ANTSDevelopment.ANTSStream;
 
 public class ANTSEventListenerHandler {
 	
@@ -25,10 +24,7 @@ public class ANTSEventListenerHandler {
 	{
 		ANTSIEventListener[] es = this.listenerList.getListeners(listener.getClass());
 		
-		
-			System.out.println("listener " +es.length );
-		
-		
+		ANTSStream.printDebug("listener " +es.length );
 		
 		this.listenerList.add(ANTSIEventListener.class, listener);
 	}

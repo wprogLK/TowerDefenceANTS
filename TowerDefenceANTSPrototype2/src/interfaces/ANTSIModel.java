@@ -28,7 +28,6 @@ public interface ANTSIModel
 	
 	public AffineTransform getMatrix();
 	
-	
 	///////////
 	//Setters//
 	///////////
@@ -43,6 +42,4 @@ public interface ANTSIModel
 	///////////
 	
 	public void update();
-
-	
 }

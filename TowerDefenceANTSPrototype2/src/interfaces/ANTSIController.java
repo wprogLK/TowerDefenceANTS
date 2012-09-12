@@ -25,13 +25,10 @@ public interface ANTSIController extends MouseListener, MouseMotionListener, Mou
 	///////////
 	
 	public void setLayer(ANTSLayerSystem.Layer layer);
-
 	
 	///////////
 	//Special//
 	///////////
 	
 	public void update();
-	
-
 }

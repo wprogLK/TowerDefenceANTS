@@ -3,23 +3,16 @@ package models.medium;
 import interfaces.ANTSIModel;
 
 import java.awt.geom.AffineTransform;
-import java.util.ArrayList;
-
-import controllers.ANTSSimpleRayLightController;
 
 import basics.ANTSFactory;
 
 public class ANTSStandardMediumModel extends ANTSAbstractMediumModel implements ANTSIModel 
 {
-	private ArrayList<ANTSSimpleRayLightController> rays;
-	
 	public ANTSStandardMediumModel(ANTSFactory factory)
 	{
 		super(true,0,factory);
 		
 		this.matrix = new AffineTransform();
-		this.rays = new ArrayList<ANTSSimpleRayLightController>();
-		
 		this.isMouseListener = false;
 	}
 	

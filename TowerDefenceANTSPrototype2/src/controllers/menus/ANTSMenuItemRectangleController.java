@@ -59,15 +59,14 @@ public class ANTSMenuItemRectangleController extends ANTSAbstractController impl
 		return this.iview;
 	}
 	
-	////////////
-	//SETTERES//
-	////////////
+	///////////
+	//SETTERS//
+	///////////
 	
 	public void setView(ANTSIView v)
 	{
 		this.iview = v;
 	}
-	
 
 	public void setMenuItemIndex(int index) 
 	{
@@ -103,6 +102,4 @@ public class ANTSMenuItemRectangleController extends ANTSAbstractController impl
 	{
 		this.model.setMouseEntered(true);
 	}
-
-	
 }

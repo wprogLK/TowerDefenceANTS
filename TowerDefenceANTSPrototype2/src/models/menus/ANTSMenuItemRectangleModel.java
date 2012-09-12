@@ -61,5 +61,4 @@ public class ANTSMenuItemRectangleModel extends ANTSAbstractModel implements ANT
 	///////////
 	//SPECIAL//
 	///////////
-	
 }

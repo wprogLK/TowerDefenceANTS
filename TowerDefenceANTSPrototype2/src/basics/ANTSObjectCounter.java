@@ -6,6 +6,8 @@ import interfaces.medium.ANTSIMediumController;
 
 import java.util.Arrays;
 
+import basics.ANTSDevelopment.ANTSStream;
+
 public class ANTSObjectCounter
 {
 	private int numberOfRays;
@@ -23,57 +25,51 @@ public class ANTSObjectCounter
 		this.numberOfGameObjectsTotal = 0;
 	}
 
+	//////////////////////
+	//Add/remove methods//
+	//////////////////////
+	
 	public void add(ANTSIController c) 
 	{
-		if(this.implementsInterface(c, ANTSIRayController.class))
+		if(ANTSUtility.implementsInterface(c, ANTSIRayController.class))
 		{
 			this.numberOfRays++;
 			this.numberOfGameObjectsTotal++;
 		}
-		else if(this.implementsInterface(c, ANTSIMediumController.class))
+		else if(ANTSUtility.implementsInterface(c, ANTSIMediumController.class))
 		{
 			this.numberOfMedium++;
 			this.numberOfGameObjectsTotal++;
 		}
 		else
 		{
+//			ANTSStream.printErr("unknown ANTSIController try to add to ANTSObjectCounter");
 			//unknown
 		}
-//		else if(this.implementsInterface(c, ANTSI.class))
-//		{
-//			this.numberOfMedium++;
-//			this.numberOfGameObjectsTotal++;
-//		}
-		
 	}
 	
 	public void remove(ANTSIController c)
 	{
-		if(this.implementsInterface(c, ANTSIRayController.class))
+		if(ANTSUtility.implementsInterface(c, ANTSIRayController.class))
 		{
 			this.numberOfRays--;
 			this.numberOfGameObjectsTotal--;
 		}
-		else if(this.implementsInterface(c, ANTSIMediumController.class))
+		else if(ANTSUtility.implementsInterface(c, ANTSIMediumController.class))
 		{
 			this.numberOfMedium--;
 			this.numberOfGameObjectsTotal--;
 		}
 		else
 		{
+//			ANTSStream.printErr("unknown ANTSIController try to remove from ANTSObjectCounter");
 			//unknown
 		}
-//		else if(this.implementsInterface(c, ANTSI.class))
-//		{
-//			this.numberOfMedium++;
-//			this.numberOfGameObjectsTotal++;
-//		}
 	}
 	
-	private boolean implementsInterface(ANTSIController c, Object ANTSInterface)
-	{
-		return Arrays.asList(c.getClass().getInterfaces()).contains(ANTSInterface);
-	}
+	///////////
+	//Getters//
+	///////////
 	
 	public String getNumberOfRays()
 	{
@@ -94,5 +90,4 @@ public class ANTSObjectCounter
 	{
 		return "# total gameObjects: " + this.numberOfGameObjectsTotal;
 	}
-	
 }

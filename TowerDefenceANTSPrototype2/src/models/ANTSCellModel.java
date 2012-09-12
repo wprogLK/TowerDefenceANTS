@@ -92,6 +92,7 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 	///////////
 	//Getters//
 	///////////
+	
 	public int[] getCoordRel()
 	{
 		int[] coord = {this.relativePosX, this.relativePosY};
@@ -137,7 +138,6 @@ public class ANTSCellModel extends ANTSAbstractModel implements ANTSIModel
 	public double[][] getPoints()
 	{
 		double[][] points = new double[4][2];
-		
 		
 		double aX =  this.absolutePosX +  + this.cellWidth/2;
 		double aY = this.absolutePosY;

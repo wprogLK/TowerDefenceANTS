@@ -1,18 +1,12 @@
 package controllers.medium;
 
 import java.awt.event.MouseEvent;
-import java.util.Arrays;
-
-import controllers.ANTSSimpleRayLightController;
 
 import basics.ANTSFactory;
-import basics.ANTSDevelopment.ANTSDebug;
-import basics.ANTSDevelopment.ANTSStream;
 
-import interfaces.ANTSIController;
 import interfaces.ANTSIModel;
-import interfaces.ANTSIRayController;
 import interfaces.ANTSIView;
+
 import interfaces.medium.ANTSIMediumController;
 
 import views.medium.ANTSSimpleMediumView;
@@ -38,6 +32,7 @@ public class ANTSSimpleMediumController extends ANTSAbstractMediumController imp
 	//GETTERS//
 	///////////
 	
+	@Override
 	public ANTSIModel getModel()
 	{
 		return this.model;
@@ -48,13 +43,15 @@ public class ANTSSimpleMediumController extends ANTSAbstractMediumController imp
 		return this.view;
 	}
 
+	@Override
 	public ANTSIView getIView()
 	{
 		return this.view;
 	}
 	
 	@Override
-	public double getRefractionIndex() {
+	public double getRefractionIndex() 
+	{
 		return this.model.getRefractionIndex();
 	}
 	
@@ -68,21 +65,13 @@ public class ANTSSimpleMediumController extends ANTSAbstractMediumController imp
 	//MOUSE LISTENER//
 	//////////////////
 	
-	@Override
-	public void mouseRightClickedANTS(MouseEvent e) 
-	{
-		ANTSDebug.setStopIfNoCollision(true);
-	}
 	
 	/////////////////////////
 	//MOUSE MOTION LISTENER//
 	/////////////////////////
 	
-	
 	public void mouseDraggedANTS(MouseEvent e) 
 	{
 		this.model.setPosition((int) (e.getX()-this.model.getWidth()/2), (int) (e.getY()-this.model.getHeight()/2));
 	}
-
-	
 }

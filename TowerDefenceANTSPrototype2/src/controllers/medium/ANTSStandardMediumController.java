@@ -1,20 +1,13 @@
 package controllers.medium;
 
-import java.awt.Color;
-import java.awt.event.MouseEvent;
-
 import basics.ANTSFactory;
-import basics.ANTSDevelopment.ANTSStream;
 
-import interfaces.ANTSIController;
 import interfaces.ANTSIModel;
 import interfaces.ANTSIView;
 import interfaces.medium.ANTSIMediumController;
 
-import views.medium.ANTSSimpleMediumView;
 import views.medium.ANTSStandardMediumView;
 
-import models.medium.ANTSSimpleMediumModel;
 import models.medium.ANTSStandardMediumModel;
 
 public class ANTSStandardMediumController extends ANTSAbstractMediumController implements ANTSIMediumController
@@ -35,11 +28,13 @@ public class ANTSStandardMediumController extends ANTSAbstractMediumController i
 	//GETTERS//
 	///////////
 	
+	@Override
 	public ANTSIModel getModel()
 	{
 		return this.model;
 	}
 	
+	@Override
 	public ANTSIView getIView()
 	{
 		return this.view;

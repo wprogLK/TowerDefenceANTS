@@ -8,7 +8,6 @@ import basics.ANTSFactory;
 
 public class ANTSGridModel extends ANTSAbstractModel implements ANTSIModel 
 {
-	
 	private ANTSCellController[][] grid;		//"[x][y]"
 	
 	private int xCells;	

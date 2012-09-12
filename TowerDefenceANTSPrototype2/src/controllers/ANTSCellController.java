@@ -2,8 +2,6 @@ package controllers;
 
 import java.awt.event.MouseEvent;
 
-import events.ANTSFooEvent;
-
 import basics.ANTSDevelopment.ANTSDebug;
 import basics.ANTSFactory;
 
@@ -33,16 +31,18 @@ public class ANTSCellController extends ANTSAbstractController implements ANTSIC
 	//GETTERS & SETTERS//
 	/////////////////////
 	
+	@Override
 	public ANTSIModel getModel()
 	{
 		return this.model;
 	}
-	
+
 	public ANTSCellView getView()
 	{
 		return this.view;
 	}
 
+	@Override
 	public ANTSIView getIView()
 	{
 		return this.view;

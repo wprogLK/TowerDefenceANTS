@@ -1,5 +1,6 @@
 package interfaces.medium;
 
-public interface ANTSIMediumView {
+public interface ANTSIMediumView 
+{
 
 }

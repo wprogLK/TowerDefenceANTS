@@ -39,6 +39,7 @@ public class ANTSAbstractController extends ANTSEventListenerHandler implements 
 	///////////
 	//GETTERS//
 	///////////
+	
 	@Override
 	public ANTSIModel getModel()
 	{
@@ -67,7 +68,6 @@ public class ANTSAbstractController extends ANTSEventListenerHandler implements 
 		this.model = m;
 	}
 	
-
 	@Override
 	public double getPosX() 
 	{
@@ -79,7 +79,6 @@ public class ANTSAbstractController extends ANTSEventListenerHandler implements 
 	{
 		return this.model.getMatrix().getTranslateY();
 	}
-
 	
 	///////////
 	//SETTERS//
@@ -101,7 +100,6 @@ public class ANTSAbstractController extends ANTSEventListenerHandler implements 
 		this.model.update();
 		this.model.setIsAlreadyUpdated(true);
 	}
-
 	
 	//////////////////
 	//MOUSE LISTENER//
@@ -126,7 +124,7 @@ public class ANTSAbstractController extends ANTSEventListenerHandler implements 
 			}
 			else
 			{
-				ANTSStream.print("Unkown button was clicked!");
+				ANTSStream.printErr("Unkown button was clicked!");
 			}
 		}
 	}
@@ -168,7 +166,7 @@ public class ANTSAbstractController extends ANTSEventListenerHandler implements 
 			}
 			else
 			{
-				ANTSStream.print("Unkown button was pressed!");
+				ANTSStream.printErr("Unkown button was pressed!");
 			}
 			
 			if(e.isPopupTrigger())
@@ -199,7 +197,7 @@ public class ANTSAbstractController extends ANTSEventListenerHandler implements 
 			}
 			else
 			{
-				ANTSStream.print("Unkown button was released!");
+				ANTSStream.printErr("Unkown button was released!");
 			}
 			
 			if(e.isPopupTrigger())
@@ -244,8 +242,6 @@ public class ANTSAbstractController extends ANTSEventListenerHandler implements 
 		}
 	}
 	
-	
-	
 	@Override
 	public final void mouseWheelMoved(MouseWheelEvent e) 
 	{
@@ -253,12 +249,11 @@ public class ANTSAbstractController extends ANTSEventListenerHandler implements 
 		{
 			this.mouseWheelMovedANTS(e);
 		}
-		
 	}
 	
-	///////////////////
-	//Mouse "Actions"//
-	///////////////////
+	////////////////////////////////
+	//Mouse ANTS "Actions" Adapter//
+	////////////////////////////////
 	
 	public void mouseRightClickedANTS(MouseEvent e) 
 	{
@@ -337,6 +332,4 @@ public class ANTSAbstractController extends ANTSEventListenerHandler implements 
 	{
 		return this.model.containsPoint(x, y) || this.iview.containsPoint(x,y);
 	}
-
-
 }

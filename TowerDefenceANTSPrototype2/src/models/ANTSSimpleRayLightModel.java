@@ -4,14 +4,11 @@ import interfaces.ANTSIModel;
 import interfaces.medium.ANTSIMediumController;
 
 import java.awt.Color;
-import java.awt.Shape;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
-import java.awt.geom.Point2D.Double;
+
+import controllers.ANTSSimpleRayLightController;
 
 import basics.ANTSFactory;
-import basics.ANTSDevelopment.ANTSStream;
 
 public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIModel
 {
@@ -65,22 +62,10 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 	@Override
 	public void update()
 	{	
-//		this.matrix.setTransform(this.sourceMatrix);
-		
 		this.velocityMatrix = new AffineTransform();
 		this.velocityMatrix.translate(this.velocity, 0);
 		
-//		this.matrix.concatenate(this.sourcePivotRotateMatrix);
-//		this.matrix.concatenate(this.localRotateMatrix);
 		this.matrix.concatenate(this.velocityMatrix);
-		
-//		Point2D center = new Point2D.Double(this.center[0], this.center[1]);
-//		
-//		this.matrix.transform(center, center);
-//		
-//		this.center[0] = center.getX();
-//		this.center[1] = center.getY();
-		
 	}
 	
 	/**
@@ -99,11 +84,7 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 	//Getters//
 	///////////
 	
-//	public AffineTransform getInterpolationMatrix()
-//	{
-//		return this.matrixForInterpolation;
-//	}
-	
+	@Override
 	public AffineTransform getMatrix()
 	{
 		return this.matrix;
@@ -141,6 +122,7 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 	///////////
 	//Special//
 	///////////
+	
 	public void addAngle(double angle) 
 	{
 		this.angle+=angle;

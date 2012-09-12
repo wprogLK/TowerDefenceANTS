@@ -20,7 +20,6 @@ public class ANTSCircleMenuModel extends ANTSAbstractModel implements ANTSIModel
 	
 	private ArrayList<ANTSMenuItemCircleController> menuItems;
 	
-	
 	public ANTSCircleMenuModel(double posX, double posY, double radius, ANTSFactory factory )
 	{
 		super(factory);
@@ -80,5 +79,4 @@ public class ANTSCircleMenuModel extends ANTSAbstractModel implements ANTSIModel
 		
 		c.setMenuItemIndex(index);
 	}
-	
 }

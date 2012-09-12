@@ -47,6 +47,7 @@ public class ANTSSimpleTestAnt1Controller extends ANTSAbstractController impleme
 	//GETTERS//
 	///////////
 	
+	@Override
 	public ANTSIModel getModel()
 	{
 		return this.model;
@@ -57,6 +58,7 @@ public class ANTSSimpleTestAnt1Controller extends ANTSAbstractController impleme
 		return this.view;
 	}
 
+	@Override
 	public ANTSIView getIView()
 	{
 		return this.view;

@@ -56,11 +56,10 @@ public class ANTSSimpleTestAnt1Model extends ANTSAbstractModel implements ANTSIM
 		this.isMouseListener = isMouseListener;
 	}
 	
-
-	
 	///////////
 	//Getters//
 	///////////
+	
 	public boolean isDragged()
 	{
 		return this.isDragged;
@@ -96,7 +95,6 @@ public class ANTSSimpleTestAnt1Model extends ANTSAbstractModel implements ANTSIM
 		return this.color;
 	}
 	
-	
 	public String toString()
 	{
 		return "Model: ANT X: " + this.matrix.getTranslateX() + " Y: " + this.matrix.getTranslateY() + " COLOR: " + this.color;
@@ -119,6 +117,7 @@ public class ANTSSimpleTestAnt1Model extends ANTSAbstractModel implements ANTSIM
 		
 		return aTImage;
 	}
+	
 	///////////
 	//Setters//
 	///////////
@@ -131,6 +130,4 @@ public class ANTSSimpleTestAnt1Model extends ANTSAbstractModel implements ANTSIM
 	///////////
 	//Special//
 	///////////
-	
-	
 }

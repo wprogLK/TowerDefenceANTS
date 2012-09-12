@@ -112,10 +112,4 @@ public class ANTSCircleMenuController extends ANTSAbstractController implements 
 		//Only an example
 		ANTSStream.print("CLICK of " + this.model.toString());
 	}
-	
-	@Override 
-	public void mouseEnteredANTS(MouseEvent e)
-	{
-
-	}
 }

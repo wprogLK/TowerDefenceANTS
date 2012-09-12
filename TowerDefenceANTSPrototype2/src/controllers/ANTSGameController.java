@@ -39,7 +39,7 @@ public class ANTSGameController extends ANTSAbstractController implements ANTSIC
 	private void initGame() 
 	{
 		this.createGrid();
-		createSimpleSourceLight(); //Only for testing
+		createSimpleSourceLight();
 		createSimpleSourceLightNeon();
 //		createSimpleSourceLight2();
 		createSimpleSourceLight3();
@@ -48,12 +48,10 @@ public class ANTSGameController extends ANTSAbstractController implements ANTSIC
 		createSimpleMedium2();
 	}
 
-	
-
 	////////////
 	//CREATERS//
 	////////////
-	
+
 	private void createGrid()
 	{
 		this.factory.createGrid(xCells, yCells);
@@ -80,7 +78,6 @@ public class ANTSGameController extends ANTSAbstractController implements ANTSIC
 		this.factory.createSimpeSourceLigthNeon(400, 400, 100, Color.red, true);
 		
 	}
-
 	
 	public void createSimpleTestAnt1()
 	{
@@ -100,7 +97,8 @@ public class ANTSGameController extends ANTSAbstractController implements ANTSIC
 	///////////
 	//GETTERS//
 	///////////
-
+	
+	@Override
 	public ANTSIModel getModel()
 	{
 		return this.model;
@@ -110,6 +108,8 @@ public class ANTSGameController extends ANTSAbstractController implements ANTSIC
 	{
 		return this.view;
 	}
+	
+	@Override
 	public ANTSIView getIView()
 	{
 		return this.view;
