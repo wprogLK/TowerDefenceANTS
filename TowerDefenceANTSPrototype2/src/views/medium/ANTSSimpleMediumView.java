@@ -1,35 +1,25 @@
 package views.medium;
 
-import interfaces.ANTSIController;
-import interfaces.ANTSIRayController;
 import interfaces.ANTSIView;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Shape;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-
-import basics.ANTSDevelopment.ANTSStream;
 
 import views.ANTSAbstractView;
-
 
 import models.medium.ANTSSimpleMediumModel;
 
 public class ANTSSimpleMediumView extends ANTSAbstractView implements ANTSIView
 {
 	private ANTSSimpleMediumModel model;
-//	private ArrayList<Shape> detectionLines;
 	
 	public ANTSSimpleMediumView(ANTSSimpleMediumModel m) 
 	{
 		super();
 		this.model = m;
-//		this.detectionLines = new ArrayList<Shape>();
 	}
 	
 	///////////
@@ -100,7 +90,6 @@ public class ANTSSimpleMediumView extends ANTSAbstractView implements ANTSIView
 			g2d.fill(shape);
 			this.paintBounds(g2d);
 	}
-
 
 	@Override
 	public void paint(Graphics2D g2d, float interpolation) 

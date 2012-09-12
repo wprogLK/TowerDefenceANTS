@@ -5,21 +5,16 @@ import interfaces.ANTSIView;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Shape;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 import views.ANTSAbstractView;
 
-import models.sourceLight.ANTSSimpleSourceLightModel;
 import models.sourceLight.ANTSSimpleSourceLightNeonModel;
 
 public class ANTSSimpleSourceLightNeonView extends ANTSAbstractView implements ANTSIView
 {
 	private ANTSSimpleSourceLightNeonModel model;
-//	private Ellipse2D circle;
 	private Rectangle2D rectangle;
 	
 	public ANTSSimpleSourceLightNeonView(ANTSSimpleSourceLightNeonModel m) 
@@ -63,7 +58,6 @@ public class ANTSSimpleSourceLightNeonView extends ANTSAbstractView implements A
 		this.shape = aT.createTransformedShape(this.rectangle);
 	}	
 	
-	
 	@Override
 	public void paint(Graphics2D g2d) 
 	{
@@ -94,7 +88,6 @@ public class ANTSSimpleSourceLightNeonView extends ANTSAbstractView implements A
 			g2d.setStroke(new BasicStroke());
 		}
 		
-		
 		if(this.model.isOn())
 		{
 			g2d.setColor(this.model.getColor());
@@ -114,6 +107,4 @@ public class ANTSSimpleSourceLightNeonView extends ANTSAbstractView implements A
 	{
 		this.paint(g2d);
 	}
-	
-
 }

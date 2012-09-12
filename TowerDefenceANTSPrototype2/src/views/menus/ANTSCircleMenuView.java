@@ -1,7 +1,6 @@
 package views.menus;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
@@ -36,6 +35,11 @@ public class ANTSCircleMenuView extends ANTSAbstractView implements ANTSIView, A
 	//Setters//
 	///////////
 	
+	public String toString()
+	{
+		return "Cell view";
+	}
+	
 	///////////
 	//Special//
 	///////////
@@ -48,11 +52,6 @@ public class ANTSCircleMenuView extends ANTSAbstractView implements ANTSIView, A
 		Ellipse2D circle = new Ellipse2D.Double(-this.model.getRadius()/2, -this.model.getRadius()/2, this.model.getRadius(), this.model.getRadius());
 		this.shape = aT.createTransformedShape(circle);
 	}	
-	
-	public String toString()
-	{
-		return "Cell view";
-	}
 
 	@Override
 	public boolean isMouseListener() 
@@ -75,8 +74,6 @@ public class ANTSCircleMenuView extends ANTSAbstractView implements ANTSIView, A
 	@Override
 	public void paint(Graphics2D g2d, float interpolation)
 	{
-		
-		
 		g2d.setColor(Color.black);
 		
 		if(this.model.getMouseEntered())

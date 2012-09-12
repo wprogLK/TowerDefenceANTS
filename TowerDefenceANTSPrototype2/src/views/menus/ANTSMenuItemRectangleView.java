@@ -3,25 +3,14 @@ package views.menus;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.Shape;
-import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Arc2D;
-import java.awt.geom.NoninvertibleTransformException;
-import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-import java.util.concurrent.Semaphore;
-
-import basics.ANTSDevelopment.ANTSStream;
 
 import interfaces.ANTSIView;
 import interfaces.menus.ANTSIMenuView;
 
 import views.ANTSAbstractView;
 
-import models.menus.ANTSCircleMenuModel;
-import models.menus.ANTSMenuItemCircleModel;
 import models.menus.ANTSMenuItemRectangleModel;
 import models.menus.ANTSRectangleMenuModel;
 
@@ -59,15 +48,14 @@ public class ANTSMenuItemRectangleView extends ANTSAbstractView implements ANTSI
 	{
 		AffineTransform aT = this.model.getMatrix();
 		
-		Rectangle2D.Double rec = new Rectangle2D.Double(0,0,this.parentModel.getMinWidth(),this.fontSize);
+		Rectangle2D.Double rec = new Rectangle2D.Double(0,0,this.parentModel.getMinWidth(),fontSize);
 		
 		AffineTransform t = new AffineTransform(aT);
 		
 		double posX = 0;
-		double posY = this.model.getIndex()*this.fontSize ;
+		double posY = this.model.getIndex()*fontSize ;
 		
-		t.translate(posX, posY-this.fontSize);
-		
+		t.translate(posX, posY-fontSize);
 		
 		this.shape = t.createTransformedShape(rec);
 	}	
@@ -102,7 +90,6 @@ public class ANTSMenuItemRectangleView extends ANTSAbstractView implements ANTSI
 		
 		g2d.setColor(Color.black);
 		
-		
 		if(this.model.getMouseEntered())
 		{
 			g2d.setColor(Color.blue);
@@ -115,18 +102,17 @@ public class ANTSMenuItemRectangleView extends ANTSAbstractView implements ANTSI
 		this.updateShape(interpolation);
 		
 		AffineTransform t = new AffineTransform(aT);
-//		
+		
 		double posX = 0;
-		double posY = this.model.getIndex()*this.fontSize ;
+		double posY = this.model.getIndex()*fontSize ;
 
-		t.translate(posX, posY-this.fontSize);
+		t.translate(posX, posY-fontSize);
 
 		g2d.fill(shape);
 		
-		g2d.setColor(this.fontColor);
-		g2d.setFont(this.font);
+		g2d.setColor(fontColor);
+		g2d.setFont(font);
 		
-		g2d.drawString(this.model.getText(), (int) aT.getTranslateX(), (int)(t.getTranslateY()+this.fontSize));
+		g2d.drawString(this.model.getText(), (int) aT.getTranslateX(), (int)(t.getTranslateY()+fontSize));
 	}
-	
 }

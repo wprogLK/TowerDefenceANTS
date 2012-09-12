@@ -109,6 +109,4 @@ public class ANTSSimpleSourceLightView extends ANTSAbstractView implements ANTSI
 	{
 		this.paint(g2d);
 	}
-	
-
 }

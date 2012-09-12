@@ -11,7 +11,6 @@ import java.awt.geom.Ellipse2D;
 import views.ANTSAbstractView;
 
 import models.lens.ANTSSimpleLensModel;
-import models.sourceLight.ANTSSimpleSourceLightModel;
 
 public class ANTSSimpleLensView extends ANTSAbstractView implements ANTSIView
 {
@@ -104,6 +103,4 @@ public class ANTSSimpleLensView extends ANTSAbstractView implements ANTSIView
 	{
 		this.paint(g2d);
 	}
-	
-
 }

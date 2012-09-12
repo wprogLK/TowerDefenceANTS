@@ -4,23 +4,16 @@ import interfaces.ANTSIView;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
-import basics.ANTSDevelopment.ANTSDebug;
-import basics.ANTSDevelopment.ANTSStream;
-
-import models.ANTSSimpleRayLightModel;
 import models.ANTSSimpleRayLightModel;
 
 public class ANTSSimpleRayLightView extends ANTSAbstractView implements ANTSIView
 {
 	private ANTSSimpleRayLightModel model;
 	private	Line2D.Double ray;
-	private Line2D.Double line;
 	
 	public ANTSSimpleRayLightView(ANTSSimpleRayLightModel m)
 	{
@@ -39,14 +32,6 @@ public class ANTSSimpleRayLightView extends ANTSAbstractView implements ANTSIVie
 		return this.model.isMouseListener();
 	}
 	
-	///////////
-	//Setters//
-	///////////
-	
-	///////////
-	//Special//
-	///////////
-	
 	public double[] getCenter()
 	{
 		this.updateShape(-1);
@@ -58,7 +43,16 @@ public class ANTSSimpleRayLightView extends ANTSAbstractView implements ANTSIVie
 		
 		return center;
 	}
-
+	
+	///////////
+	//Setters//
+	///////////
+	
+	///////////
+	//Special//
+	///////////
+	
+	
 	@Override
 	protected void updateShape(float interpolation) 
 	{
@@ -81,8 +75,6 @@ public class ANTSSimpleRayLightView extends ANTSAbstractView implements ANTSIVie
 		g2d.draw(this.shape);
 
 		this.paintBounds(g2d);
-		
-//		paintCenter(g2d);
 	}
 	
 	@Override
@@ -97,16 +89,5 @@ public class ANTSSimpleRayLightView extends ANTSAbstractView implements ANTSIVie
 		g2d.draw(this.shape);
 		
 		this.paintBounds(g2d);
-		
-//		paintCenter(g2d);
-	}
-	
-	private void paintCenter(Graphics2D g2d)
-	{
-		double[] c = this.getCenter();
-		Rectangle2D rec = new Rectangle2D.Double(c[0], c[1], 5, 5);
-		
-		g2d.setColor(Color.red);
-		g2d.draw(rec);
 	}
 }

@@ -30,10 +30,10 @@ public class ANTSCircleMenuController extends ANTSAbstractController implements 
 		this.setIModel(this.model);
 		
 		this.addNewMenuItem("test item 1");
-//		this.addNewMenuItem("test item 2");
-//		this.addNewMenuItem("test item 3");
-//		this.addNewMenuItem("test item 4");
-//		this.addNewMenuItem("test item 5");
+		this.addNewMenuItem("test item 2");
+		this.addNewMenuItem("test item 3");
+		this.addNewMenuItem("test item 4");
+		this.addNewMenuItem("test item 5");
 //		this.addNewMenuItem("test item 6");
 //		this.addNewMenuItem("test item 7");
 //		this.addNewMenuItem("test item 8");

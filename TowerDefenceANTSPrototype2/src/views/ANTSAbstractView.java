@@ -7,7 +7,6 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 
 import basics.ANTSDevelopment.ANTSDebug;
-import basics.ANTSDevelopment.ANTSStream;
 
 public abstract class ANTSAbstractView  implements ANTSIView
 {
@@ -28,15 +27,12 @@ public abstract class ANTSAbstractView  implements ANTSIView
 		{
 			
 		}
-
-	
 	};
 	
 	public ANTSAbstractView()
 	{
 		this.isMouseOver = false;
 	}
-	
 	
 	@Override
 	public void paint(Graphics2D g2d) 
@@ -59,7 +55,6 @@ public abstract class ANTSAbstractView  implements ANTSIView
 			g2d.draw(this.shape.getBounds2D());
 		}
 	}
-	
 	
 	/////////////////////
 	//GETTERS & SETTERS//
@@ -133,5 +128,8 @@ public abstract class ANTSAbstractView  implements ANTSIView
 	 * 
 	 * @param interpolation if the interpolation is -1, it's definitely not an interpolation
 	 */
-	protected abstract void updateShape(float interpolation);
+	protected void updateShape(float interpolation)
+	{
+		
+	}
 }

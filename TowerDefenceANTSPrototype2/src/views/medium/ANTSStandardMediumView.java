@@ -34,11 +34,4 @@ public class ANTSStandardMediumView extends ANTSAbstractView implements ANTSIVie
 	///////////
 	//SPECIAL//
 	///////////
-	
-
-	@Override
-	protected void updateShape(float interpolation) 
-	{
-		//Do nothing
-	}
-	}
+}

@@ -10,15 +10,11 @@ import models.ANTSGameModel;
 public class ANTSGameView extends ANTSAbstractView implements ANTSIView
 {
 	private ANTSGameModel model;
-	private JButton buttonUpdate;
 	
 	public ANTSGameView(ANTSGameModel m) 
 	{
 		super();
 		this.model = m;
-		
-//		this.buttonUpdate = new JButton("Update");
-//		this.buttonUpdate.addActionListener(ANTSUpdateListener.getInstance());
 	}
 	
 	///////////
@@ -36,6 +32,7 @@ public class ANTSGameView extends ANTSAbstractView implements ANTSIView
 	{
 		return "Game view";
 	}
+	
 	///////////
 	//Setters//
 	///////////
@@ -43,24 +40,4 @@ public class ANTSGameView extends ANTSAbstractView implements ANTSIView
 	///////////
 	//Special//
 	///////////
-	
-	@Override
-	protected void updateShape(float interpolation) 
-	{
-		//Do nothing
-	}	
-	
-	@Override
-	public void paint(Graphics2D g2d)
-	{
-		
-	}
-	
-	@Override
-	public void paint(Graphics2D g2d, float interpolation) 
-	{
-		this.paintBounds(g2d);
-	}
-	
-	
 }

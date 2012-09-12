@@ -42,6 +42,7 @@ public class ANTSCellView extends ANTSAbstractView implements ANTSIView
 	{
 		return false;
 	}
+	
 	///////////
 	//Setters//
 	///////////
@@ -75,12 +76,9 @@ public class ANTSCellView extends ANTSAbstractView implements ANTSIView
 		this.paint(g2d, 0);
 	}
 	
-	
 	@Override
 	public void paint(Graphics2D g2d, float interpolation)
 	{
-	
-		
 		g2d.setColor(Color.black);
 		
 		if(this.model.getMouseEntered())
@@ -96,7 +94,8 @@ public class ANTSCellView extends ANTSAbstractView implements ANTSIView
 		this.drawMenu(g2d,interpolation);
 	}
 
-	private void drawMenu(Graphics2D g2d, float interpolation) {
+	private void drawMenu(Graphics2D g2d, float interpolation) 
+	{
 		Iterator<ANTSIMenuController> menuIterator = this.model.getMenuIterator();
 		
 		while(menuIterator.hasNext())
@@ -106,5 +105,4 @@ public class ANTSCellView extends ANTSAbstractView implements ANTSIView
 		}
 		
 	}
-
 }
