@@ -26,8 +26,8 @@ public class ANTSCollisionDetection
 	private int height;
 	private int width;
 	
-	private final int defaultCellsX = 1;		//TODO: IMPORTANT: If you have big objects the number of cells should be small! Otherwise the detection is not really working
-	private final int defaultCellsY = 1;
+	private final int defaultCellsX = 2;		//TODO: IMPORTANT: If you have big objects the number of cells should be small! Otherwise the detection is not really working
+	private final int defaultCellsY = 2;
 	
 	private int cellsX;
 	private int cellsY;
@@ -164,73 +164,50 @@ public class ANTSCollisionDetection
 			for(int cellY = 0; cellY<this.cellsY; cellY++)
 			{
 				LinkedList<ANTSIRayController> colliderRays = new LinkedList<ANTSIRayController>();
+				LinkedList<ANTSIMediumController> colliderMedium = new LinkedList<ANTSIMediumController>();
 				
 				colliderRays.addAll(this.hashMap[cellX][cellY].getRays());
+				colliderMedium.addAll(this.hashMap[cellX][cellY].getObjects());
 
+				
 				// Lower Cell
 				if (cellY > 0) {
-					colliderRays.addAll(this.hashMap[cellX][cellY - 1].getRays());
+					colliderMedium.addAll(this.hashMap[cellX][cellY - 1].getObjects());
 
 					// Lower right cell
 					if (cellX < this.cellsX - 1) {
-						colliderRays.addAll(this.hashMap[cellX + 1][cellY - 1].getRays());
+						colliderMedium.addAll(this.hashMap[cellX + 1][cellY - 1].getObjects());
 					}
 
 					// Lower left cell
 					if (cellX > 0) {
-						colliderRays.addAll(this.hashMap[cellX - 1][cellY - 1].getRays());
+						colliderMedium.addAll(this.hashMap[cellX - 1][cellY - 1].getObjects());
 					}
 				}
 
 				// Upper Cell
 				if (cellY < this.cellsY - 1) {
-					colliderRays.addAll(this.hashMap[cellX][cellY + 1].getRays());
+					colliderMedium.addAll(this.hashMap[cellX][cellY + 1].getObjects());
 
 					// Upper right cell
 					if (cellX < this.cellsX - 1) {
-						colliderRays.addAll(this.hashMap[cellX + 1][cellY + 1].getRays());
+						colliderMedium.addAll(this.hashMap[cellX + 1][cellY + 1].getObjects());
 					}
 
 					// Upper left cell
 					if (cellX > 0) {
-						colliderRays.addAll(this.hashMap[cellX - 1][cellY + 1].getRays());
+						colliderMedium.addAll(this.hashMap[cellX - 1][cellY + 1].getObjects());
 					}
 				}
 
 				// Left Cell
 				if (cellX > 0) {
-					colliderRays.addAll(this.hashMap[cellX - 1][cellY].getRays());
+					colliderMedium.addAll(this.hashMap[cellX - 1][cellY].getObjects());
 				}
 				// Right Cell
 				if (cellX < this.cellsX - 1) {
-					colliderRays.addAll(this.hashMap[cellX + 1][cellY].getRays());
+					colliderMedium.addAll(this.hashMap[cellX + 1][cellY].getObjects());
 				}
-				
-//				boolean noCollisionWithMedium = true;
-//				
-//				for(ANTSIMediumController medium : this.hashMap[cellX][cellY].getObjects())
-//				{
-//					
-//					for(ANTSIRayController ray : colliderRays)
-//					{
-//						
-//						if(this.checkForCollision(ray,medium))
-//						{
-//							ANTSStream.printDebug("yes with " + medium.getRefractionIndex());
-//							
-//							this.calculateAngle(ray, medium);
-//							
-//							noCollisionWithMedium = false;
-//							
-//							break;
-//						}
-//						else
-//						{
-//							this.calculateAngle(ray, this.factory.createStandardMediumController());
-//						}
-//					}
-//				}
-				
 				
 				for(ANTSIRayController ray : colliderRays)
 				{

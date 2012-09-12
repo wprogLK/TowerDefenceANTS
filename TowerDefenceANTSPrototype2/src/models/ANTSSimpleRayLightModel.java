@@ -46,6 +46,7 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 		
 		this.matrix.translate(center[0], center[1]);
 		this.sourceMatrix.translate(center[0], center[1]);
+		this.matrixForInterpolation.translate(center[0], center[1]);
 		
 		this.sourcePivotRotateMatrix.rotate(Math.toRadians(angle), 0,0);
 		
@@ -58,6 +59,7 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 		this.medium = factory.createStandardMediumController();
 		
 		this.matrix.concatenate(this.sourcePivotRotateMatrix);
+		this.matrixForInterpolation.concatenate(this.sourcePivotRotateMatrix);
 	}
 	
 	@Override
@@ -79,7 +81,6 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 //		this.center[0] = center.getX();
 //		this.center[1] = center.getY();
 		
-		ANTSStream.printDebug("normal update");
 	}
 	
 	/**
@@ -89,26 +90,9 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 	 */
 	public void update(float interpolation)
 	{
-//		this.matrixForInterpolation.setTransform(this.sourceMatrix);
-//		
-//		AffineTransform tmpVelocityMatrix = new AffineTransform(this.velocityMatrix); //BUG
-//		tmpVelocityMatrix.translate(this.velocity*interpolation, 0);
-////		tmpVelocityMatrix.translate(0, this.velocity*interpolation);
-//		
-////		this.matrixForInterpolation.preConcatenate(this.localRotateMatrix);
-////		this.matrixForInterpolation.concatenate(this.rotateMatrix);
-////		this.matrixForInterpolation.concatenate(tmpVelocityMatrix);	
-////		this.matrix.setTransform(this.matrixForInterpolation);
-		
-		
-		//NEW:
-//		this.matrixForInterpolation.setTransform(matrix);
 		this.velocityMatrix = new AffineTransform();
 		this.velocityMatrix.translate(this.velocity*interpolation, 0);
 		this.matrix.concatenate(this.velocityMatrix);
-//		this.matrix.setTransform(matrixForInterpolation);
-		
-		ANTSStream.printDebug("interpolation update");
 	}
 	
 	///////////
@@ -166,5 +150,6 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 		this.localRotateMatrix.rotate(Math.toRadians(angle));
 		
 		this.matrix.concatenate(this.localRotateMatrix);
+		this.matrixForInterpolation.concatenate(this.localRotateMatrix);
 	}
 }
