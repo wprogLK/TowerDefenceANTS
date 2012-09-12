@@ -8,8 +8,6 @@ import interfaces.medium.ANTSIMediumController;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Shape;
-import java.awt.geom.Area;
-import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -17,9 +15,6 @@ import java.util.ListIterator;
 
 import basics.ANTSDevelopment.ANTSDebug;
 import basics.ANTSDevelopment.ANTSStream;
-
-import controllers.ANTSSimpleRayLightController;
-import controllers.medium.ANTSStandardMediumController;
 
 public class ANTSCollisionDetection 
 {
@@ -126,8 +121,6 @@ public class ANTSCollisionDetection
 						
 						iterator.remove();
 						this.factory.removeController(controller);
-						
-						
 					}
 					else
 					{
@@ -146,7 +139,6 @@ public class ANTSCollisionDetection
 	
 	private boolean isOutOfRange(int hashValue, int max) 
 	{
-		
 		if(hashValue<0 || hashValue>=max)
 		{	
 			return true;
@@ -168,7 +160,6 @@ public class ANTSCollisionDetection
 				
 				colliderRays.addAll(this.hashMap[cellX][cellY].getRays());
 				colliderMedium.addAll(this.hashMap[cellX][cellY].getObjects());
-
 				
 				// Lower Cell
 				if (cellY > 0) {
@@ -213,7 +204,7 @@ public class ANTSCollisionDetection
 				{
 					boolean noCollisionWithNonStandardMedium = true;
 					
-					for(ANTSIMediumController medium : this.hashMap[cellX][cellY].getObjects())
+					for(ANTSIMediumController medium : colliderMedium)//this.hashMap[cellX][cellY].getObjects())
 					{
 		
 						if(this.checkForCollision(ray,medium))
