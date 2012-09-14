@@ -19,7 +19,7 @@ public class ANTSSimpleSourceLightNeonView extends ANTSAbstractView implements A
 	
 	public ANTSSimpleSourceLightNeonView(ANTSSimpleSourceLightNeonModel m) 
 	{
-		super();
+		super(m);
 		
 		this.model = m;
 		

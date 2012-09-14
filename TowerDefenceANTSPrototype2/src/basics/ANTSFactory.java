@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import basics.ANTSDevelopment.ANTSStream;
 
 import controllers.ANTSCellController;
+import controllers.ANTSDevelopmentController;
 import controllers.ANTSGameController;
 import controllers.ANTSGridController;
 import controllers.ANTSSimpleRayLightController;
@@ -33,6 +34,7 @@ public class ANTSFactory
 	private ANTSGridController gridController;
 	private ANTSCollisionDetection collisionDetection;
 	private ANTSStandardMediumController standardMediumController;
+	private ANTSDevelopmentController developmentController;
 	
 	private ANTSObjectCounter objectCounter;
 	public ANTSFactory(ANTSDriver d) 
@@ -45,6 +47,7 @@ public class ANTSFactory
 		this.menuControllers = new ArrayList<ANTSIMenuController>();
 		this.createCollisionDetection();
 		this.standardMediumController = new ANTSStandardMediumController(this);
+		this.developmentController = new ANTSDevelopmentController(this);
 		
 		this.objectCounter = new ANTSObjectCounter();
 	}
@@ -117,8 +120,9 @@ public class ANTSFactory
 	
 	public void createGame()
 	{
-		ANTSGameController c = new ANTSGameController(this);
-		this.gameController = c;
+		this.gameController = new ANTSGameController(this);
+		
+		this.addToKeyListener(this.gameController);
 	}
 	
 	/////////////////
@@ -165,6 +169,11 @@ public class ANTSFactory
 	public ANTSObjectCounter getObjectCounter()
 	{
 		return this.objectCounter;
+	}
+	
+	public ANTSDevelopmentController getDevelopmentController()
+	{
+		return this.developmentController;
 	}
 	
 	//////////////////////
@@ -217,14 +226,17 @@ public class ANTSFactory
 		}
 	}
 	
+	public void addToKeyListener(ANTSIController c)
+	{
+		this.driver.addControllerToKeyListener(c);
+	}
+	
 	///////////
 	//Special//
 	///////////
 	
 	public void paintAllViews(Graphics2D g2d, float interpolation)
 	{
-		ANTSDevelopment.ANTSDebug.setFactory(this);
-		
 		this.gridController.getIView().paint(g2d, interpolation);
 		
 		for(int i = 0; i<this.controllers.size(); i++)
@@ -238,6 +250,8 @@ public class ANTSFactory
 		}
 		
 		this.collisionDetection.paintDetectionGrid(g2d);
+		this.developmentController.setGraphics2D(g2d);
+		this.developmentController.getIView().paint(g2d, interpolation);
 	}
 	
 	public void updateAllModels()
@@ -256,6 +270,8 @@ public class ANTSFactory
 				controller.update();
 			}
 		} 
+		
+		this.developmentController.update();
 	}
 	
 	public void resetUpdate()

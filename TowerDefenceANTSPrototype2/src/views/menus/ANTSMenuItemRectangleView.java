@@ -24,7 +24,7 @@ public class ANTSMenuItemRectangleView extends ANTSAbstractView implements ANTSI
 	
 	public ANTSMenuItemRectangleView(ANTSMenuItemRectangleModel model, ANTSRectangleMenuModel parentModel) 
 	{
-		super();
+		super(model);
 		
 		this.model = model;
 		this.parentModel = parentModel;

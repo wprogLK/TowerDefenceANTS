@@ -5,6 +5,8 @@ import interfaces.menus.ANTSIMenuController;
 import java.awt.geom.AffineTransform;
 import java.util.Iterator;
 
+import controllers.ANTSDevelopmentController;
+
 import basics.ANTSFactory;
 
 import layers.ANTSLayerSystem.Layer;
@@ -28,6 +30,8 @@ public interface ANTSIModel
 	
 	public AffineTransform getMatrix();
 	
+	public ANTSDevelopmentController getDevelopmentController();
+	
 	///////////
 	//Setters//
 	///////////
@@ -42,4 +46,5 @@ public interface ANTSIModel
 	///////////
 	
 	public void update();
+	
 }

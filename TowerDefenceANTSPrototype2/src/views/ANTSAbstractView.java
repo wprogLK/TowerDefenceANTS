@@ -1,20 +1,24 @@
 package views;
 
+import interfaces.ANTSIModel;
 import interfaces.ANTSIView;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 
-import basics.ANTSDevelopment.ANTSDebug;
+import basics.ANTSDevelopment.ANTSStream;
+
+import controllers.ANTSDevelopmentController;
 
 public abstract class ANTSAbstractView  implements ANTSIView
 {
 	protected boolean isMouseOver;
 	protected Shape shape;
 	protected static int fontSize = 12;
+	protected ANTSDevelopmentController developmentController;
 	
-	private static ANTSAbstractView emptyView = new ANTSAbstractView() 
+	private static ANTSAbstractView emptyView = new ANTSAbstractView(null) 
 	{
 		@Override
 		public boolean isMouseListener() 
@@ -29,10 +33,21 @@ public abstract class ANTSAbstractView  implements ANTSIView
 		}
 	};
 	
-	public ANTSAbstractView()
+	public ANTSAbstractView(ANTSIModel m)
 	{
 		this.isMouseOver = false;
+		
+		if(m!=null)
+		{
+			this.developmentController = m.getDevelopmentController();
+		}
 	}
+	
+//	public ANTSAbstractView()
+//	{
+//		this.isMouseOver = false;
+//	}
+	
 	
 	@Override
 	public void paint(Graphics2D g2d) 
@@ -48,7 +63,7 @@ public abstract class ANTSAbstractView  implements ANTSIView
 	
 	public final void paintBounds(Graphics2D g2d)
 	{
-		if(ANTSDebug.isShowBounds())
+		if(this.developmentController.isShowBounds())
 		{
 			g2d.setColor(Color.BLUE);
 			

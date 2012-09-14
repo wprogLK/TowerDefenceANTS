@@ -13,7 +13,7 @@ public class ANTSGridView extends ANTSAbstractView implements ANTSIView
 	
 	public ANTSGridView(ANTSGridModel m) 
 	{
-		super();
+		super(m);
 		
 		this.model = m;
 	}

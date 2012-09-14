@@ -18,7 +18,7 @@ public class ANTSSimpleMediumView extends ANTSAbstractView implements ANTSIView
 	
 	public ANTSSimpleMediumView(ANTSSimpleMediumModel m) 
 	{
-		super();
+		super(m);
 		this.model = m;
 	}
 	

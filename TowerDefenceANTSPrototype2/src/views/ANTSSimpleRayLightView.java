@@ -17,7 +17,7 @@ public class ANTSSimpleRayLightView extends ANTSAbstractView implements ANTSIVie
 	
 	public ANTSSimpleRayLightView(ANTSSimpleRayLightModel m)
 	{
-		super();
+		super(m);
 		this.model = m;
 		this.updateShape(-1);
 	}

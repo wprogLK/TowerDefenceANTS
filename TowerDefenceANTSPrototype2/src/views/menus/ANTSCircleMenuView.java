@@ -22,7 +22,7 @@ public class ANTSCircleMenuView extends ANTSAbstractView implements ANTSIView, A
 	
 	public ANTSCircleMenuView(ANTSCircleMenuModel m) 
 	{
-		super();
+		super(m);
 		
 		this.model = m;
 	}

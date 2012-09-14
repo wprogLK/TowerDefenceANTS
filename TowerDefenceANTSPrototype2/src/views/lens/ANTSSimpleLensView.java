@@ -19,7 +19,7 @@ public class ANTSSimpleLensView extends ANTSAbstractView implements ANTSIView
 	
 	public ANTSSimpleLensView(ANTSSimpleLensModel m) 
 	{
-		super();
+		super(m);
 		
 		this.model = m;
 		

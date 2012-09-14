@@ -21,7 +21,7 @@ public class ANTSRectangleMenuView extends ANTSAbstractView implements ANTSIView
 	
 	public ANTSRectangleMenuView(ANTSRectangleMenuModel m) 
 	{
-		super();
+		super(m);
 		
 		this.model = m;
 	}

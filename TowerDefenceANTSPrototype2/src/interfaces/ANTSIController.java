@@ -1,12 +1,13 @@
 package interfaces;
 
+import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelListener;
 
 import layers.ANTSLayerSystem;
 
-public interface ANTSIController extends MouseListener, MouseMotionListener, MouseWheelListener
+public interface ANTSIController extends MouseListener, MouseMotionListener, MouseWheelListener, KeyListener
 {
 	///////////
 	//Getters//

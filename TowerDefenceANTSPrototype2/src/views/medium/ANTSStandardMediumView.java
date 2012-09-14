@@ -12,7 +12,7 @@ public class ANTSStandardMediumView extends ANTSAbstractView implements ANTSIVie
 	
 	public ANTSStandardMediumView(ANTSStandardMediumModel m) 
 	{
-		super();
+		super(m);
 		this.model = m;
 	}
 	

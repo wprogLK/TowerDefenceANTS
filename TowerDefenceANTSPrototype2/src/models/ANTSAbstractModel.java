@@ -4,6 +4,8 @@ import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import controllers.ANTSDevelopmentController;
+
 import basics.ANTSDevelopment.ANTSStream;
 import basics.ANTSFactory;
 
@@ -188,5 +190,11 @@ public class ANTSAbstractModel implements ANTSIModel, ANTSIEventListener
 	{
 		ANTSStream.printDebug("Event source: " + event.getSource());
 		
+	}
+
+	@Override
+	public ANTSDevelopmentController getDevelopmentController() 
+	{
+		return this.factory.getDevelopmentController();
 	}
 }

@@ -10,6 +10,7 @@ import interfaces.ANTSIView;
 import interfaces.menus.ANTSIMenuController;
 
 import models.ANTSCellModel;
+import models.ANTSDevelopmentModel;
 
 public class ANTSCellView extends ANTSAbstractView implements ANTSIView
 {
@@ -17,7 +18,7 @@ public class ANTSCellView extends ANTSAbstractView implements ANTSIView
 	
 	public ANTSCellView(ANTSCellModel m) 
 	{
-		super();
+		super(m);
 		
 		this.model = m;
 	}

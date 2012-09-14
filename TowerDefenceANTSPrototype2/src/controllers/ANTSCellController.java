@@ -2,7 +2,6 @@ package controllers;
 
 import java.awt.event.MouseEvent;
 
-import basics.ANTSDevelopment.ANTSDebug;
 import basics.ANTSFactory;
 
 import interfaces.ANTSIController;
@@ -73,7 +72,7 @@ public class ANTSCellController extends ANTSAbstractController implements ANTSIC
 		if(this.containsPoint(e.getX(),e.getY()))
 		{
 			this.mouseEnteredANTS(e);
-			ANTSDebug.setCurrentHoveringCell(this);
+			this.model.getFactory().getDevelopmentController().setCurrentHoveringCell(this);
 		}
 		else
 		{

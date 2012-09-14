@@ -13,7 +13,6 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
-import basics.ANTSDevelopment.ANTSDebug;
 import basics.ANTSDevelopment.ANTSStream;
 
 public class ANTSCollisionDetection 
@@ -267,7 +266,7 @@ public class ANTSCollisionDetection
 	
 	public void paintDetectionGrid(Graphics2D g2d)
 	{
-		if(ANTSDebug.isShowDetectionGrid())
+		if(this.factory.getDevelopmentController().isShowDetectionGrid())
 		{
 			for(int cellX = 0; cellX<this.cellsX; cellX++)
 			{

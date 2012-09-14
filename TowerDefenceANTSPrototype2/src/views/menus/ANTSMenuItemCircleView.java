@@ -27,7 +27,7 @@ public class ANTSMenuItemCircleView extends ANTSAbstractView implements ANTSIVie
 	
 	public ANTSMenuItemCircleView(ANTSMenuItemCircleModel model, ANTSCircleMenuModel parentModel) 
 	{
-		super();
+		super(model);
 		
 		this.model = model;
 		this.parentModel = parentModel;

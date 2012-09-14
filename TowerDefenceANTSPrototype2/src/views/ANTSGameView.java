@@ -13,7 +13,7 @@ public class ANTSGameView extends ANTSAbstractView implements ANTSIView
 	
 	public ANTSGameView(ANTSGameModel m) 
 	{
-		super();
+		super(m);
 		this.model = m;
 	}
 	

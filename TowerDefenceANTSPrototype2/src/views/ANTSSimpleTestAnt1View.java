@@ -33,7 +33,7 @@ public class ANTSSimpleTestAnt1View extends ANTSAbstractView implements ANTSIVie
 	
 	public ANTSSimpleTestAnt1View(ANTSSimpleTestAnt1Model m) 
 	{
-		super();
+		super(m);
 		
 		this.model = m;
 		

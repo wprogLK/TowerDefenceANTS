@@ -14,7 +14,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
-import basics.ANTSDevelopment.ANTSDebug;
+import controllers.ANTSDevelopmentController;
 
 import interfaces.ANTSIController;
 import interfaces.ANTSIDriver;
@@ -26,8 +26,8 @@ import interfaces.ANTSIDriver;
 public class ANTSDriver extends Thread implements ANTSIDriver
 {
 	private ANTSFactory factory;
+	private ANTSDevelopmentController developmentController;
 	private ANTSFPS fps;
-	
 	
 	private ANTSWindow window;
 	
@@ -52,11 +52,12 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		this.canvas = new Canvas();
 		
 		this.factory = new ANTSFactory(this);
+		this.developmentController = this.factory.getDevelopmentController();
 		
 		this.createGame();
 		
 		this.initActiveRendering();
-	}
+	}		
 	
 	public ANTSDriver(int width, int height)
 	{	
@@ -104,6 +105,11 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		this.canvas.addMouseWheelListener(c);
 	}
 	
+	public void addControllerToKeyListener(ANTSIController c)
+	{
+		this.window.addKeyListener(c);	//add to window because the focus is on the window not on the canvas
+	}
+	
 	//Create new objects
 	
 	private void createGame()
@@ -132,11 +138,13 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 				loops++;
 			}
 			
-			interpolation =(System.currentTimeMillis() + this.fps.getSkiptTicks() - nextGameTick) /(this.fps.getSkiptTicks());
-			
-			if(!ANTSDebug.getInterpolationOn())
+			if(!this.developmentController.getInterpolationOn())
 			{
 				interpolation = 0;
+			}
+			else
+			{
+				interpolation =(System.currentTimeMillis() + this.fps.getSkiptTicks() - nextGameTick) /(this.fps.getSkiptTicks());
 			}
 			
 			this.paint(interpolation);
@@ -150,9 +158,9 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		this.bufferedImage = this.graphicsConfig.createCompatibleImage(this.window.getWidthOfGraphics(),this.window.getHeightOfGraphics());
 		this.g2d = bufferedImage.createGraphics();
 		
-		ANTSDebug.setGraphics2D(this.g2d);
-		ANTSDebug.setFPS(fps);
-		ANTSDebug.setInterpolation(interpolation);
+		this.developmentController.setGraphics2D(this.g2d);
+		this.developmentController.setFPS(fps);
+		this.developmentController.setInterpolation(interpolation);
 		
 		//Clear:
 		g2d.setColor(this.backgroundColor); 
@@ -160,8 +168,6 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		
 		this.factory.paintAllViews(g2d, interpolation);
 
-		ANTSDebug.showDebugScreen();
-		
 		//Blit image and flip
 		this.graphics = this.buffer.getDrawGraphics();
 		graphics.drawImage(this.bufferedImage, 0, 0, null);
