@@ -242,6 +242,68 @@ public class ANTSDevelopmentModel extends ANTSAbstractModel implements ANTSIMode
 	}
 	
 	
+	
+	////////////
+	//SWITCHES//
+	////////////
+	
+
+	public void switchShowDebugScreenAll()
+	{
+		this.doShowDebugScreenAll = !this.doShowDebugScreenAll;
+	}
+
+	public void switchShowFPS()
+	{
+		this.showFPS = !this.showFPS;
+	}
+	
+	public void switchShowExtraInformation()
+	{
+		this.showExtraInformation = !this.showExtraInformation;
+	}
+	
+	public void switchShowCurrentHoveringCellInfo()
+	{
+		this.showCurrentHoveringCellInfo = !this.showCurrentHoveringCellInfo;
+	}
+	
+	public void switchShowCurrentInterplation()
+	{
+		this.showCurrentInterpolation = !this.showCurrentInterpolation;
+	}
+	
+	public void switchShowInterpolationState()
+	{
+		this.showInterpolationStatus = 	!this.showInterpolationStatus;
+	}
+	
+	public void switchShowBounds()
+	{
+		this.showBounds = !this.showBounds;
+	}
+	
+	public void switchShowNrOfObjects()
+	{
+		this.showNrOfObjects = !this.showNrOfObjects;
+	}
+	
+	public void switchShowDetectionGrid()
+	{
+		this.showDetectionGrid = !this.showDetectionGrid;
+	}
+	
+	public void switchInterpolationOn()
+	{
+		this.interpolationOn = !this.interpolationOn;
+	}
+	
+	public void switchRecordFPS() 
+	{
+		this.recordFPS = !this.recordFPS;
+		
+	}
+	
 	///////////
 	//GETTERS//
 	//////////
@@ -260,5 +322,8 @@ public class ANTSDevelopmentModel extends ANTSAbstractModel implements ANTSIMode
 	{
 		return showDetectionGrid;
 	}
+
+
+
 	
 }

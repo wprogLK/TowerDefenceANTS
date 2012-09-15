@@ -346,7 +346,6 @@ public class ANTSAbstractController extends ANTSEventListenerHandler implements 
 	public void keyTyped(KeyEvent e) 
 	{
 		// TODO Auto-generated method stub
-		ANTSStream.printDebug("key Typed: " + e.getKeyChar());
 	}
 	
 	///////////

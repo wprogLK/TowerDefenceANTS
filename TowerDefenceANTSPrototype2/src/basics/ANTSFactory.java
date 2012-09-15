@@ -49,6 +49,8 @@ public class ANTSFactory
 		this.standardMediumController = new ANTSStandardMediumController(this);
 		this.developmentController = new ANTSDevelopmentController(this);
 		
+		this.addToKeyListener(this.developmentController);
+		
 		this.objectCounter = new ANTSObjectCounter();
 	}
 	

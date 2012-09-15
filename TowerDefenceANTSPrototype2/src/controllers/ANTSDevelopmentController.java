@@ -1,7 +1,9 @@
 package controllers;
 
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 
+import basics.ANTSDevelopment.ANTSStream;
 import basics.ANTSDriver.ANTSFPS;
 import basics.ANTSFactory;
 
@@ -134,6 +136,11 @@ public class ANTSDevelopmentController extends ANTSAbstractController implements
 		this.model.setInterpolationOn(value);
 	}
 	
+	public void showDebugWindow()
+	{
+		this.view.show();
+	}
+	
 	///////////
 	//GETTERS//
 	//////////
@@ -156,5 +163,21 @@ public class ANTSDevelopmentController extends ANTSAbstractController implements
 	//////////////////
 	//MOUSE LISTENER//
 	//////////////////
+	
+	
+	////////////////
+	//KEY LISTENER//
+	////////////////
+	
+	@Override
+	public void keyReleased(KeyEvent e) 
+	{
+		char c = Character.toLowerCase(e.getKeyChar());
+		
+		if(c == 's')
+		{
+			this.showDebugWindow();
+		}
+	}
 	
 }
