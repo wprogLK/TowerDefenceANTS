@@ -2,32 +2,30 @@ package models.lens;
 
 import interfaces.ANTSIModel;
 
-import java.awt.Color;
 import java.awt.geom.AffineTransform;
 
-import models.ANTSAbstractModel;
+import models.medium.ANTSAbstractMediumModel;
 
 import basics.ANTSFactory;
 
-public class ANTSSimpleLensModel extends ANTSAbstractModel implements ANTSIModel 
+public class ANTSSimpleLensModel extends ANTSAbstractMediumModel implements ANTSIModel 
 {
 	private AffineTransform matrix;
+	
+	private double height = 100;
+	private double width = 100;
+	
 	private double radius;
 	
-	private Color color;
-
-	
-	public ANTSSimpleLensModel(double posX, double posY, double radius, Color color, boolean isMouseListener, ANTSFactory factory)
+	public ANTSSimpleLensModel(double posX, double posY, double radius, double refractionIndex, boolean isMouseListener, ANTSFactory factory)
 	{
-		super(factory);
+		super(true, refractionIndex, factory);
 		
 		this.matrix = new AffineTransform();
 		
 		this.matrix.setToTranslation(posX, posY);
 		
 		this.radius = radius;
-		
-		this.color = color;
 		
 		this.isMouseListener = isMouseListener;
 	}
@@ -36,6 +34,16 @@ public class ANTSSimpleLensModel extends ANTSAbstractModel implements ANTSIModel
 	//Getters//
 	///////////
 
+	public double getRadius()
+	{
+		return this.radius;
+	}
+	
+	@Override
+	public boolean isDragged()
+	{
+		return this.isDragged;
+	}
 	
 	public double getPosX()
 	{
@@ -47,24 +55,25 @@ public class ANTSSimpleLensModel extends ANTSAbstractModel implements ANTSIModel
 		return this.matrix.getTranslateY();
 	}
 	
-	public double getRadius()
+	public double getWidth()
 	{
-		return this.radius;
+		return this.width;
+	}
+	
+	public double getHeight()
+	{
+		return this.height;
 	}
 	
 	public AffineTransform getMatrix()
 	{
 		return this.matrix;
 	}
-	
-	public Color getColor()
-	{
-		return this.color;
-	}
-	
+		
+	@Override
 	public String toString()
 	{
-		return "Model: X: " + this.matrix.getTranslateX() + " Y: " + this.matrix.getTranslateY() + " Radius : " +this.radius + " COLOR: " + this.color;
+		return "Model simple medium";
 	}
 	
 	///////////

@@ -16,6 +16,7 @@ import controllers.ANTSDevelopmentController;
 import controllers.ANTSGameController;
 import controllers.ANTSGridController;
 import controllers.ANTSSimpleRayLightController;
+import controllers.lens.ANTSSimpleLensController;
 import controllers.medium.ANTSSimpleMediumController;
 import controllers.medium.ANTSStandardMediumController;
 import controllers.menus.ANTSCircleMenuController;
@@ -89,6 +90,18 @@ public class ANTSFactory
 	public ANTSCellController createCell(double cellHeight, double cellAngleInDegree, int cellNrX, int cellNrY, int shiftHalf, int xOffset, int yOffset)
 	{
 		ANTSCellController c = new ANTSCellController(cellHeight, cellAngleInDegree, cellNrX, cellNrY, shiftHalf, xOffset, yOffset, this);
+		this.addController(c);
+		
+		return c;
+	}
+	
+	////////////////
+	//Create lens'//
+	///////////////
+	
+	public ANTSSimpleLensController createSimpleLens(double posX, double posY, double radius, double refractionIndex, boolean isMouseListener )
+	{
+		ANTSSimpleLensController c = new ANTSSimpleLensController(posX, posY, radius, refractionIndex, isMouseListener, this);
 		this.addController(c);
 		
 		return c;

@@ -1,5 +1,6 @@
 package views.lens;
 
+
 import interfaces.ANTSIView;
 
 import java.awt.BasicStroke;
@@ -15,15 +16,11 @@ import models.lens.ANTSSimpleLensModel;
 public class ANTSSimpleLensView extends ANTSAbstractView implements ANTSIView
 {
 	private ANTSSimpleLensModel model;
-	private Ellipse2D circle;
 	
 	public ANTSSimpleLensView(ANTSSimpleLensModel m) 
 	{
 		super(m);
-		
 		this.model = m;
-		
-		this.updateShape(-1);
 	}
 	
 	///////////
@@ -32,7 +29,7 @@ public class ANTSSimpleLensView extends ANTSAbstractView implements ANTSIView
 	
 	public String toString()
 	{
-		return "lens " + this.model.getPosX() + " " + this.model.getPosY() + " " + this.model.getColor();
+		return "Simple medium view"; 
 	}
 
 	@Override
@@ -53,18 +50,19 @@ public class ANTSSimpleLensView extends ANTSAbstractView implements ANTSIView
 	@Override
 	protected void updateShape(float interpolation) 
 	{
-		AffineTransform aT = this.model.getMatrix();
 		double radius = this.model.getRadius();
 		
-		this.circle = new Ellipse2D.Double(0, 0, radius, radius);
+		Ellipse2D.Double circle = new Ellipse2D.Double(0, 0, radius, radius);
+		
+		AffineTransform aT = this.model.getMatrix();
 		this.shape = aT.createTransformedShape(circle);
 	}	
-	
 	
 	@Override
 	public void paint(Graphics2D g2d) 
 	{
-		this.updateShape(-1);			//TODO CHECK IF position and radius has changed
+		
+		this.updateShape(-1);
 		
 		if(this.model.isDragged())
 		{
@@ -92,12 +90,11 @@ public class ANTSSimpleLensView extends ANTSAbstractView implements ANTSIView
 		}
 		
 		
-			g2d.setColor(this.model.getColor());
+			g2d.setColor(Color.GREEN);
 			g2d.fill(shape);
-		
-		this.paintBounds(g2d);
+			this.paintBounds(g2d);
 	}
-	
+
 	@Override
 	public void paint(Graphics2D g2d, float interpolation) 
 	{
