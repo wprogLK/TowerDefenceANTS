@@ -7,15 +7,15 @@ import controllers.ANTSAbstractController;
 
 import basics.ANTSFactory;
 
-import interfaces.ANTSIController;
 import interfaces.ANTSIModel;
+import interfaces.ANTSISourceLightController;
 import interfaces.ANTSIView;
 
 import views.sourceLight.ANTSSimpleSourceLightView;
 
 import models.sourceLight.ANTSSimpleSourceLightModel;
 
-public class ANTSSimpleSourceLightController extends ANTSAbstractController implements ANTSIController
+public class ANTSSimpleSourceLightController extends ANTSAbstractController implements ANTSISourceLightController
 {
 	private ANTSSimpleSourceLightModel model;
 	private ANTSSimpleSourceLightView view;

@@ -8,15 +8,15 @@ import controllers.ANTSAbstractController;
 
 import basics.ANTSFactory;
 
-import interfaces.ANTSIController;
 import interfaces.ANTSIModel;
+import interfaces.ANTSISourceLightController;
 import interfaces.ANTSIView;
 
 import views.sourceLight.ANTSSimpleSourceLightNeonView;
 
 import models.sourceLight.ANTSSimpleSourceLightNeonModel;
 
-public class ANTSSimpleSourceLightNeonController extends ANTSAbstractController implements ANTSIController
+public class ANTSSimpleSourceLightNeonController extends ANTSAbstractController implements ANTSISourceLightController
 {
 	private ANTSSimpleSourceLightNeonModel model;
 	private ANTSSimpleSourceLightNeonView view;

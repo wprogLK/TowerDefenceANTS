@@ -2,6 +2,7 @@ package basics;
 
 import interfaces.ANTSIController;
 import interfaces.ANTSIRayController;
+import interfaces.ANTSISourceLightController;
 import interfaces.medium.ANTSIMediumController;
 
 import java.util.Arrays;
@@ -41,6 +42,12 @@ public class ANTSObjectCounter
 			this.numberOfMedium++;
 			this.numberOfGameObjectsTotal++;
 		}
+		else if(ANTSUtility.implementsInterface(c, ANTSISourceLightController.class))
+		{
+			this.numberOfSourceOfLights++;
+			this.numberOfGameObjectsTotal++;
+		}
+		
 		else
 		{
 //			ANTSStream.printErr("unknown ANTSIController try to add to ANTSObjectCounter");
@@ -58,6 +65,11 @@ public class ANTSObjectCounter
 		else if(ANTSUtility.implementsInterface(c, ANTSIMediumController.class))
 		{
 			this.numberOfMedium--;
+			this.numberOfGameObjectsTotal--;
+		}
+		else if(ANTSUtility.implementsInterface(c, ANTSISourceLightController.class))
+		{
+			this.numberOfSourceOfLights--;
 			this.numberOfGameObjectsTotal--;
 		}
 		else
