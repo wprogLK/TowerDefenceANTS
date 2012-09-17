@@ -5,6 +5,7 @@ import interfaces.medium.ANTSIMediumController;
 
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 
 import controllers.ANTSSimpleRayLightController;
 
@@ -24,6 +25,21 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 	private double velocity;
 	private double angle;
 	private Color color;
+	
+	//Vector
+	private Point2D.Double start;
+	private Point2D.Double end;
+	
+	
+	//equation r = a + tv
+	private double a_1;
+	private double a_2;
+	
+	private double r_1;
+	private double r_2;
+	
+	private double v_1;
+	private double v_2;
 	
 	private ANTSIMediumController medium;
 	
@@ -57,8 +73,19 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 		
 		this.matrix.concatenate(this.sourcePivotRotateMatrix);
 		this.matrixForInterpolation.concatenate(this.sourcePivotRotateMatrix);
+		
+		this.updateVector();
 	}
 	
+	private void updateVector() 
+	{
+		this.start = new Point2D.Double(0, 0);
+		this.end = new Point2D.Double(this.length, 0);
+		
+		this.matrix.transform(this.start, this.start);
+		this.matrix.transform(this.end, this.end);
+	}
+
 	@Override
 	public void update()
 	{	
@@ -108,6 +135,15 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 	public ANTSIMediumController getCurrentMedium()
 	{
 		return this.medium;
+	}
+	
+	public Point2D.Double[] getVector()
+	{
+		this.updateVector();
+		
+		Point2D.Double[] vec = {this.start,this.end};
+		
+		return vec;
 	}
 	
 	///////////

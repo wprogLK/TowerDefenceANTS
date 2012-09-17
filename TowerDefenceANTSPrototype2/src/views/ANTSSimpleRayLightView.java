@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 import models.ANTSSimpleRayLightModel;
@@ -59,6 +60,12 @@ public class ANTSSimpleRayLightView extends ANTSAbstractView implements ANTSIVie
 		AffineTransform aT = this.model.getMatrix();
 		
 		double length = this.model.getLength();
+		
+//		Point2D.Double[] vec =	this.model.getVector();
+//		
+//		this.ray = new Line2D.Double(vec[0].x,vec[0].y,vec[1].x,vec[1].y);
+//		
+//		this.shape = this.ray;
 		
 		this.ray = new Line2D.Double(0,0,length,0);
 		
