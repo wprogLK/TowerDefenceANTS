@@ -1,6 +1,7 @@
 package controllers.lens;
 
 import java.awt.event.MouseEvent;
+import java.awt.geom.AffineTransform;
 
 import controllers.medium.ANTSAbstractMediumController;
 
@@ -52,6 +53,26 @@ public class ANTSSimpleLensController extends ANTSAbstractMediumController imple
 		return this.model.getRefractionIndex();
 	}
 	
+	public double getRadius()
+	{
+		return this.model.getRadius();
+	}
+	
+	public double[] getCenter() 
+	{
+		return this.model.getCenter();
+	}
+	
+	
+	///////////
+	//SETTERS//
+	///////////
+	
+	public void setPointOfIntersection(double x_1, double y_1, double x_2, double y_2) 
+	{
+		this.model.setPointOfIntersection(x_1, y_1, x_2, y_2);
+	}
+	
 	///////////
 	//SPECIAL//
 	///////////
@@ -71,4 +92,10 @@ public class ANTSSimpleLensController extends ANTSAbstractMediumController imple
 	{
 		this.model.setPosition((int) (e.getX()-this.model.getWidth()/2), (int) (e.getY()-this.model.getHeight()/2));
 	}
+
+
+
+
+
+
 }

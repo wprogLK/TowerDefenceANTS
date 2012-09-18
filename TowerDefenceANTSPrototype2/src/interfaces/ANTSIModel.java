@@ -31,7 +31,7 @@ public interface ANTSIModel
 	public AffineTransform getMatrix();
 	
 	public ANTSDevelopmentController getDevelopmentController();
-	
+	public double[] getCenter();
 	///////////
 	//Setters//
 	///////////

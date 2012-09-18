@@ -15,6 +15,9 @@ public class ANTSSimpleLensModel extends ANTSAbstractMediumModel implements ANTS
 	private double height = 100;
 	private double width = 100;
 	
+	private double[] intersectionPoint1;
+	private double[] intersectionPoint2;
+	
 	private double radius;
 	
 	public ANTSSimpleLensModel(double posX, double posY, double radius, double refractionIndex, boolean isMouseListener, ANTSFactory factory)
@@ -28,12 +31,41 @@ public class ANTSSimpleLensModel extends ANTSAbstractMediumModel implements ANTS
 		this.radius = radius;
 		
 		this.isMouseListener = isMouseListener;
+		
+		this.intersectionPoint1 = new double[2];
+		this.intersectionPoint2 = new double[2];
+		
+		this.intersectionPoint1[0] = Double.POSITIVE_INFINITY;
+		this.intersectionPoint1[1] = Double.POSITIVE_INFINITY;
+		
+		this.intersectionPoint2[0] = Double.POSITIVE_INFINITY;
+		this.intersectionPoint2[1] = Double.POSITIVE_INFINITY;
 	}
 	
 	///////////
 	//Getters//
 	///////////
 
+	public final double[] getCenter()
+	{
+		this.center[0] = this.matrix.getTranslateX()+this.radius/2;
+		this.center[1] = this.matrix.getTranslateY()+this.radius/2;
+		
+		return this.center;
+	}
+	
+	public double[] getPointOfIntersection1()
+	{
+		return this.intersectionPoint1;
+	}
+	
+	public double[] getPointOfIntersection2()
+	{
+		return this.intersectionPoint2;
+	}
+
+
+	
 	public double getRadius()
 	{
 		return this.radius;
@@ -76,6 +108,7 @@ public class ANTSSimpleLensModel extends ANTSAbstractMediumModel implements ANTS
 		return "Model simple medium";
 	}
 	
+	
 	///////////
 	//Setters//
 	///////////
@@ -83,6 +116,15 @@ public class ANTSSimpleLensModel extends ANTSAbstractMediumModel implements ANTS
 	public void setPosition(int x, int y)
 	{
 		this.matrix.setToTranslation(x, y);
+	}
+	
+	public void setPointOfIntersection(double x_1, double y_1, double x_2, double y_2) 
+	{
+		this.intersectionPoint1[0] = x_1;
+		this.intersectionPoint1[1] = y_1;
+		
+		this.intersectionPoint2[0] = x_2;
+		this.intersectionPoint2[1] = y_2;
 	}
 	
 	///////////
@@ -94,4 +136,6 @@ public class ANTSSimpleLensModel extends ANTSAbstractMediumModel implements ANTS
 	{
 
 	}
+
+	
 }

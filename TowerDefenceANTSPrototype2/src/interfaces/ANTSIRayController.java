@@ -1,5 +1,7 @@
 package interfaces;
 
+import java.awt.geom.Point2D;
+
 import interfaces.medium.ANTSIMediumController;
 
 public interface ANTSIRayController extends ANTSIController
@@ -19,6 +21,7 @@ public interface ANTSIRayController extends ANTSIController
 	
 	public double[] getCenter();
 	
+	public Point2D.Double[] getVector();
 	///////////
 	//SPECIAL//
 	///////////

@@ -6,6 +6,7 @@ import interfaces.ANTSIView;
 import interfaces.medium.ANTSIMediumController;
 
 import java.awt.Color;
+import java.awt.geom.Point2D;
 
 import basics.ANTSFactory;
 
@@ -52,6 +53,12 @@ public class ANTSSimpleRayLightController extends ANTSAbstractController impleme
 	public double getRefractionIndex() 
 	{
 		return this.model.getCurrentMedium().getRefractionIndex();
+	}
+	
+	@Override
+	public Point2D.Double[] getVector()
+	{
+		return this.model.getVector();
 	}
 	
 	//////////

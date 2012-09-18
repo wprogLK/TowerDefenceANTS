@@ -118,7 +118,7 @@ public class ANTSAbstractModel implements ANTSIModel, ANTSIEventListener
 		return this.isAlreadyUpdated;
 	}
 	
-	public final double[] getCenter()
+	public double[] getCenter()
 	{
 		return this.center;
 	}

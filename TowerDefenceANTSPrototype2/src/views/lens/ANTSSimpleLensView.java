@@ -8,6 +8,9 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
+
+import basics.ANTSDevelopment.ANTSStream;
 
 import views.ANTSAbstractView;
 
@@ -93,6 +96,42 @@ public class ANTSSimpleLensView extends ANTSAbstractView implements ANTSIView
 			g2d.setColor(Color.GREEN);
 			g2d.fill(shape);
 			this.paintBounds(g2d);
+			
+			this.paintIntersectionPoints(g2d);
+	}
+
+	private void paintIntersectionPoints(Graphics2D g2d) 
+	{
+		double[] point1 = this.model.getPointOfIntersection1();
+		double[] point2 = this.model.getPointOfIntersection2();
+		
+		if(point1[0] != Double.POSITIVE_INFINITY && point1[1] != Double.POSITIVE_INFINITY )
+		{
+			this.paintPoint(point1,g2d);
+		}
+		else
+		{
+//			ANTSStream.printDebug("point 1 not valid");
+		}
+		
+		if(point2[0] != Double.POSITIVE_INFINITY && point2[1] != Double.POSITIVE_INFINITY )
+		{
+			this.paintPoint(point2,g2d);
+		}
+		else
+		{
+//			ANTSStream.printDebug("point 2 not valid");
+		}
+	}
+
+	private void paintPoint(double[] point,Graphics2D g2d) 
+	{
+		Rectangle2D rec = new Rectangle2D.Double(point[0], point[1], 5, 5);
+		
+		g2d.setColor(Color.BLUE);
+		
+		g2d.fill(rec);
+		
 	}
 
 	@Override
