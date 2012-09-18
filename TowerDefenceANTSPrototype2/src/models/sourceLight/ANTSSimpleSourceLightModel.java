@@ -12,7 +12,7 @@ import basics.ANTSFactory;
 public class ANTSSimpleSourceLightModel extends ANTSAbstractModel implements ANTSIModel 
 {
 	private AffineTransform matrix;
-	private double radius;
+	private double radius;	//TODO: Attention this is not the radius, it's the diameter!!
 	
 	private boolean on;
 	private Color color;

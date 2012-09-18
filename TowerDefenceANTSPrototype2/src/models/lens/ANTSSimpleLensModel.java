@@ -15,10 +15,14 @@ public class ANTSSimpleLensModel extends ANTSAbstractMediumModel implements ANTS
 	private double height = 100;
 	private double width = 100;
 	
+	private double radius; //TODO: Attention this is not the radius, it's the diameter!!
+	
+	/*
+	 * Only for debbuging and testing
+	 */
 	private double[] intersectionPoint1;
 	private double[] intersectionPoint2;
-	
-	private double radius;
+	private double[] theIntersectionPoint;
 	
 	public ANTSSimpleLensModel(double posX, double posY, double radius, double refractionIndex, boolean isMouseListener, ANTSFactory factory)
 	{
@@ -32,14 +36,22 @@ public class ANTSSimpleLensModel extends ANTSAbstractMediumModel implements ANTS
 		
 		this.isMouseListener = isMouseListener;
 		
+		
+		/*
+		 * Only for debbuging and testing
+		 */
 		this.intersectionPoint1 = new double[2];
 		this.intersectionPoint2 = new double[2];
+		this.theIntersectionPoint = new double[2];
 		
 		this.intersectionPoint1[0] = Double.POSITIVE_INFINITY;
 		this.intersectionPoint1[1] = Double.POSITIVE_INFINITY;
 		
 		this.intersectionPoint2[0] = Double.POSITIVE_INFINITY;
 		this.intersectionPoint2[1] = Double.POSITIVE_INFINITY;
+		
+		this.theIntersectionPoint[0] = Double.POSITIVE_INFINITY;
+		this.theIntersectionPoint[1] = Double.POSITIVE_INFINITY;
 	}
 	
 	///////////
@@ -54,14 +66,28 @@ public class ANTSSimpleLensModel extends ANTSAbstractMediumModel implements ANTS
 		return this.center;
 	}
 	
+	/*
+	 * Only for debbuging and testing
+	 */
 	public double[] getPointOfIntersection1()
 	{
 		return this.intersectionPoint1;
 	}
 	
+	/*
+	 * Only for debbuging and testing
+	 */
 	public double[] getPointOfIntersection2()
 	{
 		return this.intersectionPoint2;
+	}
+	
+	/*
+	 * Only for debbuging and testing
+	 */
+	public double[] getThePointOfIntersection()
+	{
+		return this.theIntersectionPoint;
 	}
 
 
@@ -118,13 +144,24 @@ public class ANTSSimpleLensModel extends ANTSAbstractMediumModel implements ANTS
 		this.matrix.setToTranslation(x, y);
 	}
 	
-	public void setPointOfIntersection(double x_1, double y_1, double x_2, double y_2) 
+	/*
+	 * Only for debbuging and testing
+	 */
+	public void setPointsOfIntersection(double x_1, double y_1, double x_2, double y_2) 
 	{
 		this.intersectionPoint1[0] = x_1;
 		this.intersectionPoint1[1] = y_1;
 		
 		this.intersectionPoint2[0] = x_2;
 		this.intersectionPoint2[1] = y_2;
+	}
+	
+	/*
+	 * Only for debbuging and testing
+	 */
+	public void setThePointOfIntersection(double[] point) 
+	{
+		this.theIntersectionPoint = point;
 	}
 	
 	///////////

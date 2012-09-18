@@ -97,7 +97,8 @@ public class ANTSSimpleLensView extends ANTSAbstractView implements ANTSIView
 			g2d.fill(shape);
 			this.paintBounds(g2d);
 			
-			this.paintIntersectionPoints(g2d);
+//			this.paintIntersectionPoints(g2d);
+			this.paintTheIntersectionPoint(g2d);
 	}
 
 	private void paintIntersectionPoints(Graphics2D g2d) 
@@ -121,6 +122,17 @@ public class ANTSSimpleLensView extends ANTSAbstractView implements ANTSIView
 		else
 		{
 //			ANTSStream.printDebug("point 2 not valid");
+		}
+	}
+	
+	private void paintTheIntersectionPoint(Graphics2D g2d) 
+	{
+		double[] point = this.model.getThePointOfIntersection();
+	
+		
+		if(point[0] != Double.POSITIVE_INFINITY && point[1] != Double.POSITIVE_INFINITY )
+		{
+			this.paintPoint(point,g2d);	
 		}
 	}
 

@@ -68,9 +68,20 @@ public class ANTSSimpleLensController extends ANTSAbstractMediumController imple
 	//SETTERS//
 	///////////
 	
-	public void setPointOfIntersection(double x_1, double y_1, double x_2, double y_2) 
+	/*
+	 * Only for debbuging and testing
+	 */
+	public void setPointsOfIntersection(double x_1, double y_1, double x_2, double y_2) 
 	{
-		this.model.setPointOfIntersection(x_1, y_1, x_2, y_2);
+		this.model.setPointsOfIntersection(x_1, y_1, x_2, y_2);
+	}
+	
+	/*
+	 * Only for debbuging and testing
+	 */
+	public void setThePointOfIntersection(double[] point)
+	{
+		this.model.setThePointOfIntersection(point);
 	}
 	
 	///////////

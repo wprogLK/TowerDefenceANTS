@@ -250,7 +250,8 @@ public class ANTSCollisionDetection
 	{
 		if(mediumIn.getClass().equals(ANTSSimpleLensController.class))
 		{
-			calculateIntersectionCenterLens(ray,mediumIn);
+			double[] intersectionPoint = calculateIntersectionPoint(ray,mediumIn);
+			double alphaLot = this.getAlphaLot(intersectionPoint,mediumIn);	//TODO
 		}
 		else
 		{
@@ -259,7 +260,23 @@ public class ANTSCollisionDetection
 	}
 	
 	
-	private void calculateIntersectionCenterLens(ANTSIRayController ray,ANTSIMediumController mediumIn) 
+	private double getAlphaLot(double[] intersectionPoint, ANTSIMediumController mediumIn) 
+	{
+		ANTSSimpleLensController lensController = (ANTSSimpleLensController) mediumIn;
+		
+		double R = lensController.getRadius()/2.0;
+		double[] M = lensController.getCenter();
+		
+		double x = intersectionPoint[0];
+		
+		double phiRad = Math.cosh((x-M[0])/R);
+		double phiDeg = Math.toDegrees(phiRad);
+		
+		ANTSStream.printDebug("phiDeg = " + phiDeg);
+		return 0;
+	}
+
+	private double[] calculateIntersectionPoint(ANTSIRayController ray,ANTSIMediumController mediumIn) 
 	{
 		ANTSSimpleLensController lensController = (ANTSSimpleLensController) mediumIn;
 		
@@ -287,11 +304,6 @@ public class ANTSCollisionDetection
 		
 		double D = Math.pow(b, 2)-4*a*c;
 		
-//		ANTSStream.printDebug("tmpRes (G)= " + G);
-//		ANTSStream.printDebug("tmpRes2 (F)= " + F);
-//		ANTSStream.printDebug("side (S)= " + S);
-//		ANTSStream.printDebug("Diskriminante D = " + D);
-		
 		double t_1,t_2;
 		
 		if(D>0)
@@ -318,20 +330,50 @@ public class ANTSCollisionDetection
 			t_2=Double.POSITIVE_INFINITY;
 		}
 		
-//		ANTSStream.printDebug("t_1 = " + t_1 + " \t t_2 = " + t_2);
-		
 		double x_1 = x_a+t_1*(x_b-x_a);
 		double x_2 = x_a+t_2*(x_b-x_a);
 		
 		double y_1 = y_a+t_1*(y_b-y_a);
 		double y_2 = y_a+t_2*(y_b-y_a);
 		
-//		ANTSStream.printDebug("x_1 = " + x_1 + " \t x_2 = " + x_2);
-//		ANTSStream.printDebug("y_1 = " + y_1 + " \t y_2 = " + y_2);
+		lensController.setPointsOfIntersection(x_1,y_1,x_2,y_2);
 		
-		lensController.setPointOfIntersection(x_1,y_1,x_2,y_2);
+		double[] point1 = {x_1,y_1};
+		double[] point2 = {x_2,y_2};
+		
+		double[] closestPoint = getClosestIntersectionPoint(ray,point1,point2);
+		lensController.setThePointOfIntersection(closestPoint);
+		
+		return closestPoint;
 	}
 	
+	private double[] getClosestIntersectionPoint(ANTSIRayController ray, double[] point1, double[] point2) 
+	{
+		double distancePoint1 = getDistanceBetweenRayAndIntersectionPoint(ray, point1);
+		double distancePoint2 = getDistanceBetweenRayAndIntersectionPoint(ray, point2);
+		
+		if(distancePoint1<=distancePoint2)
+		{
+			return point1;
+		}
+		else
+		{
+			return point2;
+		}
+	}
+
+	private double getDistanceBetweenRayAndIntersectionPoint(ANTSIRayController ray, double[] point) 
+	{
+		double[] posRay = new double[2];
+		
+		posRay[0] = ray.getModel().getMatrix().getTranslateX();
+		posRay[1] = ray.getModel().getMatrix().getTranslateY();
+		
+		double distance = Point2D.distance(point[0], point[1], posRay[0], posRay[1]);
+		
+		return distance;
+	}
+
 	private double pow(double v)
 	{
 		return Math.pow(v, 2);
