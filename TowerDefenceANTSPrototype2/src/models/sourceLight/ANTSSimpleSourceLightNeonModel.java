@@ -24,7 +24,7 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 	private int ticksBetweenTwoRays = 10;
 	private int tickCounter;
 	
-	private double rotationStep = 0.5;
+	private double rotationStep = 10;
 	
 	//RayProperties:
 	private double velocityRay = 1;

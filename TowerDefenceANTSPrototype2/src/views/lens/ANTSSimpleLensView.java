@@ -107,7 +107,7 @@ public class ANTSSimpleLensView extends ANTSAbstractView implements ANTSIView
 		
 		if(point1[0] != Double.POSITIVE_INFINITY && point1[1] != Double.POSITIVE_INFINITY )
 		{
-			this.paintPoint(point1,g2d);
+			this.paintPoint(point1,g2d);	
 		}
 		else
 		{

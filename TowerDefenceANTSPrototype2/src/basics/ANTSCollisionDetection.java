@@ -229,9 +229,11 @@ public class ANTSCollisionDetection
 	{
 		double angle =  15;
 		
+		this.checkLens(ray,mediumIn);
+		
 		if(!ray.setCurrentMedium(mediumIn))
 		{
-			this.checkLens(ray,mediumIn);	//for debugging
+			//for debugging
 			
 			if(mediumIn.equals(this.factory.createStandardMediumController()))	//TODO: only for debugging
 			{
@@ -248,88 +250,91 @@ public class ANTSCollisionDetection
 	{
 		if(mediumIn.getClass().equals(ANTSSimpleLensController.class))
 		{
-			ANTSStream.printDebug("it's a lens");
-			
-			ANTSSimpleLensController lensController = (ANTSSimpleLensController) mediumIn;
-			
-			double R = lensController.getRadius();
-			double[] M = lensController.getCenter();
-			
-			Point2D.Double[] vec = ray.getVector();
-			
-			double x_a = vec[0].x-M[0];
-			double y_a = vec[0].y-M[1];
-			
-			double x_b = vec[1].x-M[0];
-			double y_b = vec[1].y-M[1];
-			
-			double m_1 = M[0];
-			double m_2 = M[1];
-		
-			double G = 2*(x_a*x_b-Math.pow(x_a, 2)+y_a*y_b-Math.pow(y_a, 2));
-			double F = Math.pow(x_b,2)-2*x_b*x_a+Math.pow(x_a, 2)+Math.pow(y_b, 2)-2*y_b*y_a+Math.pow(y_a, 2);
-			double S = Math.pow(R,2)-Math.pow(x_a, 2)-Math.pow(y_a, 2);
-			
-			double b = G;
-			double a = F;
-			double c = - S;
-			
-			double D = Math.pow(b, 2)-4*a*c;
-			
-			ANTSStream.printDebug("tmpRes (G)= " + G);
-			ANTSStream.printDebug("tmpRes2 (F)= " + F);
-			ANTSStream.printDebug("side (S)= " + S);
-			ANTSStream.printDebug("Diskriminante D = " + D);
-			
-			double t_1,t_2;
-			
-			if(D>0)
-			{
-				t_1 = (-b+Math.sqrt(D))/(2*a);
-				t_2 = (-b-Math.sqrt(D))/(2*a);
-			}
-			else if(D==0)
-			{
-				t_1 = -b/(2*a);
-				t_2 = -b/(2*a);
-			}
-			else if(D<0)
-			{
-				ANTSStream.printDebug("Complex solution");
-				
-				t_1=Double.POSITIVE_INFINITY;
-				t_2=Double.POSITIVE_INFINITY;
-			}
-			else
-			{
-				ANTSStream.printDebug("Unkown case");
-				t_1=Double.POSITIVE_INFINITY;
-				t_2=Double.POSITIVE_INFINITY;
-			}
-			
-			ANTSStream.printDebug("t_1 = " + t_1 + " \t t_2 = " + t_2);
-			
-			double x_1 = x_a+t_1*(x_b-x_a);
-			double x_2 = x_a+t_2*(x_b-x_a);
-			
-			double y_1 = y_a+t_1*(y_b-y_a);
-			double y_2 = y_a+t_2*(y_b-y_a);
-			
-			x_1 += M[0];
-			x_2 += M[0];
-			
-			y_1 += M[1];
-			y_2 += M[1];
-			
-			ANTSStream.printDebug("x_1 = " + x_1 + " \t x_2 = " + x_2);
-			ANTSStream.printDebug("y_1 = " + y_1 + " \t y_2 = " + y_2);
-			
-			lensController.setPointOfIntersection(x_1,y_1,x_2,y_2);
+			calculateIntersectionCenterLens(ray,mediumIn);
 		}
 		else
 		{
 			
 		}
+	}
+	
+	
+	private void calculateIntersectionCenterLens(ANTSIRayController ray,ANTSIMediumController mediumIn) 
+	{
+		ANTSSimpleLensController lensController = (ANTSSimpleLensController) mediumIn;
+		
+		double R = lensController.getRadius()/2.0;
+		double[] M = lensController.getCenter();
+		
+		Point2D.Double[] vec = ray.getVector();
+		
+		double x_a = vec[0].x;
+		double y_a = vec[0].y;
+		
+		double x_b = vec[1].x;
+		double y_b = vec[1].y;
+		
+		double x_m = M[0];
+		double y_m = M[1];
+	
+		double G = 2*(-pow(x_a)+x_a*x_b+x_a*x_m-x_b*x_m-pow(y_a)+y_a*y_b+y_a*y_m-y_b*y_m);
+		double F = pow(x_a)-2*x_a*x_b+pow(x_b)+pow(y_a)-2*y_a*y_b+pow(y_b);
+		double S = pow(R)-pow(x_a)+2*x_a*x_m-pow(x_m)-pow(y_a)+2*y_a*y_m-pow(y_m);
+		
+		double b = G;
+		double a = F;
+		double c = - S;
+		
+		double D = Math.pow(b, 2)-4*a*c;
+		
+//		ANTSStream.printDebug("tmpRes (G)= " + G);
+//		ANTSStream.printDebug("tmpRes2 (F)= " + F);
+//		ANTSStream.printDebug("side (S)= " + S);
+//		ANTSStream.printDebug("Diskriminante D = " + D);
+		
+		double t_1,t_2;
+		
+		if(D>0)
+		{
+			t_1 = (-b+Math.sqrt(D))/(2.0*a);
+			t_2 = (-b-Math.sqrt(D))/(2.0*a);
+		}
+		else if(D==0)
+		{
+			t_1 = -b/(2.0*a);
+			t_2 = -b/(2.0*a);
+		}
+		else if(D<0)
+		{
+			ANTSStream.printDebug("Complex solution");
+			
+			t_1=Double.POSITIVE_INFINITY;
+			t_2=Double.POSITIVE_INFINITY;
+		}
+		else
+		{
+			ANTSStream.printDebug("Unkown case");
+			t_1=Double.POSITIVE_INFINITY;
+			t_2=Double.POSITIVE_INFINITY;
+		}
+		
+//		ANTSStream.printDebug("t_1 = " + t_1 + " \t t_2 = " + t_2);
+		
+		double x_1 = x_a+t_1*(x_b-x_a);
+		double x_2 = x_a+t_2*(x_b-x_a);
+		
+		double y_1 = y_a+t_1*(y_b-y_a);
+		double y_2 = y_a+t_2*(y_b-y_a);
+		
+//		ANTSStream.printDebug("x_1 = " + x_1 + " \t x_2 = " + x_2);
+//		ANTSStream.printDebug("y_1 = " + y_1 + " \t y_2 = " + y_2);
+		
+		lensController.setPointOfIntersection(x_1,y_1,x_2,y_2);
+	}
+	
+	private double pow(double v)
+	{
+		return Math.pow(v, 2);
 	}
 	
 	public boolean checkForCollision(ANTSIRayController ray, ANTSIMediumController medium)
