@@ -8,6 +8,7 @@ import java.awt.geom.Point2D;
 
 import models.ANTSAbstractModel;
 
+import basics.ANTSDevelopment.ANTSStream;
 import basics.ANTSFactory;
 
 public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements ANTSIModel 
@@ -182,7 +183,7 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 	private void createRays()
 	{
 		double tmpPosX = 0;
-		
+
 		for(int numberRay = 0; numberRay<this.getNumberOfRays(); numberRay++)
 		{
 			Point2D.Double pointUp = new Point2D.Double(tmpPosX, 0);
@@ -194,8 +195,8 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 			double[] posUp = {pointUp.getX(),pointUp.getY()};
 			double[] posDown = {pointDown.getX(),pointDown.getY()};
 			
-			this.factory.createSimpleRayLight(posUp, this.velocityRay, this.angle-90, this.color);
-//			this.factory.createSimpleRayLight(posDown, this.velocityRay, this.angle+90 , this.color);
+//			this.factory.createSimpleRayLight(posUp, this.velocityRay, this.angle-90, this.color);
+			this.factory.createSimpleRayLight(posDown, this.velocityRay, this.angle+90 , this.color);
 			
 			tmpPosX += this.getDistanceBetweenTwoRays();
 		}

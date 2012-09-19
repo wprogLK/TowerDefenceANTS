@@ -227,7 +227,7 @@ public class ANTSCollisionDetection
 	
 	public void calculateAngle(ANTSIRayController ray, ANTSIMediumController mediumIn)
 	{
-		double angle =  15;
+		double angle =  0;
 		
 		this.checkLens(ray,mediumIn);
 		
@@ -259,6 +259,22 @@ public class ANTSCollisionDetection
 		}
 	}
 	
+//OLD
+//	private double getAlphaLot(double[] intersectionPoint, ANTSIMediumController mediumIn) 
+//	{
+//		ANTSSimpleLensController lensController = (ANTSSimpleLensController) mediumIn;
+//		
+//		double R = lensController.getRadius()/2.0;
+//		double[] M = lensController.getCenter();
+//		
+//		double x = intersectionPoint[0];
+//		
+//		double phiRad = Math.cosh((x-M[0])/R);
+//		double phiDeg = Math.toDegrees(phiRad);
+//		
+//		ANTSStream.printDebug("phiDeg = " + phiDeg);
+//		return 0;
+//	}
 	
 	private double getAlphaLot(double[] intersectionPoint, ANTSIMediumController mediumIn) 
 	{
@@ -266,15 +282,97 @@ public class ANTSCollisionDetection
 		
 		double R = lensController.getRadius()/2.0;
 		double[] M = lensController.getCenter();
+		double x_m = M[0];
+		double y_m = M[1];
 		
 		double x = intersectionPoint[0];
+		double y = intersectionPoint[1];
 		
-		double phiRad = Math.cosh((x-M[0])/R);
-		double phiDeg = Math.toDegrees(phiRad);
+		String caseString = "";
 		
-		ANTSStream.printDebug("phiDeg = " + phiDeg);
-		return 0;
+		double anglePhiRad = 0;
+		double anglePhiDeg = 0;
+		
+		double angleBetaDeg = 0;	//TODO: only for debugging
+		double angleOffsetDeg = 0;	//TODO: only for debugging
+		
+		double angleGreenDeg = 0;
+		
+		//CASE A
+		if(x>=x_m && y<=y_m)
+		{
+			caseString = "Case A";
+			
+			double deltaY = y_m-y;
+			double deltaX = x-x_m;
+			
+			anglePhiRad = Math.sinh(deltaX/R);
+			anglePhiDeg = Math.toDegrees(anglePhiRad);
+			
+			angleGreenDeg = anglePhiDeg;
+			
+			angleOffsetDeg = 270;
+		}
+		//CASE B
+		else if(x>=x_m && y>=y_m)
+		{
+			caseString = "Case B";
+			
+			double deltaY = y-y_m;
+			double deltaX = x-x_m;
+			
+			anglePhiRad = Math.sinh(deltaX/R);
+			anglePhiDeg = Math.toDegrees(anglePhiRad);
+			
+			angleGreenDeg = 90-anglePhiDeg;
+			
+			angleOffsetDeg = 0;
+		}
+		//CASE C
+		else if(x<x_m && y>=y_m)
+		{
+			caseString = "Case C";
+			
+			double deltaY = y-y_m;
+			double deltaX = x_m-x;
+			
+			anglePhiRad = Math.sinh(deltaX/R);
+			anglePhiDeg = Math.toDegrees(anglePhiRad);
+			
+			angleGreenDeg = anglePhiDeg;
+			
+			angleOffsetDeg = 90;
+		}
+		//CASE D
+		else if(x<x_m && y<y_m)
+		{
+			caseString = "Case D";
+			
+			double deltaY = y_m-y;
+			double deltaX = x_m-x;
+			
+			anglePhiRad = Math.sinh(deltaX/R);
+			anglePhiDeg = Math.toDegrees(anglePhiRad);
+			
+			angleGreenDeg = 90-anglePhiDeg;
+			
+			angleOffsetDeg = 180;
+		}
+		//CASE UNKNOWN
+		else
+		{
+			caseString = "Something strange happend: Unkown case";
+		}
+		
+		angleBetaDeg = angleGreenDeg + angleOffsetDeg;
+		
+		ANTSStream.printDebug(caseString + " Angle phi' in degree is " + anglePhiDeg);
+		ANTSStream.printDebug(" Angle beta in degree is " + angleBetaDeg);
+		ANTSStream.printDebug(" Angle green in degree is " + angleGreenDeg);
+		
+		return anglePhiDeg;
 	}
+
 
 	private double[] calculateIntersectionPoint(ANTSIRayController ray,ANTSIMediumController mediumIn) 
 	{

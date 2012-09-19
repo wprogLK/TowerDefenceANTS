@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 
 import basics.ANTSDevelopment.ANTSStream;
@@ -97,31 +98,36 @@ public class ANTSSimpleLensView extends ANTSAbstractView implements ANTSIView
 			g2d.fill(shape);
 			this.paintBounds(g2d);
 			
-//			this.paintIntersectionPoints(g2d);
 			this.paintTheIntersectionPoint(g2d);
+			this.paintAngle(g2d);
 	}
 
-	private void paintIntersectionPoints(Graphics2D g2d) 
+	/*
+	 * For debugging 
+	 */
+	private void paintAngle(Graphics2D g2d) 
 	{
-		double[] point1 = this.model.getPointOfIntersection1();
-		double[] point2 = this.model.getPointOfIntersection2();
+		double[] point = this.model.getThePointOfIntersection();
 		
-		if(point1[0] != Double.POSITIVE_INFINITY && point1[1] != Double.POSITIVE_INFINITY )
+		if(point[0] != Double.POSITIVE_INFINITY && point[1] != Double.POSITIVE_INFINITY )
 		{
-			this.paintPoint(point1,g2d);	
-		}
-		else
-		{
-//			ANTSStream.printDebug("point 1 not valid");
-		}
-		
-		if(point2[0] != Double.POSITIVE_INFINITY && point2[1] != Double.POSITIVE_INFINITY )
-		{
-			this.paintPoint(point2,g2d);
-		}
-		else
-		{
-//			ANTSStream.printDebug("point 2 not valid");
+			double[] center = this.model.getCenter();
+			
+			double radius = this.model.getRadius()/2;
+			
+			double[] extendedPoint = new double[2];
+			double t = 10;
+			
+			extendedPoint[0] = center[0] + t*(point[0]-center[0]);
+			extendedPoint[1] = center[1] + t*(point[1]-center[1]);
+			
+			Line2D.Double lineAngleZero = new Line2D.Double(center[0], center[1], center[0]+radius*t, center[1]);
+			Line2D.Double lineAngleIntersetion = new Line2D.Double(center[0], center[1],extendedPoint[0], extendedPoint[1]);
+			
+			g2d.setColor(Color.BLUE);
+			
+			g2d.draw(lineAngleIntersetion);
+			g2d.draw(lineAngleZero);
 		}
 	}
 	

@@ -25,7 +25,7 @@ public class ANTSDevelopmentModel extends ANTSAbstractModel implements ANTSIMode
 	private  boolean showInterpolationStatus = true;
 	private  boolean showBounds = false;
 	private boolean showNrOfObjects = true;
-	private boolean showDetectionGrid = true;
+	private boolean showDetectionGrid = false;
 	
 	private boolean interpolationOn = false;
 	
