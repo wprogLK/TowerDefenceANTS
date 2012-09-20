@@ -75,6 +75,5 @@ public class ANTSSimpleSourceLightNeonController extends ANTSAbstractController 
 	public void mouseWheelMovedANTS(MouseWheelEvent e)
 	{
 		this.model.rotate(e.getWheelRotation());
-		
 	}
 }

@@ -66,6 +66,19 @@ public class ANTSSimpleRayLightController extends ANTSAbstractController impleme
 	{
 		return this.model.getCurrentMedium();
 	}
+	
+	@Override
+	public double getAngle() 
+	{
+		return this.model.getAngle();
+	}
+
+	@Override
+	public double[] getCenter()
+	{
+		return this.model.getCenter();
+	}
+	
 	//////////
 	//SETTER//
 	//////////
@@ -77,6 +90,11 @@ public class ANTSSimpleRayLightController extends ANTSAbstractController impleme
 		this.model.setCurrentMedium(c);
 		
 		return sameMedium;
+	}
+	
+	public void setAngle(double angle)
+	{
+		this.model.setAngle(angle);
 	}
 
 	///////////
@@ -102,15 +120,5 @@ public class ANTSSimpleRayLightController extends ANTSAbstractController impleme
 		this.model.addAngle(angle);
 	}
 
-	@Override
-	public double getAngle() 
-	{
-		return this.model.getAngle();
-	}
 
-	@Override
-	public double[] getCenter()
-	{
-		return this.model.getCenter();
-	}
 }

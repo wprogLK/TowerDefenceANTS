@@ -28,4 +28,6 @@ public interface ANTSIRayController extends ANTSIController
 	///////////
 	
 	public void addAngle(double angle);
+
+	public void setAngle(double newRayAngle);
 }

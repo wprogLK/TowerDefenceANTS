@@ -201,6 +201,7 @@ public class ANTSDevelopment
 		
 		private static boolean doPrintMessages = true;
 		private static boolean doPrintErr = true;
+		private static boolean doPrintDebug = true;
 		
 		public static void print(String output)
 		{
@@ -220,7 +221,7 @@ public class ANTSDevelopment
 		
 		public static void printDebug(String output)
 		{
-			if(debugModeOn && doPrintAll)
+			if(debugModeOn && doPrintAll &&  doPrintDebug)
 			{
 				System.out.println(output);
 			}

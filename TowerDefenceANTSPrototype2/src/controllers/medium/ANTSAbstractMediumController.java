@@ -14,7 +14,7 @@ import interfaces.medium.ANTSIMediumModel;
 public abstract class ANTSAbstractMediumController extends ANTSAbstractController implements ANTSIMediumController
 {
 	protected ANTSIMediumModel model;
-	
+
 	///////////
 	//GETTERS//
 	///////////

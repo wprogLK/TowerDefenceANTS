@@ -159,7 +159,11 @@ public class ANTSDevelopmentController extends ANTSAbstractController implements
 	{
 		return this.model.isShowDetectionGrid();
 	}
-	
+
+	public boolean isPause() 
+	{
+		return this.model.isPause();
+	}
 	//////////////////
 	//MOUSE LISTENER//
 	//////////////////
@@ -178,6 +182,18 @@ public class ANTSDevelopmentController extends ANTSAbstractController implements
 		{
 			this.showDebugWindow();
 		}
+		
+		if(c == 'p')
+		{
+			this.model.switchIsPause();
+		}
+		
+		if(e.getKeyCode()==KeyEvent.VK_ESCAPE)
+		{
+			ANTSStream.printDebug("Bye!");
+			System.exit(0);
+		}
 	}
+
 	
 }

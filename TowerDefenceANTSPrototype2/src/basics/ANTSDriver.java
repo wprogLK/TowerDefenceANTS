@@ -14,6 +14,8 @@ import java.awt.GraphicsEnvironment;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
+import basics.ANTSDevelopment.ANTSStream;
+
 import controllers.ANTSDevelopmentController;
 
 import interfaces.ANTSIController;
@@ -107,7 +109,7 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	
 	public void addControllerToKeyListener(ANTSIController c)
 	{
-		this.window.addKeyListener(c);	//add to window because the focus is on the window not on the canvas
+		this.canvas.addKeyListener(c);	//TODO use key bindings
 	}
 	
 	//Create new objects
@@ -133,7 +135,11 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 			loops = 0;
 			while(System.currentTimeMillis() >nextGameTick && loops<this.fps.getMaxFrameSkip())
 			{
-				this.factory.updateAllModels();
+				if(!this.developmentController.isPause())
+				{
+					this.factory.updateAllModels();
+				}
+				
 				nextGameTick +=this.fps.getSkiptTicks();
 				loops++;
 			}
@@ -191,6 +197,10 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		}
 	}
 	
+	///////////
+	//GETTERS//
+	///////////
+	
 	public int getWidth()
 	{
 		return this.window.getWidth();
@@ -200,6 +210,14 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 	{
 		return this.window.getHeight();
 	}
+	
+	///////////
+	//SETTERS//
+	///////////
+	
+	///////////
+	//SPECIAL//
+	///////////
 	
 	//////////////////
 	//INNER CLASSES://

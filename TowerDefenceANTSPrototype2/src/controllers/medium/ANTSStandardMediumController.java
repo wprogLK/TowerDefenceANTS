@@ -1,10 +1,8 @@
 package controllers.medium;
 
 import basics.ANTSFactory;
-import basics.ANTSDevelopment.ANTSStream;
 
 import interfaces.ANTSIModel;
-import interfaces.ANTSIRayController;
 import interfaces.ANTSIView;
 import interfaces.medium.ANTSIMediumController;
 
@@ -17,9 +15,9 @@ public class ANTSStandardMediumController extends ANTSAbstractMediumController i
 	private ANTSStandardMediumModel model;
 	private ANTSStandardMediumView view;
 	
-	public ANTSStandardMediumController(ANTSFactory factory)
+	public ANTSStandardMediumController(double refractionIndex, ANTSFactory factory)
 	{
-		this.model = new ANTSStandardMediumModel(factory);
+		this.model = new ANTSStandardMediumModel(refractionIndex, factory);
 		this.view = new ANTSStandardMediumView(this.model);
 		
 		this.iview = view;

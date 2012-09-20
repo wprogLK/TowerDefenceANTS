@@ -8,9 +8,9 @@ import basics.ANTSFactory;
 
 public class ANTSStandardMediumModel extends ANTSAbstractMediumModel implements ANTSIModel 
 {
-	public ANTSStandardMediumModel(ANTSFactory factory)
+	public ANTSStandardMediumModel(double refractionIndex, ANTSFactory factory)
 	{
-		super(true,0,factory);
+		super(true, refractionIndex, factory);
 		
 		this.matrix = new AffineTransform();
 		this.isMouseListener = false;
@@ -25,7 +25,6 @@ public class ANTSStandardMediumModel extends ANTSAbstractMediumModel implements 
 	{
 		return this.isDragged;
 	}
-	
 	
 	public String toString()
 	{

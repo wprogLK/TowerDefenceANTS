@@ -26,10 +26,13 @@ public class ANTSDevelopmentModel extends ANTSAbstractModel implements ANTSIMode
 	private  boolean showBounds = false;
 	private boolean showNrOfObjects = true;
 	private boolean showDetectionGrid = false;
+	private boolean showIsPause = true;
 	
 	private boolean interpolationOn = false;
 	
 	private boolean recordFPS = false;			//TODO
+	
+	private boolean isPause = false;
 	
 	private Graphics2D g2d;
 	
@@ -85,12 +88,21 @@ public class ANTSDevelopmentModel extends ANTSAbstractModel implements ANTSIMode
 			showInterpolationStatus();
 			showFPSExtraInformation();
 			showNumberOfObjects();
+			showPause();
 		}
 	}
 	
+	private void showPause() 
+	{
+		if(showIsPause)
+		{
+			drawString("is pause: " + this.isPause);
+		}
+	}
+
 	private void showNumberOfObjects() 
 	{
-		if(showNrOfObjects && ANTSDevelopment.isDebugModeOn())
+		if(showNrOfObjects)
 		{
 				if(this.factory == null)
 				{
@@ -107,7 +119,7 @@ public class ANTSDevelopmentModel extends ANTSAbstractModel implements ANTSIMode
 
 	private void showFPSExtraInformation() 
 	{
-		if(showExtraInformation && ANTSDevelopment.isDebugModeOn())
+		if(showExtraInformation)
 		{
 			drawString(String.format("average fps: %s", fps.getAverageFPS()));
 			drawString(String.format("min fps: %s", fps.getMinFPS()));
@@ -121,7 +133,7 @@ public class ANTSDevelopmentModel extends ANTSAbstractModel implements ANTSIMode
 	
 	private void showInterpolation() 
 	{
-		if(showCurrentInterpolation && ANTSDevelopment.isDebugModeOn())
+		if(showCurrentInterpolation)
 		{
 			drawString(String.format("current interpolation: %s", interpolation));
 		}
@@ -129,7 +141,7 @@ public class ANTSDevelopmentModel extends ANTSAbstractModel implements ANTSIMode
 
 	private void showCurrentHoveringCell()
 	{
-		if(showCurrentHoveringCellInfo && ANTSDevelopment.isDebugModeOn())
+		if(showCurrentHoveringCellInfo)
 		{
 			drawString(String.format("currentHoveringCell: %s", currentHoveringCell));
 		}
@@ -137,7 +149,7 @@ public class ANTSDevelopmentModel extends ANTSAbstractModel implements ANTSIMode
 	
 	private void showFPS()
 	{
-		if(showFPS  && ANTSDevelopment.isDebugModeOn())
+		if(showFPS)
 		{
 			drawString(String.format("FPS: %s", fps.getFPS()));
 		}
@@ -145,7 +157,7 @@ public class ANTSDevelopmentModel extends ANTSAbstractModel implements ANTSIMode
 	
 	private void showInterpolationStatus()
 	{
-		if(showInterpolationStatus && ANTSDevelopment.isDebugModeOn())
+		if(showInterpolationStatus)
 		{
 			drawString(String.format("Interpolation status: %s", interpolationOn));
 		}
@@ -304,6 +316,11 @@ public class ANTSDevelopmentModel extends ANTSAbstractModel implements ANTSIMode
 		
 	}
 	
+	public void switchIsPause()
+	{
+		this.isPause = !this.isPause;
+	}
+	
 	///////////
 	//GETTERS//
 	//////////
@@ -321,6 +338,11 @@ public class ANTSDevelopmentModel extends ANTSAbstractModel implements ANTSIMode
 	public boolean isShowDetectionGrid() 
 	{
 		return showDetectionGrid;
+	}
+
+	public boolean isPause() 
+	{
+		return this.isPause;
 	}
 
 

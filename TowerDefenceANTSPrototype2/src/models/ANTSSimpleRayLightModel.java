@@ -65,7 +65,7 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 		
 		this.angle = angle;
 		this.center = center;
-		this.length = 10;
+		this.length = 5;
 		this.color = sourceColor;
 		this.velocity =velocity;
 		
@@ -155,6 +155,12 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 		this.medium = c;
 	}
 	
+	public void setAngle(double angle) 
+	{
+		this.addAngle(-this.angle);		//TODO Check this
+		this.addAngle(angle);
+	}
+	
 	///////////
 	//Special//
 	///////////
@@ -170,4 +176,6 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 		this.matrix.concatenate(this.localRotateMatrix);
 		this.matrixForInterpolation.concatenate(this.localRotateMatrix);
 	}
+
+	
 }
