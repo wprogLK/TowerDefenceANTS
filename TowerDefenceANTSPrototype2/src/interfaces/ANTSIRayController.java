@@ -16,6 +16,7 @@ public interface ANTSIRayController extends ANTSIController
 	//GETTERS//
 	///////////
 	
+	public ANTSIMediumController getCurrentMedium();
 	public double getRefractionIndex();
 	double getAngle();
 	

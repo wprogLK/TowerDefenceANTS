@@ -23,6 +23,7 @@ public class ANTSCollisionDetection
 	private int height;
 	private int width;
 	
+	
 	private final int defaultCellsX = 2;		//TODO: IMPORTANT: If you have big objects the number of cells should be small! Otherwise the detection is not really working
 	private final int defaultCellsY = 2;
 	
@@ -32,6 +33,8 @@ public class ANTSCollisionDetection
 	private ANTSHashMapCell[][] hashMap;
 	
 	private ANTSFactory factory;
+	
+	private enum direction {IN, OUT; }
 	
 	public ANTSCollisionDetection(int height, int width, int cellsX, int cellsY, ANTSFactory antsFactory)
 	{
@@ -228,37 +231,50 @@ public class ANTSCollisionDetection
 	public void calculateAngle(ANTSIRayController ray, ANTSIMediumController mediumIn)
 	{
 		double angle =  0;
+		double angleToAdd =  0;
 		
-		this.checkLens(ray,mediumIn);
+//		ANTSStream.printDebug("newMedium: " + mediumIn);
+//		ANTSStream.printDebug("current medium: " + ray.getRefractionIndex());
 		
-		if(!ray.setCurrentMedium(mediumIn))
+		ANTSIMediumController currentMedium = ray.getCurrentMedium();
+		
+		if(!currentMedium.equals(mediumIn))
 		{
 			//for debugging
 			
-			if(mediumIn.equals(this.factory.createStandardMediumController()))	//TODO: only for debugging
+			if(mediumIn.equals(this.factory.createStandardMediumController()))	//TODO: only for debugging	//Ray is leaving the medium
 			{
+				ANTSStream.printDebug("RAY OUT");
+				angleToAdd = this.getAngleToAdd(ray,mediumIn,direction.OUT);
 				ray.addAngle(-angle);
 			}
-			else
+			else	//Ray is entering the medium
 			{
+				ANTSStream.printDebug("RAY IN");
+				angleToAdd = this.getAngleToAdd(ray,mediumIn,direction.IN);
 				ray.addAngle(angle);
 			}
+			
+			ray.setCurrentMedium(mediumIn);
 		}
 	}
 	
-	private void checkLens(ANTSIRayController ray, ANTSIMediumController mediumIn)
+	private double getAngleToAdd(ANTSIRayController ray, ANTSIMediumController mediumIn,direction d)
 	{
 		if(mediumIn.getClass().equals(ANTSSimpleLensController.class))
 		{
 			double[] intersectionPoint = calculateIntersectionPoint(ray,mediumIn);
 			
 			double phiLot = this.getPhiLot(intersectionPoint,mediumIn);	
-			double angleBetween = this.getAngleBetween(phiLot,intersectionPoint,mediumIn,ray);
+//			double angleLot = this.getAngleLot(intersectionPoint,mediumIn);
+			double angleBetween = this.getAngleBetween(phiLot,intersectionPoint,mediumIn,ray,d);
 		}
 		else
 		{
 			
 		}
+		
+		return 0;
 	}
 	
 //OLD
@@ -278,36 +294,100 @@ public class ANTSCollisionDetection
 //		return 0;
 //	}
 	
-	private double getAngleBetween(double phiLot, double[] intersectionPoint, ANTSIMediumController mediumIn, ANTSIRayController ray) 
+//	private double getAngleLot(double[] intersectionPoint, ANTSIMediumController mediumIn)
+//	{
+//		ANTSSimpleLensController lensController = (ANTSSimpleLensController) mediumIn;
+//		
+//		double R = lensController.getRadius()/2.0;
+//		double[] M = lensController.getCenter();
+//		double x_m = M[0];
+//		double y_m = M[1];
+//		
+//		double x = intersectionPoint[0];
+//		double y = intersectionPoint[1];
+//		double intput = ((x-x_m)/R);
+//		double alpha = Math.toDegrees(Math.acos(intput));
+//		ANTSStream.printDebug("alpha is " + alpha + " angle lot = " + (360-alpha));
+//		
+//		return 360-alpha;
+//	}
+
+	private double getAngleBetween(double phiLot, double[] intersectionPoint, ANTSIMediumController mediumIn, ANTSIRayController ray, direction d) 
 	{
-		
-		//TODO Debug this!
-		
 		ANTSSimpleLensController lensController = (ANTSSimpleLensController) mediumIn;
 		double[] centerLens = lensController.getCenter();
 		
+		Point2D.Double[] pointsOfRay = ray.getVector();
+		Point2D.Double startPointRay = pointsOfRay[0];
+		Point2D.Double endPointRay = pointsOfRay[1];
 		
-		double[] vecLot = new double[2];
-		double[] vecRay = new double[2];
+		double[] directionVecRay = new double[2];
+		double[] directionVecLot = new double[2];
 		
-		vecLot[0] = intersectionPoint[0] - centerLens[0];
-		vecLot[1] = intersectionPoint[1] - centerLens[1];
+		switch(d)
+		{
+			case IN:
+			{
+				directionVecLot[0] = centerLens[0]-intersectionPoint[0];
+				directionVecLot[1] = centerLens[1]-intersectionPoint[1];
+				break;	
+			}
+			case OUT:
+			{
+				directionVecLot[0] = intersectionPoint[0]-centerLens[0];
+				directionVecLot[1] = intersectionPoint[1]-centerLens[1];
+				break;	
+			}
+		}
 		
-//		vecRay[0] = intersectionPoint[0] - ray.getVector()[0].x;
-//		vecRay[1] = intersectionPoint[1] - ray.getVector()[0].y;
 		
-		vecRay[0] = ray.getVector()[1].x - ray.getVector()[0].x;
-		vecRay[1] = ray.getVector()[1].y - ray.getVector()[0].y;
+		directionVecRay[0] = endPointRay.getX()-startPointRay.getX();
+		directionVecRay[1] = endPointRay.getY()-startPointRay.getY();
 		
-		double angleRad = Math.cosh((vecLot[0]*vecRay[0]+vecLot[1]*vecRay[1])/(Math.sqrt(pow(vecLot[0])+pow(vecLot[1]))*Math.sqrt(pow(vecRay[0])+pow(vecRay[1]))));
+		double dotProduct =directionVecLot[0]*directionVecRay[0]+directionVecLot[1]*directionVecRay[1];
+		double lengthLot = Math.sqrt(pow(directionVecLot[0]) +pow(directionVecLot[1]) );
+		double lengthRay = Math.sqrt(pow(directionVecRay[0]) +pow(directionVecRay[1]) );
 		
-		double angleDeg = Math.toDegrees(angleRad);
+		double cosAlpha = dotProduct/(lengthLot*lengthRay);
+		double angle = Math.toDegrees(Math.acos(cosAlpha));
 		
-		ANTSStream.printDebug("angle is " + angleDeg);
-		ANTSStream.printDebug("phiLot is " + phiLot);
-		ANTSStream.printDebug("angleRay is " + ray.getAngle());
+		ANTSStream.printDebug("angle is " + angle);
+		ANTSStream.printDebug("direction is " + d);
+		ANTSStream.printDebug("angle Lot is " +phiLot + "\n angleRay is " + ray.getAngle()); 
 		
-		return angleDeg;
+		return angle;
+		
+//	///////////////////////////////////////////////////////////
+//		
+//		//TODO Debug this!
+//		
+//		ANTSSimpleLensController lensController = (ANTSSimpleLensController) mediumIn;
+//		double[] centerLens = lensController.getCenter();
+//		
+//		
+//		double[] vecLot = new double[2];
+//		double[] vecRay = new double[2];
+//		
+//		vecLot[0] = intersectionPoint[0] - centerLens[0];
+//		vecLot[1] = intersectionPoint[1] - centerLens[1];
+//		
+////		vecRay[0] = intersectionPoint[0] - ray.getVector()[0].x;
+////		vecRay[1] = intersectionPoint[1] - ray.getVector()[0].y;
+//		
+//		vecRay[0] = ray.getVector()[1].x - ray.getVector()[0].x;
+//		vecRay[1] = ray.getVector()[1].y - ray.getVector()[0].y;
+//		
+//		double angleRad = Math.cosh((vecLot[0]*vecRay[0]+vecLot[1]*vecRay[1])/(Math.sqrt(pow(vecLot[0])+pow(vecLot[1]))*Math.sqrt(pow(vecRay[0])+pow(vecRay[1]))));
+//		
+//		double angleDeg = Math.toDegrees(angleRad);
+//		
+//		ANTSStream.printDebug("angle is " + angleDeg);
+//		ANTSStream.printDebug("phiLot is " + phiLot);
+//		ANTSStream.printDebug("angleRay is " + ray.getAngle());
+//		
+//		return angleDeg;
+//		
+//		///////////////////////////////////////////////////////////
 		
 //		Possible solution sometimes angle is NaN
 //		ANTSSimpleLensController lensController = (ANTSSimpleLensController) mediumIn;
@@ -423,7 +503,8 @@ public class ANTSCollisionDetection
 //		ANTSStream.printDebug(" Angle beta in degree is " + angleBetaDeg);
 //		ANTSStream.printDebug(" Angle green in degree is " + angleGreenDeg);
 		
-		return anglePhiDeg;
+//		return anglePhiDeg;
+		return angleBetaDeg;
 	}
 
 

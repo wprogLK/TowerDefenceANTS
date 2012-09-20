@@ -61,6 +61,11 @@ public class ANTSSimpleRayLightController extends ANTSAbstractController impleme
 		return this.model.getVector();
 	}
 	
+	@Override
+	public ANTSIMediumController getCurrentMedium() 
+	{
+		return this.model.getCurrentMedium();
+	}
 	//////////
 	//SETTER//
 	//////////
