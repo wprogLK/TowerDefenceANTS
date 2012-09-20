@@ -89,11 +89,48 @@ public class ANTSSimpleMediumView extends ANTSAbstractView implements ANTSIView
 			g2d.setColor(Color.GREEN);
 			g2d.fill(shape);
 			this.paintBounds(g2d);
+			
+//			this.paintIntersectionPoints(g2d);
+			this.paintTheIntersectionPoint(g2d);
+	}
+
+	private void paintTheIntersectionPoint(Graphics2D g2d)
+	{
+		g2d.setColor(Color.blue);
+		
+		double[] intersectionPoint = this.model.getTheIntersectionPoint();
+		
+		Rectangle2D.Double recIntersectionPoint = new Rectangle2D.Double(intersectionPoint[0], intersectionPoint[1], 5, 5);
+		
+		g2d.draw(recIntersectionPoint);
+	}
+
+	private void paintIntersectionPoints(Graphics2D g2d) 
+	{
+		g2d.setColor(Color.blue);
+		
+		double[] intersectionPointRay = this.model.getIntersectionPointRay();
+		double[] intersectionPointBox = this.model.getIntersectionPointBox();
+		
+		Rectangle2D.Double recPointRay = new Rectangle2D.Double(intersectionPointRay[0], intersectionPointRay[1], 5, 5);
+		Rectangle2D.Double recPointBox = new Rectangle2D.Double(intersectionPointBox[0], intersectionPointBox[1], 5, 5);
+		
+		g2d.draw(recPointBox);
+		g2d.draw(recPointRay);
+		
+		g2d.drawString("BoxPoint", (int) intersectionPointBox[0],(int) intersectionPointBox[1]);
+		g2d.drawString("RayPoint", (int) intersectionPointRay[0],(int) intersectionPointRay[1]);
 	}
 
 	@Override
 	public void paint(Graphics2D g2d, float interpolation) 
 	{
 		this.paint(g2d);
+	}
+
+	public void setIntersectionPoint(double[] intersectionPointBox,
+			double[] intersectionPointRay) {
+		// TODO Auto-generated method stub
+		
 	}
 }

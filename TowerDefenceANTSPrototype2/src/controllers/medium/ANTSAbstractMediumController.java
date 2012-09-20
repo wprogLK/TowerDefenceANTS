@@ -52,7 +52,7 @@ public abstract class ANTSAbstractMediumController extends ANTSAbstractControlle
 		return null;
 	}
 	
-	protected final double[] getClosestIntersectionPoint(ANTSIRayController ray, double[] point1, double[] point2) 
+	protected double[] getClosestIntersectionPoint(ANTSIRayController ray, double[] point1, double[] point2) 
 	{
 		double distancePoint1 = getDistanceBetweenRayAndIntersectionPoint(ray, point1);
 		double distancePoint2 = getDistanceBetweenRayAndIntersectionPoint(ray, point2);
@@ -67,7 +67,7 @@ public abstract class ANTSAbstractMediumController extends ANTSAbstractControlle
 		}
 	}
 	
-	protected final double getDistanceBetweenRayAndIntersectionPoint(ANTSIRayController ray, double[] point) 
+	protected double getDistanceBetweenRayAndIntersectionPoint(ANTSIRayController ray, double[] point) 
 	{
 		double[] posRay = new double[2];
 		

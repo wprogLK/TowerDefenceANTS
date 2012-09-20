@@ -251,15 +251,16 @@ public class ANTSCollisionDetection
 		{
 			ANTSPerpendicular perpendicular = medium.calculatePerpendicular(ray);
 			
-			double angleBetweenRayPerpendicular = this.calculateAngleBetweenRayPerpendiuclar(perpendicular, ray, direction);
-			
-			double angle = this.calculateSnell(angleBetweenRayPerpendicular,mediumIn.getRefractionIndex(),mediumOut.getRefractionIndex());
-			
-			this.changeAngle(perpendicular, angle, ray,mediumIn.getRefractionIndex(),mediumOut.getRefractionIndex(),direction);
-			
-			ray.setCurrentMedium(mediumIn);
-			
-			this.calculateCriticalAngle(mediumIn.getRefractionIndex(),mediumOut.getRefractionIndex());
+			//TODO uncomment this again
+//			double angleBetweenRayPerpendicular = this.calculateAngleBetweenRayPerpendiuclar(perpendicular, ray, direction);
+//			
+//			double angle = this.calculateSnell(angleBetweenRayPerpendicular,mediumIn.getRefractionIndex(),mediumOut.getRefractionIndex());
+//			
+//			this.changeAngle(perpendicular, angle, ray,mediumIn.getRefractionIndex(),mediumOut.getRefractionIndex(),direction);
+//			
+//			ray.setCurrentMedium(mediumIn);
+//			
+//			this.calculateCriticalAngle(mediumIn.getRefractionIndex(),mediumOut.getRefractionIndex());
 		}
 	}
 	
@@ -346,6 +347,7 @@ public class ANTSCollisionDetection
 			return -1;
 		}
 	}
+	
 	private double calculateAngleBetweenRayPerpendiuclar(ANTSPerpendicular perpendicular, ANTSIRayController ray, direction direction) //TODO CHECK THIS!
 	{
 		double[] directionVecRay = new double[2];
@@ -395,7 +397,7 @@ public class ANTSCollisionDetection
 		Shape rayShape = rayView.getShape();
 		Shape mediumShape = mediumView.getShape();
 		
-		return rayShape.intersects(mediumShape.getBounds2D());
+		return rayShape.intersects(mediumShape.getBounds2D());			//TODO: mediumShape.intersects(rayShape.getBounds2D()) oder so ähnlich (da sonst kollision ungenau ist) 
 	}
 
 	public void addController(ANTSIController c) 

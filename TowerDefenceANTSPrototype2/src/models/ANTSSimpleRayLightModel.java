@@ -137,6 +137,10 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 		return this.medium;
 	}
 	
+	/**
+	 * first point is startPoint, second point is endPoint
+	 * @return
+	 */
 	public Point2D.Double[] getVector()
 	{
 		this.updateVector();

@@ -55,6 +55,10 @@ public class ANTSSimpleRayLightController extends ANTSAbstractController impleme
 		return this.model.getCurrentMedium().getRefractionIndex();
 	}
 	
+	/**
+	 * first point is startPoint, second point is endPoint
+	 * @return
+	 */
 	@Override
 	public Point2D.Double[] getVector()
 	{
