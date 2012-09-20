@@ -3,8 +3,11 @@ package controllers.medium;
 import java.awt.event.MouseEvent;
 
 import basics.ANTSFactory;
+import basics.ANTSPerpendicular;
+import basics.ANTSDevelopment.ANTSStream;
 
 import interfaces.ANTSIModel;
+import interfaces.ANTSIRayController;
 import interfaces.ANTSIView;
 
 import interfaces.medium.ANTSIMediumController;
@@ -59,6 +62,23 @@ public class ANTSSimpleMediumController extends ANTSAbstractMediumController imp
 	//SPECIAL//
 	///////////
 	
+	@Override
+	public double[] calculateIntersectionPoint(ANTSIRayController ray) 
+	{
+		ANTSStream.printDebug("Error: at the moment there's not a valid method to calculate the intersection point with a simple medium");	//TODO 
+		System.exit(1);
+			
+		return null;
+	}
+	
+	@Override
+	public ANTSPerpendicular calculatePerpendicular(ANTSIRayController ray)
+	{
+		ANTSStream.printDebug("Error: at the moment there's not a valid method to calculate the perpendicular at the intersection point with a simple medium");	//TODO 
+		System.exit(1);
+			
+		return null;
+	}
 
 	
 	//////////////////
@@ -74,4 +94,6 @@ public class ANTSSimpleMediumController extends ANTSAbstractMediumController imp
 	{
 		this.model.setPosition((int) (e.getX()-this.model.getWidth()/2), (int) (e.getY()-this.model.getHeight()/2));
 	}
+
+	
 }

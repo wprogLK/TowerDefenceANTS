@@ -2,12 +2,16 @@ package controllers.lens;
 
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 
 import controllers.medium.ANTSAbstractMediumController;
 
+import basics.ANTSDevelopment.ANTSStream;
 import basics.ANTSFactory;
+import basics.ANTSPerpendicular;
 
 import interfaces.ANTSIModel;
+import interfaces.ANTSIRayController;
 import interfaces.ANTSIView;
 
 import interfaces.medium.ANTSIMediumController;
@@ -68,26 +72,86 @@ public class ANTSSimpleLensController extends ANTSAbstractMediumController imple
 	//SETTERS//
 	///////////
 	
-	/*
-	 * Only for debbuging and testing
-	 */
-	public void setPointsOfIntersection(double x_1, double y_1, double x_2, double y_2) 
-	{
-		this.model.setPointsOfIntersection(x_1, y_1, x_2, y_2);
-	}
-	
-	/*
-	 * Only for debbuging and testing
-	 */
-	public void setThePointOfIntersection(double[] point)
-	{
-		this.model.setThePointOfIntersection(point);
-	}
-	
 	///////////
 	//SPECIAL//
 	///////////
 	
+	@Override
+	public double[] calculateIntersectionPoint(ANTSIRayController ray) 
+	{
+		double R = this.model.getRadius()/2.0;
+		double[] M = this.model.getCenter();
+		
+		Point2D.Double[] vec = ray.getVector();
+		
+		double x_a = vec[0].x;
+		double y_a = vec[0].y;
+		
+		double x_b = vec[1].x;
+		double y_b = vec[1].y;
+		
+		double x_m = M[0];
+		double y_m = M[1];
+	
+		double G = 2*(-pow(x_a)+x_a*x_b+x_a*x_m-x_b*x_m-pow(y_a)+y_a*y_b+y_a*y_m-y_b*y_m);
+		double F = pow(x_a)-2*x_a*x_b+pow(x_b)+pow(y_a)-2*y_a*y_b+pow(y_b);
+		double S = pow(R)-pow(x_a)+2*x_a*x_m-pow(x_m)-pow(y_a)+2*y_a*y_m-pow(y_m);
+		
+		double b = G;
+		double a = F;
+		double c = - S;
+		
+		double D = Math.pow(b, 2)-4*a*c;
+		
+		double t_1,t_2;
+		
+		if(D>0)
+		{
+			t_1 = (-b+Math.sqrt(D))/(2.0*a);
+			t_2 = (-b-Math.sqrt(D))/(2.0*a);
+		}
+		else if(D==0)
+		{
+			t_1 = -b/(2.0*a);
+			t_2 = -b/(2.0*a);
+		}
+		else if(D<0)
+		{
+			ANTSStream.printDebug("Complex solution");
+			
+			t_1=Double.POSITIVE_INFINITY;
+			t_2=Double.POSITIVE_INFINITY;
+		}
+		else
+		{
+			ANTSStream.printDebug("Unkown case");
+			t_1=Double.POSITIVE_INFINITY;
+			t_2=Double.POSITIVE_INFINITY;
+		}
+		
+		double x_1 = x_a+t_1*(x_b-x_a);
+		double x_2 = x_a+t_2*(x_b-x_a);
+		
+		double y_1 = y_a+t_1*(y_b-y_a);
+		double y_2 = y_a+t_2*(y_b-y_a);
+		
+		this.model.setPointsOfIntersection(x_1,y_1,x_2,y_2);
+		
+		double[] point1 = {x_1,y_1};
+		double[] point2 = {x_2,y_2};
+		
+		double[] closestPoint = this.getClosestIntersectionPoint(ray,point1,point2);
+		this.model.setThePointOfIntersection(closestPoint);
+		
+		return closestPoint;
+	}
+	
+	@Override
+	public ANTSPerpendicular calculatePerpendicular(ANTSIRayController ray)
+	{
+		double[] intersectionPoint = this.calculateIntersectionPoint(ray);
+		return new ANTSPerpendicular(intersectionPoint, this.model.getCenter());
+	}
 
 	
 	//////////////////
