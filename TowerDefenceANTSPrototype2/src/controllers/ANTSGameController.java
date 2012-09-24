@@ -93,7 +93,7 @@ public class ANTSGameController extends ANTSAbstractController implements ANTSIC
 	
 	private void createSimpleMedium1() 
 	{
-		this.factory.createSimpleMedium(100, 100, 100, 100, 1, true);
+		this.factory.createSimpleMedium(100, 100, 100, 100, 2, true);
 	}
 	
 	private void createSimpleMedium2() 

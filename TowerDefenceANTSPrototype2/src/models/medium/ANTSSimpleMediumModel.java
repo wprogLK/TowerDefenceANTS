@@ -158,8 +158,22 @@ public class ANTSSimpleMediumModel extends ANTSAbstractMediumModel implements AN
 	public void setPosition(int x, int y)
 	{
 		this.matrix.setToTranslation(x, y);
+		
+		this.setPoints();
 	}
 	
+	private void setPoints()  //TODO: what happened if rotation?
+	{
+		double posX = this.matrix.getTranslateX();
+		double posY = this.matrix.getTranslateY();
+		
+		this.pointA = new Point2D.Double(posX, posY);
+		this.pointB = new Point2D.Double(posX, posY+height);
+		this.pointC = new Point2D.Double(posX+width, posY+height);
+		this.pointD = new Point2D.Double(posX+width, posY);
+		
+	}
+
 	//Only for debugging
 	public void setTheIntersectionPoint(double[] closestIntersectionPoint) 
 	{

@@ -252,15 +252,15 @@ public class ANTSCollisionDetection
 			ANTSPerpendicular perpendicular = medium.calculatePerpendicular(ray);
 			
 			//TODO uncomment this again
-//			double angleBetweenRayPerpendicular = this.calculateAngleBetweenRayPerpendiuclar(perpendicular, ray, direction);
-//			
-//			double angle = this.calculateSnell(angleBetweenRayPerpendicular,mediumIn.getRefractionIndex(),mediumOut.getRefractionIndex());
-//			
-//			this.changeAngle(perpendicular, angle, ray,mediumIn.getRefractionIndex(),mediumOut.getRefractionIndex(),direction);
-//			
-//			ray.setCurrentMedium(mediumIn);
-//			
-//			this.calculateCriticalAngle(mediumIn.getRefractionIndex(),mediumOut.getRefractionIndex());
+			double angleBetweenRayPerpendicular = this.calculateAngleBetweenRayPerpendiuclar(perpendicular, ray, direction);
+			
+			double angle = this.calculateSnell(angleBetweenRayPerpendicular,mediumIn.getRefractionIndex(),mediumOut.getRefractionIndex());
+			
+			this.changeAngle(perpendicular, angle, ray,mediumIn.getRefractionIndex(),mediumOut.getRefractionIndex(),direction);
+			
+			ray.setCurrentMedium(mediumIn);
+			
+			this.calculateCriticalAngle(mediumIn.getRefractionIndex(),mediumOut.getRefractionIndex());
 		}
 	}
 	
@@ -320,7 +320,7 @@ public class ANTSCollisionDetection
 		double angle = Math.toDegrees(Math.asin(factor));
 		double criticalAngle = this.calculateCriticalAngle(refractionIndexMediumIn, refractionIndexMediumOut);
 		
-		if(criticalAngle>=0 && angleIncoming>=criticalAngle)
+		if(refractionIndexMediumIn<refractionIndexMediumOut && angleIncoming>=criticalAngle)
 		{
 			ANTSStream.printErr("'Error': TOTAL REFLECTION! \n phi_1 = " + angleIncoming + "\t critical angle = " + criticalAngle);	//TODO: Implement what happen if there is a total reflection
 		}
@@ -397,7 +397,7 @@ public class ANTSCollisionDetection
 		Shape rayShape = rayView.getShape();
 		Shape mediumShape = mediumView.getShape();
 		
-		return rayShape.intersects(mediumShape.getBounds2D());			//TODO: mediumShape.intersects(rayShape.getBounds2D()) oder so ähnlich (da sonst kollision ungenau ist) 
+		return rayShape.intersects(mediumShape.getBounds2D());			//TODO: mediumShape.intersects(rayShape.getBounds2D()) oder so ï¿½hnlich (da sonst kollision ungenau ist) 
 	}
 
 	public void addController(ANTSIController c) 

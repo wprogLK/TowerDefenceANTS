@@ -92,6 +92,15 @@ public class ANTSSimpleMediumView extends ANTSAbstractView implements ANTSIView
 			
 //			this.paintIntersectionPoints(g2d);
 			this.paintTheIntersectionPoint(g2d);
+			this.paintCenter(g2d);
+	}
+
+	private void paintCenter(Graphics2D g2d) 
+	{
+		Rectangle2D center = new Rectangle2D.Double(this.model.getCenter()[0], this.model.getCenter()[1] , 5, 5);
+		
+		g2d.setColor(Color.blue);
+		g2d.fill(center);
 	}
 
 	private void paintTheIntersectionPoint(Graphics2D g2d)
