@@ -1,6 +1,7 @@
 package controllers.medium;
 
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 
 import basics.ANTSPerpendicular;
 import basics.ANTSDevelopment.ANTSStream;
@@ -52,29 +53,48 @@ public abstract class ANTSAbstractMediumController extends ANTSAbstractControlle
 		return null;
 	}
 	
-	protected double[] getClosestIntersectionPoint(ANTSIRayController ray, double[] point1, double[] point2) 
+	protected final double[] getClosestIntersectionPoint(ANTSIRayController ray, ArrayList<Point2D.Double> intersectionPoints) 
 	{
-		double distancePoint1 = getDistanceBetweenRayAndIntersectionPoint(ray, point1);
-		double distancePoint2 = getDistanceBetweenRayAndIntersectionPoint(ray, point2);
-		
-		if(distancePoint1<=distancePoint2)
+		if(!intersectionPoints.isEmpty())
 		{
-			return point1;
+			Point2D.Double closestPoint = intersectionPoints.get(0);
+			double closestDistance = getDistanceBetweenRayAndIntersectionPoint(ray, closestPoint);
+					
+			for(Point2D.Double currentPoint:intersectionPoints)
+			{
+				double currentDistance = getDistanceBetweenRayAndIntersectionPoint(ray, currentPoint);
+						
+				if(closestDistance>currentDistance)
+				{
+					closestPoint=currentPoint;
+					closestDistance = currentDistance;
+				}
+			}
+					
+				double[] point = new double[2];
+				point[0] = closestPoint.x;
+				point[1] = closestPoint.y;
+					
+				return point;
 		}
 		else
 		{
-			return point2;
+			double[] point = new double[2];
+			point[0] = -1;
+			point[1] = -1;
+					
+			return point;
 		}
 	}
 	
-	protected double getDistanceBetweenRayAndIntersectionPoint(ANTSIRayController ray, double[] point) 
+	protected final double getDistanceBetweenRayAndIntersectionPoint(ANTSIRayController ray, Point2D.Double point) 
 	{
 		double[] posRay = new double[2];
 		
 		posRay[0] = ray.getModel().getMatrix().getTranslateX();
 		posRay[1] = ray.getModel().getMatrix().getTranslateY();
 		
-		double distance = Point2D.distance(point[0], point[1], posRay[0], posRay[1]);
+		double distance = Point2D.distance(point.getX(), point.getY(), posRay[0], posRay[1]);
 		
 		return distance;
 	}

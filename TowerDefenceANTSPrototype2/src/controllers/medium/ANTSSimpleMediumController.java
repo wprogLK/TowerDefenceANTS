@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import basics.ANTSFactory;
 import basics.ANTSPerpendicular;
-import basics.ANTSDevelopment.ANTSStream;
 
 import interfaces.ANTSIModel;
 import interfaces.ANTSIRayController;
@@ -24,6 +23,8 @@ public class ANTSSimpleMediumController extends ANTSAbstractMediumController imp
 	private ANTSSimpleMediumModel model;
 	private ANTSSimpleMediumView view;
 	
+	private Point2D.Double invalidIntersectionPoint;
+	
 	public ANTSSimpleMediumController(double posX, double posY, double height, double width, double refractionIndex, boolean isMouseListener, ANTSFactory factory)
 	{
 		this.model = new ANTSSimpleMediumModel(posX,posY,height,width, refractionIndex, isMouseListener, factory);
@@ -32,6 +33,8 @@ public class ANTSSimpleMediumController extends ANTSAbstractMediumController imp
 		this.iview = view;
 		this.setIModel(this.model);
 		this.setModel(this.model);
+		
+		this.invalidIntersectionPoint = new Point2D.Double(-1, -1);
 	}
 	
 	///////////
@@ -68,87 +71,28 @@ public class ANTSSimpleMediumController extends ANTSAbstractMediumController imp
 	@Override
 	public double[] calculateIntersectionPoint(ANTSIRayController ray) 
 	{
-			Point2D.Double intersectionPoint = calculateCurrentIntersectionPoint(ray,this.model.getVectorA());
+		ArrayList<Point2D.Double[]> vectors = new ArrayList<Point2D.Double[]>();
+		ArrayList<Point2D.Double> intersectionPoints = new ArrayList<Point2D.Double>();
+		
+		vectors.add(this.model.getVectorA());
+		vectors.add(this.model.getVectorB());
+		vectors.add(this.model.getVectorC());
+		vectors.add(this.model.getVectorD());
+		
+		for(int index = 0; index<vectors.size();index++)
+		{
+			Point2D.Double intersectionPoint = calculateCurrentIntersectionPoint(ray,vectors.get(index));
 			
-			if(intersectionPoint == null)
-			{
-				intersectionPoint = calculateCurrentIntersectionPoint(ray,this.model.getVectorB());
-			}
-
-			if(intersectionPoint == null)
-			{
-				intersectionPoint = calculateCurrentIntersectionPoint(ray,this.model.getVectorC());
-			}
+			intersectionPoints.add(intersectionPoint);
+		}
+		
+		double[] intersectionPoint = this.getClosestIntersectionPoint(ray, intersectionPoints);
+		
+		this.model.setTheIntersectionPoint(intersectionPoint);
 			
-			if(intersectionPoint == null)
-			{
-				intersectionPoint = calculateCurrentIntersectionPoint(ray,this.model.getVectorD());
-			}
-			
-			double[] point = new double[2];
-			
-			if(intersectionPoint == null)
-			{
-				point[0] = -1;
-				point[1] = -1;
-			}
-			else
-			{
-				point[0] = intersectionPoint.getX();
-				point[1] = intersectionPoint.getY();
-			}
-
-			this.model.setTheIntersectionPoint(point);
-			
-		return point;
+		return intersectionPoint;
 	}
-//	
-//	protected double[] getClosestIntersectionPoint(ANTSIRayController ray, ArrayList<Point2D.Double> intersectionPoints) 
-//	{
-//		if(!intersectionPoints.isEmpty())
-//		{	
-//			Point2D.Double closestPoint = intersectionPoints.get(0);
-//			double closestDistance = getDistanceBetweenRayAndIntersectionPoint(ray, closestPoint);
-//			
-//			for(Point2D.Double currentPoint:intersectionPoints)
-//			{
-//				double currentDistance = getDistanceBetweenRayAndIntersectionPoint(ray, currentPoint);
-//				
-//				if(closestDistance>currentDistance)
-//				{
-//					closestPoint=currentPoint;
-//				}
-//			}
-//			
-//			double[] point = new double[2];
-//			point[0] = closestPoint.x;
-//			point[1] = closestPoint.y;
-//			
-//			return point;
-//		}
-//		else
-//		{
-//			double[] point = new double[2];
-//			point[0] = 0;
-//			point[1] = 0;
-//			
-//			return point; //TODO
-//		}
-//		
-//	}
-	
-//	protected double getDistanceBetweenRayAndIntersectionPoint(ANTSIRayController ray, Point2D.Double point) 
-//	{
-//		double[] posRay = new double[2];
-//		
-//		posRay[0] = ray.getModel().getMatrix().getTranslateX();
-//		posRay[1] = ray.getModel().getMatrix().getTranslateY();
-//		
-//		double distance = Point2D.distance(point.x, point.y, posRay[0], posRay[1]);
-//		
-//		return distance;
-//	}
-//	
+
 	private Double calculateCurrentIntersectionPoint(ANTSIRayController ray, Double[] currentVector) 
 	{
 		Point2D.Double startVectorBox = currentVector[0];
@@ -188,25 +132,22 @@ public class ANTSSimpleMediumController extends ANTSAbstractMediumController imp
 			
 			Point2D.Double intersectionPoint = new Point2D.Double(intersectionPointBox[0], intersectionPointBox[1]);
 			
-			boolean rValid = (r>=0 && r<=1);
-			boolean sValid = (s>=0 && s<=1);
-			
-			if( sValid && rValid)
+			if(s>=0 && s<=1)
 			{
 //				ANTSStream.print("OK!");
-//				ANTSStream.print("--------------------------------------------------------");
 				return intersectionPoint;
 			}
 			else
 			{
 //				ANTSStream.print("Wrong: rValid " + rValid + " sValid " + sValid );
-//				ANTSStream.print("--------------------------------------------------------");
-				return null; //TODO Design by contract !
+//				ANTSStream.print("INVALID POINT!"); //TODO
+				return this.invalidIntersectionPoint; 
 			}
 		}
 		else
 		{
-			return null; //TODO Design by contract !
+//			ANTSStream.print("TOTAL INVALID POINT!"); //TODO
+			return this.invalidIntersectionPoint;
 		}
 	}
 
@@ -226,8 +167,6 @@ public class ANTSSimpleMediumController extends ANTSAbstractMediumController imp
 
 	private double[] getPseudoCenter(double[] intersectionPoint) 
 	{
- //TODO CHECK THIS!
-		
 		double x = intersectionPoint[0];
 		double y = intersectionPoint[1];
 		
@@ -239,20 +178,16 @@ public class ANTSSimpleMediumController extends ANTSAbstractMediumController imp
 		double[] center = new double[2];
 		double centerOffset = 10;
 		
-		String message = "intersectionPoint on vector ";
-		
 		if(y==vecA[0].y)
 		{
 			//intersection on vecA
-			message+="A";
-			
+
 			center[0] = x;
 			center[1] = y + centerOffset; 
 		}
 		else if(y==vecC[0].y)
 		{
 			//intersection on vecC
-			message+="C";
 			
 			center[0] = x;
 			center[1] = y - centerOffset;
@@ -260,7 +195,6 @@ public class ANTSSimpleMediumController extends ANTSAbstractMediumController imp
 		else if(x==vecD[0].x)
 		{
 			//intersection on vecD
-			message+="D";
 			
 			center[0] = x + centerOffset;
 			center[1] = y;
@@ -268,7 +202,6 @@ public class ANTSSimpleMediumController extends ANTSAbstractMediumController imp
 		else if(x==vecB[0].x)
 		{
 			//intersection on vecB
-			message+="B";
 			
 			center[0] = x - centerOffset;
 			center[1] = y;
@@ -282,8 +215,6 @@ public class ANTSSimpleMediumController extends ANTSAbstractMediumController imp
 		}
 		
 		this.model.setCenter(center);
-		
-		ANTSStream.print(message);
 		
 		return center;
 	}

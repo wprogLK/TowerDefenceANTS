@@ -3,6 +3,7 @@ package controllers.lens;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 
 import controllers.medium.ANTSAbstractMediumController;
 
@@ -137,10 +138,15 @@ public class ANTSSimpleLensController extends ANTSAbstractMediumController imple
 		
 		this.model.setPointsOfIntersection(x_1,y_1,x_2,y_2);
 		
-		double[] point1 = {x_1,y_1};
-		double[] point2 = {x_2,y_2};
+		Point2D.Double point1 = new Point2D.Double(x_1,y_1);
+		Point2D.Double point2 = new Point2D.Double(x_2,y_2);
 		
-		double[] closestPoint = this.getClosestIntersectionPoint(ray,point1,point2);
+		ArrayList<Point2D.Double> points = new ArrayList<Point2D.Double>();
+		
+		points.add(point1);
+		points.add(point2);
+		
+		double[] closestPoint = this.getClosestIntersectionPoint(ray,points);
 		this.model.setThePointOfIntersection(closestPoint);
 		
 		return closestPoint;

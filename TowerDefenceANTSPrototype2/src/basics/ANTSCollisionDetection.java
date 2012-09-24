@@ -251,7 +251,6 @@ public class ANTSCollisionDetection
 		{
 			ANTSPerpendicular perpendicular = medium.calculatePerpendicular(ray);
 			
-			//TODO uncomment this again
 			double angleBetweenRayPerpendicular = this.calculateAngleBetweenRayPerpendiuclar(perpendicular, ray, direction);
 			
 			double angle = this.calculateSnell(angleBetweenRayPerpendicular,mediumIn.getRefractionIndex(),mediumOut.getRefractionIndex());
