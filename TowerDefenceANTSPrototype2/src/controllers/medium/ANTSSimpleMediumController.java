@@ -5,8 +5,10 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Double;
 import java.util.ArrayList;
 
+import basics.ANTSDevelopment.ANTSStream;
 import basics.ANTSFactory;
 import basics.ANTSPerpendicular;
+import basics.ANTSUtility;
 
 import interfaces.ANTSIModel;
 import interfaces.ANTSIRayController;
@@ -126,7 +128,7 @@ public class ANTSSimpleMediumController extends ANTSAbstractMediumController imp
 		intersectionPointRay[0] = startVectorRay.x+r*directionVectorRay.x;	
 		intersectionPointRay[1] = startVectorRay.y+r*directionVectorRay.y;	
 		
-		if(roundScale2(intersectionPointBox[0])==roundScale2(intersectionPointRay[0]) && roundScale2(intersectionPointBox[1])==roundScale2(intersectionPointRay[1]))
+		if(ANTSUtility.roundScale2(intersectionPointBox[0])==ANTSUtility.roundScale2(intersectionPointRay[0]) && ANTSUtility.roundScale2(intersectionPointBox[1])==ANTSUtility.roundScale2(intersectionPointRay[1]))
 		{
 			this.model.setIntersectionPoint(intersectionPointBox,intersectionPointRay);
 			
@@ -151,10 +153,7 @@ public class ANTSSimpleMediumController extends ANTSAbstractMediumController imp
 		}
 	}
 
-	private double roundScale2( double d )
-	{
-	    return Math.round( d * 10000000 ) / 10000000.;
-	}
+	
 	
 	@Override
 	public ANTSPerpendicular calculatePerpendicular(ANTSIRayController ray)
@@ -181,34 +180,32 @@ public class ANTSSimpleMediumController extends ANTSAbstractMediumController imp
 		if(y==vecA[0].y)
 		{
 			//intersection on vecA
-
+			
 			center[0] = x;
 			center[1] = y + centerOffset; 
+			
 		}
 		else if(y==vecC[0].y)
 		{
 			//intersection on vecC
-			
 			center[0] = x;
 			center[1] = y - centerOffset;
 		}
 		else if(x==vecD[0].x)
 		{
 			//intersection on vecD
-			
 			center[0] = x + centerOffset;
 			center[1] = y;
 		}
 		else if(x==vecB[0].x)
-		{
-			//intersection on vecB
+		{//intersection on vecB
 			
 			center[0] = x - centerOffset;
 			center[1] = y;
 		}
 		else
 		{
-//			ANTSStream.printErr("Error: Unknown case in method getPseudoCenter() !");
+//			ANTSStream.printErr("Error: Unknown case in method getPseudoCenter() ! " + x + " | " + y);	//TODO!!
 			
 			center[0] = -1;
 			center[1] = -1;

@@ -123,6 +123,4 @@ public class ANTSSimpleRayLightController extends ANTSAbstractController impleme
 	{
 		this.model.addAngle(angle);
 	}
-
-
 }

@@ -299,6 +299,7 @@ public class ANTSFactory
 		for(ANTSIController c:this.controllers)
 		{
 			c.getModel().setIsAlreadyUpdated(false);
+
 		}
 	}
 }

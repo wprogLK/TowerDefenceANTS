@@ -47,7 +47,7 @@ public class ANTSGameController extends ANTSAbstractController implements ANTSIC
 		createSimpleMedium1();
 //		createSimpleMedium2();
 		
-		createSimpleLens();
+//		createSimpleLens();
 	}
 
 	////////////
@@ -56,7 +56,7 @@ public class ANTSGameController extends ANTSAbstractController implements ANTSIC
 
 	private void createSimpleLens() 
 	{
-		this.factory.createSimpleLens(300, 300, 100, 2, true);
+		this.factory.createSimpleLens(300, 300, 100,0.1, true);
 	}
 
 	private void createGrid()
@@ -82,7 +82,7 @@ public class ANTSGameController extends ANTSAbstractController implements ANTSIC
 	
 	private void createSimpleSourceLightNeon() 
 	{
-		this.factory.createSimpeSourceLigthNeon(300, 200, 100, Color.red, true);
+		this.factory.createSimpeSourceLigthNeon(345, 225, 100, Color.red, true);
 		
 	}
 	
@@ -93,7 +93,7 @@ public class ANTSGameController extends ANTSAbstractController implements ANTSIC
 	
 	private void createSimpleMedium1() 
 	{
-		this.factory.createSimpleMedium(100, 100, 100, 100, 2, true);
+		this.factory.createSimpleMedium(300, 300, 100, 100, 1.9, true);
 	}
 	
 	private void createSimpleMedium2() 

@@ -165,6 +165,11 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 		this.addAngle(angle);
 	}
 	
+	public void setIsAlreadyUpdated(boolean b)
+	{
+		this.isAlreadyUpdated = b;
+	}
+	
 	///////////
 	//Special//
 	///////////
@@ -180,6 +185,4 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 		this.matrix.concatenate(this.localRotateMatrix);
 		this.matrixForInterpolation.concatenate(this.localRotateMatrix);
 	}
-
-	
 }

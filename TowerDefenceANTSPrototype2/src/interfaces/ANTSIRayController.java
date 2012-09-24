@@ -23,6 +23,7 @@ public interface ANTSIRayController extends ANTSIController
 	public double[] getCenter();
 	
 	public Point2D.Double[] getVector();
+	
 	///////////
 	//SPECIAL//
 	///////////

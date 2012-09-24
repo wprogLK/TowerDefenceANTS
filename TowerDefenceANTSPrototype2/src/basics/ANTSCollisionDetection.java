@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.ListIterator;
+import java.util.Queue;
 
 import controllers.lens.ANTSSimpleLensController;
 
@@ -25,8 +26,8 @@ public class ANTSCollisionDetection
 	private int width;
 	
 	
-	private final int defaultCellsX = 2;		//TODO: IMPORTANT: If you have big objects the number of cells should be small! Otherwise the detection is not really working
-	private final int defaultCellsY = 2;
+	private final int defaultCellsX =1;		//TODO: IMPORTANT: If you have big objects the number of cells should be small! Otherwise the detection is not really working
+	private final int defaultCellsY = 1;
 	
 	private int cellsX;
 	private int cellsY;
@@ -208,9 +209,10 @@ public class ANTSCollisionDetection
 				
 				for(ANTSIRayController ray : colliderRays)
 				{
+					
 					boolean noCollisionWithNonStandardMedium = true;
 					
-					for(ANTSIMediumController medium : colliderMedium)//this.hashMap[cellX][cellY].getObjects())
+					for(ANTSIMediumController medium : colliderMedium)
 					{
 						if(this.checkForCollision(ray,medium))
 						{
@@ -231,36 +233,46 @@ public class ANTSCollisionDetection
 	
 	public void calculateAngle(ANTSIRayController ray, ANTSIMediumController mediumIn)
 	{
-		ANTSIMediumController mediumOut = ray.getCurrentMedium();
-		
-		direction direction = null;
-		ANTSIMediumController medium;
-		
-		if(mediumIn.equals(this.factory.createStandardMediumController()))
-		{
-			medium = mediumOut;
-			direction = direction.OUT;
-		}
-		else
-		{
-			medium = mediumIn;
-			direction = direction.IN;
-		}
-		
-		if(!mediumOut.equals(mediumIn))
-		{
-			ANTSPerpendicular perpendicular = medium.calculatePerpendicular(ray);
+			ANTSIMediumController mediumOut = ray.getCurrentMedium();
 			
-			double angleBetweenRayPerpendicular = this.calculateAngleBetweenRayPerpendiuclar(perpendicular, ray, direction);
+			direction direction = null;
+			ANTSIMediumController medium;
 			
-			double angle = this.calculateSnell(angleBetweenRayPerpendicular,mediumIn.getRefractionIndex(),mediumOut.getRefractionIndex());
+			if(mediumIn.equals(this.factory.createStandardMediumController()))
+			{
+				medium = mediumOut;
+				direction = direction.OUT;
+			}
+			else
+			{
+				medium = mediumIn;
+				direction = direction.IN;
+			}
 			
-			this.changeAngle(perpendicular, angle, ray,mediumIn.getRefractionIndex(),mediumOut.getRefractionIndex(),direction);
+			if(!mediumOut.equals(mediumIn))
+			{
+				ANTSPerpendicular perpendicular = medium.calculatePerpendicular(ray);
+				
+				double angleBetweenRayPerpendicular = this.calculateAngleBetweenRayPerpendiuclar(perpendicular, ray, direction);
+				
+				if(!Double.isNaN(angleBetweenRayPerpendicular))
+				{
+					double angle = this.calculateSnell(angleBetweenRayPerpendicular,mediumIn.getRefractionIndex(),mediumOut.getRefractionIndex());
+					
+					this.changeAngle(perpendicular, angle, ray,mediumIn.getRefractionIndex(),mediumOut.getRefractionIndex(),direction);
+					
+					ray.setCurrentMedium(mediumIn);
+					
+					this.calculateCriticalAngle(mediumIn.getRefractionIndex(),mediumOut.getRefractionIndex());
+				}
+				else
+				{
+					ray.setCurrentMedium(mediumIn);
+//					ANTSStream.print("ERROR angle between ray and perpendicular is NaN because the should not be a collision!"); //TODO
+				}
+				
 			
-			ray.setCurrentMedium(mediumIn);
-			
-			this.calculateCriticalAngle(mediumIn.getRefractionIndex(),mediumOut.getRefractionIndex());
-		}
+			}
 	}
 	
 	private void changeAngle(ANTSPerpendicular perpendicular, double angleToAdd, ANTSIRayController ray, double refractionIndexIn, double refractionIndexOut, direction direction)
@@ -282,33 +294,27 @@ public class ANTSCollisionDetection
 			}
 		}
 		
-		ANTSStream.printDebug("----------------------------------------------------------------------");
-		ANTSStream.printDebug("perpendicularAngle = " + perpendicularAngle + " direction " + direction);
-		
 		double newRayAngle = 0;
 		
 		if(perpendicularAngle>rayAngle)
 		{
-			ANTSStream.printDebug("situation B");
 			newRayAngle = perpendicularAngle-angleToAdd;
 		}
 		else
 		{
-			ANTSStream.printDebug("situation A");
 			newRayAngle = perpendicularAngle+angleToAdd;
 		}
 		
-		ANTSStream.printDebug("newRayAngle = " + newRayAngle + "angleToAdd = " + angleToAdd);
 		ray.setAngle(newRayAngle);
 		
-		if(refractionIndexIn>refractionIndexOut)
-		{
-			ANTSStream.printDebug("Brechung ZUM Lot: \nangle= " + angleToAdd);
-		}
-		else
-		{
-			ANTSStream.printDebug("Brechung VOM Lot: \nangle= " + angleToAdd);
-		}
+//		if(refractionIndexIn>refractionIndexOut)
+//		{
+//			ANTSStream.printDebug("Brechung ZUM Lot");
+//		}
+//		else
+//		{
+//			ANTSStream.printDebug("Brechung VOM Lot");
+//		}
 	}
 
 	private double calculateSnell(double angleIncoming, double refractionIndexMediumIn, double refractionIndexMediumOut) 
@@ -319,11 +325,27 @@ public class ANTSCollisionDetection
 		double angle = Math.toDegrees(Math.asin(factor));
 		double criticalAngle = this.calculateCriticalAngle(refractionIndexMediumIn, refractionIndexMediumOut);
 		
-		if(refractionIndexMediumIn<refractionIndexMediumOut && angleIncoming>=criticalAngle)
+//		ANTSStream.printErr("phi_1 = " + ANTSUtility.roundScale2(angleIncoming) + "\t critical angle = " + ANTSUtility.roundScale2(criticalAngle) +" factor is " + factor + "medIn " + refractionIndexMediumIn + " < medOut" + refractionIndexMediumOut);	
+		
+		if(refractionIndexMediumIn<=refractionIndexMediumOut && ANTSUtility.roundScale2(angleIncoming)>=ANTSUtility.roundScale2(criticalAngle))
 		{
-			ANTSStream.printErr("'Error': TOTAL REFLECTION! \n phi_1 = " + angleIncoming + "\t critical angle = " + criticalAngle);	//TODO: Implement what happen if there is a total reflection
+//			ANTSStream.printErr("'Error': TOTAL REFLECTION! \n phi_1 = " + angleIncoming + "\t critical angle = " + criticalAngle +" factor is " + factor);	
+			
+			//TODO test this
+			
+			double rest = factor % 1;
+			double number = factor - rest;
+			
+			double extraAngle = number * 90;
+			angle = Math.toDegrees(Math.asin(rest));
+			
+//			ANTSStream.print("angle " + angle);
+			angle = angle + extraAngle;
+			
+//			ANTSStream.print("extra Angle " + extraAngle);
+//			ANTSStream.print("return angle: " + angle);
 		}
-
+		
 		return angle;
 	}
 
@@ -396,10 +418,10 @@ public class ANTSCollisionDetection
 		Shape rayShape = rayView.getShape();
 		Shape mediumShape = mediumView.getShape();
 		
-//		return rayShape.intersects(mediumShape.getBounds2D());			//TODO: mediumShape.intersects(rayShape.getBounds2D()) oder so �hnlich (da sonst kollision ungenau ist) 
+		return rayShape.intersects(mediumShape.getBounds2D());			//TODO: mediumShape.intersects(rayShape.getBounds2D()) oder so �hnlich (da sonst kollision ungenau ist) 
 //		return mediumShape.intersects(rayShape.getBounds2D());
 	
-		return mediumShape.contains(ray.getVector()[1]);
+//		return mediumShape.contains(ray.getVector()[1]);
 	}
 
 	public void addController(ANTSIController c) 
