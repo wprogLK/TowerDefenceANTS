@@ -396,7 +396,10 @@ public class ANTSCollisionDetection
 		Shape rayShape = rayView.getShape();
 		Shape mediumShape = mediumView.getShape();
 		
-		return rayShape.intersects(mediumShape.getBounds2D());			//TODO: mediumShape.intersects(rayShape.getBounds2D()) oder so �hnlich (da sonst kollision ungenau ist) 
+//		return rayShape.intersects(mediumShape.getBounds2D());			//TODO: mediumShape.intersects(rayShape.getBounds2D()) oder so �hnlich (da sonst kollision ungenau ist) 
+//		return mediumShape.intersects(rayShape.getBounds2D());
+	
+		return mediumShape.contains(ray.getVector()[1]);
 	}
 
 	public void addController(ANTSIController c) 
