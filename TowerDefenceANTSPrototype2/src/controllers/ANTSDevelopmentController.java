@@ -136,14 +136,19 @@ public class ANTSDevelopmentController extends ANTSAbstractController implements
 		this.model.setInterpolationOn(value);
 	}
 	
-	public void showDebugWindow()
+	
+	public void setIsPause(boolean value)
 	{
-		this.view.show();
+		this.model.setIsPause(value);
 	}
 	
 	///////////
 	//GETTERS//
 	//////////
+	public void showDebugWindow()
+	{
+		this.view.show();
+	}
 	
 	public boolean isShowBounds()
 	{

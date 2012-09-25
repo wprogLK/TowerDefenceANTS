@@ -253,7 +253,11 @@ public class ANTSDevelopmentModel extends ANTSAbstractModel implements ANTSIMode
 		this.interpolationOn = value;
 	}
 	
-	
+
+	public void setIsPause(boolean value) 
+	{
+		this.isPause = value;
+	}
 	
 	////////////
 	//SWITCHES//
@@ -344,6 +348,8 @@ public class ANTSDevelopmentModel extends ANTSAbstractModel implements ANTSIMode
 	{
 		return this.isPause;
 	}
+
+
 
 
 

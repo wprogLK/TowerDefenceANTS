@@ -47,7 +47,7 @@ public class ANTSFactory
 		this.controllers = new ArrayList<ANTSIController>();
 		this.menuControllers = new ArrayList<ANTSIMenuController>();
 		this.createCollisionDetection();
-		this.standardMediumController = new ANTSStandardMediumController(1,this);	//Vacuum n = 1
+		this.standardMediumController = new ANTSStandardMediumController(1.33,this);	//Vacuum n = 1
 		this.developmentController = new ANTSDevelopmentController(this);
 		
 		this.addToKeyListener(this.developmentController);

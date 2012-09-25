@@ -46,6 +46,8 @@ public class ANTSAbstractModel implements ANTSIModel, ANTSIEventListener
 		this.mouseEntered = false;
 		
 		this.center =  new double[2];
+		
+		this.classInvariant();
 	}
 	
 	public ANTSAbstractModel(ANTSFactory factory)
@@ -61,6 +63,13 @@ public class ANTSAbstractModel implements ANTSIModel, ANTSIEventListener
 		this.mouseEntered = false;
 		
 		this.center =  new double[2];
+		
+		this.classInvariant();
+	}
+	
+	protected void classInvariant()
+	{
+		
 	}
 	
 	///////////

@@ -10,6 +10,7 @@ import java.awt.geom.Point2D;
 import controllers.ANTSSimpleRayLightController;
 
 import basics.ANTSFactory;
+import basics.ANTSUtility;
 
 public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIModel
 {
@@ -75,6 +76,14 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 		this.matrixForInterpolation.concatenate(this.sourcePivotRotateMatrix);
 		
 		this.updateVector();
+		
+		this.classInvariant();
+	}
+	
+	@Override
+	protected void classInvariant()
+	{
+		assert(this.angle>=0 && this.angle<360);
 	}
 	
 	private void updateVector() 
@@ -129,6 +138,7 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 	
 	public double getAngle()
 	{
+		this.classInvariant();
 		return this.angle;
 	}
 
@@ -161,8 +171,11 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 	
 	public void setAngle(double angle) 
 	{
-		this.addAngle(-this.angle);		//TODO Check this
-		this.addAngle(angle);
+		this.classInvariant();
+		
+		this.addAngle(-this.angle);		//Reset matrix
+		this.addAngle(ANTSUtility.angleBetween0And359Degree(angle));
+		this.classInvariant();
 	}
 	
 	public void setIsAlreadyUpdated(boolean b)
@@ -176,7 +189,10 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 	
 	public void addAngle(double angle) 
 	{
+		this.classInvariant();
 		this.angle+=angle;
+		
+		this.angle = ANTSUtility.angleBetween0And359Degree(this.angle);
 		
 		this.localRotateMatrix = new AffineTransform();
 		
@@ -184,5 +200,6 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 		
 		this.matrix.concatenate(this.localRotateMatrix);
 		this.matrixForInterpolation.concatenate(this.localRotateMatrix);
+		this.classInvariant();
 	}
 }

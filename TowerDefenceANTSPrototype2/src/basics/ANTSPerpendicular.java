@@ -30,10 +30,19 @@ public class ANTSPerpendicular
 		
 		this.calculateAngleInToOutSide();
 		this.calculateAngleOutToInSide();
+		
+		this.classInvariant();
+	}
+	
+	private void classInvariant()
+	{
+		assert(this.angleInToOutSide>=0 && this.angleInToOutSide<360);
+		assert(this.angleOutToInSide>=0 && this.angleOutToInSide<360);
 	}
 	
 	/**
 	 * the calculated angle is the angle of the direction vector inside to outside!
+	 * angle is between 0° and 359,99°;
 	 */
 	private void calculateAngleInToOutSide() 
 	{
@@ -51,10 +60,13 @@ public class ANTSPerpendicular
 		{
 			this.angleInToOutSide = antiClockWiseAngle;
 		}
+		
+		this.angleInToOutSide = ANTSUtility.angleBetween0And359Degree(this.angleInToOutSide); //angle is between 0° and 359,99°;
 	}
 	
 	/**
 	 * the calculated angle is the angle of the direction vector outside to inside!
+	 * angle is between 0° and 359,99°;
 	 */
 	private void calculateAngleOutToInSide() 
 	{
@@ -72,6 +84,8 @@ public class ANTSPerpendicular
 		{
 			this.angleOutToInSide = antiClockWiseAngle;
 		}
+		
+		this.angleOutToInSide = ANTSUtility.angleBetween0And359Degree(this.angleOutToInSide); //angle is <360°;
 	}
 
 	private void calculateDirectionVectors() 
@@ -105,17 +119,23 @@ public class ANTSPerpendicular
 	
 	/**
 	 * the calculated angle is the angle of the direction vector inside to outside!
+	 * 
+	 * the angle is between 0° and <360°
 	 */
 	public double getAngleInToOutSide()
 	{
+		this.classInvariant();
 		return this.angleInToOutSide;
 	}
 	
 	/**
 	 * the calculated angle is the angle of the direction vector outside to inside!
+	 * 
+	 * the angle is between 0° and <360°
 	 */
 	public double getAngleOutToInSide()
 	{
+		this.classInvariant();
 		return this.angleOutToInSide;
 	}
 }

@@ -10,6 +10,7 @@ import models.ANTSAbstractModel;
 
 import basics.ANTSDevelopment.ANTSStream;
 import basics.ANTSFactory;
+import basics.ANTSUtility;
 
 public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements ANTSIModel 
 {
@@ -42,7 +43,7 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 		
 		this.length = length;
 		this.height = 50;		//TODO
-		this.angle = 5.739170477266787;
+		this.angle = 230;
 		
 		this.on = false;		//TODO
 		this.color = color;
@@ -53,6 +54,14 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 		this.isMouseListener = isMouseListener;
 		
 		this.updateCenter();
+		
+		
+	}
+	
+	@Override
+	protected void classInvariant()
+	{
+		assert(this.angle>=0 && this.angle<360);
 	}
 	
 	///////////
@@ -128,12 +137,15 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 	public void rotate(int direction)
 	{
 		this.angle+=direction*this.rotationStep;
+		this.angle = ANTSUtility.angleBetween0And359Degree(this.angle);
 		
 		this.rotation = new AffineTransform();
 		
 		this.rotation.rotate(Math.toRadians(direction*this.rotationStep),length/2,height/2);
 		
 		this.matrix.concatenate(this.rotation);
+		
+		this.classInvariant();
 	}
 	
 	///////////
@@ -182,6 +194,8 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 	
 	private void createRays()
 	{
+		this.classInvariant();
+		
 		double tmpPosX = 0;
 
 		for(int numberRay = 0; numberRay<this.getNumberOfRays(); numberRay++)
@@ -195,8 +209,8 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 			double[] posUp = {pointUp.getX(),pointUp.getY()};
 			double[] posDown = {pointDown.getX(),pointDown.getY()};
 			
-//			this.factory.createSimpleRayLight(posUp, this.velocityRay, this.angle-90, this.color);
-			this.factory.createSimpleRayLight(posDown, this.velocityRay, this.angle+90 , this.color);
+//			this.factory.createSimpleRayLight(posUp, this.velocityRay, ANTSUtility.angleBetween0And359Degree(this.angle-90), this.color);
+			this.factory.createSimpleRayLight(posDown, this.velocityRay, ANTSUtility.angleBetween0And359Degree(this.angle+90) , this.color);
 			
 			tmpPosX += this.getDistanceBetweenTwoRays();
 		}
@@ -204,6 +218,8 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 	
 	private void updateCenter() 
 	{
+		this.classInvariant();
+		
 		this.center[0] = this.matrix.getTranslateX()+this.length/2;
 		this.center[1] = this.matrix.getTranslateY()+this.height/2;
 		
