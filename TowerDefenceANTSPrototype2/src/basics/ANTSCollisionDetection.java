@@ -334,27 +334,9 @@ public class ANTSCollisionDetection
 		double newRayAngle = 0;
 		
 		
-		
-//		if(perpendicularAngle==0)
-//		{
-//			perpendicularAngle =360;
-//		}
-		
 		ANTSStream.print("perpendicularAngle = " + perpendicularAngle +"\nrayAngle = " + rayAngle );//+"\nangleToAdd = " + angleToAdd);
 		
-//		if(perpendicularAngle>rayAngle)
-//		{
-//			ANTSStream.print("MINUS");
-//			newRayAngle = perpendicularAngle-angleToAdd;
-//		}
-//		else
-//		{
-//			ANTSStream.print("PLUS");
-//			newRayAngle = perpendicularAngle+angleToAdd;
-//		}
-//		
 		double angleRayReduced = ANTSUtility.angleBetween0And359Degree(rayAngle - perpendicularAngle);	//perpemdicularAngle is now always 0°
-//		ANTSStream.printDebug("reduced  = " + angleRayReduced);
 		
 		
 		if(angleRayReduced>=180)
