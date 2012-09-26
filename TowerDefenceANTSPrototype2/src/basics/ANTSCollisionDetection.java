@@ -295,14 +295,11 @@ public class ANTSCollisionDetection
 					
 					ANTSStream.print("SET NEW MEDIUM = " + mediumIn);
 					ray.setCurrentMedium(mediumIn);
-					
-			
-					
 				}
 				else
 				{
 					ray.setCurrentMedium(mediumIn);
-//					ANTSStream.print("ERROR angle between ray and perpendicular is NaN because the should not be a collision!"); //TODO
+					ANTSStream.print("ERROR angle between ray and perpendicular is NaN because the should not be a collision!"); //TODO
 				}
 				
 			
@@ -321,13 +318,13 @@ public class ANTSCollisionDetection
 		{
 			case IN:
 			{
-				ANTSStream.print("OUT");
+//				ANTSStream.print("OUT");
 				perpendicularAngle = perpendicular.getAngleOutToInSide();
 				break;
 			}
 			case OUT:
 			{
-				ANTSStream.print("IN");
+//				ANTSStream.print("IN");
 				perpendicularAngle = perpendicular.getAngleInToOutSide();
 				break;
 			}
@@ -343,32 +340,54 @@ public class ANTSCollisionDetection
 //			perpendicularAngle =360;
 //		}
 		
-		ANTSStream.print("perpendicularAngle = " + perpendicularAngle +"\nrayAngle = " + rayAngle +"\nangleToAdd = " + angleToAdd);
+		ANTSStream.print("perpendicularAngle = " + perpendicularAngle +"\nrayAngle = " + rayAngle );//+"\nangleToAdd = " + angleToAdd);
 		
-		if(perpendicularAngle>rayAngle)
+//		if(perpendicularAngle>rayAngle)
+//		{
+//			ANTSStream.print("MINUS");
+//			newRayAngle = perpendicularAngle-angleToAdd;
+//		}
+//		else
+//		{
+//			ANTSStream.print("PLUS");
+//			newRayAngle = perpendicularAngle+angleToAdd;
+//		}
+//		
+		double angleRayReduced = ANTSUtility.angleBetween0And359Degree(rayAngle - perpendicularAngle);	//perpemdicularAngle is now always 0°
+//		ANTSStream.printDebug("reduced  = " + angleRayReduced);
+		
+		
+		if(angleRayReduced>=180)
 		{
 			ANTSStream.print("MINUS");
-			newRayAngle = perpendicularAngle-angleToAdd;
+			newRayAngle = 360-angleToAdd+perpendicularAngle;
 		}
 		else
 		{
 			ANTSStream.print("PLUS");
-			newRayAngle = perpendicularAngle+angleToAdd;
+			newRayAngle = angleToAdd+perpendicularAngle;
 		}
+		
+		ANTSStream.print("new ANGLE = " + newRayAngle);
 		
 		if(refractionIndexIn>refractionIndexOut)
 		{
 			ANTSStream.printDebug("Brechung ZUM Lot");
+			
+			
 		}
 		else
 		{
 			ANTSStream.printDebug("Brechung VOM Lot");
+			
 		}
+		
+		
 		
 //		this.factory.getDevelopmentController().setIsPause(true);
 		newRayAngle = ANTSUtility.angleBetween0And359Degree(newRayAngle);
 		
-		ANTSStream.print("angle to set = " + newRayAngle);
+//		ANTSStream.print("angle to set = " + newRayAngle);
 		
 		ray.setAngle(newRayAngle);
 	}
