@@ -30,7 +30,11 @@ public abstract class ANTSAbstractMediumModel extends ANTSAbstractModel implemen
 	///////////
 	//SETTERS//
 	///////////
-	
+	@Override
+	public final void setRefractionIndex(double refractionIndex)
+	{
+		this.refractionIndex = refractionIndex;
+	}
 	///////////
 	//Getters//
 	///////////

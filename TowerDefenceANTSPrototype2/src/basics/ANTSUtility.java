@@ -37,4 +37,28 @@ public class ANTSUtility
 		
 		return angleBetween; //angle is <360°;
 	}
+	
+	public static double computeAngleBetweenTwoDirectionVectors(double[] directionVectorA, double[] directionVectorB)
+	{
+		double dotProduct = directionVectorB[0]*directionVectorA[0] + directionVectorB[1]*directionVectorA[1];
+		double lengthVectorB = Math.sqrt(pow(directionVectorB[0]) + pow(directionVectorB[1]) );
+		double lengthVectorA = Math.sqrt(pow(directionVectorA[0]) +pow(directionVectorA[1]) );
+		
+		double cosAlpha = dotProduct/(lengthVectorB*lengthVectorA);
+		double angle = Math.toDegrees(Math.acos(cosAlpha));				
+		
+		return angle;
+	}
+	
+	public static double pow(double v)
+	{
+		return Math.pow(v, 2);
+	}
+	
+	public static double computeAngleOfOneVector(double[] directionVector)
+	{
+		double[] xAxisVector = {500,0};
+		
+		return computeAngleBetweenTwoDirectionVectors(directionVector, xAxisVector);
+	}
 }

@@ -2,6 +2,7 @@ package basics;
 
 import interfaces.ANTSIRayController;
 import interfaces.ANTSIRefractionComputeUnit;
+import interfaces.ANTSIStandardMediumController;
 import interfaces.medium.ANTSIMediumController;
 
 import controllers.medium.ANTSStandardMediumController;
@@ -11,24 +12,24 @@ import basics.ANTSDevelopment.ANTSStream;
 
 public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 {
-	private ANTSStandardMediumController standardMediumController;
+	private ANTSIStandardMediumController standardMediumController;
 	
-	public ANTSRefractionComputeUnit(ANTSStandardMediumController standardMediumController)
+	public ANTSRefractionComputeUnit(ANTSIStandardMediumController standardMediumController)
 	{
 		this.standardMediumController = standardMediumController;
 	}
 	
 	@Override
-	public void calculateAngle(ANTSIRayController ray, ANTSIMediumController mediumIn)
+	public double calculateAngle(ANTSIRayController ray, ANTSIMediumController mediumIn)
 	{
 			ANTSIMediumController mediumOut = ray.getCurrentMedium();
 			
 			ANTSDirectionEnum direction = null;
 			ANTSIMediumController medium;
 			
-			if(this.isMediumInStandardMedium(mediumIn))
+			if(this.isMediumInStandardMedium(mediumIn)) 
 			{
-				medium = mediumOut;
+				medium = ray.getCurrentMedium();
 				direction = ANTSDirectionEnum.OUT;
 			}
 			else
@@ -40,7 +41,7 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 			if(!mediumOut.equals(mediumIn))
 			{
 				ANTSPerpendicular perpendicular = medium.calculatePerpendicular(ray);
-				
+//				
 				double[] directionVectorRay = ray.getDirectionVector();
 				double[] directionVectorPerpendicular = perpendicular.getDirectionVector(direction);
 				
@@ -58,13 +59,20 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 				{
 					ANTSStream.printDebug("Brechung VOM Lot");
 				}
-				
-				double realAngleToSet = computeNewRayAngle(directionVectorRay, directionVectorPerpendicular, refractionIndexMediumIn, refractionIndexMediumOut, angleRay, anglePerpendicular);
-				
+//				
+				double realAngleToSet = getNewAngleRay(directionVectorRay, directionVectorPerpendicular, refractionIndexMediumIn, refractionIndexMediumOut, angleRay, anglePerpendicular);
+//				
 				this.updateRay(realAngleToSet, ray, mediumIn);
+				return realAngleToSet; //Only for testing!
+			}
+			else
+			{
+				ANTSStream.printDebug("ERROR: MediumIn and MediumOut are the same! Don't calculate a new angle...");
+				return ray.getAngle();
 			}
 	}
 	
+	@Override
 	/**
 	 * 
 	 * @param directionVectorRay
@@ -75,7 +83,7 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 	 * @param anglePerpendicular
 	 * @return  the new absolute angle of the ray
 	 */
-	private double computeNewRayAngle(double[] directionVectorRay, double[] directionVectorPerpendicular, double refractionIndexMediumIn, double refractionIndexMediumOut, double angleRay, double anglePerpendicular) 
+	public double getNewAngleRay(double[] directionVectorRay, double[] directionVectorPerpendicular, double refractionIndexMediumIn, double refractionIndexMediumOut, double angleRay, double anglePerpendicular) 
 	{
 		double angleBetweenRayPerpendicular = this.computeAngleBetweenRayAndPerpendicular(directionVectorRay, directionVectorPerpendicular);
 		
@@ -114,6 +122,7 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 		return (ANTSUtility.roundScale2(angleBetween)==ANTSUtility.roundScale2(angleBetweenRayPerpendicular));
 	}
 
+	
 	/**
 	 * 
 	 * @param refractionIndexMediumIn
@@ -123,7 +132,8 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 	 * @param angleBetweenRayPerpendicular
 	 * @return the new absolute angle of the ray
 	 */
-	private double computeRefractionOrTotalReflection(double refractionIndexMediumIn, double refractionIndexMediumOut,double angleRay, double anglePerpendicular, double angleBetweenRayPerpendicular) 
+	@Override
+	public double computeRefractionOrTotalReflection(double refractionIndexMediumIn, double refractionIndexMediumOut,double angleRay, double anglePerpendicular, double angleBetweenRayPerpendicular) 
 	{
 		double criticalAngle = this.calculateCriticalAngle(refractionIndexMediumIn,refractionIndexMediumOut);
 		double angleToSet = 0;
@@ -137,16 +147,11 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 		{
 			if(ANTSUtility.roundScale2(angleBetweenRayPerpendicular)==ANTSUtility.roundScale2(criticalAngle))
 			{
-				//TODO
-				ANTSStream.print("GRENZE");
-				
-				angleToSet = 90; //TODO
-			
+				angleToSet= this.calculateAngleInCriticalSituation(angleBetweenRayPerpendicular,anglePerpendicular,angleRay);
 			}
 			else if(ANTSUtility.roundScale2(angleBetweenRayPerpendicular)>ANTSUtility.roundScale2(criticalAngle))
 			{
-				ANTSStream.print("Totalreflection");
-				//TODO
+				angleToSet = this.calculateTotalReflection(angleBetweenRayPerpendicular,anglePerpendicular,angleRay);
 			}
 			else
 			{
@@ -163,6 +168,22 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 		return this.computeNewRayAngle(anglePerpendicular, angleRay ,angleToSet ,refractionIndexMediumIn,refractionIndexMediumOut);
 	}
 	
+	@Override
+	public double calculateAngleInCriticalSituation(double angleBetweenRayPerpendicular, double anglePerpendicular,double angleRay) 
+	{
+		ANTSStream.print("GRENZE");
+		// TODO Auto-generated method stub
+		return 90;
+	}
+
+	@Override
+	public double calculateTotalReflection(double angleBetweenRayPerpendicular, double anglePerpendicular,double angleRay) 
+	{
+		ANTSStream.print("Totalreflection");
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	private void updateRay(double realAngleToSet, ANTSIRayController ray, ANTSIMediumController mediumIn) 
 	{
 		ray.setAngle(realAngleToSet);
@@ -171,7 +192,7 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 
 	private boolean isMediumInStandardMedium(ANTSIMediumController mediumIn) 
 	{
-		return mediumIn.equals(this.standardMediumController);
+		return mediumIn.equals(this.standardMediumController); //TODO TEST THIS (is it working if this.standardMediumController is an interface?)
 	}
 
 	@Override
@@ -205,6 +226,8 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 		ANTSStream.print("new ANGLE = " + newRayAngle);
 		
 		newRayAngle = ANTSUtility.angleBetween0And359Degree(newRayAngle);
+		
+		ANTSStream.printErr("----------ANGLE TO SET----------- " + newRayAngle); 
 		
 		return newRayAngle;
 	}
@@ -247,17 +270,17 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 //		
 		
 		angle = ANTSUtility.angleBetween0And359Degree(angle);
+		ANTSStream.print("return angle: " + angle);
 		return angle;
 	}
 
-	@Override
 	/**
 	 * Calculates the critical angle for a total reflection
 	 * @param refractionIndexMediumIn
 	 * @param refractionIndexMediumOut
 	 * @return
 	 */
-	public double calculateCriticalAngle(double refractionIndexMediumIn, double refractionIndexMediumOut)
+	public static double calculateCriticalAngle(double refractionIndexMediumIn, double refractionIndexMediumOut)
 	{
 		if(refractionIndexMediumIn<refractionIndexMediumOut)
 		{
@@ -273,6 +296,7 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 		}
 	}
 	
+	@Override
 	/**
 	 * @param directionVectorRay
 	 * @param directionVectorPerpendicular
@@ -280,18 +304,6 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 	 */
 	public double computeAngleBetweenRayAndPerpendicular(double[] directionVectorRay, double[] directionVectorPerpendicular)
 	{
-		double dotProduct = directionVectorPerpendicular[0]*directionVectorRay[0] + directionVectorPerpendicular[1]*directionVectorRay[1];
-		double lengthPerpendicular = Math.sqrt(pow(directionVectorPerpendicular[0]) + pow(directionVectorPerpendicular[1]) );
-		double lengthRay = Math.sqrt(pow(directionVectorRay[0]) +pow(directionVectorRay[1]) );
-		
-		double cosAlpha = dotProduct/(lengthPerpendicular*lengthRay);
-		double angle = Math.toDegrees(Math.acos(cosAlpha));				
-		
-		return angle;
-	}
-
-	private double pow(double v)
-	{
-		return Math.pow(v, 2);
+		return ANTSUtility.computeAngleBetweenTwoDirectionVectors(directionVectorRay, directionVectorPerpendicular);
 	}
 }

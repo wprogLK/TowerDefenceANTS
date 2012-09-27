@@ -1,6 +1,7 @@
 package basics;
 
 import interfaces.ANTSIController;
+import interfaces.ANTSIDriver;
 import interfaces.ANTSIFactory;
 import interfaces.ANTSIModel;
 import interfaces.ANTSIRefractionComputeUnit;
@@ -28,7 +29,7 @@ import controllers.sourceLight.ANTSSimpleSourceLightNeonController;
 
 public class ANTSFactory implements ANTSIFactory
 {
-	private ANTSDriver driver;
+	private ANTSIDriver driver;
 	
 	private ArrayList<ANTSIController> controllers;
 	private ArrayList<ANTSIMenuController> menuControllers;
@@ -42,7 +43,7 @@ public class ANTSFactory implements ANTSIFactory
 	
 	private ANTSObjectCounter objectCounter;
 	
-	public ANTSFactory(ANTSDriver d) 
+	public ANTSFactory(ANTSIDriver d) 
 	{
 		super();
 		
@@ -53,6 +54,9 @@ public class ANTSFactory implements ANTSIFactory
 		this.standardMediumController = new ANTSStandardMediumController(1.33,this);	//Vacuum n = 1
 		this.developmentController = new ANTSDevelopmentController(this);
 		this.refractionCalculationUnit = new ANTSRefractionComputeUnit(this.standardMediumController);
+		
+		this.refractionCalculationUnit.computeRefractionOrTotalReflection(1.1, 1.5, 315, 0, 45);
+		
 		this.createCollisionDetection();
 		
 		this.addToKeyListener(this.developmentController);
@@ -196,7 +200,7 @@ public class ANTSFactory implements ANTSIFactory
 		return this.developmentController;
 	}
 	
-	public ANTSDriver getDriver()
+	public ANTSIDriver getDriver()
 	{
 		return this.driver;
 	}

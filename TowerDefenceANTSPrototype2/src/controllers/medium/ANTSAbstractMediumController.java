@@ -35,6 +35,12 @@ public abstract class ANTSAbstractMediumController extends ANTSAbstractControlle
 		this.model = m;
 	}
 	
+	@Override
+	public void setRefractionIndex(double refractionIndex)
+	{
+		this.model.setRefractionIndex(refractionIndex);
+	}
+	
 	///////////
 	//SPECIAL//
 	///////////

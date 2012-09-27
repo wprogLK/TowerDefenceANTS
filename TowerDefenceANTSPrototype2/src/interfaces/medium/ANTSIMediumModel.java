@@ -12,7 +12,7 @@ public interface ANTSIMediumModel
 	///////////
 	//SETTERS//
 	///////////
-	
+	public void setRefractionIndex(double refractionIndex);
 	
 	//////////////
 	//ADD/REMOVE//

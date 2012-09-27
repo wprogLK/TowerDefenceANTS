@@ -7,6 +7,12 @@ import interfaces.ANTSIRayController;
 public interface ANTSIMediumController extends ANTSIController
 {
 	///////////
+	//SETTERS//
+	///////////
+	
+	public void setRefractionIndex(double d);
+	
+	///////////
 	//GETTERS//
 	///////////
 	

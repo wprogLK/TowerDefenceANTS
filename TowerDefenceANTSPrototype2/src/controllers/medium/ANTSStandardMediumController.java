@@ -3,6 +3,7 @@ package controllers.medium;
 import basics.ANTSFactory;
 
 import interfaces.ANTSIModel;
+import interfaces.ANTSIStandardMediumController;
 import interfaces.ANTSIView;
 import interfaces.medium.ANTSIMediumController;
 
@@ -10,7 +11,7 @@ import views.medium.ANTSStandardMediumView;
 
 import models.medium.ANTSStandardMediumModel;
 
-public class ANTSStandardMediumController extends ANTSAbstractMediumController implements ANTSIMediumController
+public class ANTSStandardMediumController extends ANTSAbstractMediumController implements ANTSIStandardMediumController
 {
 	private ANTSStandardMediumModel model;
 	private ANTSStandardMediumView view;
