@@ -13,6 +13,7 @@ import controllers.ANTSCellController;
 public class ANTSDevelopment
 {
 	private static boolean debugModeOn = true;
+	private static boolean testModeOn = true;
 	
 	///////////////
 	//DEBUG CLASS//
@@ -202,6 +203,7 @@ public class ANTSDevelopment
 		private static boolean doPrintMessages = true;
 		private static boolean doPrintErr = true;
 		private static boolean doPrintDebug = true;
+		private static boolean doTesting = true;
 		
 		public static void print(String output)
 		{
@@ -225,6 +227,15 @@ public class ANTSDevelopment
 			{
 				System.out.println(output);
 			}
+		}
+
+		public static void printTest(String output) 
+		{
+			if(testModeOn && doTesting && doPrintAll)
+			{
+				System.out.println(output);
+			}
+			
 		}
 	}
 

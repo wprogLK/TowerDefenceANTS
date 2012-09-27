@@ -67,7 +67,7 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 			}
 			else
 			{
-				ANTSStream.printDebug("ERROR: MediumIn and MediumOut are the same! Don't calculate a new angle...");
+//				ANTSStream.printDebug("ERROR: MediumIn and MediumOut are the same! Don't calculate a new angle...");
 				return ray.getAngle();
 			}
 	}
@@ -119,6 +119,8 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 			angleBetween = 360 - angleBetween;
 		}
 		
+//		ANTSStream.print("AngleBetweenCheck = " + ANTSUtility.roundScale2(angleBetween) + "AngleBetweenCalc = " + ANTSUtility.roundScale2(angleBetweenRayPerpendicular));
+		
 		return (ANTSUtility.roundScale2(angleBetween)==ANTSUtility.roundScale2(angleBetweenRayPerpendicular));
 	}
 
@@ -141,7 +143,7 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 		boolean isPossibleTotalReflection = refractionIndexMediumIn<=refractionIndexMediumOut;
 		boolean angleRelationForTotalReflection = !(ANTSUtility.roundScale2(angleBetweenRayPerpendicular)<ANTSUtility.roundScale2(criticalAngle));
 		
-		ANTSStream.print("ANGLE BETWEEN " + angleBetweenRayPerpendicular);
+//		ANTSStream.print("ANGLE BETWEEN " + angleBetweenRayPerpendicular);
 		
 		if(isPossibleTotalReflection && angleRelationForTotalReflection)
 		{
@@ -208,7 +210,7 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 	{
 		double newRayAngle = 0;
 		
-		ANTSStream.print("perpendicularAngle = " + perpendicularAngle +"\nrayAngle = " + rayAngle );//+"\nangleToAdd = " + angleToAdd);
+//		ANTSStream.print("perpendicularAngle = " + perpendicularAngle +"\nrayAngle = " + rayAngle );//+"\nangleToAdd = " + angleToAdd);
 		
 		double angleRayReduced = ANTSUtility.angleBetween0And359Degree(rayAngle - perpendicularAngle);	//perpemdicularAngle is now always 0°
 		
@@ -227,7 +229,7 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 		
 		newRayAngle = ANTSUtility.angleBetween0And359Degree(newRayAngle);
 		
-		ANTSStream.printErr("----------ANGLE TO SET----------- " + newRayAngle); 
+//		ANTSStream.printErr("----------ANGLE TO SET----------- " + newRayAngle); 
 		
 		return newRayAngle;
 	}
@@ -270,7 +272,7 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 //		
 		
 		angle = ANTSUtility.angleBetween0And359Degree(angle);
-		ANTSStream.print("return angle: " + angle);
+//		ANTSStream.print("return angle: " + angle);
 		return angle;
 	}
 
@@ -286,7 +288,7 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 		{
 			double angleCrit = Math.toDegrees(Math.asin(refractionIndexMediumIn/refractionIndexMediumOut));
 			
-			ANTSStream.print("critical angle is " + angleCrit + "med in " + refractionIndexMediumIn + " med out " + refractionIndexMediumOut);
+//			ANTSStream.print("critical angle is " + angleCrit + "med in " + refractionIndexMediumIn + " med out " + refractionIndexMediumOut);
 			
 			return ANTSUtility.angleBetween0And359Degree(angleCrit);
 		}
@@ -304,6 +306,6 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 	 */
 	public double computeAngleBetweenRayAndPerpendicular(double[] directionVectorRay, double[] directionVectorPerpendicular)
 	{
-		return ANTSUtility.computeAngleBetweenTwoDirectionVectors(directionVectorRay, directionVectorPerpendicular);
+		return ANTSUtility.computeAngleBetweenTwoRealDirectionVectors(directionVectorRay, directionVectorPerpendicular);
 	}
 }
