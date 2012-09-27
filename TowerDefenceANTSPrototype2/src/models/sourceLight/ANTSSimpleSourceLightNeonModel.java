@@ -54,8 +54,6 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 		this.isMouseListener = isMouseListener;
 		
 		this.updateCenter();
-		
-		
 	}
 	
 	@Override

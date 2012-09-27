@@ -211,6 +211,11 @@ public class ANTSDriver extends Thread implements ANTSIDriver
 		return this.window.getHeight();
 	}
 	
+	public ANTSFactory getFactory()
+	{
+		return this.factory;
+	}
+	
 	///////////
 	//SETTERS//
 	///////////

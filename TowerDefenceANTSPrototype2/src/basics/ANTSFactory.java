@@ -1,7 +1,9 @@
 package basics;
 
 import interfaces.ANTSIController;
+import interfaces.ANTSIFactory;
 import interfaces.ANTSIModel;
+import interfaces.ANTSIRefractionComputeUnit;
 import interfaces.ANTSIView;
 import interfaces.menus.ANTSIMenuController;
 
@@ -24,7 +26,7 @@ import controllers.menus.ANTSRectangleMenuController;
 import controllers.sourceLight.ANTSSimpleSourceLightController;
 import controllers.sourceLight.ANTSSimpleSourceLightNeonController;
 
-public class ANTSFactory
+public class ANTSFactory implements ANTSIFactory
 {
 	private ANTSDriver driver;
 	
@@ -36,8 +38,10 @@ public class ANTSFactory
 	private ANTSCollisionDetection collisionDetection;
 	private ANTSStandardMediumController standardMediumController;
 	private ANTSDevelopmentController developmentController;
+	private ANTSIRefractionComputeUnit refractionCalculationUnit;
 	
 	private ANTSObjectCounter objectCounter;
+	
 	public ANTSFactory(ANTSDriver d) 
 	{
 		super();
@@ -46,9 +50,10 @@ public class ANTSFactory
 		
 		this.controllers = new ArrayList<ANTSIController>();
 		this.menuControllers = new ArrayList<ANTSIMenuController>();
-		this.createCollisionDetection();
 		this.standardMediumController = new ANTSStandardMediumController(1.33,this);	//Vacuum n = 1
 		this.developmentController = new ANTSDevelopmentController(this);
+		this.refractionCalculationUnit = new ANTSRefractionComputeUnit(this.standardMediumController);
+		this.createCollisionDetection();
 		
 		this.addToKeyListener(this.developmentController);
 		
@@ -196,6 +201,21 @@ public class ANTSFactory
 		return this.driver;
 	}
 	
+	public ANTSIRefractionComputeUnit getRefractionCalculationUnit() 
+	{
+		return this.refractionCalculationUnit;
+	}
+	
+	
+	///////////
+	//SETTERS//
+	///////////
+
+	public void setRefractionComputeUnit(ANTSIRefractionComputeUnit unit) 
+	{
+		this.refractionCalculationUnit = unit;
+	}
+	
 	//////////////////////
 	//Add/remove methods//
 	//////////////////////
@@ -302,4 +322,7 @@ public class ANTSFactory
 
 		}
 	}
+
+
+
 }

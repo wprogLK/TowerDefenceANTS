@@ -1,0 +1,297 @@
+package basics;
+
+import interfaces.ANTSIRayController;
+import interfaces.ANTSIRefractionComputeUnit;
+import interfaces.medium.ANTSIMediumController;
+
+import controllers.medium.ANTSStandardMediumController;
+import enums.ANTSDirectionEnum;
+
+import basics.ANTSDevelopment.ANTSStream;
+
+public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
+{
+	private ANTSStandardMediumController standardMediumController;
+	
+	public ANTSRefractionComputeUnit(ANTSStandardMediumController standardMediumController)
+	{
+		this.standardMediumController = standardMediumController;
+	}
+	
+	@Override
+	public void calculateAngle(ANTSIRayController ray, ANTSIMediumController mediumIn)
+	{
+			ANTSIMediumController mediumOut = ray.getCurrentMedium();
+			
+			ANTSDirectionEnum direction = null;
+			ANTSIMediumController medium;
+			
+			if(this.isMediumInStandardMedium(mediumIn))
+			{
+				medium = mediumOut;
+				direction = ANTSDirectionEnum.OUT;
+			}
+			else
+			{
+				medium = mediumIn;
+				direction = ANTSDirectionEnum.IN;
+			}
+			
+			if(!mediumOut.equals(mediumIn))
+			{
+				ANTSPerpendicular perpendicular = medium.calculatePerpendicular(ray);
+				
+				double[] directionVectorRay = ray.getDirectionVector();
+				double[] directionVectorPerpendicular = perpendicular.getDirectionVector(direction);
+				
+				double refractionIndexMediumIn = mediumIn.getRefractionIndex();
+				double refractionIndexMediumOut = mediumOut.getRefractionIndex();
+				
+				double angleRay = ray.getAngle();
+				double anglePerpendicular = perpendicular.getAngle(direction);
+				
+				if(refractionIndexMediumIn>refractionIndexMediumOut)
+				{
+					ANTSStream.printDebug("Brechung ZUM Lot");
+				}
+				else
+				{
+					ANTSStream.printDebug("Brechung VOM Lot");
+				}
+				
+				double realAngleToSet = computeNewRayAngle(directionVectorRay, directionVectorPerpendicular, refractionIndexMediumIn, refractionIndexMediumOut, angleRay, anglePerpendicular);
+				
+				this.updateRay(realAngleToSet, ray, mediumIn);
+			}
+	}
+	
+	/**
+	 * 
+	 * @param directionVectorRay
+	 * @param directionVectorPerpendicular
+	 * @param refractionIndexMediumIn
+	 * @param refractionIndexMediumOut
+	 * @param angleRay
+	 * @param anglePerpendicular
+	 * @return  the new absolute angle of the ray
+	 */
+	private double computeNewRayAngle(double[] directionVectorRay, double[] directionVectorPerpendicular, double refractionIndexMediumIn, double refractionIndexMediumOut, double angleRay, double anglePerpendicular) 
+	{
+		double angleBetweenRayPerpendicular = this.computeAngleBetweenRayAndPerpendicular(directionVectorRay, directionVectorPerpendicular);
+		
+		assert(this.checkAngleBetweenRayAndPerpendicular(angleBetweenRayPerpendicular,angleRay,anglePerpendicular));
+		
+		double realAngleToSet = 0;
+		
+		if(!Double.isNaN(angleBetweenRayPerpendicular))
+		{
+			realAngleToSet = this.computeRefractionOrTotalReflection(refractionIndexMediumIn, refractionIndexMediumOut, angleRay, anglePerpendicular, angleBetweenRayPerpendicular);
+		}
+		else
+		{
+			realAngleToSet = angleRay;
+			
+			ANTSStream.print("ERROR angle between ray and perpendicular is NaN because the should not be a collision!"); //TODO
+		}
+		return realAngleToSet;
+	}
+
+	/*
+	 * Only for testing
+	 */
+	private boolean checkAngleBetweenRayAndPerpendicular(double angleBetweenRayPerpendicular, double angleRay,double anglePerpendicular)
+	{
+		double biggerAngle = Math.max(angleRay, anglePerpendicular);
+		double smallerAngle = Math.min(angleRay, anglePerpendicular);
+		
+		double angleBetween = biggerAngle - smallerAngle;
+		
+		if(angleBetween>90)
+		{
+			angleBetween = 360 - angleBetween;
+		}
+		
+		return (ANTSUtility.roundScale2(angleBetween)==ANTSUtility.roundScale2(angleBetweenRayPerpendicular));
+	}
+
+	/**
+	 * 
+	 * @param refractionIndexMediumIn
+	 * @param refractionIndexMediumOut
+	 * @param angleRay
+	 * @param anglePerpendicular
+	 * @param angleBetweenRayPerpendicular
+	 * @return the new absolute angle of the ray
+	 */
+	private double computeRefractionOrTotalReflection(double refractionIndexMediumIn, double refractionIndexMediumOut,double angleRay, double anglePerpendicular, double angleBetweenRayPerpendicular) 
+	{
+		double criticalAngle = this.calculateCriticalAngle(refractionIndexMediumIn,refractionIndexMediumOut);
+		double angleToSet = 0;
+		
+		boolean isPossibleTotalReflection = refractionIndexMediumIn<=refractionIndexMediumOut;
+		boolean angleRelationForTotalReflection = !(ANTSUtility.roundScale2(angleBetweenRayPerpendicular)<ANTSUtility.roundScale2(criticalAngle));
+		
+		ANTSStream.print("ANGLE BETWEEN " + angleBetweenRayPerpendicular);
+		
+		if(isPossibleTotalReflection && angleRelationForTotalReflection)
+		{
+			if(ANTSUtility.roundScale2(angleBetweenRayPerpendicular)==ANTSUtility.roundScale2(criticalAngle))
+			{
+				//TODO
+				ANTSStream.print("GRENZE");
+				
+				angleToSet = 90; //TODO
+			
+			}
+			else if(ANTSUtility.roundScale2(angleBetweenRayPerpendicular)>ANTSUtility.roundScale2(criticalAngle))
+			{
+				ANTSStream.print("Totalreflection");
+				//TODO
+			}
+			else
+			{
+				ANTSStream.printErr("Something strange happend!"); //TODO
+			}
+		}
+		else
+		{
+			angleToSet = this.calculateSnell(angleBetweenRayPerpendicular,refractionIndexMediumIn,refractionIndexMediumOut);
+				
+			assert(angleToSet<360 && angleToSet>=0);
+		}
+		
+		return this.computeNewRayAngle(anglePerpendicular, angleRay ,angleToSet ,refractionIndexMediumIn,refractionIndexMediumOut);
+	}
+	
+	private void updateRay(double realAngleToSet, ANTSIRayController ray, ANTSIMediumController mediumIn) 
+	{
+		ray.setAngle(realAngleToSet);
+		ray.setCurrentMedium(mediumIn);
+	}
+
+	private boolean isMediumInStandardMedium(ANTSIMediumController mediumIn) 
+	{
+		return mediumIn.equals(this.standardMediumController);
+	}
+
+	@Override
+	/**
+	 * @param perpendicularAngle
+	 * @param rayAngle
+	 * @param angleToAdd
+	 * @param refractionIndexIn
+	 * @param reafractionIndexOut
+	 * @return the new absolute angle of the ray
+	 */
+	public double computeNewRayAngle(double perpendicularAngle,double rayAngle, double angleToAdd, double refractionIndexIn, double refractionIndexOut) 
+	{
+		double newRayAngle = 0;
+		
+		ANTSStream.print("perpendicularAngle = " + perpendicularAngle +"\nrayAngle = " + rayAngle );//+"\nangleToAdd = " + angleToAdd);
+		
+		double angleRayReduced = ANTSUtility.angleBetween0And359Degree(rayAngle - perpendicularAngle);	//perpemdicularAngle is now always 0°
+		
+		if(angleRayReduced>=180)
+		{
+			ANTSStream.print("MINUS");
+			newRayAngle = 360-angleToAdd+perpendicularAngle;
+		}
+		else
+		{
+			ANTSStream.print("PLUS");
+			newRayAngle = angleToAdd+perpendicularAngle;
+		}
+		
+		ANTSStream.print("new ANGLE = " + newRayAngle);
+		
+		newRayAngle = ANTSUtility.angleBetween0And359Degree(newRayAngle);
+		
+		return newRayAngle;
+	}
+
+	@Override
+	/**
+	 * @param angleIncoming
+	 * @param refractionIndexMediumIn
+	 * @param refractionIndexMediumOut
+	 * @return angle of refraction: The angle {@code alpha} is always: {@code 0°<=alpha<=90°}
+	 */
+	public double calculateSnell(double angleIncoming, double refractionIndexMediumIn, double refractionIndexMediumOut) 
+	{
+		double angleIncomingRad = Math.toRadians(angleIncoming);
+		
+		double factor = (Math.sin(angleIncomingRad)*refractionIndexMediumOut)/refractionIndexMediumIn;
+		double angle = Math.toDegrees(Math.asin(factor));
+//		double criticalAngle = this.calculateCriticalAngle(refractionIndexMediumIn, refractionIndexMediumOut);
+		
+////		ANTSStream.printErr("phi_1 = " + ANTSUtility.roundScale2(angleIncoming) + "\t critical angle = " + ANTSUtility.roundScale2(criticalAngle) +" factor is " + factor + "medIn " + refractionIndexMediumIn + " < medOut" + refractionIndexMediumOut);	
+//		
+//		if(refractionIndexMediumIn<=refractionIndexMediumOut && ANTSUtility.roundScale2(angleIncoming)>=ANTSUtility.roundScale2(criticalAngle))
+//		{
+////			ANTSStream.printErr("'Error': TOTAL REFLECTION! \n phi_1 = " + angleIncoming + "\t critical angle = " + criticalAngle +" factor is " + factor);	
+//			
+//			//TODO test this
+//			
+//			double rest = factor % 1;
+//			double number = factor - rest;
+//			
+//			double extraAngle = number * 90;
+//			angle = Math.toDegrees(Math.asin(rest));
+//			
+////			ANTSStream.print("angle " + angle);
+//			angle = angle + extraAngle;
+//			
+////			ANTSStream.print("extra Angle " + extraAngle);
+////			ANTSStream.print("return angle: " + angle);
+//		}
+//		
+		
+		angle = ANTSUtility.angleBetween0And359Degree(angle);
+		return angle;
+	}
+
+	@Override
+	/**
+	 * Calculates the critical angle for a total reflection
+	 * @param refractionIndexMediumIn
+	 * @param refractionIndexMediumOut
+	 * @return
+	 */
+	public double calculateCriticalAngle(double refractionIndexMediumIn, double refractionIndexMediumOut)
+	{
+		if(refractionIndexMediumIn<refractionIndexMediumOut)
+		{
+			double angleCrit = Math.toDegrees(Math.asin(refractionIndexMediumIn/refractionIndexMediumOut));
+			
+			ANTSStream.print("critical angle is " + angleCrit + "med in " + refractionIndexMediumIn + " med out " + refractionIndexMediumOut);
+			
+			return ANTSUtility.angleBetween0And359Degree(angleCrit);
+		}
+		else
+		{
+			return -1;
+		}
+	}
+	
+	/**
+	 * @param directionVectorRay
+	 * @param directionVectorPerpendicular
+	 * @return the angle between the directionVector of the ray and the directionVector of the perpendicular. The angle {@code alpha} is always: {@code 0°<=alpha<=90°}
+	 */
+	public double computeAngleBetweenRayAndPerpendicular(double[] directionVectorRay, double[] directionVectorPerpendicular)
+	{
+		double dotProduct = directionVectorPerpendicular[0]*directionVectorRay[0] + directionVectorPerpendicular[1]*directionVectorRay[1];
+		double lengthPerpendicular = Math.sqrt(pow(directionVectorPerpendicular[0]) + pow(directionVectorPerpendicular[1]) );
+		double lengthRay = Math.sqrt(pow(directionVectorRay[0]) +pow(directionVectorRay[1]) );
+		
+		double cosAlpha = dotProduct/(lengthPerpendicular*lengthRay);
+		double angle = Math.toDegrees(Math.acos(cosAlpha));				
+		
+		return angle;
+	}
+
+	private double pow(double v)
+	{
+		return Math.pow(v, 2);
+	}
+}

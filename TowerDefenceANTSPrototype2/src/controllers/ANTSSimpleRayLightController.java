@@ -83,6 +83,12 @@ public class ANTSSimpleRayLightController extends ANTSAbstractController impleme
 		return this.model.getCenter();
 	}
 	
+	@Override
+	public double[] getDirectionVector() 
+	{
+		return this.model.getDirectionVector();
+	}
+	
 	//////////
 	//SETTER//
 	//////////
@@ -123,4 +129,6 @@ public class ANTSSimpleRayLightController extends ANTSAbstractController impleme
 	{
 		this.model.addAngle(angle);
 	}
+
+
 }

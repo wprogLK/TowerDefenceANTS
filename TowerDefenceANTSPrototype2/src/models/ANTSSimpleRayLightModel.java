@@ -160,6 +160,20 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 		return vec;
 	}
 	
+	public double[] getDirectionVector() 
+	{
+		double[] directionVector = new double[2];
+		
+		Point2D.Double[] pointsOfRay = this.getVector();
+		Point2D.Double startPointRay = pointsOfRay[0];
+		Point2D.Double endPointRay = pointsOfRay[1];
+		
+		directionVector[0] = endPointRay.getX()-startPointRay.getX();
+		directionVector[1] = endPointRay.getY()-startPointRay.getY();
+		
+		return directionVector;
+	}
+	
 	///////////
 	//Setters//
 	///////////
@@ -202,4 +216,6 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 		this.matrixForInterpolation.concatenate(this.localRotateMatrix);
 		this.classInvariant();
 	}
+
+
 }

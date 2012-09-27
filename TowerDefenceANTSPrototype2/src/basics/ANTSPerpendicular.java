@@ -1,5 +1,8 @@
 package basics;
 
+import basics.ANTSDevelopment.ANTSStream;
+import enums.ANTSDirectionEnum;
+
 public class ANTSPerpendicular 
 {
 	/**
@@ -137,5 +140,46 @@ public class ANTSPerpendicular
 	{
 		this.classInvariant();
 		return this.angleOutToInSide;
+	}
+	
+	public double getAngle(ANTSDirectionEnum direction)
+	{
+		switch(direction)
+		{
+			case IN:
+			{
+				return this.getAngleOutToInSide();
+			}
+			case OUT:
+			{
+				return this.getAngleInToOutSide();
+			}
+			default:
+			{
+				ANTSStream.printErr("unknown direction in getAngle() in " + this.getClass());
+				return -1;
+			}
+		}
+	}
+	
+	public double[] getDirectionVector(ANTSDirectionEnum direction)
+	{
+		switch(direction)
+		{
+			case IN:
+			{
+				return this.getDirectionVectorOutToInSide();
+			}
+			case OUT:
+			{
+				return this.getDirectionVectorInToOutSide();
+			}
+			default:
+			{
+				ANTSStream.printErr("unknown direction in getDirectionVector() in " + this.getClass());
+				double[] d = {-1,-1};
+				return d;
+			}
+		}
 	}
 }
