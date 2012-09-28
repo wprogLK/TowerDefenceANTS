@@ -56,12 +56,20 @@ public class ANTSUtility
 		
 		double angle = Math.toDegrees(Math.acos(cosAlpha));				
 		
+		
+		
 		if(angle>180)	//TODO Test this
 		{
 			angle = 360-angle;
 			ANTSStream.print("------------------------------reduce angle "+(angle+360) + " -> "+ angle +" -----------------------------------------");
 		}
 
+//		ANTSStream.print("----------------------------------------------------------------------");
+//		
+//		ANTSStream.print("directionVectorA: " + directionVectorA[0] + " | " + directionVectorA[1]);
+//		ANTSStream.print("directionVectorB: " + directionVectorB[0] + " | " + directionVectorB[1]);
+//		ANTSStream.print("----------------------------------------------------------------------");
+		
 		assert(angle<=180 && angle>=0);
 		
 		return angle;
@@ -97,7 +105,7 @@ public class ANTSUtility
 		}
 		else if(directionVector[0]>=0 && directionVector[1]<0)
 		{
-//			ANTSStream.print("quadrant D");
+			ANTSStream.print("quadrant D");
 			angle = 360-angle;
 		}
 		else if(directionVector[0]<0 && directionVector[1]<0)
@@ -114,7 +122,7 @@ public class ANTSUtility
 			ANTSStream.print("ERROR: unknown quadrant");
 		}
 		
-//		ANTSStream.print("DIRECTIONVector: " + directionVector[0] + " | " + directionVector[1]);
+		ANTSStream.print("DIRECTIONVector: " + directionVector[0] + " | " + directionVector[1]);
 		
 		
 		return angleBetween0And359Degree(angle);

@@ -58,6 +58,7 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 				else
 				{
 					ANTSStream.printDebug("Brechung VOM Lot");
+					ANTSStream.printDebug("Reflection or total internal reflection are possible!");
 				}
 //				
 				double realAngleToSet = getNewAngleRay(directionVectorRay, directionVectorPerpendicular, refractionIndexMediumIn, refractionIndexMediumOut, angleRay, anglePerpendicular);
@@ -87,7 +88,7 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 	{
 		double angleBetweenRayPerpendicular = this.computeAngleBetweenRayAndPerpendicular(directionVectorRay, directionVectorPerpendicular);
 		
-		assert(this.checkAngleBetweenRayAndPerpendicular(angleBetweenRayPerpendicular,angleRay,anglePerpendicular));
+		assert(ANTSUtility.roundScale2(angleBetweenRayPerpendicular)==ANTSUtility.roundScale2(ANTSUtility.angleBetweenToAngles(angleRay, anglePerpendicular)));
 		
 		double realAngleToSet = 0;
 		
@@ -104,25 +105,25 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 		return realAngleToSet;
 	}
 
-	/*
-	 * Only for testing
-	 */
-	private boolean checkAngleBetweenRayAndPerpendicular(double angleBetweenRayPerpendicular, double angleRay,double anglePerpendicular)
-	{
-		double biggerAngle = Math.max(angleRay, anglePerpendicular);
-		double smallerAngle = Math.min(angleRay, anglePerpendicular);
-		
-		double angleBetween = biggerAngle - smallerAngle;
-		
-		if(angleBetween>90)
-		{
-			angleBetween = 360 - angleBetween;
-		}
-		
-//		ANTSStream.print("AngleBetweenCheck = " + ANTSUtility.roundScale2(angleBetween) + "AngleBetweenCalc = " + ANTSUtility.roundScale2(angleBetweenRayPerpendicular));
-		
-		return (ANTSUtility.roundScale2(angleBetween)==ANTSUtility.roundScale2(angleBetweenRayPerpendicular));
-	}
+//	/*
+//	 * Only for testing
+//	 */
+//	private boolean checkAngleBetweenRayAndPerpendicular(double angleBetweenRayPerpendicular, double angleRay,double anglePerpendicular)
+//	{
+//		double biggerAngle = Math.max(angleRay, anglePerpendicular);
+//		double smallerAngle = Math.min(angleRay, anglePerpendicular);
+//		
+//		double angleBetween = biggerAngle - smallerAngle;
+//		
+//		if(angleBetween>90)
+//		{
+//			angleBetween = 360 - angleBetween;
+//		}
+//		
+////		ANTSStream.print("AngleBetweenCheck = " + ANTSUtility.roundScale2(angleBetween) + "AngleBetweenCalc = " + ANTSUtility.roundScale2(angleBetweenRayPerpendicular));
+//		
+//		return (ANTSUtility.roundScale2(angleBetween)==ANTSUtility.roundScale2(angleBetweenRayPerpendicular));
+//	}
 
 	
 	/**
