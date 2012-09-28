@@ -37,7 +37,7 @@ public class ANTSUtility
 	
 		assert(angleBetween<360 && angleBetween>=0);
 		
-		return angleBetween; //angle is <360°;
+		return angleBetween;
 	}
 	
 	/**
@@ -61,7 +61,7 @@ public class ANTSUtility
 			angle = 360-angle;
 			ANTSStream.print("------------------------------reduce angle "+(angle+360) + " -> "+ angle +" -----------------------------------------");
 		}
-		
+
 		assert(angle<=180 && angle>=0);
 		
 		return angle;
@@ -77,25 +77,37 @@ public class ANTSUtility
 		double[] xAxisVector = {500,0};
 		
 		double angle = computeAngleBetweenTwoRealDirectionVectors(directionVector, xAxisVector);
-//		ANTSStream.print("ANGLE OUT = " + angle);
+		
+//with java coordinate system		
+//			|
+//			|
+//		C	|	D
+//			|
+//   --------------------> x
+//			|
+//			|
+//		B	|	A
+//			|
+//			v
+//			y
 		
 		if(directionVector[0]>=0 && directionVector[1]>=0)
 		{
 //			ANTSStream.print("quadrant A");
-			angle = 360-angle;
 		}
 		else if(directionVector[0]>=0 && directionVector[1]<0)
 		{
-//			ANTSStream.print("quadrant B");
+//			ANTSStream.print("quadrant D");
+			angle = 360-angle;
 		}
 		else if(directionVector[0]<0 && directionVector[1]<0)
 		{
 //			ANTSStream.print("quadrant C");
+			angle = 360-angle;
 		}
 		else if(directionVector[0]<0 && directionVector[1]>=0)
 		{
-//			ANTSStream.print("quadrant D");
-			angle = 360-angle;
+//			ANTSStream.print("quadrant B");
 		}
 		else
 		{
@@ -107,17 +119,6 @@ public class ANTSUtility
 		
 		return angleBetween0And359Degree(angle);
 		
-	}
-	
-	public static double computeAngleBetween(double angleA, double angleB)
-	{
-		double bigAngle = Math.max(angleA, angleB);
-		double smallAngle = Math.min(angleA, angleB);
-		
-		double angle = bigAngle-smallAngle;
-		assert(angle<360 && angle>=0);
-		
-		return angle;
 	}
 	
 	public static double[] computeDirectionVector(double[] startPoint, double[] endPoint)

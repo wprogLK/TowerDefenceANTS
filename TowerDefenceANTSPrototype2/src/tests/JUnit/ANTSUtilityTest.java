@@ -49,51 +49,7 @@ public class ANTSUtilityTest
 	@Given("oneVectorTest")
 	public void angleShouldBeLessThan90()
 	{
-		double[] startPoint = {100,120};
-		double[] endPoint = {120,100};
-		
-		double[] directionVector = ANTSUtility.computeDirectionVector(startPoint, endPoint);
-		
-		double angle = ANTSUtility.computeAngleOfOneVector(directionVector);
-		
-		ANTSStream.printTest("angle is (0-90)= " + angle);
-		
-		assertTrue(angle>=0 && angle<=90);
-	}
-	
-	@Given("oneVectorTest")
-	public void angleShouldBeLessThan180AndGreaterThan90()
-	{
-		double[] startPoint = {120,120};
-		double[] endPoint = {100,100};
-		
-		double[] directionVector = ANTSUtility.computeDirectionVector(startPoint, endPoint);
-		
-		double angle = ANTSUtility.computeAngleOfOneVector(directionVector);
-		
-		ANTSStream.printTest("angle is (90-180)= " + angle);
-		
-		assertTrue(angle>=90 && angle<=180);
-	}
-	
-	@Given("oneVectorTest")
-	public void angleShouldBeLessThan270AndGreaterThan180()
-	{
-		double[] startPoint = {120,100};
-		double[] endPoint = {100,120};
-		
-		double[] directionVector = ANTSUtility.computeDirectionVector(startPoint, endPoint);
-		
-		double angle = ANTSUtility.computeAngleOfOneVector(directionVector);
-		
-		ANTSStream.printTest("angle is (180-270)= " + angle);
-		
-		assertTrue(angle>=180 && angle<=270);
-	}
-	
-	@Given("oneVectorTest")
-	public void angleShouldBeLessThan360AndGreaterThan270()
-	{
+		//With java coordinates
 		double[] startPoint = {100,100};
 		double[] endPoint = {120,120};
 		
@@ -101,7 +57,47 @@ public class ANTSUtilityTest
 		
 		double angle = ANTSUtility.computeAngleOfOneVector(directionVector);
 		
-		ANTSStream.printTest("angle is (270-360)= " + angle);
+		assertTrue(angle>=0 && angle<=90);
+	}
+	
+	@Given("oneVectorTest")
+	public void angleShouldBeLessThan180AndGreaterThan90()
+	{
+		//With java coordinates
+		double[] startPoint = {120,100};
+		double[] endPoint = {100,120};
+		
+		double[] directionVector = ANTSUtility.computeDirectionVector(startPoint, endPoint);
+		
+		double angle = ANTSUtility.computeAngleOfOneVector(directionVector);
+		
+		assertTrue(angle>=90 && angle<=180);
+	}
+	
+	@Given("oneVectorTest")
+	public void angleShouldBeLessThan270AndGreaterThan180()
+	{
+		//With java coordinates
+		double[] startPoint = {120,120};
+		double[] endPoint = {100,100};
+		
+		double[] directionVector = ANTSUtility.computeDirectionVector(startPoint, endPoint);
+		
+		double angle = ANTSUtility.computeAngleOfOneVector(directionVector);
+		
+		assertTrue(angle>=180 && angle<=270);
+	}
+	
+	@Given("oneVectorTest")
+	public void angleShouldBeLessThan360AndGreaterThan270()
+	{
+		//With java coordinates
+		double[] startPoint = {100,120};
+		double[] endPoint = {120,100};
+		
+		double[] directionVector = ANTSUtility.computeDirectionVector(startPoint, endPoint);
+		
+		double angle = ANTSUtility.computeAngleOfOneVector(directionVector);
 		
 		assertTrue(angle>=270 && angle<360);
 	}
