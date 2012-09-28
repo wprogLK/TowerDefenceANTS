@@ -127,4 +127,25 @@ public class ANTSUtility
 		
 		return directionVector;
 	}
+	
+	public static double angleBetweenToAngles(double angleA, double angleB)	//TODO Test this!
+	{
+		double max = Math.max(angleA, angleB);
+		double min = Math.min(angleA, angleB);
+		
+		double diff = -1;
+		
+		if((max-min)>180 && min<180)
+		{
+			diff = (360-max)+min;
+		}
+		else
+		{
+			diff = max - min;
+		}
+		
+		assert(diff>=0 && diff<=180);
+		
+		return diff;
+	}
 }
