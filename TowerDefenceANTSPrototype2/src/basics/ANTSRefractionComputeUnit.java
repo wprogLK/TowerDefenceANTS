@@ -58,7 +58,20 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 				else
 				{
 					ANTSStream.printDebug("Brechung VOM Lot");
-					ANTSStream.printDebug("Reflection or total internal reflection are possible!");
+					
+					
+					double angleBetweenRayPerpendicular = this.computeAngleBetweenRayAndPerpendicular(directionVectorRay, directionVectorPerpendicular);
+					double criticalAngle = this.calculateCriticalAngle(refractionIndexMediumIn,refractionIndexMediumOut);
+					
+					boolean isPossibleTotalReflection = refractionIndexMediumIn<=refractionIndexMediumOut;
+					boolean angleRelationForTotalReflection = !(ANTSUtility.roundScale2(angleBetweenRayPerpendicular)<ANTSUtility.roundScale2(criticalAngle));
+					
+					if(isPossibleTotalReflection && angleRelationForTotalReflection)
+					{
+						ANTSStream.printDebug("Reflection or total internal reflection happen!");
+						mediumIn = mediumOut; //The ray is not changing the medium!
+					}
+					
 				}
 //				
 				double realAngleToSet = getNewAngleRay(directionVectorRay, directionVectorPerpendicular, refractionIndexMediumIn, refractionIndexMediumOut, angleRay, anglePerpendicular);
