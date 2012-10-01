@@ -95,6 +95,7 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 		if(!Double.isNaN(angleBetweenRayPerpendicular))
 		{
 			realAngleToSet = this.computeRefractionOrTotalReflection(refractionIndexMediumIn, refractionIndexMediumOut, angleRay, anglePerpendicular, angleBetweenRayPerpendicular);
+			ANTSStream.print("TO SET " + realAngleToSet);
 		}
 		else
 		{
@@ -144,7 +145,7 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 		boolean isPossibleTotalReflection = refractionIndexMediumIn<=refractionIndexMediumOut;
 		boolean angleRelationForTotalReflection = !(ANTSUtility.roundScale2(angleBetweenRayPerpendicular)<ANTSUtility.roundScale2(criticalAngle));
 		
-//		ANTSStream.print("ANGLE BETWEEN " + angleBetweenRayPerpendicular);
+//		ANTSStream.print("CRITICAL ANGLE IS " + criticalAngle);
 		
 		if(isPossibleTotalReflection && angleRelationForTotalReflection)
 		{
@@ -155,6 +156,10 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 			else if(ANTSUtility.roundScale2(angleBetweenRayPerpendicular)>ANTSUtility.roundScale2(criticalAngle))
 			{
 				angleToSet = this.calculateTotalReflection(angleBetweenRayPerpendicular,anglePerpendicular,angleRay);
+				
+				//TODO: fix bug, if it was a totalReflection don't check this ray so quick again!
+				
+				return angleToSet;
 			}
 			else
 			{
@@ -167,7 +172,6 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 				
 			assert(angleToSet<360 && angleToSet>=0);
 		}
-		
 		return this.computeNewRayAngle(anglePerpendicular, angleRay ,angleToSet ,refractionIndexMediumIn,refractionIndexMediumOut);
 	}
 	
@@ -175,16 +179,36 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 	public double calculateAngleInCriticalSituation(double angleBetweenRayPerpendicular, double anglePerpendicular,double angleRay) 
 	{
 		ANTSStream.print("GRENZE");
-		// TODO Auto-generated method stub
+		
 		return 90;
 	}
 
 	@Override
 	public double calculateTotalReflection(double angleBetweenRayPerpendicular, double anglePerpendicular,double angleRay) 
 	{
-		ANTSStream.print("Totalreflection");
-		// TODO Auto-generated method stub
-		return 0;
+		ANTSStream.print("Totalreflection: Perp: " + anglePerpendicular + " between " + angleBetweenRayPerpendicular) ;
+	
+		double rayAngleOut = -1;
+		double anglePerpendicularOut = anglePerpendicular+180;
+		
+		if(angleRay<=anglePerpendicular)
+		{
+			rayAngleOut = anglePerpendicularOut+angleBetweenRayPerpendicular;
+			ANTSStream.print("Totalreflection : PLUS : "  + rayAngleOut);
+		}
+		else if(angleRay>anglePerpendicular)
+		{
+			rayAngleOut = anglePerpendicularOut-angleBetweenRayPerpendicular;
+			ANTSStream.print("Totalreflection : MINUS : " +rayAngleOut);
+		}
+		else
+		{
+			ANTSStream.printErr("Error: Unknown case in calculateTotalReflection"); //TODO
+		}
+		
+		rayAngleOut = ANTSUtility.angleBetween0And359Degree(rayAngleOut);
+		
+		return rayAngleOut;
 	}
 
 	private void updateRay(double realAngleToSet, ANTSIRayController ray, ANTSIMediumController mediumIn) 
@@ -226,7 +250,7 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 			newRayAngle = angleToAdd+perpendicularAngle;
 		}
 		
-		ANTSStream.print("new ANGLE = " + newRayAngle);
+		ANTSStream.print("new ANGLE s = " + newRayAngle);
 		
 		newRayAngle = ANTSUtility.angleBetween0And359Degree(newRayAngle);
 		

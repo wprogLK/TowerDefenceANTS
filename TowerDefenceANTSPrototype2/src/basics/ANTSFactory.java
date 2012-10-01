@@ -51,7 +51,7 @@ public class ANTSFactory implements ANTSIFactory
 		
 		this.controllers = new ArrayList<ANTSIController>();
 		this.menuControllers = new ArrayList<ANTSIMenuController>();
-		this.standardMediumController = new ANTSStandardMediumController(1.33,this);	//Vacuum n = 1
+		this.standardMediumController = new ANTSStandardMediumController(1.8,this);	//Vacuum n = 1
 		this.developmentController = new ANTSDevelopmentController(this);
 		this.refractionCalculationUnit = new ANTSRefractionComputeUnit(this.standardMediumController);
 		

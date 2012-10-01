@@ -43,7 +43,7 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 		
 		this.length = length;
 		this.height = 50;		//TODO
-		this.angle = 230;
+		this.angle = ANTSUtility.angleBetween0And359Degree(33.74898859588859+270);
 		
 		this.on = false;		//TODO
 		this.color = color;
