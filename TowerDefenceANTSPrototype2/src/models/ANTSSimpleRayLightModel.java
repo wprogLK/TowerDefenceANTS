@@ -216,6 +216,4 @@ public class ANTSSimpleRayLightModel extends ANTSAbstractModel implements ANTSIM
 		this.matrixForInterpolation.concatenate(this.localRotateMatrix);
 		this.classInvariant();
 	}
-
-
 }

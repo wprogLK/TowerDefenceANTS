@@ -46,6 +46,8 @@ public class ANTSCollisionDetection
 		this.cellsX = cellsX;
 		this.cellsY = cellsY;
 		
+//		ANTSStream.print("Cell x " + this.cellsX + " cell y " + this.cellsY);
+		
 		double cellHeight = this.height/cellsY;
 		double cellWidth = this.width/cellsX;
 		
@@ -69,6 +71,8 @@ public class ANTSCollisionDetection
 		
 		this.cellsX = defaultCellsX;
 		this.cellsY = defaultCellsY;
+		
+		ANTSStream.print("Cell x " + this.cellsX + " cell y " + this.cellsY);
 		
 		double cellHeight = this.height/cellsY;
 		double cellWidth = this.width/cellsX;
@@ -334,7 +338,7 @@ public class ANTSCollisionDetection
 //		
 //		ANTSStream.print("perpendicularAngle = " + perpendicularAngle +"\nrayAngle = " + rayAngle );//+"\nangleToAdd = " + angleToAdd);
 //		
-//		double angleRayReduced = ANTSUtility.angleBetween0And359Degree(rayAngle - perpendicularAngle);	//perpemdicularAngle is now always 0°
+//		double angleRayReduced = ANTSUtility.angleBetween0And359Degree(rayAngle - perpendicularAngle);	//perpemdicularAngle is now always 0ï¿½
 //		
 //		
 //		if(angleRayReduced>=180)

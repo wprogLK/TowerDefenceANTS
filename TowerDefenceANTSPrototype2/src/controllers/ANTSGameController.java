@@ -121,4 +121,10 @@ public class ANTSGameController extends ANTSAbstractController implements ANTSIC
 	{
 		return this.view;
 	}
+	
+	public int[] getNumberOfCellsForDetectionGrid()
+	{
+		int[] numberOfCells = {this.xCells,this.yCells};
+		return numberOfCells;
+	}
 }

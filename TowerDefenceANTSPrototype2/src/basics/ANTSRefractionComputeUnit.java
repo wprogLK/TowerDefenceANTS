@@ -59,16 +59,15 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 				{
 					ANTSStream.printDebug("Brechung VOM Lot");
 					
-					
 					double angleBetweenRayPerpendicular = this.computeAngleBetweenRayAndPerpendicular(directionVectorRay, directionVectorPerpendicular);
 					double criticalAngle = this.calculateCriticalAngle(refractionIndexMediumIn,refractionIndexMediumOut);
 					
 					boolean isPossibleTotalReflection = refractionIndexMediumIn<=refractionIndexMediumOut;
-					boolean angleRelationForTotalReflection = !(ANTSUtility.roundScale2(angleBetweenRayPerpendicular)<ANTSUtility.roundScale2(criticalAngle));
+					boolean angleRelationForTotalReflection = !(ANTSUtility.roundScale2(angleBetweenRayPerpendicular)<=ANTSUtility.roundScale2(criticalAngle));
 					
 					if(isPossibleTotalReflection && angleRelationForTotalReflection)
 					{
-						ANTSStream.printDebug("Reflection or total internal reflection happen!");
+						ANTSStream.printDebug("total internal reflection happen!");
 						mediumIn = mediumOut; //The ray is not changing the medium!
 					}
 					
@@ -250,7 +249,7 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 		
 //		ANTSStream.print("perpendicularAngle = " + perpendicularAngle +"\nrayAngle = " + rayAngle );//+"\nangleToAdd = " + angleToAdd);
 		
-		double angleRayReduced = ANTSUtility.angleBetween0And359Degree(rayAngle - perpendicularAngle);	//perpemdicularAngle is now always 0°
+		double angleRayReduced = ANTSUtility.angleBetween0And359Degree(rayAngle - perpendicularAngle);	//perpemdicularAngle is now always 0ï¿½
 		
 		if(angleRayReduced>=180)
 		{
@@ -277,7 +276,7 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 	 * @param angleIncoming
 	 * @param refractionIndexMediumIn
 	 * @param refractionIndexMediumOut
-	 * @return angle of refraction: The angle {@code alpha} is always: {@code 0°<=alpha<=90°}
+	 * @return angle of refraction: The angle {@code alpha} is always: {@code 0ï¿½<=alpha<=90ï¿½}
 	 */
 	public double calculateSnell(double angleIncoming, double refractionIndexMediumIn, double refractionIndexMediumOut) 
 	{
@@ -340,7 +339,7 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 	/**
 	 * @param directionVectorRay
 	 * @param directionVectorPerpendicular
-	 * @return the angle between the directionVector of the ray and the directionVector of the perpendicular. The angle {@code alpha} is always: {@code 0°<=alpha<=90°}
+	 * @return the angle between the directionVector of the ray and the directionVector of the perpendicular. The angle {@code alpha} is always: {@code 0ï¿½<=alpha<=90ï¿½}
 	 */
 	public double computeAngleBetweenRayAndPerpendicular(double[] directionVectorRay, double[] directionVectorPerpendicular)
 	{

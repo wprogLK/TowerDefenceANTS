@@ -176,5 +176,4 @@ public class ANTSRefractionComputeUnitTestCriticalSituation
 	
 		assertThat(ANTSUtility.roundScale2(angleRayOut), equalTo(270.0));
 	}
-	
 }

@@ -209,7 +209,7 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 			
 //			this.factory.createSimpleRayLight(posUp, this.velocityRay, ANTSUtility.angleBetween0And359Degree(this.angle-90), this.color);
 			this.factory.createSimpleRayLight(posDown, this.velocityRay, ANTSUtility.angleBetween0And359Degree(this.angle+90) , this.color);
-			
+			ANTSStream.print("Ray angle = " + ANTSUtility.angleBetween0And359Degree(this.angle+90));
 			tmpPosX += this.getDistanceBetweenTwoRays();
 		}
 	}

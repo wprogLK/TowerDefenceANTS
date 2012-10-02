@@ -43,6 +43,9 @@ public class ANTSFactory implements ANTSIFactory
 	
 	private ANTSObjectCounter objectCounter;
 	
+	private int cellNumbersX = 10;
+	private int cellNumbersY = 10;
+	
 	public ANTSFactory(ANTSIDriver d) 
 	{
 		super();
@@ -54,8 +57,6 @@ public class ANTSFactory implements ANTSIFactory
 		this.standardMediumController = new ANTSStandardMediumController(1.8,this);	//Vacuum n = 1
 		this.developmentController = new ANTSDevelopmentController(this);
 		this.refractionCalculationUnit = new ANTSRefractionComputeUnit(this.standardMediumController);
-		
-		this.refractionCalculationUnit.computeRefractionOrTotalReflection(1.1, 1.5, 315, 0, 45);
 		
 		this.createCollisionDetection();
 		
@@ -76,7 +77,7 @@ public class ANTSFactory implements ANTSIFactory
 	
 	public ANTSCollisionDetection createCollisionDetection()
 	{
-		this.collisionDetection  = new ANTSCollisionDetection(this.driver.getHeight(), this.driver.getWidth(), this);
+		this.collisionDetection  = new ANTSCollisionDetection(this.driver.getHeight(), this.driver.getWidth(),this.cellNumbersX,this.cellNumbersY, this);
 		return this.collisionDetection;
 	}
 	
