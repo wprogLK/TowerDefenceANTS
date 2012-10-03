@@ -7,6 +7,7 @@ import basics.ANTSUtility;
 import basics.ANTSDevelopment.ANTSStream;
 
 import ch.unibe.jexample.*;
+import enums.ANTSQuadrantEnum;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -606,6 +607,70 @@ public class ANTSUtilityTest
 	}
 	
 	
+	//////////////////
+	//QUADRANTS TEST//
+	//////////////////
+	
+	@Test
+	public void quadrantOfAngle0ShouldBeQuadrantA()
+	{
+		assertThat(ANTSUtility.getQuadrantOfAngle(0.0),equalTo(ANTSQuadrantEnum.A));
+	}
+	
+	@Test
+	public void quadrantOfAngle89ShouldBeQuadrantA()
+	{
+		assertThat(ANTSUtility.getQuadrantOfAngle(89.0),equalTo(ANTSQuadrantEnum.A));
+	}
+	
+	@Test
+	public void quadrantOfAngle90ShouldBeQuadrantB()
+	{
+		assertThat(ANTSUtility.getQuadrantOfAngle(90.0),equalTo(ANTSQuadrantEnum.B));
+	}
+	
+	@Test
+	public void quadrantOfAngle179ShouldBeQuadrantB()
+	{
+		assertThat(ANTSUtility.getQuadrantOfAngle(179.0),equalTo(ANTSQuadrantEnum.B));
+	}
+	
+	@Test
+	public void quadrantOfAngle180ShouldBeQuadrantC()
+	{
+		assertThat(ANTSUtility.getQuadrantOfAngle(180.0),equalTo(ANTSQuadrantEnum.C));
+	}
+	
+	@Test
+	public void quadrantOfAngle269ShouldBeQuadrantC()
+	{
+		assertThat(ANTSUtility.getQuadrantOfAngle(269.0),equalTo(ANTSQuadrantEnum.C));
+	}
+	
+	@Test
+	public void quadrantOfAngle270ShouldBeQuadrantD()
+	{
+		assertThat(ANTSUtility.getQuadrantOfAngle(270.0),equalTo(ANTSQuadrantEnum.D));
+	}
+	
+	@Test
+	public void quadrantOfAngle359ShouldBeQuadrantD()
+	{
+		assertThat(ANTSUtility.getQuadrantOfAngle(359.0),equalTo(ANTSQuadrantEnum.D));
+	}
+	
+//	@Test
+//	public void quadrantOfAngle360ShouldBeQuadrantA()
+//	{
+//		assertThat(ANTSUtility.getQuadrantOfAngle(360.0),equalTo(ANTSQuadrantEnum.A));
+//	}
+//	
+//	@Test
+//	public void quadrantOfAngle450ShouldBeQuadrantB()
+//	{
+//		assertThat(ANTSUtility.getQuadrantOfAngle(450.0),equalTo(ANTSQuadrantEnum.B));
+//	}
+//	
 	///////////////////
 	//PRIVATE METHODS//
 	///////////////////

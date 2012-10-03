@@ -8,6 +8,8 @@ import basics.ANTSDevelopment.ANTSStream;
 
 import com.sun.org.apache.xml.internal.security.utils.JavaUtils;
 
+import enums.ANTSQuadrantEnum;
+
 import sun.misc.JavaUtilJarAccess;
 
 public class ANTSUtility 
@@ -155,5 +157,36 @@ public class ANTSUtility
 		assert(diff>=0 && diff<=180);
 		
 		return diff;
+	}
+	
+	public static ANTSQuadrantEnum getQuadrantOfAngle(double angle)
+	{
+		ANTSQuadrantEnum q = null;
+		
+		assert(angle>= 0 && angle <360);
+		
+		if(0<=angle && angle<90)
+		{
+			q = ANTSQuadrantEnum.A;
+		}
+		else if(90<=angle && angle<180)
+		{
+			q = ANTSQuadrantEnum.B;
+		}
+		else if(180<=angle && angle<270)
+		{
+			q = ANTSQuadrantEnum.C;
+		}
+		else if(270<= angle && angle<360)
+		{
+			q = ANTSQuadrantEnum.D;
+		}
+		else
+		{
+			ANTSStream.printErr("ERROR: unknown case in method getQuadrantOfAngle!");	//TODO
+			q = ANTSQuadrantEnum.UnkownCase;
+		}
+		
+		return q;
 	}
 }

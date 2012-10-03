@@ -7,6 +7,7 @@ import interfaces.medium.ANTSIMediumController;
 
 import controllers.medium.ANTSStandardMediumController;
 import enums.ANTSDirectionEnum;
+import enums.ANTSQuadrantEnum;
 
 import basics.ANTSDevelopment.ANTSStream;
 
@@ -153,6 +154,7 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 	{
 		double criticalAngle = this.calculateCriticalAngle(refractionIndexMediumIn,refractionIndexMediumOut);
 		double angleToSet = 0;
+		int sign = 0;
 		
 		boolean isPossibleTotalReflection = refractionIndexMediumIn<=refractionIndexMediumOut;
 		boolean angleRelationForTotalReflection = !(ANTSUtility.roundScale2(angleBetweenRayPerpendicular)<ANTSUtility.roundScale2(criticalAngle));
@@ -164,14 +166,16 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 			if(ANTSUtility.roundScale2(angleBetweenRayPerpendicular)==ANTSUtility.roundScale2(criticalAngle))
 			{
 				angleToSet= this.calculateAngleInCriticalSituation(angleBetweenRayPerpendicular,anglePerpendicular,angleRay);
+				
+				sign = 1;
 			}
 			else if(ANTSUtility.roundScale2(angleBetweenRayPerpendicular)>ANTSUtility.roundScale2(criticalAngle))
 			{
 				angleToSet = this.calculateTotalReflection(angleBetweenRayPerpendicular,anglePerpendicular,angleRay);
+//				anglePerpendicular = ANTSUtility.angleBetween0And359Degree(anglePerpendicular + 180);
 				
-				//TODO: fix bug, if it was a totalReflection don't check this ray so quick again!
-				
-				return angleToSet;
+				sign = -1;
+//				return angleToSet;
 			}
 			else
 			{
@@ -181,10 +185,10 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 		else
 		{
 			angleToSet = this.calculateSnell(angleBetweenRayPerpendicular,refractionIndexMediumIn,refractionIndexMediumOut);
-				
+			sign = 1;	
 			assert(angleToSet<360 && angleToSet>=0);
 		}
-		return this.computeNewRayAngle(anglePerpendicular, angleRay ,angleToSet ,refractionIndexMediumIn,refractionIndexMediumOut);
+		return this.computeNewRayAngle(anglePerpendicular, angleRay ,angleToSet ,refractionIndexMediumIn,refractionIndexMediumOut, sign);
 	}
 	
 	@Override
@@ -198,29 +202,31 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 	@Override
 	public double calculateTotalReflection(double angleBetweenRayPerpendicular, double anglePerpendicular,double angleRay) 
 	{
-		ANTSStream.print("Totalreflection: Perp: " + anglePerpendicular + " between " + angleBetweenRayPerpendicular) ;
-	
-		double rayAngleOut = -1;
-		double anglePerpendicularOut = anglePerpendicular+180;
+//		ANTSStream.print("Totalreflection: Perp: " + anglePerpendicular + " between " + angleBetweenRayPerpendicular) ;
+//	
+//		double rayAngleOut = -1;
+//		double anglePerpendicularOut = anglePerpendicular+180;
+//		
+//		if(angleRay<=anglePerpendicular)
+//		{
+//			rayAngleOut = anglePerpendicularOut+angleBetweenRayPerpendicular;
+//			ANTSStream.print("Totalreflection : PLUS : "  + rayAngleOut);
+//		}
+//		else if(angleRay>anglePerpendicular)
+//		{
+//			rayAngleOut = anglePerpendicularOut-angleBetweenRayPerpendicular;
+//			ANTSStream.print("Totalreflection : MINUS : " +rayAngleOut);
+//		}
+//		else
+//		{
+//			ANTSStream.printErr("Error: Unknown case in calculateTotalReflection"); //TODO
+//		}
+//		
+//		rayAngleOut = ANTSUtility.angleBetween0And359Degree(rayAngleOut);
+//		
+//		return rayAngleOut;
 		
-		if(angleRay<=anglePerpendicular)
-		{
-			rayAngleOut = anglePerpendicularOut+angleBetweenRayPerpendicular;
-			ANTSStream.print("Totalreflection : PLUS : "  + rayAngleOut);
-		}
-		else if(angleRay>anglePerpendicular)
-		{
-			rayAngleOut = anglePerpendicularOut-angleBetweenRayPerpendicular;
-			ANTSStream.print("Totalreflection : MINUS : " +rayAngleOut);
-		}
-		else
-		{
-			ANTSStream.printErr("Error: Unknown case in calculateTotalReflection"); //TODO
-		}
-		
-		rayAngleOut = ANTSUtility.angleBetween0And359Degree(rayAngleOut);
-		
-		return rayAngleOut;
+		return angleBetweenRayPerpendicular;
 	}
 
 	private void updateRay(double realAngleToSet, ANTSIRayController ray, ANTSIMediumController mediumIn) 
@@ -241,36 +247,100 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 	 * @param angleToAdd
 	 * @param refractionIndexIn
 	 * @param reafractionIndexOut
+	 * @param sign: if it's a normal refraction +1
+	 * 				if it's a total reflection -1
 	 * @return the new absolute angle of the ray
 	 */
-	public double computeNewRayAngle(double perpendicularAngle,double rayAngle, double angleToAdd, double refractionIndexIn, double refractionIndexOut) 
-	{
-		double newRayAngle = 0;
+	public Double computeNewRayAngle(double perpendicularAngle,double rayAngle, double angleToAdd, double refractionIndexIn, double refractionIndexOut,int sign) 
+	{			
+//		   |
+//		C  |	D
+//	-------|------>
+//		   |
+//		B  |	A
+//		   v
 		
-//		ANTSStream.print("perpendicularAngle = " + perpendicularAngle +"\nrayAngle = " + rayAngle );//+"\nangleToAdd = " + angleToAdd);
+		/*
+		 * Idea: reduce angle perpendicular and ray to a easier situation where perpendicular angle is 0°, 90°, 180° or 270°
+		 */
 		
-		double angleRayReduced = ANTSUtility.angleBetween0And359Degree(rayAngle - perpendicularAngle);	//perpemdicularAngle is now always 0ï¿½
+		double newRayAngle = -1;
 		
-		if(angleRayReduced>=180)
+		int signCalc = 0;
+		
+		double minuend = perpendicularAngle % 90;
+		double anglePerpendicularReduced = perpendicularAngle - minuend;
+		double angleRayReduced = rayAngle - minuend;
+		
+		angleRayReduced = ANTSUtility.angleBetween0And359Degree(angleRayReduced);
+		
+		assert(anglePerpendicularReduced==0 || anglePerpendicularReduced==90 || anglePerpendicularReduced == 180 || anglePerpendicularReduced == 270);
+		assert(angleRayReduced>=0 && angleRayReduced<360);
+		
+		ANTSStream.print("______________________________________________________________________________________________________________________________________________");
+		ANTSStream.print("INFO: \n anglePerpendicular = " + perpendicularAngle + " anglePerpendicularReduced = " + anglePerpendicularReduced + "\n rayAngle = " + rayAngle + " rayAngleReduced = " + angleRayReduced + " Angle to add = " + angleToAdd +  "\n sign = " + sign +"\n minuend = " + minuend);
+		ANTSStream.print("______________________________________________________________________________________________________________________________________________");
+		
+		if(angleRayReduced<anglePerpendicularReduced)
 		{
-			ANTSStream.print("MINUS");
-			newRayAngle = 360-angleToAdd+perpendicularAngle;
+			ANTSStream.print("MINUS REFRACTION");
+			signCalc = -1;
 		}
 		else
 		{
-			ANTSStream.print("PLUS");
-			newRayAngle = angleToAdd+perpendicularAngle;
+			ANTSStream.print("PLUS REFRACTION");
+			signCalc = 1;
 		}
 		
-		ANTSStream.print("new ANGLE s = " + newRayAngle);
+		ANTSQuadrantEnum quadrantRayReduced = ANTSUtility.getQuadrantOfAngle(angleRayReduced);
+		
+		if(anglePerpendicularReduced==0)
+		{
+			if(quadrantRayReduced==ANTSQuadrantEnum.A)
+			{
+				ANTSStream.print("PLUS REFRACTION");
+				signCalc = 1;
+			}
+			else if(quadrantRayReduced == ANTSQuadrantEnum.D)
+			{
+				ANTSStream.print("MINUS REFRACTION");
+				signCalc = -1;
+			}
+			else
+			{
+				ANTSStream.print("ERROR: Impossible quadrant! The quadrant was " + quadrantRayReduced); //TODO
+				return null;
+			}
+		}
+		
+		if(sign==-1)
+		{
+			if(signCalc==1)
+			{
+				ANTSStream.print("MINUS TOTAL REFLECTION");
+			}
+			else
+			{
+				ANTSStream.print("PLUS TOTAL REFLECTION");
+			}
+			
+			anglePerpendicularReduced = anglePerpendicularReduced + 180;
+		}
+		
+		
+		double reducedNewAngleRay = anglePerpendicularReduced+(signCalc*sign*angleToAdd);
+		newRayAngle = reducedNewAngleRay + minuend;
+		
+		ANTSStream.print("newRayAngle is : " +newRayAngle );
+//		assert(newRayAngle>=0 && newRayAngle<360);
 		
 		newRayAngle = ANTSUtility.angleBetween0And359Degree(newRayAngle);
-		
-//		ANTSStream.printErr("----------ANGLE TO SET----------- " + newRayAngle); 
+		ANTSStream.print("newRayAngle is correct : " +newRayAngle );
 		
 		return newRayAngle;
 	}
-
+	
+	
 	@Override
 	/**
 	 * @param angleIncoming

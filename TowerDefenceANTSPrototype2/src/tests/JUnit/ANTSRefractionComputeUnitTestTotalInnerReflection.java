@@ -41,8 +41,10 @@ public class ANTSRefractionComputeUnitTestTotalInnerReflection
 		double angleRayOut = this.unit.computeRefractionOrTotalReflection(refractionIndexMediumIn, refractionIndexMediumOut, angleRayIn, anglePerpendicular, angleBetweenRayAndPerpendicular);
 	
 		assertThat(ANTSUtility.roundScale2(angleRayOut), equalTo(ANTSUtility.roundScale2(anglePerpendicular+180+angleBetweenRayAndPerpendicular)));
+		
+		assert(angleRayOut>270 && angleRayOut<360);
 	}
-	
+	 
 	@Test
 	public void AngleInBetween90And180TotalInnerReflectionSituationPerpendicularAngle90() //A2
 	{	
@@ -58,6 +60,8 @@ public class ANTSRefractionComputeUnitTestTotalInnerReflection
 		double angleRayOut = this.unit.computeRefractionOrTotalReflection(refractionIndexMediumIn, refractionIndexMediumOut, angleRayIn, anglePerpendicular, angleBetweenRayAndPerpendicular);
 	
 		assertThat(ANTSUtility.roundScale2(angleRayOut), equalTo(ANTSUtility.roundScale2(anglePerpendicular+180-angleBetweenRayAndPerpendicular)));
+		
+		assert(angleRayOut>180 && angleRayOut<270);
 	}
 	
 	@Test
@@ -66,7 +70,7 @@ public class ANTSRefractionComputeUnitTestTotalInnerReflection
 		double anglePerpendicular = 180;
 		double angleRayIn = anglePerpendicular-this.criticalAngle-offsetRayAngleIn;
 	
-		assert(angleRayIn>=90 && angleRayIn<=180);
+		assert(angleRayIn>90 && angleRayIn<=180);
 
 		double angleBetweenRayAndPerpendicular = ANTSUtility.angleBetweenToAngles(angleRayIn, anglePerpendicular); 
 		
@@ -75,6 +79,8 @@ public class ANTSRefractionComputeUnitTestTotalInnerReflection
 		double angleRayOut = this.unit.computeRefractionOrTotalReflection(refractionIndexMediumIn, refractionIndexMediumOut, angleRayIn, anglePerpendicular, angleBetweenRayAndPerpendicular);
 	
 		assertThat(ANTSUtility.roundScale2(angleRayOut), equalTo(ANTSUtility.roundScale2(ANTSUtility.angleBetween0And359Degree((anglePerpendicular+180+angleBetweenRayAndPerpendicular)))));
+		
+		assert(angleRayOut>0 && angleRayOut<90);
 	}
 	
 	@Test
@@ -92,6 +98,8 @@ public class ANTSRefractionComputeUnitTestTotalInnerReflection
 		double angleRayOut = this.unit.computeRefractionOrTotalReflection(refractionIndexMediumIn, refractionIndexMediumOut, angleRayIn, anglePerpendicular, angleBetweenRayAndPerpendicular);
 	
 		assertThat(ANTSUtility.roundScale2(angleRayOut), equalTo(ANTSUtility.roundScale2(ANTSUtility.angleBetween0And359Degree((anglePerpendicular+180-angleBetweenRayAndPerpendicular)))));
+	
+		assert(angleRayOut>270 && angleRayOut<360);
 	}
 	
 	
@@ -110,6 +118,8 @@ public class ANTSRefractionComputeUnitTestTotalInnerReflection
 		double angleRayOut = this.unit.computeRefractionOrTotalReflection(refractionIndexMediumIn, refractionIndexMediumOut, angleRayIn, anglePerpendicular, angleBetweenRayAndPerpendicular);
 	
 		assertThat(ANTSUtility.roundScale2(angleRayOut), equalTo(ANTSUtility.roundScale2(ANTSUtility.angleBetween0And359Degree((anglePerpendicular+180-angleBetweenRayAndPerpendicular)))));
+		
+		assert(angleRayOut>0 && angleRayOut<90);
 	}
 	
 	@Test
@@ -127,6 +137,8 @@ public class ANTSRefractionComputeUnitTestTotalInnerReflection
 		double angleRayOut = this.unit.computeRefractionOrTotalReflection(refractionIndexMediumIn, refractionIndexMediumOut, angleRayIn, anglePerpendicular, angleBetweenRayAndPerpendicular);
 	
 		assertThat(ANTSUtility.roundScale2(angleRayOut), equalTo(ANTSUtility.roundScale2(ANTSUtility.angleBetween0And359Degree((anglePerpendicular+180+angleBetweenRayAndPerpendicular)))));
+		
+		assert(angleRayOut>90 && angleRayOut<180);
 	}
 	
 	@Test
@@ -144,23 +156,26 @@ public class ANTSRefractionComputeUnitTestTotalInnerReflection
 		double angleRayOut = this.unit.computeRefractionOrTotalReflection(refractionIndexMediumIn, refractionIndexMediumOut, angleRayIn, anglePerpendicular, angleBetweenRayAndPerpendicular);
 	
 		assertThat(ANTSUtility.roundScale2(angleRayOut), equalTo(ANTSUtility.roundScale2(ANTSUtility.angleBetween0And359Degree((anglePerpendicular+180-angleBetweenRayAndPerpendicular)))));
+		
+		assert(angleRayOut>90 && angleRayOut<180);
 	}
 	
-	//TODO: FIX THIS!
-//	@Test
-//	public void AngleInBetween270And360TotalInnerReflectionSituationPerpendicularAngle0() //D2
-//	{	
-//		double anglePerpendicular = 0;
-//		double angleRayIn = ANTSUtility.angleBetween0And359Degree(anglePerpendicular-this.criticalAngle-offsetRayAngleIn);
-//	
-//		assert(angleRayIn>=270 && angleRayIn<360);
-//
-//		double angleBetweenRayAndPerpendicular = ANTSUtility.angleBetweenToAngles(angleRayIn, anglePerpendicular); 
-//		
-//		assert(ANTSUtility.roundScale2(angleBetweenRayAndPerpendicular)>ANTSUtility.roundScale2(this.criticalAngle));
-//		
-//		double angleRayOut = this.unit.computeRefractionOrTotalReflection(refractionIndexMediumIn, refractionIndexMediumOut, angleRayIn, anglePerpendicular, angleBetweenRayAndPerpendicular);
-//	
-//		assertThat(ANTSUtility.roundScale2(angleRayOut), equalTo(ANTSUtility.roundScale2(ANTSUtility.angleBetween0And359Degree((anglePerpendicular+180+angleBetweenRayAndPerpendicular)))));
-//	}
+	@Test
+	public void AngleInBetween270And360TotalInnerReflectionSituationPerpendicularAngle0() //D2
+	{	
+		double anglePerpendicular = 0;
+		double angleRayIn = ANTSUtility.angleBetween0And359Degree(anglePerpendicular-this.criticalAngle-offsetRayAngleIn);
+	
+		assert(angleRayIn>=270 && angleRayIn<360);
+
+		double angleBetweenRayAndPerpendicular = ANTSUtility.angleBetweenToAngles(angleRayIn, anglePerpendicular); 
+		
+		assert(ANTSUtility.roundScale2(angleBetweenRayAndPerpendicular)>ANTSUtility.roundScale2(this.criticalAngle));
+		
+		double angleRayOut = this.unit.computeRefractionOrTotalReflection(refractionIndexMediumIn, refractionIndexMediumOut, angleRayIn, anglePerpendicular, angleBetweenRayAndPerpendicular);
+	
+		assertThat(ANTSUtility.roundScale2(angleRayOut), equalTo(ANTSUtility.roundScale2(ANTSUtility.angleBetween0And359Degree((anglePerpendicular+180+angleBetweenRayAndPerpendicular)))));
+	
+		assert(angleRayOut>180 && angleRayOut<270);
+	}
 }
