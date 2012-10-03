@@ -659,18 +659,6 @@ public class ANTSUtilityTest
 		assertThat(ANTSUtility.getQuadrantOfAngle(359.0),equalTo(ANTSQuadrantEnum.D));
 	}
 	
-//	@Test
-//	public void quadrantOfAngle360ShouldBeQuadrantA()
-//	{
-//		assertThat(ANTSUtility.getQuadrantOfAngle(360.0),equalTo(ANTSQuadrantEnum.A));
-//	}
-//	
-//	@Test
-//	public void quadrantOfAngle450ShouldBeQuadrantB()
-//	{
-//		assertThat(ANTSUtility.getQuadrantOfAngle(450.0),equalTo(ANTSQuadrantEnum.B));
-//	}
-//	
 	///////////////////
 	//PRIVATE METHODS//
 	///////////////////

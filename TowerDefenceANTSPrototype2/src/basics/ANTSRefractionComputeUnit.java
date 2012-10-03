@@ -54,14 +54,17 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 				
 				if(refractionIndexMediumIn>refractionIndexMediumOut)
 				{
-					ANTSStream.printDebug("Brechung ZUM Lot");
+//					ANTSStream.printDebug("Brechung ZUM Lot");
 				}
 				else
 				{
-					ANTSStream.printDebug("Brechung VOM Lot");
+//					ANTSStream.printDebug("Brechung VOM Lot");
 					
 					double angleBetweenRayPerpendicular = this.computeAngleBetweenRayAndPerpendicular(directionVectorRay, directionVectorPerpendicular);
 					double criticalAngle = this.calculateCriticalAngle(refractionIndexMediumIn,refractionIndexMediumOut);
+					
+					ANTSStream.printDebug("crit angle = " +criticalAngle);
+					ANTSStream.printDebug("between angle = " +angleBetweenRayPerpendicular);
 					
 					boolean isPossibleTotalReflection = refractionIndexMediumIn<=refractionIndexMediumOut;
 					boolean angleRelationForTotalReflection = !(ANTSUtility.roundScale2(angleBetweenRayPerpendicular)<=ANTSUtility.roundScale2(criticalAngle));
@@ -108,7 +111,7 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 		if(!Double.isNaN(angleBetweenRayPerpendicular))
 		{
 			realAngleToSet = this.computeRefractionOrTotalReflection(refractionIndexMediumIn, refractionIndexMediumOut, angleRay, anglePerpendicular, angleBetweenRayPerpendicular);
-			ANTSStream.print("TO SET " + realAngleToSet);
+//			ANTSStream.print("TO SET " + realAngleToSet);
 		}
 		else
 		{
@@ -261,7 +264,7 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 //		   v
 		
 		/*
-		 * Idea: reduce angle perpendicular and ray to a easier situation where perpendicular angle is 0°, 90°, 180° or 270°
+		 * Idea: reduce angle perpendicular and ray to a easier situation where perpendicular angle is 0ï¿½, 90ï¿½, 180ï¿½ or 270ï¿½
 		 */
 		
 		double newRayAngle = -1;
@@ -277,18 +280,18 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 		assert(anglePerpendicularReduced==0 || anglePerpendicularReduced==90 || anglePerpendicularReduced == 180 || anglePerpendicularReduced == 270);
 		assert(angleRayReduced>=0 && angleRayReduced<360);
 		
-		ANTSStream.print("______________________________________________________________________________________________________________________________________________");
-		ANTSStream.print("INFO: \n anglePerpendicular = " + perpendicularAngle + " anglePerpendicularReduced = " + anglePerpendicularReduced + "\n rayAngle = " + rayAngle + " rayAngleReduced = " + angleRayReduced + " Angle to add = " + angleToAdd +  "\n sign = " + sign +"\n minuend = " + minuend);
-		ANTSStream.print("______________________________________________________________________________________________________________________________________________");
+//		ANTSStream.print("______________________________________________________________________________________________________________________________________________");
+//		ANTSStream.print("INFO: \n anglePerpendicular = " + perpendicularAngle + " anglePerpendicularReduced = " + anglePerpendicularReduced + "\n rayAngle = " + rayAngle + " rayAngleReduced = " + angleRayReduced + " Angle to add = " + angleToAdd +  "\n sign = " + sign +"\n minuend = " + minuend);
+//		ANTSStream.print("______________________________________________________________________________________________________________________________________________");
 		
 		if(angleRayReduced<anglePerpendicularReduced)
 		{
-			ANTSStream.print("MINUS REFRACTION");
+//			ANTSStream.print("MINUS REFRACTION");
 			signCalc = -1;
 		}
 		else
 		{
-			ANTSStream.print("PLUS REFRACTION");
+//			ANTSStream.print("PLUS REFRACTION");
 			signCalc = 1;
 		}
 		
@@ -298,17 +301,17 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 		{
 			if(quadrantRayReduced==ANTSQuadrantEnum.A)
 			{
-				ANTSStream.print("PLUS REFRACTION");
+//				ANTSStream.print("PLUS REFRACTION");
 				signCalc = 1;
 			}
 			else if(quadrantRayReduced == ANTSQuadrantEnum.D)
 			{
-				ANTSStream.print("MINUS REFRACTION");
+//				ANTSStream.print("MINUS REFRACTION");
 				signCalc = -1;
 			}
 			else
 			{
-				ANTSStream.print("ERROR: Impossible quadrant! The quadrant was " + quadrantRayReduced); //TODO
+//				ANTSStream.print("ERROR: Impossible quadrant! The quadrant was " + quadrantRayReduced); //TODO
 				return null;
 			}
 		}
@@ -317,11 +320,11 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 		{
 			if(signCalc==1)
 			{
-				ANTSStream.print("MINUS TOTAL REFLECTION");
+//				ANTSStream.print("MINUS TOTAL REFLECTION");
 			}
 			else
 			{
-				ANTSStream.print("PLUS TOTAL REFLECTION");
+//				ANTSStream.print("PLUS TOTAL REFLECTION");
 			}
 			
 			anglePerpendicularReduced = anglePerpendicularReduced + 180;
@@ -331,11 +334,11 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 		double reducedNewAngleRay = anglePerpendicularReduced+(signCalc*sign*angleToAdd);
 		newRayAngle = reducedNewAngleRay + minuend;
 		
-		ANTSStream.print("newRayAngle is : " +newRayAngle );
+//		ANTSStream.print("newRayAngle is : " +newRayAngle );
 //		assert(newRayAngle>=0 && newRayAngle<360);
 		
 		newRayAngle = ANTSUtility.angleBetween0And359Degree(newRayAngle);
-		ANTSStream.print("newRayAngle is correct : " +newRayAngle );
+//		ANTSStream.print("newRayAngle is correct : " +newRayAngle );
 		
 		return newRayAngle;
 	}

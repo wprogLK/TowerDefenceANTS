@@ -81,6 +81,7 @@ public class ANTSSimpleLensController extends ANTSAbstractMediumController imple
 	public double[] calculateIntersectionPoint(ANTSIRayController ray) 
 	{
 		double R = this.model.getRadius()/2.0;
+		
 		double[] M = this.model.getCenter();
 		
 		Point2D.Double[] vec = ray.getVector();

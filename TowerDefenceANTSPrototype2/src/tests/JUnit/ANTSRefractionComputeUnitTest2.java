@@ -75,8 +75,8 @@ public class ANTSRefractionComputeUnitTest2
 	public void testSituationA1(Mockery mockery)
 	{
 		//Setup for Situation A1:
-			//perpendicularAngle will be 90°
-			//rayAngle will be <=90° & >=0°
+			//perpendicularAngle will be 90ï¿½
+			//rayAngle will be <=90ï¿½ & >=0ï¿½
 		
 			//Perpendicular
 			//in java coordinate system!
@@ -161,8 +161,8 @@ public class ANTSRefractionComputeUnitTest2
 	public void testSituationA2(Mockery mockery)
 	{
 		//Setup for Situation A2:
-			//perpendicularAngle will be 90°
-			//rayAngle will be <180° & >90°
+			//perpendicularAngle will be 90ï¿½
+			//rayAngle will be <180ï¿½ & >90ï¿½
 		
 			//Perpendicular
 			//in java coordinate system!
@@ -246,8 +246,8 @@ public class ANTSRefractionComputeUnitTest2
 	public void testSituationB1(Mockery mockery)
 	{
 		//Setup for Situation B1:
-			//perpendicularAngle will be 180° 
-			//rayAngle will be <=180° & >=90°
+			//perpendicularAngle will be 180ï¿½ 
+			//rayAngle will be <=180ï¿½ & >=90ï¿½
 		
 			//Perpendicular
 			//in java coordinate system!
@@ -351,8 +351,8 @@ public class ANTSRefractionComputeUnitTest2
 //	public void testSituationB2(Mockery mockery)
 //	{
 //		//Setup for Situation B2:
-//			//perpendicularAngle will be 180°
-//			//rayAngle will be <270° & >180°
+//			//perpendicularAngle will be 180ï¿½
+//			//rayAngle will be <270ï¿½ & >180ï¿½
 //		
 //			//Perpendicular
 //			//in java coordinate system!
@@ -426,8 +426,8 @@ public class ANTSRefractionComputeUnitTest2
 //	public void testSituationC1(Mockery mockery)
 //	{
 //		//Setup for Situation C1:
-//			//perpendicularAngle will be 270°
-//			//rayAngle will be <360° & >270°
+//			//perpendicularAngle will be 270ï¿½
+//			//rayAngle will be <360ï¿½ & >270ï¿½
 //		
 //			//Perpendicular
 //			//in java coordinate system!
@@ -501,8 +501,8 @@ public class ANTSRefractionComputeUnitTest2
 //	public void testSituationC2(Mockery mockery)
 //	{
 //		//Setup for Situation C2:
-//			//perpendicularAngle will be 270°
-//			//rayAngle will be <=270° & >=180°
+//			//perpendicularAngle will be 270ï¿½
+//			//rayAngle will be <=270ï¿½ & >=180ï¿½
 //		
 //			//Perpendicular
 //			//in java coordinate system!
@@ -576,8 +576,8 @@ public class ANTSRefractionComputeUnitTest2
 //	public void testSituationD1(Mockery mockery)
 //	{
 //		//Setup for Situation D1:
-//			//perpendicularAngle will be 0°
-//			//rayAngle will be <90° & >0°
+//			//perpendicularAngle will be 0ï¿½
+//			//rayAngle will be <90ï¿½ & >0ï¿½
 //		
 //			//Perpendicular
 //			//in java coordinate system!
@@ -650,8 +650,8 @@ public class ANTSRefractionComputeUnitTest2
 //	public void testSituationD2(Mockery mockery)
 //	{
 //		//Setup for Situation D2:
-//			//perpendicularAngle will be 0°
-//			//rayAngle will be <360° & >=270° or =0°
+//			//perpendicularAngle will be 0ï¿½
+//			//rayAngle will be <360ï¿½ & >=270ï¿½ or =0ï¿½
 //		
 //			//Perpendicular
 //			//in java coordinate system!
