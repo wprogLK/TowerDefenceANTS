@@ -20,6 +20,8 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 	private double height;
 	private double angle;
 	
+	private double[] pos = new double[2];
+	
 	private boolean on;
 	private Color color;
 	
@@ -40,10 +42,13 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 		this.rotation = new AffineTransform();
 		
 		this.matrix.setToTranslation(posX, posY);
+
+		this.pos[0] = posX;
+		this.pos[1] = posY;
 		
 		this.length = length;
 		this.height = 50;		//TODO
-		this.angle = ANTSUtility.angleBetween0And359Degree(33.74898859588859+270);
+		this.angle = 270;//ANTSUtility.angleBetween0And359Degree(33.74898859588859+270);
 		
 		this.on = false;		//TODO
 		this.color = color;
@@ -83,12 +88,16 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 	
 	public double getPosX()
 	{
-		return this.matrix.getTranslateX();
+//		return this.matrix.getTranslateX();
+		return this.pos[0];
 	}
 
 	public double getPosY()
 	{
-		return this.matrix.getTranslateY();
+//		return this.matrix.getTranslateY();
+
+		return this.pos[1];
+		
 	}
 	
 	public double getLength()
@@ -126,9 +135,15 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 	//Setters//
 	///////////
 	
-	public void setPosition(int x, int y)
+	public void setPosition(double x, double y) //TODO TEST & Debug this! (At the moment x and y are the coordinates of the center!)
 	{
-		this.matrix.setToTranslation(x, y);
+
+		this.pos[0] = x;
+		this.pos[1] = y;
+		
+		
+		this.matrix.setToTranslation(x, y);	
+		
 		this.updateCenter();
 	}
 	
@@ -209,7 +224,7 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 			
 //			this.factory.createSimpleRayLight(posUp, this.velocityRay, ANTSUtility.angleBetween0And359Degree(this.angle-90), this.color);
 			this.factory.createSimpleRayLight(posDown, this.velocityRay, ANTSUtility.angleBetween0And359Degree(this.angle+90) , this.color);
-//			ANTSStream.print("Ray angle = " + ANTSUtility.angleBetween0And359Degree(this.angle+90));
+			ANTSStream.print("created ray Y: " + posDown[1]);
 			tmpPosX += this.getDistanceBetweenTwoRays();
 		}
 	}

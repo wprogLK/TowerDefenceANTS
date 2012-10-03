@@ -1,12 +1,14 @@
 package controllers.sourceLight;
 
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 
 import controllers.ANTSAbstractController;
 
 import basics.ANTSFactory;
+import basics.ANTSDevelopment.ANTSStream;
 
 import interfaces.ANTSIModel;
 import interfaces.ANTSISourceLightController;
@@ -68,6 +70,8 @@ public class ANTSSimpleSourceLightNeonController extends ANTSAbstractController 
 	@Override
 	public void mouseDraggedANTS(MouseEvent e) 
 	{
+		ANTSStream.print("e X " + e.getX() +" e y " +e.getY());
+		
 		this.model.setPosition((int) (e.getX()-this.model.getLength()/2), (int) (e.getY()-this.model.getLength()/4));
 	}
 	
@@ -75,5 +79,37 @@ public class ANTSSimpleSourceLightNeonController extends ANTSAbstractController 
 	public void mouseWheelMovedANTS(MouseWheelEvent e)
 	{
 		this.model.rotate(e.getWheelRotation());
+	}
+	
+	////////////////
+	//KEY LISTENER//
+	////////////////
+	
+	@Override
+	public void keyReleased(KeyEvent e) 
+	{
+		char c = Character.toLowerCase(e.getKeyChar());
+		
+		double posX = this.model.getPosX();
+		double posY = this.model.getPosY();
+		
+		double deltaX = 1;
+		double deltaY = 0.2;
+		
+		if(e.getKeyCode()==KeyEvent.VK_UP)	//For debugging
+		{
+			double y = posY-deltaY;
+//			this.mouseDraggedANTS(new MouseEvent(null, 0, 0, 0, (int) posX, (int) y, 0, 0, 0, false, 0));
+			this.model.setPosition(posX, y);
+		}
+		
+		if(e.getKeyCode()==KeyEvent.VK_DOWN) 	//For debugging
+		{
+			double y = posY+deltaY;
+			
+			this.model.setPosition(posX, y);
+			
+//			this.mouseDraggedANTS(new MouseEvent(, 0, 0, 0, (int) posX, (int) y, 0, 0, 0, false, 0));
+		}
 	}
 }

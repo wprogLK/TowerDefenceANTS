@@ -52,6 +52,9 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 				double angleRay = ray.getAngle();
 				double anglePerpendicular = perpendicular.getAngle(direction);
 				
+				double angleBetweenRayPerpendicular = this.computeAngleBetweenRayAndPerpendicular(directionVectorRay, directionVectorPerpendicular);
+				double criticalAngle = this.calculateCriticalAngle(refractionIndexMediumIn,refractionIndexMediumOut);
+				
 				if(refractionIndexMediumIn>refractionIndexMediumOut)
 				{
 //					ANTSStream.printDebug("Brechung ZUM Lot");
@@ -60,18 +63,17 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 				{
 //					ANTSStream.printDebug("Brechung VOM Lot");
 					
-					double angleBetweenRayPerpendicular = this.computeAngleBetweenRayAndPerpendicular(directionVectorRay, directionVectorPerpendicular);
-					double criticalAngle = this.calculateCriticalAngle(refractionIndexMediumIn,refractionIndexMediumOut);
 					
-					ANTSStream.printDebug("crit angle = " +criticalAngle);
-					ANTSStream.printDebug("between angle = " +angleBetweenRayPerpendicular);
+					
+//					ANTSStream.printDebug("crit angle = " +criticalAngle);
+//					ANTSStream.printDebug("between angle = " +angleBetweenRayPerpendicular);
 					
 					boolean isPossibleTotalReflection = refractionIndexMediumIn<=refractionIndexMediumOut;
 					boolean angleRelationForTotalReflection = !(ANTSUtility.roundScale2(angleBetweenRayPerpendicular)<=ANTSUtility.roundScale2(criticalAngle));
 					
 					if(isPossibleTotalReflection && angleRelationForTotalReflection)
 					{
-						ANTSStream.printDebug("total internal reflection happen!");
+						ANTSStream.printDebug("total internal reflection happen! round between " +ANTSUtility.roundScale2(angleBetweenRayPerpendicular) + " round crit " + ANTSUtility.roundScale2(criticalAngle) );
 						mediumIn = mediumOut; //The ray is not changing the medium!
 					}
 					
@@ -80,6 +82,23 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 				double realAngleToSet = getNewAngleRay(directionVectorRay, directionVectorPerpendicular, refractionIndexMediumIn, refractionIndexMediumOut, angleRay, anglePerpendicular);
 //				
 				this.updateRay(realAngleToSet, ray, mediumIn);
+				
+				double[] directionVectorNew = ray.getDirectionVector();
+				double newAngleRay2 = ANTSUtility.computeAngleOfOneVector(directionVectorNew);
+				double angleBetweenOUT = ANTSUtility.computeAngleBetweenTwoRealDirectionVectors(directionVectorPerpendicular, directionVectorNew);
+				
+				ANTSStream.print("__________________________________________________________");
+//				ANTSStream.print("NEW direction vector ray = [ " + directionVectorNew[0] + " | " + directionVectorNew[1] + " ]");
+//				ANTSStream.print("OLD direction vector ray = [ " + directionVectorRay[0] + " | " + directionVectorRay[1] + " ]");
+//				ANTSStream.print("OLD ray angle = " + angleRay);
+//				ANTSStream.print("NEW ray angle calc with DIRECTION vector = " + newAngleRay2);
+//				ANTSStream.print("NEW ray angle TO SET = " + realAngleToSet );
+//				ANTSStream.print("NEW ray angle GET = " + ray.getAngle());
+				ANTSStream.print("angle between OUT = " + angleBetweenOUT);
+//				ANTSStream.print("angle between IN = " + angleBetweenRayPerpendicular);
+//				ANTSStream.print("critical angle = " + criticalAngle);
+//				ANTSStream.print("ANGLE Perpendicular = " + anglePerpendicular);
+				ANTSStream.print("__________________________________________________________");
 				return realAngleToSet; //Only for testing!
 			}
 			else
@@ -103,6 +122,8 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 	public double getNewAngleRay(double[] directionVectorRay, double[] directionVectorPerpendicular, double refractionIndexMediumIn, double refractionIndexMediumOut, double angleRay, double anglePerpendicular) 
 	{
 		double angleBetweenRayPerpendicular = this.computeAngleBetweenRayAndPerpendicular(directionVectorRay, directionVectorPerpendicular);
+		
+//		ANTSStream.printDebug("between IN angle = " +angleBetweenRayPerpendicular);
 		
 		assert(ANTSUtility.roundScale2(angleBetweenRayPerpendicular)==ANTSUtility.roundScale2(ANTSUtility.angleBetweenToAngles(angleRay, anglePerpendicular)));
 		

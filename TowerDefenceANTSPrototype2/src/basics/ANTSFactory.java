@@ -43,8 +43,8 @@ public class ANTSFactory implements ANTSIFactory
 	
 	private ANTSObjectCounter objectCounter;
 	
-	private int cellNumbersX = 10;
-	private int cellNumbersY = 10;
+	private int cellNumbersX = 1;
+	private int cellNumbersY = 1;
 	
 	public ANTSFactory(ANTSIDriver d) 
 	{
@@ -131,6 +131,7 @@ public class ANTSFactory implements ANTSIFactory
 	{
 		ANTSSimpleSourceLightNeonController c = new ANTSSimpleSourceLightNeonController(posX, posY, length, color, isMouseListener, this);
 		this.addController(c);
+		this.addToKeyListener(c);
 	}
 	
 	///////////////
