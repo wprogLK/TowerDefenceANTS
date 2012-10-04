@@ -70,8 +70,6 @@ public class ANTSSimpleSourceLightNeonController extends ANTSAbstractController 
 	@Override
 	public void mouseDraggedANTS(MouseEvent e) 
 	{
-		ANTSStream.print("e X " + e.getX() +" e y " +e.getY());
-		
 		this.model.setPosition((int) (e.getX()-this.model.getLength()/2), (int) (e.getY()-this.model.getLength()/4));
 	}
 	

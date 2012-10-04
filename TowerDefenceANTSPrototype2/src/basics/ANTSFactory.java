@@ -20,6 +20,7 @@ import controllers.ANTSGameController;
 import controllers.ANTSGridController;
 import controllers.ANTSSimpleRayLightController;
 import controllers.lens.ANTSSimpleLensController;
+import controllers.lens.ANTSSimplePrismController;
 import controllers.medium.ANTSSimpleMediumController;
 import controllers.medium.ANTSStandardMediumController;
 import controllers.menus.ANTSCircleMenuController;
@@ -112,6 +113,14 @@ public class ANTSFactory implements ANTSIFactory
 	public ANTSSimpleLensController createSimpleLens(double posX, double posY, double radius, double refractionIndex, boolean isMouseListener )
 	{
 		ANTSSimpleLensController c = new ANTSSimpleLensController(posX, posY, radius, refractionIndex, isMouseListener, this);
+		this.addController(c);
+		
+		return c;
+	}
+	
+	public ANTSSimplePrismController createSimplePrism(double posX, double posY, double height, double width, double heightOfCorner, double angleOfCorner ,double angle, double refractionIndex, boolean isMouseListener)
+	{
+		ANTSSimplePrismController c = new ANTSSimplePrismController(posX, posY, height, width, heightOfCorner, angleOfCorner, angle, refractionIndex, isMouseListener, this);
 		this.addController(c);
 		
 		return c;
