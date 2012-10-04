@@ -25,7 +25,7 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 	private boolean on;
 	private Color color;
 	
-	private int ticksBetweenTwoRays = 10;
+	private int ticksBetweenTwoRays = 5;
 	private int tickCounter;
 	
 	private double rotationStep = 5;
@@ -224,7 +224,7 @@ public class ANTSSimpleSourceLightNeonModel extends ANTSAbstractModel implements
 			
 //			this.factory.createSimpleRayLight(posUp, this.velocityRay, ANTSUtility.angleBetween0And359Degree(this.angle-90), this.color);
 			this.factory.createSimpleRayLight(posDown, this.velocityRay, ANTSUtility.angleBetween0And359Degree(this.angle+90) , this.color);
-			ANTSStream.print("created ray Y: " + posDown[1]);
+//			ANTSStream.print("created ray Y: " + posDown[1]);
 			tmpPosX += this.getDistanceBetweenTwoRays();
 		}
 	}

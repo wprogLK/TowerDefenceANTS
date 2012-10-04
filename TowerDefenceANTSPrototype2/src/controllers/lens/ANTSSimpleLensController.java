@@ -119,14 +119,14 @@ public class ANTSSimpleLensController extends ANTSAbstractMediumController imple
 		}
 		else if(D<0)
 		{
-			ANTSStream.printDebug("Complex solution");
+			ANTSStream.printDebug("ERROR: Complex solution!!"); //TODO
 			
 			t_1=Double.POSITIVE_INFINITY;
 			t_2=Double.POSITIVE_INFINITY;
 		}
 		else
 		{
-			ANTSStream.printDebug("Unkown case");
+			ANTSStream.printDebug("ERROR: Unkown case"); //TODO
 			t_1=Double.POSITIVE_INFINITY;
 			t_2=Double.POSITIVE_INFINITY;
 		}

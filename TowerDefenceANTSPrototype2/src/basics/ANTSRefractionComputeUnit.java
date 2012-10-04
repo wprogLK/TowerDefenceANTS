@@ -73,7 +73,7 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 					
 					if(isPossibleTotalReflection && angleRelationForTotalReflection)
 					{
-						ANTSStream.printDebug("total internal reflection happen! round between " +ANTSUtility.roundScale2(angleBetweenRayPerpendicular) + " round crit " + ANTSUtility.roundScale2(criticalAngle) );
+//						ANTSStream.printDebug("total internal reflection happen! round between " +ANTSUtility.roundScale2(angleBetweenRayPerpendicular) + " round crit " + ANTSUtility.roundScale2(criticalAngle) );
 						mediumIn = mediumOut; //The ray is not changing the medium!
 					}
 					
@@ -83,22 +83,23 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 //				
 				this.updateRay(realAngleToSet, ray, mediumIn);
 				
-				double[] directionVectorNew = ray.getDirectionVector();
-				double newAngleRay2 = ANTSUtility.computeAngleOfOneVector(directionVectorNew);
-				double angleBetweenOUT = ANTSUtility.computeAngleBetweenTwoRealDirectionVectors(directionVectorPerpendicular, directionVectorNew);
+//ONLY FOR DEBUGGING				
+//				double[] directionVectorNew = ray.getDirectionVector();
+//				double newAngleRay2 = ANTSUtility.computeAngleOfOneVector(directionVectorNew);
+//				double angleBetweenOUT = ANTSUtility.computeAngleBetweenTwoRealDirectionVectors(directionVectorPerpendicular, directionVectorNew);
 				
-				ANTSStream.print("__________________________________________________________");
+//				ANTSStream.print("__________________________________________________________");
 //				ANTSStream.print("NEW direction vector ray = [ " + directionVectorNew[0] + " | " + directionVectorNew[1] + " ]");
 //				ANTSStream.print("OLD direction vector ray = [ " + directionVectorRay[0] + " | " + directionVectorRay[1] + " ]");
 //				ANTSStream.print("OLD ray angle = " + angleRay);
 //				ANTSStream.print("NEW ray angle calc with DIRECTION vector = " + newAngleRay2);
 //				ANTSStream.print("NEW ray angle TO SET = " + realAngleToSet );
 //				ANTSStream.print("NEW ray angle GET = " + ray.getAngle());
-				ANTSStream.print("angle between OUT = " + angleBetweenOUT);
+//				ANTSStream.print("angle between OUT = " + angleBetweenOUT);
 //				ANTSStream.print("angle between IN = " + angleBetweenRayPerpendicular);
 //				ANTSStream.print("critical angle = " + criticalAngle);
 //				ANTSStream.print("ANGLE Perpendicular = " + anglePerpendicular);
-				ANTSStream.print("__________________________________________________________");
+//				ANTSStream.print("__________________________________________________________");
 				return realAngleToSet; //Only for testing!
 			}
 			else
@@ -332,7 +333,7 @@ public class ANTSRefractionComputeUnit implements ANTSIRefractionComputeUnit
 			}
 			else
 			{
-//				ANTSStream.print("ERROR: Impossible quadrant! The quadrant was " + quadrantRayReduced); //TODO
+				ANTSStream.print("ERROR: Impossible quadrant! The quadrant was " + quadrantRayReduced); //TODO
 				return null;
 			}
 		}

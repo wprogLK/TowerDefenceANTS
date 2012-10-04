@@ -72,7 +72,15 @@ public class ANTSUtility
 //		ANTSStream.print("directionVectorB: " + directionVectorB[0] + " | " + directionVectorB[1]);
 //		ANTSStream.print("----------------------------------------------------------------------");
 		
-		assert(angle<=180 && angle>=0);
+		try
+		{
+			assert(angle<=180 && angle>=0);
+		}
+		catch(AssertionError e)
+		{
+			ANTSStream.printErr("ERROR: the angle between to Vectors was bigger than 180 or smaller than 0. The angle was " + angle +" dotProduct was " + dotProduct + " lengthVectorA " + lengthVectorA + " lengthVectorB " + lengthVectorB +"angleCos " +cosAlpha);
+		}
+	
 		
 		return angle;
 	}

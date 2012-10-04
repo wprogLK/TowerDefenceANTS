@@ -346,83 +346,91 @@ public class ANTSRefractionComputeUnitTest2
 		
 		mockery.assertIsSatisfied();
 	}
+	
+	@Given("simpleTestFromAMediumWithGreaterRefractionIndexIntoStandardMediumWithoutReflexion")
+	public void testSituationB2(Mockery mockery)
+	{
+		//Setup for Situation B2:
+			//perpendicularAngle will be 180�
+			//rayAngle will be <270� & >180�
+		
+			//Perpendicular
+			//in java coordinate system!
+			double[] startPointPerpendicular = {100,100};//IMPORTANT: The start and endPoint of the perpendicular is always for the case IN the medium!!
+			double[] endPointPerpendicular = {500, 100};//IMPORTANT: The start and endPoint of the perpendicular is always for the case IN the medium!!
+			
+			final ANTSPerpendicular perpendicular = new ANTSPerpendicular(startPointPerpendicular, endPointPerpendicular);
+			double perpendicularAngle = perpendicular.getAngle(ANTSDirectionEnum.OUT);
+			double[] directionVectorPerpendicular = perpendicular.getDirectionVector(ANTSDirectionEnum.OUT);
+			
+			//Ray
+			//in java coordinate system!
+			double[] startPointRay = {150,120};		
+			double[] endPointRay = {100,100};	
+			
+			final double[] directionVectorRay = {endPointRay[0] - startPointRay[0], endPointRay[1] - startPointRay[1]};
+			final double rayAngle = ANTSUtility.computeAngleOfOneVector(directionVectorRay);
+			
+			//AngleBetween
+			double angleBetweenIn = ANTSUtility.computeAngleBetweenTwoRealDirectionVectors(directionVectorRay, directionVectorPerpendicular);
+			
+			//CriticalAngle
+			double criticalAngle = ANTSRefractionComputeUnit.calculateCriticalAngle(this.refractionIndexStandardMedium, this.refractionIndexMediumOut);
+			
+			assertThat(angleBetweenIn,lessThan(criticalAngle));
+			
+			assert(rayAngle<270 && rayAngle>180);
+			assert(perpendicularAngle==180);
+			
+		mockery.checking(new Expectations()
+		{
+			{
+			oneOf(rayControllerMock).getCurrentMedium(); 
+				will(returnValue(mediumOutControllerMock));
+		
+			oneOf(rayControllerMock).getCurrentMedium(); 
+				will(returnValue(mediumOutControllerMock));
+				
+			oneOf(mediumOutControllerMock).calculatePerpendicular(rayControllerMock);
+				will(returnValue(perpendicular));
+				
+			oneOf(rayControllerMock).getDirectionVector();
+				will(returnValue(directionVectorRay)); //TODO: is it necessary ?, because it's only for calculating the angle between ray and perpendicular
+				
+			oneOf(mediumOutControllerMock).getRefractionIndex();
+				will(returnValue(refractionIndexMediumOut));
+//				
+			oneOf(standardMediumControllerMock).getRefractionIndex();
+				will(returnValue(refractionIndexStandardMedium));
+//				
+			oneOf(rayControllerMock).getAngle();
+				will(returnValue(rayAngle));
+//				
+			oneOf(rayControllerMock).setAngle(with(lessThan(360.0)));
+			oneOf(rayControllerMock).setCurrentMedium(standardMediumControllerMock);
+			}
+		});
+		
+		double newAngleRay = this.unit.calculateAngle(this.rayControllerMock,  this.standardMediumControllerMock);
+		
+		Point2D p = new Point2D.Double(100, 0);
+		
+		AffineTransform aT = new AffineTransform();
+		aT.rotate(Math.toRadians(newAngleRay));
+		
+		aT.transform(p, p);
+		
+		double[] directionVectorRayOut = {p.getX(),p.getY()};
+		
+		double angleBetweenOut = ANTSUtility.computeAngleBetweenTwoRealDirectionVectors(directionVectorPerpendicular, directionVectorRayOut);
+
+		assert(perpendicularAngle<newAngleRay);
+		assert(angleBetweenIn<angleBetweenOut);
+		
+		mockery.assertIsSatisfied();
+	}
 //	
-//	@Given("simpleTestFromAMediumWithGreaterRefractionIndexIntoStandardMedium")
-//	public void testSituationB2(Mockery mockery)
-//	{
-//		//Setup for Situation B2:
-//			//perpendicularAngle will be 180�
-//			//rayAngle will be <270� & >180�
-//		
-//			//Perpendicular
-//			//in java coordinate system!
-//			double[] startPointPerpendicular = {500,100};
-//			double[] endPointPerpendicular = {100, 100};
-//			
-//			final ANTSPerpendicular perpendicular = new ANTSPerpendicular(startPointPerpendicular, endPointPerpendicular);
-//			double perpendicularAngle = perpendicular.getAngle(ANTSDirectionEnum.IN);
-//			double[] directionVectorPerpendicular = perpendicular.getDirectionVector(ANTSDirectionEnum.IN);
-//			
-//			//Ray
-//			//in java coordinate system!
-//			double[] startPointRay = {150,150};		
-//			double[] endPointRay = {100,100};	
-//			
-//			final double[] directionVectorRay = {endPointRay[0] - startPointRay[0], endPointRay[1] - startPointRay[1]};
-//			final double rayAngle = ANTSUtility.computeAngleOfOneVector(directionVectorRay);
-//			
-//			//AngleBetween
-//			double angleBetweenIn = ANTSUtility.computeAngleBetweenTwoRealDirectionVectors(directionVectorRay, directionVectorPerpendicular);
-//			
-//			assert(rayAngle<270 && rayAngle>180);
-//			assert(perpendicularAngle==180);
-//			
-//		mockery.checking(new Expectations()
-//		{
-//			{
-//				oneOf(rayControllerMock).getCurrentMedium(); 
-//					will(returnValue(standardMediumControllerMock));
-//					
-//				oneOf(mediumInControllerMock).calculatePerpendicular(rayControllerMock);
-//					will(returnValue(perpendicular));
-//					
-//				oneOf(rayControllerMock).getDirectionVector();
-//					will(returnValue(directionVectorRay)); //TODO: is it necessary ?, because it's only for calculating the angle between ray and perpendicular
-//					
-//				oneOf(mediumInControllerMock).getRefractionIndex();
-//					will(returnValue(refractionIndexMediumIn));
-//					
-//				oneOf(standardMediumControllerMock).getRefractionIndex();
-//					will(returnValue(refractionIndexStandardMedium));
-//					
-//				oneOf(rayControllerMock).getAngle();
-//					will(returnValue(rayAngle));
-//					
-//				oneOf(rayControllerMock).setAngle(with(lessThan(360.0)));
-//				oneOf(rayControllerMock).setCurrentMedium(mediumInControllerMock);
-//			}
-//		});
-//		
-//		double newAngleRay = this.unit.calculateAngle(this.rayControllerMock,  this.mediumInControllerMock);
-//		
-//		Point2D p = new Point2D.Double(100, 0);
-//		
-//		AffineTransform aT = new AffineTransform();
-//		aT.rotate(Math.toRadians(newAngleRay));
-//		
-//		aT.transform(p, p);
-//		
-//		double[] directionVectorRayOut = {p.getX(),p.getY()};
-//		
-//		double angleBetweenOut = ANTSUtility.computeAngleBetweenTwoRealDirectionVectors(directionVectorPerpendicular, directionVectorRayOut);
-//
-//		assert(perpendicularAngle<newAngleRay);
-//		assert(angleBetweenIn>angleBetweenOut);
-//		
-//		mockery.assertIsSatisfied();
-//	}
-//	
-//	@Given("simpleTestFromAMediumWithGreaterRefractionIndexIntoStandardMedium")
+//	@Given("simpleTestFromAMediumWithGreaterRefractionIndexIntoStandardMediumWithoutReflexion")
 //	public void testSituationC1(Mockery mockery)
 //	{
 //		//Setup for Situation C1:
@@ -431,12 +439,12 @@ public class ANTSRefractionComputeUnitTest2
 //		
 //			//Perpendicular
 //			//in java coordinate system!
-//			double[] startPointPerpendicular = {500,500};
-//			double[] endPointPerpendicular = {500, 100};
+//			double[] startPointPerpendicular = {500,500}; //IMPORTANT: The start and endPoint of the perpendicular is always for the case IN the medium!!
+//			double[] endPointPerpendicular = {500, 100}; //IMPORTANT: The start and endPoint of the perpendicular is always for the case IN the medium!!
 //			
 //			final ANTSPerpendicular perpendicular = new ANTSPerpendicular(startPointPerpendicular, endPointPerpendicular);
-//			double perpendicularAngle = perpendicular.getAngle(ANTSDirectionEnum.IN);
-//			double[] directionVectorPerpendicular = perpendicular.getDirectionVector(ANTSDirectionEnum.IN);
+//			double perpendicularAngle = perpendicular.getAngle(ANTSDirectionEnum.OUT);
+//			double[] directionVectorPerpendicular = perpendicular.getDirectionVector(ANTSDirectionEnum.OUT);
 //			
 //			//Ray
 //			//in java coordinate system!
@@ -448,6 +456,11 @@ public class ANTSRefractionComputeUnitTest2
 //		
 //			//AngleBetween
 //			double angleBetweenIn = ANTSUtility.computeAngleBetweenTwoRealDirectionVectors(directionVectorRay, directionVectorPerpendicular);
+//
+//			//CriticalAngle
+//			double criticalAngle = ANTSRefractionComputeUnit.calculateCriticalAngle(this.refractionIndexStandardMedium, this.refractionIndexMediumOut);
+//			
+//			assertThat(angleBetweenIn,lessThan(criticalAngle));
 //			
 //			assert(rayAngle<360 && rayAngle>270);
 //			assert(perpendicularAngle==270);
@@ -455,30 +468,35 @@ public class ANTSRefractionComputeUnitTest2
 //		mockery.checking(new Expectations()
 //		{
 //			{
-//				oneOf(rayControllerMock).getCurrentMedium(); 
-//					will(returnValue(standardMediumControllerMock));
-//					
-//				oneOf(mediumInControllerMock).calculatePerpendicular(rayControllerMock);
-//					will(returnValue(perpendicular));
-//					
-//				oneOf(rayControllerMock).getDirectionVector();
-//					will(returnValue(directionVectorRay)); //TODO: is it necessary ?, because it's only for calculating the angle between ray and perpendicular
-//					
-//				oneOf(mediumInControllerMock).getRefractionIndex();
-//					will(returnValue(refractionIndexMediumIn));
-//					
-//				oneOf(standardMediumControllerMock).getRefractionIndex();
-//					will(returnValue(refractionIndexStandardMedium));
-//					
-//				oneOf(rayControllerMock).getAngle();
-//					will(returnValue(rayAngle));
-//					
-//				oneOf(rayControllerMock).setAngle(with(lessThan(360.0)));
-//				oneOf(rayControllerMock).setCurrentMedium(mediumInControllerMock);
+//				{
+//					oneOf(rayControllerMock).getCurrentMedium(); 
+//						will(returnValue(mediumOutControllerMock));
+//				
+//					oneOf(rayControllerMock).getCurrentMedium(); 
+//						will(returnValue(mediumOutControllerMock));
+//						
+//					oneOf(mediumOutControllerMock).calculatePerpendicular(rayControllerMock);
+//						will(returnValue(perpendicular));
+//						
+//					oneOf(rayControllerMock).getDirectionVector();
+//						will(returnValue(directionVectorRay)); //TODO: is it necessary ?, because it's only for calculating the angle between ray and perpendicular
+//						
+//					oneOf(mediumOutControllerMock).getRefractionIndex();
+//						will(returnValue(refractionIndexMediumOut));
+////						
+//					oneOf(standardMediumControllerMock).getRefractionIndex();
+//						will(returnValue(refractionIndexStandardMedium));
+////						
+//					oneOf(rayControllerMock).getAngle();
+//						will(returnValue(rayAngle));
+////						
+//					oneOf(rayControllerMock).setAngle(with(lessThan(360.0)));
+//					oneOf(rayControllerMock).setCurrentMedium(standardMediumControllerMock);
+//				}
 //			}
 //		});
 //		
-//		double newAngleRay = this.unit.calculateAngle(this.rayControllerMock,  this.mediumInControllerMock);
+//		double newAngleRay = this.unit.calculateAngle(this.rayControllerMock,  this.standardMediumControllerMock);
 //		
 //		Point2D p = new Point2D.Double(100, 0);
 //		
@@ -492,7 +510,7 @@ public class ANTSRefractionComputeUnitTest2
 //		double angleBetweenOut = ANTSUtility.computeAngleBetweenTwoRealDirectionVectors(directionVectorPerpendicular, directionVectorRayOut);
 //		
 //		assert(perpendicularAngle<newAngleRay);
-//		assert(angleBetweenIn>angleBetweenOut);
+//		assert(angleBetweenIn<angleBetweenOut);
 //		
 //		mockery.assertIsSatisfied();
 //	}
