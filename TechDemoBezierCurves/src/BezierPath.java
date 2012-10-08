@@ -285,6 +285,7 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 		}
 	}
 	
+	//cubic bezierCurve (n=3) (4 Points)
 	private class CurveToCommand  extends BezierCommand implements BezierIPathCommand
 	{
 		private double[] point1;
@@ -304,8 +305,254 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 		@Override
 		public double[] calculateIntersectionPoint(double[][] rayVector) 
 		{
+			/*
+			 * RayVector:
+			 * 	A:=startPoint =(a_x,a_y) = (a,g)
+			 * 	B:=endPoint = (b_x,b_y)
+			 * 	dR:=B-A = (dR_x,dR_y) = (b,h)
+			 * 
+			 * 	P_R:= A+t*dR
+			 * 
+			 * Cubic:
+			 *  P_0:=startPoint
+			 *  P_1,P_2 points
+			 *  P_3:=endPoint
+			 *  D:=endPoints = (d_x,d_y)
+			 *
+			 *  C:= (-P_0+3*P_1-3*P_2+P_3) = (c,i)
+			 *  D:= (3*P_0-6*P_1+3*P_2) = (d,j)
+			 *  E:= (-3*P_0+3*P_1) = (e,k)
+			 *	F:= P_0 = (f,l)
+			 *
+			 *	P_C = C*s^3+D*s^2+E*s+F
+			 *
+			 * Equation:
+			 * (I)  a + t*b = c*s^3 + d*s^2 +e*s+f
+			 * (II) g+t*h = i*s^3 + j*s2 + l*s + l
+			 * 
+			 * 
+			 * Calculation:
+			 * 
+			 * 	COMMENT: everything with ' is a double letter(ex. A' is in the code AA)!
+			 * 
+			 * 	(I)  -> t'  = (c*s^3+d*s^2+e*s+f-a)/b
+			 * 	(II) -> t'' = (i*s^3+j*s^2+k*s+l-g)/h
+			 * 
+			 *  t' == t'' & simplify -> s^3(h*c-b*i)+s^2(h*d-b*j)+s(h*e-b*k)+h*f-h*a+b*g-b*l=0
+			 * 
+			 *  A':= h*c-b*i
+			 *  B':= h*d-b*j
+			 *  C':= h*e-b*k
+			 *  D':= h*f-h*a+b*g-b*l
+			 *  
+			 *  A'!=0 ->
+			 *  a':= B'/A'
+			 *  b':= C'/A'
+			 *  c':=D'/A'
+			 *  
+			 *  s = alpha*z+beta; alpha := 1; beta :=-a'/3
+			 *  
+			 *  p:= b'-(a'^2)/3
+			 *  q:= (2*a'^2)/27 -(a'*b')/3+c'
+			 *  
+			 *  Det:= (q/2)^2 + (p/3)^3
+			 *  
+			 *  u:= thirdRoot(-q/2+sqrt(Det))
+			 *  v:= thirdRoot(-q/2-sqrt(Det))
+			 *  
+			 *  case 1: Det>0: 1 real solution 2 complex
+			 *  	z_1 := u+v
+			 *  	z_(2,3) := .....
+			 *  case 2: Det=0: 3 real solutions
+			 *  	u=v ->  z_1 = 2u = thirdRoot(-4*q) = 3q/p
+			 *  			z_(2,3) = -u = thirdRoot(q/2) = -3q/2p
+			 *  	p=q=0 -> z = 0 is the only solution!
+			 *  case 3: Det<0 3 real solutions 
+			 *  	u,v complex konj. to each other -> z = u+v = u + ¬(u) = 2Re(u)
+			 *  	.
+			 *  	.
+			 *  	.
+			 *  	.
+			 *  	z_2 = ....
+			 *  	z_1 = ....
+			 *  	z_3 = ....
+			 *  
+			 */	
+			
+			System.out.println("try to calculate intersection point with a curve");
+			
+			//RAY:
+			double[] A = rayVector[0];
+			double[] B = rayVector[1];
+			
+			double a = A[0];
+			double g = A[1];
+			
+			double[] dR = {B[0]-A[0],B[1]-A[1]};
+			
+			double b = dR[0];
+			double h = dR[1];
+			
+			//CUBIC:
+			
+			double[] P_0 = this.startPoint;
+			double[] P_1 = this.point1;
+			double[] P_2 = this.point2;
+			double[] P_3 = this.endPoint;
+			
+			double[] C = new double[2];
+			double[] D = new double[2];
+			double[] E = new double[2];
+			double[] F = new double[2];
+			
+				for(int i=0; i<2;i++)
+				{
+					C[i] = -1*P_0[i]+3*P_1[i]-3*P_2[i]+P_3[i];
+					D[i] = 3*P_0[i]-6*P_1[i]+3*P_2[i];
+					E[i] = -3*P_0[i]+3*P_1[i];
+					F[i] = P_0[i];
+				}
+			
+			double c = C[0];
+			double i = C[1];
+			
+			double d = D[0];
+			double j = D[1];
+			
+			double e = D[0];
+			double k = D[1];
+			
+			double f = F[0];
+			double l = F[1];
+			
+			//EQUATION:
+			
+			double AA = h*c-b*i;
+			double BB = h*d-b*j;
+			double CC = h*e-b*k;
+			double DD = h*f-h*a+b*g-b*l;
+			
+			assert(AA!=0);
+			
+			double aa = BB/AA;
+			double bb = CC/AA;
+			double cc = DD/AA;
+			
+			double alpha = 1;
+			double beta = -aa/3;
+			
+			double p = bb-pow2(aa)/3;
+			double q = (2*pow2(aa)/27-(aa*bb)/3+cc);
+			
+			double det = pow2(q/2)+pow3(p/3);
+			
+			double u = Math.cbrt(-(q/2)+Math.sqrt(det));
+			double v = Math.cbrt(-(q/2)-Math.sqrt(det));
+			
+			//Cases:
+			
+
+			double[] zs = new double[3];
+			
+			if(det>0)
+			{
+				System.out.println("case 1: det>0");
+				
+				double z_1 = u+v;
+				zs[0] = z_1;
+			}
+			else if(det == 0)
+			{
+				System.out.println("case 2: det==0");
+				
+				if(u == v)
+				{
+					System.out.println("u==v");
+					
+					double z_11 = 2*u;
+					double z_12 = Math.cbrt(-4*q);
+					double z_13 = 3*q/p;
+					
+					assert(z_11==z_12 && z_12==z_13); //TODO check this
+					
+					zs[0] = z_11;
+					
+					System.out.println("z_11 = " + z_11 + "\nz_12 = "+ z_12 + "\nz_13 = " + z_13);
+					
+					double z_21 = -u;
+					double z_22 = Math.cbrt(q/2);
+					double z_23 = -3*q/(2*p);
+					
+					assert(z_21==z_22 && z_22==z_23); //TODO check this
+					
+					zs[1] = z_21;
+					
+					System.out.println("z_21 = " + z_21 + "\nz_22 = "+ z_22 + "\nz_23 = " + z_23);
+				}
+				
+				if(p==0 && q==0)
+				{
+					System.out.println("p==q==0");
+					
+					double z_1=0;
+					
+					zs[0] = z_1;
+					
+				}
+			}
+			else if(det<0)
+			{
+				System.out.println("case 3: det<0");
+				
+				//u, v complex conj. to each other //TODO: implement this condition!
+				
+				double z_2 = -Math.sqrt(-4*p/3)*Math.cos((1/3)*Math.acos((-q/2))*Math.sqrt(-27/pow3(p))+Math.PI/3);	//TODO Check this!
+				double z_1 = Math.sqrt(-4*p/3)*Math.cos((1/3)*Math.acos((-q/2))*Math.sqrt(-27/pow3(p))); //TODO Check this!
+				double z_3 = -Math.sqrt(-4*p/3)*Math.cos((1/3)*Math.acos((-q/2))*Math.sqrt(-27/pow3(p))-Math.PI/3);	//TODO Check this!
+			
+				zs[1] = z_2;
+				zs[0] = z_1;
+				zs[2] = z_3;
+				
+				System.out.println("z_2 = " + z_2 + "\nz_1 = "+ z_1 + "\nz_3 = " + z_3);
+			}
+			else
+			{
+				System.out.println("impossible case! should not happen! (in CurveToCommand)"); //TODO
+			}
+			
+			///ReSub:
+			
+			double[] s = new double[3];
+			
+			for(int index = 0; index<3; index++)
+			{
+				s[index] = zs[index] - (BB)/(3*AA);
+			}
+			
+			double[] t = new double[3];
+			double[] tt = new double[3];
+			
+			for(int index = 0; index<3; index++)
+			{
+				t[index] = (c*pow3(s[index])+d*pow2(s[index])+e*s[index]+f-a)/b;
+				tt[index] = (i*pow3(s[index])+j*pow2(s[index])+k*s[index]+l-g)/h;
+				
+				System.out.println("t = " + t[index] + " tt = " + tt[index]);
+			}
+			
 			return null;
 		}
+	}
+	
+	private double pow2(double n)
+	{
+		return Math.pow(n, 2);
+	}
+	
+	private double pow3(double n)
+	{
+		return Math.pow(n, 3);
 	}
 	
 	private class LineToCommand  extends BezierCommand implements BezierIPathCommand

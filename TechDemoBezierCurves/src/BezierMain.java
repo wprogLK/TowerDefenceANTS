@@ -17,8 +17,8 @@ public class BezierMain extends JFrame
 	private ArrayList<BezierIPath> paths;
 	private static double[] pointToDraw = {-1,-1};
 	
-	private double[] startPointRay = {150,110};
-	private double[] endPointRay = {160,200};
+	private double[] startPointRay ={150,150}; //{150,110};
+	private double[] endPointRay = {300,170};//{160,200};
 	private double[][] rayVector = {startPointRay,endPointRay};
 	
 	public BezierMain(String title)
@@ -60,8 +60,9 @@ public class BezierMain extends JFrame
 		BezierIPath p = new BezierPath();
 		
 		p.addMoveTo(100, 100);
-		p.addLineTo(200, 200);
+//		p.addLineTo(200, 200);
 //		p.addQuadTo(150, 150, 300, 50);
+		p.addCurveTo(150, 150, 200, 250, 300, 50);
 		
 		this.paths.add(p);
 		
@@ -119,7 +120,7 @@ public class BezierMain extends JFrame
 			currentPath.drawSingleSegments(g2d);
 			
 			double[] intersectionPoint = currentPath.calculateIntersectionPoint(rayVector);
-			g2d.fill(new Rectangle2D.Double(intersectionPoint[0], intersectionPoint[1], 50, 50));
+//			g2d.fill(new Rectangle2D.Double(intersectionPoint[0], intersectionPoint[1], 50, 50));
 		}
 		
 		Rectangle2D point = new Rectangle2D.Double(pointToDraw[0], pointToDraw[1], 5, 5);
