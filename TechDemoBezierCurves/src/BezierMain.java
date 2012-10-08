@@ -56,6 +56,7 @@ public class BezierMain extends JFrame
 		
 		p.addMoveTo(20, 20);
 		p.addLineTo(100, 100);
+		p.addQuadTo(150, 150, 300, 50);
 		
 		this.paths.add(p);
 		
@@ -104,7 +105,11 @@ public class BezierMain extends JFrame
 		
 		while(pathIterator.hasNext())
 		{
-			g2d.draw(pathIterator.next());
+			BezierIPath currentPath = pathIterator.next();
+			
+			g2d.draw(currentPath);
+			
+			currentPath.drawSingleSegments(g2d);
 		}
 		
 		Rectangle2D point = new Rectangle2D.Double(pointToDraw[0], pointToDraw[1], 5, 5);

@@ -1,4 +1,6 @@
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.GeneralPath;
 import java.awt.geom.Path2D;
 import java.util.ArrayList;
 import java.util.Stack;
@@ -127,7 +129,7 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 	}
 
 	@Override
-	public double[] calculateIntersectionPoint(double[] directionVector)
+	public double[] calculateIntersectionPoint(double[][] rayVector)
 	{
 		double[] intersectionPoint = new double[2];
 		
@@ -135,9 +137,9 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 		{
 			if(!command.getClass().equals(MoveToCommand.class)) //Because moveTo Command has no visible line, and no intersectionPoint, so skip it
 			{
-				if(command.contains(directionVector))	//Check first if directionVector intersects current "curve" in the bounds2D
+				if(command.contains(rayVector))	//Check first if directionVector intersects current bounds2D of the current command
 				{
-					 intersectionPoint = command.calculateIntersectionPoint(directionVector);
+					 intersectionPoint = command.calculateIntersectionPoint(rayVector);
 				}
 				
 				if(isIntersectionPointValid(intersectionPoint))
@@ -162,21 +164,25 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 		return false;
 	}
 	
-//	private void addEndpoint(double[] endpoint)
-//	{
-//		assert(endpoint!=null);
-//		
-//		this.endPoints.add(endpoint);
-//	}
+	@Override
+	public void drawSingleSegments(Graphics2D g2d)
+	{
+		for(BezierIPathCommand command : this.segments)
+		{
+			command.paintSingleSegment(g2d);
+		}
+	}
+	
 	////////////
 	//COMMANDS//
 	////////////
-	
 	
 	private abstract class BezierCommand implements BezierIPathCommand
 	{
 		protected final double[] startPoint;
 		protected final double[] endPoint;
+		
+		protected GeneralPath pathOfOneSegment;
 		
 		public BezierCommand(double[] startPoint, double[] endPoint)
 		{
@@ -191,6 +197,37 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 		{
 			return this.endPoint;
 		}
+		
+		@Override
+		public final boolean contains(double[][] rayVector) 
+		{
+			if(pathOfOneSegment != null)
+			{
+				return this.pathOfOneSegment.getBounds2D().contains(rayVector[1][0], rayVector[1][1]); //endPoint of ray must be inside the bounds! //TODO Check and test this!!!
+			}
+			else
+			{
+				return false; //TODO
+			}
+		}
+		
+		protected void initGeneralPath(double[] startPointOfSegment)
+		{
+			this.pathOfOneSegment = new GeneralPath();
+			this.pathOfOneSegment.moveTo(startPointOfSegment[0], startPointOfSegment[1]);
+		}
+		
+		public final void paintSingleSegment(Graphics2D g2d)
+		{
+			if(pathOfOneSegment!=null)
+			{
+				g2d.setColor(Color.BLUE);
+				g2d.draw(pathOfOneSegment);
+				
+				g2d.setColor(Color.RED);
+				g2d.draw(pathOfOneSegment.getBounds2D());
+			}
+		}
 	}
 	
 	private class MoveToCommand extends BezierCommand implements BezierIPathCommand
@@ -201,17 +238,10 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 		}
 		
 		@Override
-		public double[] calculateIntersectionPoint(double[] directionVector) 
+		public double[] calculateIntersectionPoint(double[][] rayVector) 
 		{
 			//DO NOTHING!
 			return null;
-		}
-
-		@Override
-		public boolean contains(double[] directionVector) 
-		{
-			//DO NOTHING!
-			return false;
 		}
 	}
 	
@@ -220,20 +250,16 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 		public CloseCommand(double[] startPoint,double[] endPoint)
 		{
 			super(startPoint, endPoint);
+			
+			this.initGeneralPath(startPoint);
+			this.pathOfOneSegment.lineTo(endPoint[0], endPoint[1]); //TODO: is closePath always a simple line? Test this
 		}
 		
 		@Override
-		public double[] calculateIntersectionPoint(double[] directionVector) 
+		public double[] calculateIntersectionPoint(double[][] rayVector) 
 		{
 			// TODO Auto-generated method stub
 			return null;
-		}
-
-		@Override
-		public boolean contains(double[] directionVector) 
-		{
-			// TODO Auto-generated method stub
-			return false;
 		}
 	}		
 	
@@ -246,20 +272,16 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 			super(startPoint,endPoint);
 			
 			this.point1 = point1;
+			
+			this.initGeneralPath(startPoint);
+			this.pathOfOneSegment.quadTo(point1[0], point1[1], endPoint[0], endPoint[1]);
 		}
 		
 		@Override
-		public double[] calculateIntersectionPoint(double[] directionVector) 
+		public double[] calculateIntersectionPoint(double[][] rayVector) 
 		{
 			// TODO Auto-generated method stub
 			return null;
-		}
-
-		@Override
-		public boolean contains(double[] directionVector) 
-		{
-			// TODO Auto-generated method stub
-			return false;
 		}
 	}
 	
@@ -274,20 +296,16 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 			
 			this.point1 = point1;
 			this.point2 = point2;
+			
+			this.initGeneralPath(startPoint);
+			this.pathOfOneSegment.curveTo(point1[0], point1[1],point2[0], point2[1] ,endPoint[0], endPoint[1]);
 		}
 		
 		@Override
-		public double[] calculateIntersectionPoint(double[] directionVector) 
+		public double[] calculateIntersectionPoint(double[][] rayVector) 
 		{
 			// TODO Auto-generated method stub
 			return null;
-		}
-
-		@Override
-		public boolean contains(double[] directionVector) 
-		{
-			// TODO Auto-generated method stub
-			return false;
 		}
 	}
 	
@@ -296,20 +314,16 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 		public LineToCommand(double[] startPoint, double[] endPoint)
 		{
 			super(startPoint,endPoint);
+			
+			this.initGeneralPath(startPoint);
+			this.pathOfOneSegment.lineTo(endPoint[0], endPoint[1]);
 		}
 		
 		@Override
-		public double[] calculateIntersectionPoint(double[] directionVector) 
+		public double[] calculateIntersectionPoint(double[][] rayVector) 
 		{
 			// TODO Auto-generated method stub
 			return null;
-		}
-
-		@Override
-		public boolean contains(double[] directionVector) 
-		{
-			// TODO Auto-generated method stub
-			return false;
 		}
 	}
 }
