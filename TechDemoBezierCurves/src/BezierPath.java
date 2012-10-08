@@ -137,10 +137,10 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 		{
 			if(!command.getClass().equals(MoveToCommand.class)) //Because moveTo Command has no visible line, and no intersectionPoint, so skip it
 			{
-				if(command.contains(rayVector))	//Check first if directionVector intersects current bounds2D of the current command
-				{
+//				if(command.contains(rayVector))	//Check first if directionVector intersects current bounds2D of the current command
+//				{
 					 intersectionPoint = command.calculateIntersectionPoint(rayVector);
-				}
+//				}
 				
 				if(isIntersectionPointValid(intersectionPoint))
 				{
@@ -203,7 +203,7 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 		{
 			if(pathOfOneSegment != null)
 			{
-				return this.pathOfOneSegment.getBounds2D().contains(rayVector[1][0], rayVector[1][1]); //endPoint of ray must be inside the bounds! //TODO Check and test this!!!
+				return this.pathOfOneSegment.getBounds2D().contains(rayVector[1][0], rayVector[1][1]); //endPoint of ray must be inside the bounds! //TODO Check and test this!!! DEBUG: it's not working if the ray is too long!
 			}
 			else
 			{
@@ -228,6 +228,13 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 				g2d.draw(pathOfOneSegment.getBounds2D());
 			}
 		}
+		
+		
+		@Override
+		public double[] calculateIntersectionPoint(double[][] rayVector) 
+		{
+			return null;
+		}
 	}
 	
 	private class MoveToCommand extends BezierCommand implements BezierIPathCommand
@@ -245,21 +252,14 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 		}
 	}
 	
-	private class CloseCommand  extends BezierCommand implements BezierIPathCommand
+	private class CloseCommand  extends LineToCommand implements BezierIPathCommand //TODO: is closePath always a simple line? Test this
 	{	
 		public CloseCommand(double[] startPoint,double[] endPoint)
 		{
 			super(startPoint, endPoint);
 			
-			this.initGeneralPath(startPoint);
-			this.pathOfOneSegment.lineTo(endPoint[0], endPoint[1]); //TODO: is closePath always a simple line? Test this
-		}
-		
-		@Override
-		public double[] calculateIntersectionPoint(double[][] rayVector) 
-		{
-			// TODO Auto-generated method stub
-			return null;
+//			this.initGeneralPath(startPoint);
+//			this.pathOfOneSegment.lineTo(endPoint[0], endPoint[1]); 
 		}
 	}		
 	
@@ -304,7 +304,6 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 		@Override
 		public double[] calculateIntersectionPoint(double[][] rayVector) 
 		{
-			// TODO Auto-generated method stub
 			return null;
 		}
 	}
@@ -320,10 +319,67 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 		}
 		
 		@Override
-		public double[] calculateIntersectionPoint(double[][] rayVector) 
+		public double[] calculateIntersectionPoint(double[][] rayVector)  //TODO Test this!
 		{
-			// TODO Auto-generated method stub
-			return null;
+			/*
+			 * RayVector:
+			 * 	A:=startPoint =(a_x,a_y) = (a,e)
+			 * 	B:=endPoint = (b_x,_y)
+			 * 	dR:=B-A = (dR_x,dR_y) = (b,f)
+			 * 
+			 * 	P_R:= A+t*dR
+			 * 
+			 * line:
+			 *  C:=startPoint = (c_x,c_y) = (c,g)
+			 *  D:=endPoints = (d_x,d_y)
+			 *  dL:=D-C = (dL_x,dL_y) = (d,h)
+			 *  
+			 *  P_L:= C+s*dL
+			 *  
+			 *  Equation:
+			 *  a+t*b=c+s*d
+			 *  e+t*f=g+s*h
+			 */
+			
+			//RAY:
+			double[] A = rayVector[0];
+			double[] B = rayVector[1];
+			
+			double a = A[0];
+			double e = A[1];
+			
+			double b_x = B[0];
+			double b_y = B[1];
+			
+			double[] dR = {(b_x-a),(b_y-e)};
+			double b = dR[0];
+			double f = dR[1];
+			
+			//Line:
+			double[] C = this.startPoint;
+			double[] D = this.endPoint;
+			
+			double c = C[0];
+			double g = C[1];
+			
+			double d_x = D[0];
+			double d_y = D[1];
+			
+			double[] dL = {(d_x-c),(d_y-g)};
+			double d = dL[0];
+			double h = dL[1];
+			
+			
+			//Equation solved:
+			double s = (-a*f+b*e-b*g+c*f)/(b*h-d*f);
+			double t = (-a+c+d*s)/(b);
+			
+			assert(s>=0 && s<=1);
+			assert(t>=0 && t<=1);
+			
+			double[] intersectionPoint = {(a+t*b), (e+t*f)}; //TODO check this
+			
+			return intersectionPoint;
 		}
 	}
 }

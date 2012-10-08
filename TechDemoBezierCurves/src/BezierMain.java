@@ -3,6 +3,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.GeneralPath;
+import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -15,6 +16,10 @@ public class BezierMain extends JFrame
 //	private ArrayList<GeneralPath> paths;
 	private ArrayList<BezierIPath> paths;
 	private static double[] pointToDraw = {-1,-1};
+	
+	private double[] startPointRay = {150,110};
+	private double[] endPointRay = {160,200};
+	private double[][] rayVector = {startPointRay,endPointRay};
 	
 	public BezierMain(String title)
 	{
@@ -54,11 +59,13 @@ public class BezierMain extends JFrame
 		
 		BezierIPath p = new BezierPath();
 		
-		p.addMoveTo(20, 20);
-		p.addLineTo(100, 100);
-		p.addQuadTo(150, 150, 300, 50);
+		p.addMoveTo(100, 100);
+		p.addLineTo(200, 200);
+//		p.addQuadTo(150, 150, 300, 50);
 		
 		this.paths.add(p);
+		
+	
 		
 //		this.paths = new ArrayList<GeneralPath>();
 //		
@@ -110,11 +117,16 @@ public class BezierMain extends JFrame
 			g2d.draw(currentPath);
 			
 			currentPath.drawSingleSegments(g2d);
+			
+			double[] intersectionPoint = currentPath.calculateIntersectionPoint(rayVector);
+			g2d.fill(new Rectangle2D.Double(intersectionPoint[0], intersectionPoint[1], 50, 50));
 		}
 		
 		Rectangle2D point = new Rectangle2D.Double(pointToDraw[0], pointToDraw[1], 5, 5);
 		
 		g2d.fill(point);
+		
+		g2d.draw(new Line2D.Double(this.startPointRay[0], this.startPointRay[1], this.endPointRay[0], this.endPointRay[1]));
 		
 	}
 	
