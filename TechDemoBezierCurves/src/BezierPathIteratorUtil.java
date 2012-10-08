@@ -1,4 +1,6 @@
+import java.awt.font.NumericShaper;
 import java.awt.geom.PathIterator;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,7 +18,7 @@ public class BezierPathIteratorUtil
 		double[] prevPoint = {Double.NaN,Double.NaN}; //The endpoint of the previous segment
 		double[] startPoint = {Double.NaN,Double.NaN}; //The startpoint of the first segment
 		
-		double[] currentPoints = {Double.NaN,Double.NaN,Double.NaN,Double.NaN};
+		double[] currentPoints = {Double.NaN,Double.NaN,Double.NaN,Double.NaN, Double.NaN,Double.NaN};
 		
 		boolean start = true;
 		
@@ -34,11 +36,8 @@ public class BezierPathIteratorUtil
 				
 				start = false;
 			}
-			printPoints(currentPoints, " currentPoint = ");
-			printPoints(prevPoint, " prevPoint = ");
+
 			analyzeCurrentSegment(type,currentPoints,prevPoint);
-			
-			System.out.println("The prevPoint is [" + prevPoint[0] + " | " + prevPoint[1] + " ] ");
 			
 			resetCurrentPoints(currentPoints);
 			
@@ -57,45 +56,52 @@ public class BezierPathIteratorUtil
 		}
 	}
 
-	private static void printPoints(double[] currentPoints, String message)
-	{
-		for(int i = 0; i*2<currentPoints.length/2;i=i+2)
-		{
-			System.out.println(message + " [ " + currentPoints[i] + " | " + currentPoints[i+1] +" ]" );
-		}
-	}
-	
+	/**
+	 * 
+	 * @param type
+	 * @param currentPoints
+	 * @param prevPoint: the endPoint of the previous segment
+	 */
 	private static void analyzeCurrentSegment(int type, double[] currentPoints, double[] prevPoint) 
 	{
-		double[] currentValidPoints = Arrays.copyOfRange(currentPoints, 0, type*2);
+		double[][] currentValidPoints = getCurrentValidPoints(currentPoints,prevPoint,type);
 		
+		printAllPoints(currentValidPoints, "current Valid points: ");
+
 		switch(type)
 		{
 			case(PathIterator.SEG_MOVETO):
 			{
-				analyzeMove(currentValidPoints,prevPoint);
+				System.out.println("MoveTo (T = " + type +")");
+
+				//no analysis necessary because it's only a gap, so no intersection point!
 				
 				break;
 			}
 			case(PathIterator.SEG_LINETO):
 			{
-				analyzeLine(currentValidPoints,prevPoint);
+				System.out.println("LineTo (T = " + type +")");
+				analyzeLine(currentValidPoints);
 				
 				break;
 			}
 			case(PathIterator.SEG_QUADTO):
 			{
-				analyzeQuadratic(currentValidPoints,prevPoint);
+				System.out.println("QuadTo (T = " + type +")");
+				analyzeQuadratic(currentValidPoints);
+				
 				break;
 			}
 			case(PathIterator.SEG_CUBICTO):
 			{
-			
+				System.out.println("CubicTo (T = " + type +")");
 				
 				break;
 			}
 			case(PathIterator.SEG_CLOSE):
 			{
+				System.out.println("Close (T = " + type +")");
+				
 				break;
 			}
 			default:
@@ -105,36 +111,114 @@ public class BezierPathIteratorUtil
 			}
 		}
 		
-		int length = currentPoints.length;
-		int numberOfPoints = length/2;
+		int length = currentValidPoints.length;
 		
-		prevPoint[0] = currentPoints[length-2];
-		prevPoint[1] = currentPoints[length-1];
+		prevPoint[0] = currentValidPoints[length-1][0];
+		prevPoint[1] = currentValidPoints[length-1][1];
+		
+		System.out.println("the new prev point is [ " + prevPoint[0] + " | " + prevPoint[1] + " ]");
 	}
 
-	private static void analyzeMove(double[] currentPoints, double[] prevPoint)
+	private static double[][] getCurrentValidPoints(double[] currentPoints, double[] prevPoint, int type) 
 	{
-		prevPoint = currentPoints;
+		int numberOfCurrentPoints;
+		
+		double[] headPoint = new double[2];	//The prevPoint
+		double[] tailPoint = new double[2];	//The startPointOfPath (only necessary if type is SEG_CLOSE)
+		
+		boolean validHeadPoint = false;
+		boolean validTailPoint = false;
+		
+		double[][] validPoints;
+		int numberOfValidPoints = 0;
+	
+		if(type == PathIterator.SEG_MOVETO)
+		{
+			numberOfCurrentPoints = 1; 	//TODO: WARNING: prevPoint and point in currentPoints are the same! only one is needed!
+			//TODO is it always the start point? What happen if moveTo, then for example lineTo and then again moveTo and then lineTo and at last closeTo? (To which moveTo refers now closeTo?) 
+			//TODO setTail! & validTailPoint = true
+			//TODO numberOfValidPoints++;
+		}
+		else if(type == PathIterator.SEG_CLOSE)
+		{
+			numberOfCurrentPoints = 0;
+			headPoint = prevPoint;
+			numberOfValidPoints = numberOfValidPoints + 1;	//TODO +2 not +1 because of the tail
+			//TODO setTail!
+			validHeadPoint = true;
+		}
+		else
+		{
+			assert(type>0 && type<4);
+			
+			numberOfCurrentPoints = type;
+			headPoint = prevPoint;
+			numberOfValidPoints ++;
+			
+			validHeadPoint = true;
+		}
+		
+		int sizeOfValidPoints = numberOfCurrentPoints + numberOfValidPoints;
+		int index = 0;
+		
+		validPoints = new double[sizeOfValidPoints][2];
+		
+		if(validHeadPoint)
+		{
+			validPoints[index][0] = headPoint[0];
+			validPoints[index][1] = headPoint[1];
+			
+			index ++;
+		}
+
+		for(int i = 0; i<numberOfCurrentPoints*2; i=i+2) //TODO CHECK THIS!
+		{	
+			validPoints[index][0] = currentPoints[i];
+			validPoints[index][1] = currentPoints[i+1];
+			
+			index ++;
+		}
+		
+		if(validTailPoint)
+		{
+			validPoints[index][0] = tailPoint[0];
+			validPoints[index][1] = tailPoint[1];
+			
+			index ++;
+		}
+		
+		return validPoints;
 	}
 	
-	private static void analyzeLine(double[] currentPoints, double[] prevPoint)
+	private static void printAllPoints(double[][] currentValidPoints, String string) 
 	{
-		double t = 1.2;
+		System.out.println(string);
 		
-		double[] point0 = prevPoint;
-		double[] point1 = currentPoints;
+		for(int i = 0; i<currentValidPoints.length; i++)
+		{
+			System.out.println("point [ " + currentValidPoints[i][0] + " | " + currentValidPoints[i][1]+" ]");
+		}
 		
-		double x = (1-t)*point0[0]+t*point1[0];
-		double y = (1-t)*point0[1]+t*point1[1];
-		
-		double[] pointC = {x,y};
-		
-		BezierMain.setPointToDraw(pointC);
-		
-		prevPoint = point1;
+	}
+
+	private static void analyzeLine(double[][] currentPoints)
+	{
+//		double t = 1.2;
+//		
+//		double[] point0 = prevPoint;
+//		double[] point1 = currentPoints;
+//		
+//		double x = (1-t)*point0[0]+t*point1[0];
+//		double y = (1-t)*point0[1]+t*point1[1];
+//		
+//		double[] pointC = {x,y};
+//		
+//		BezierMain.setPointToDraw(pointC);
+//		
+//		prevPoint = point1;
 	}
 	
-	private static void analyzeQuadratic(double[] currentPoints, double[] prevPoint)
+	private static void analyzeQuadratic(double[][] currentPoints)
 	{
 //		double t = 1.2;
 //		
@@ -148,7 +232,7 @@ public class BezierPathIteratorUtil
 //		
 //		BezierMain.setPointToDraw(pointC);
 		
-		System.out.println("cu " + currentPoints.length);
+//		System.out.println("cu " + currentPoints.length);
 		
 	}
 	

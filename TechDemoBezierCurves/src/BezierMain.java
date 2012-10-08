@@ -1,6 +1,7 @@
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
@@ -11,7 +12,8 @@ import javax.swing.JFrame;
 
 public class BezierMain extends JFrame
 {
-	private ArrayList<GeneralPath> paths;
+//	private ArrayList<GeneralPath> paths;
+	private ArrayList<BezierIPath> paths;
 	private static double[] pointToDraw = {-1,-1};
 	
 	public BezierMain(String title)
@@ -27,12 +29,14 @@ public class BezierMain extends JFrame
 	
 	private void analyzePaths() 
 	{
-		Iterator<GeneralPath> pathIterator = this.paths.iterator();
+//		Iterator<GeneralPath> pathIterator = this.paths.iterator();
 		
-		while(pathIterator.hasNext())
-		{
-			BezierPathIteratorUtil.foo(pathIterator.next().getPathIterator(new AffineTransform()));
-		}
+//		while(pathIterator.hasNext())
+//		{
+//			System.out.println("--------------Start path--------------------");
+//			BezierPathIteratorUtil.foo(pathIterator.next().getPathIterator(new AffineTransform()));
+//			System.out.println("---------------End path---------------------");
+//		}
 		
 	}
 
@@ -46,19 +50,35 @@ public class BezierMain extends JFrame
 	
 	private void bezierSetup() 
 	{
-		this.paths = new ArrayList<GeneralPath>();
+		this.paths = new ArrayList<BezierIPath>();
 		
-		GeneralPath simpleLinePath = new GeneralPath();
-		simpleLinePath.moveTo(25, 50);
-		simpleLinePath.lineTo(150, 50);
+		BezierIPath p = new BezierPath();
 		
-		this.paths.add(simpleLinePath);
+		p.addMoveTo(20, 20);
+		p.addLineTo(100, 100);
 		
-//		GeneralPath simpleQuadraticPath = new GeneralPath();
-//		simpleQuadraticPath.moveTo(25, 50);
-//		simpleQuadraticPath.quadTo(150, 150, 300, 50);
+		this.paths.add(p);
+		
+//		this.paths = new ArrayList<GeneralPath>();
 //		
-//		this.paths.add(simpleQuadraticPath);
+////		GeneralPath simpleLinePath = new GeneralPath();
+////		simpleLinePath.moveTo(25, 50);
+////		simpleLinePath.lineTo(150, 50);
+////		
+////		this.paths.add(simpleLinePath);
+//		
+////		GeneralPath simpleQuadraticPath = new GeneralPath();
+////		simpleQuadraticPath.moveTo(25, 50);
+////		simpleQuadraticPath.quadTo(150, 150, 300, 50);
+////		
+////		
+////		this.paths.add(simpleQuadraticPath);
+//		
+//		
+//		GeneralPath simpleCubicPath = new GeneralPath();
+//		simpleCubicPath.moveTo(25,50);
+//		simpleCubicPath.curveTo(10, 110, 155, 130, 260, 300);
+//		this.paths.add(simpleCubicPath);
 	}
 
 	private void windowSetup() 
@@ -73,7 +93,14 @@ public class BezierMain extends JFrame
 	{
 		Graphics2D g2d = (Graphics2D) g;
 		
-		Iterator<GeneralPath> pathIterator = this.paths.iterator();
+//		Iterator<GeneralPath> pathIterator = this.paths.iterator();
+//		
+//		while(pathIterator.hasNext())
+//		{
+//			g2d.draw(pathIterator.next());
+//		}
+		
+		Iterator<BezierIPath> pathIterator = this.paths.iterator();
 		
 		while(pathIterator.hasNext())
 		{
