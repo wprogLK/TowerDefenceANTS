@@ -7,17 +7,21 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 {
 	private ArrayList<BezierIPathCommand> segments;
 	
-	Stack<double[]> endPoints = new Stack<double[]>();
+	//Stack<double[]> endPoints = new Stack<double[]>(); //EndPoint of a segment
+	double[] currentEndPointOfPreviousSegment;
 	double[] startPointOfPath = new double[2];
 	
 	public BezierPath() 
 	{
+		double[] currentEndPointOfPreviousSegment = new double[2];
 		this.segments = new ArrayList<BezierIPathCommand>();
 	}
 	
 	@Override
 	public void addMoveTo(double x, double y)
 	{
+		this.specialPreAndPostConditionIsEmpty();
+		
 		double[] point = {x,y};
 		
 		BezierIPathCommand command = new MoveToCommand(point);
@@ -28,53 +32,98 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 			this.startPointOfPath = point; //TODO and else?
 		}
 		
+		this.currentEndPointOfPreviousSegment=point;
+		
 		this.moveTo(x, y);
+		
+		preAndPostConditionEndPos();
 	}
 	
 	@Override
 	public void addLineTo(double x, double y)
 	{
-		double[] point = {x,y};
+		this.preAndPostConditionEndPos();
 		
-		BezierIPathCommand command = new LineToCommand(point);
+		double[] endPoint = {x,y};
+		double[] startPoint = this.currentEndPointOfPreviousSegment;
+		
+		BezierIPathCommand command = new LineToCommand(startPoint,endPoint);
 		this.segments.add(command);
+
+		this.currentEndPointOfPreviousSegment = endPoint;
 		
 		this.lineTo(x, y);
+		
+		this.preAndPostConditionEndPos();
 	}
 	
 	@Override
 	public void addClose()
 	{
-		BezierIPathCommand command = new CloseCommand();
+		this.preAndPostConditionEndPos();
+		
+		double[] startPoint = this.currentEndPointOfPreviousSegment;
+		double[] endPoint = this.startPointOfPath;
+		
+		BezierIPathCommand command = new CloseCommand(startPoint,endPoint);
 		this.segments.add(command);
 		
+		this.currentEndPointOfPreviousSegment = null;
+		this.startPointOfPath = null;
+		
 		this.closePath();
+		
+		this.specialPreAndPostConditionIsEmpty();
 	}
 	
 	@Override
 	public void addCurveTo(double x1,double y1, double x2, double y2, double x3, double y3)
 	{
+		this.preAndPostConditionEndPos();
+		
+		double[] startPoint = this.currentEndPointOfPreviousSegment;
 		double[] point1 = {x1,y1};
 		double[] point2 = {x2,y2};
-		double[] point3 = {x3,y3};
+		double[] endPoint = {x3,y3};
 		
-		BezierIPathCommand command = new CurveToCommand(point1,point2,point3);
+		BezierIPathCommand command = new CurveToCommand(startPoint,point1,point2,endPoint);
 		this.segments.add(command);
+		
+		this.currentEndPointOfPreviousSegment = endPoint;
 		
 		this.curveTo(x1, y1, x2, y2, x3, y3);
 		
+		this.preAndPostConditionEndPos();
 	}
 	
 	@Override
 	public void addQuadTo(double x1,double y1, double x2, double y2)
 	{
-		double[] point1 = {x1,y1};
-		double[] point2 = {x2,y2};
+		this.preAndPostConditionEndPos();
 		
-		BezierIPathCommand command = new QuadToCommand(point1,point2);
+		double[] startPoint = this.currentEndPointOfPreviousSegment;
+		double[] point1 = {x1,y1};
+		double[] endPoint = {x2,y2};
+		
+		BezierIPathCommand command = new QuadToCommand(startPoint, point1,endPoint);
 		this.segments.add(command);
 		
+		this.currentEndPointOfPreviousSegment = endPoint;
+		
 		this.quadTo(x1, y1, x2, y2);
+		
+		this.preAndPostConditionEndPos();
+	}
+	
+	private void preAndPostConditionEndPos()
+	{
+//		assert(this.endPoints.size()==1);
+		assert(this.currentEndPointOfPreviousSegment != null);	//TODO check this
+	}
+	
+	private void specialPreAndPostConditionIsEmpty() 
+	{
+		assert(this.currentEndPointOfPreviousSegment == null);	//TODO check this
 	}
 
 	@Override
@@ -113,31 +162,42 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 		return false;
 	}
 	
-	/**
-	 * 
-	 * @param points: The last point [size-1][0] and [size-1][1] is the endPoint
-	 */
-	private void addEndpoint(double[][] points)
-	{
-		double[] endPoint = new double[2];
-		
-		assert(points.length>0);
-		
-		endPoint[0] = points[points.length-1][0];
-		endPoint[1] = points[points.length-1][1];
-		
-		this.endPoints.add(endPoint);
-	}
+//	private void addEndpoint(double[] endpoint)
+//	{
+//		assert(endpoint!=null);
+//		
+//		this.endPoints.add(endpoint);
+//	}
 	////////////
 	//COMMANDS//
 	////////////
 	
 	
-	private class MoveToCommand implements BezierIPathCommand
+	private abstract class BezierCommand implements BezierIPathCommand
 	{
-		public MoveToCommand(double[] point)
+		protected final double[] startPoint;
+		protected final double[] endPoint;
+		
+		public BezierCommand(double[] startPoint, double[] endPoint)
 		{
-
+			assert(endPoint!=null);
+			
+			this.startPoint = startPoint;
+			this.endPoint = endPoint;
+		}
+		
+		@Override
+		public final double[] getEndPoint()
+		{
+			return this.endPoint;
+		}
+	}
+	
+	private class MoveToCommand extends BezierCommand implements BezierIPathCommand
+	{
+		public MoveToCommand(double[] endPoint)
+		{
+			super(null,endPoint);
 		}
 		
 		@Override
@@ -153,27 +213,13 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 			//DO NOTHING!
 			return false;
 		}
-		
-		@Override
-		public double[] getStartPoint()
-		{
-			//TODO
-			return null;
-		}
-		
-		@Override
-		public double[] getEndPoint()
-		{
-			//TODO
-			return null;
-		}
 	}
 	
-	private class CloseCommand implements BezierIPathCommand
-	{
-		public CloseCommand()
+	private class CloseCommand  extends BezierCommand implements BezierIPathCommand
+	{	
+		public CloseCommand(double[] startPoint,double[] endPoint)
 		{
-
+			super(startPoint, endPoint);
 		}
 		
 		@Override
@@ -189,31 +235,17 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 			// TODO Auto-generated method stub
 			return false;
 		}
-		
-		@Override
-		public double[] getStartPoint()
-		{
-			//TODO
-			return null;
-		}
-		
-		@Override
-		public double[] getEndPoint()
-		{
-			//TODO
-			return null;
-		}
-	}
+	}		
 	
-	private class QuadToCommand implements BezierIPathCommand
+	private class QuadToCommand  extends BezierCommand implements BezierIPathCommand
 	{
 		private double[] point1;
-		private double[] endpoint;
 		
-		public QuadToCommand(double[] point1, double[] point2)
+		public QuadToCommand(double[] startPoint, double[] point1, double[] endPoint)
 		{
+			super(startPoint,endPoint);
+			
 			this.point1 = point1;
-			this.endpoint = point2;
 		}
 		
 		@Override
@@ -229,34 +261,19 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 			// TODO Auto-generated method stub
 			return false;
 		}
-		
-		@Override
-		public double[] getStartPoint()
-		{
-			//TODO
-			return null;
-		}
-		
-		@Override
-		public double[] getEndPoint()
-		{
-			//TODO
-			return null;
-		}
 	}
 	
-	private class CurveToCommand implements BezierIPathCommand
+	private class CurveToCommand  extends BezierCommand implements BezierIPathCommand
 	{
-		private double[] endpoint;
 		private double[] point1;
 		private double[] point2;
 		
-		
-		public CurveToCommand(double[] point1, double[] point2, double[] point3)
+		public CurveToCommand(double[] startPoint,double[] point1, double[] point2, double[] endPoint)
 		{
+			super(startPoint,endPoint);
+			
 			this.point1 = point1;
 			this.point2 = point2;
-			this.endpoint = point3;
 		}
 		
 		@Override
@@ -271,30 +288,14 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 		{
 			// TODO Auto-generated method stub
 			return false;
-		}
-		
-		@Override
-		public double[] getStartPoint()
-		{
-			//TODO
-			return null;
-		}
-		
-		@Override
-		public double[] getEndPoint()
-		{
-			//TODO
-			return null;
 		}
 	}
 	
-	private class LineToCommand implements BezierIPathCommand
+	private class LineToCommand  extends BezierCommand implements BezierIPathCommand
 	{
-		private double[] endPoint;
-		
-		public LineToCommand(double[] point)
+		public LineToCommand(double[] startPoint, double[] endPoint)
 		{
-			this.endPoint = point;
+			super(startPoint,endPoint);
 		}
 		
 		@Override
@@ -309,20 +310,6 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 		{
 			// TODO Auto-generated method stub
 			return false;
-		}
-		
-		@Override
-		public double[] getStartPoint()
-		{
-			//TODO
-			return null;
-		}
-		
-		@Override
-		public double[] getEndPoint()
-		{
-			//TODO
-			return null;
 		}
 	}
 }
