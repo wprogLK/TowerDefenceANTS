@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Path2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -227,8 +228,14 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 				g2d.setColor(Color.RED);
 				g2d.draw(pathOfOneSegment.getBounds2D());
 			}
+			
+			this.paintDebug(g2d);
 		}
 		
+		protected void paintDebug(Graphics2D g2d)
+		{
+			
+		}
 		
 		@Override
 		public double[] calculateIntersectionPoint(double[][] rayVector) 
@@ -302,6 +309,20 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 			this.pathOfOneSegment.curveTo(point1[0], point1[1],point2[0], point2[1] ,endPoint[0], endPoint[1]);
 		}
 		
+		protected void paintDebug(Graphics2D g2d)
+		{
+			this.paintDebugPoint(g2d, startPoint, "startPoint");
+			this.paintDebugPoint(g2d, point1, "point1");
+			this.paintDebugPoint(g2d, point2, "point2");
+			this.paintDebugPoint(g2d, endPoint, "endPoint");
+		}
+		
+		private void paintDebugPoint(Graphics2D g2d, double[] point, String s)
+		{
+			g2d.fill(new Rectangle2D.Double(point[0], point[1], 5, 5));
+			g2d.drawString(s, (int) point[0], (int) point[1]);
+		}
+		
 		@Override
 		public double[] calculateIntersectionPoint(double[][] rayVector) 
 		{
@@ -328,7 +349,7 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 			 *
 			 * Equation:
 			 * (I)  a + t*b = c*s^3 + d*s^2 +e*s+f
-			 * (II) g+t*h = i*s^3 + j*s2 + l*s + l
+			 * (II) g+t*h = i*s^3 + j*s^2 + l*s + l
 			 * 
 			 * 
 			 * Calculation:
@@ -368,7 +389,7 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 			 *  			z_(2,3) = -u = thirdRoot(q/2) = -3q/2p
 			 *  	p=q=0 -> z = 0 is the only solution!
 			 *  case 3: Det<0 3 real solutions 
-			 *  	u,v complex konj. to each other -> z = u+v = u + ¬(u) = 2Re(u)
+			 *  	u,v complex konj. to each other -> z = u+v = u + ï¿½(u) = 2Re(u)
 			 *  	.
 			 *  	.
 			 *  	.
@@ -432,117 +453,178 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 			double CC = h*e-b*k;
 			double DD = h*f-h*a+b*g-b*l;
 			
-			assert(AA!=0);
+//			assert(AA!=0);
+//			
+//			double aa = BB/AA;
+//			double bb = CC/AA;
+//			double cc = DD/AA;
+//			
+//			double alpha = 1;
+//			double beta = -aa/3;
+//			
+//			double p = bb-pow2(aa)/3;
+//			double q = (2*pow2(aa)/27-((aa*bb)/3)+cc);
+//			
+//			System.out.println("q= " + q + " p = "+ p);
+//			
+//			double det = pow2(q/2)+pow3(p/3);
+//			
+//			double u = Math.cbrt(-(q/2)+Math.sqrt(det));
+//			double v = Math.cbrt(-(q/2)-Math.sqrt(det));
+//			
+//			//Cases:
+//			
+//			double[] zs = new double[3];
+//			
+//			if(det>0)
+//			{
+//				System.out.println("case 1: det>0");
+//				
+//				double z_1 = u+v;
+//				zs[0] = z_1;
+//			}
+//			else if(det == 0)
+//			{
+//				System.out.println("case 2: det==0");
+//				
+//				if(u == v)
+//				{
+//					System.out.println("u==v");
+//					
+//					double z_11 = 2*u;
+//					double z_12 = Math.cbrt(-4*q);
+//					double z_13 = 3*q/p;
+//					
+//					assert(z_11==z_12 && z_12==z_13); //TODO check this
+//					
+//					zs[0] = z_11;
+//					
+//					System.out.println("z_11 = " + z_11 + "\nz_12 = "+ z_12 + "\nz_13 = " + z_13);
+//					
+//					double z_21 = -u;
+//					double z_22 = Math.cbrt(q/2);
+//					double z_23 = -3*q/(2*p);
+//					
+//					assert(z_21==z_22 && z_22==z_23); //TODO check this
+//					
+//					zs[1] = z_21;
+//					
+//					System.out.println("z_21 = " + z_21 + "\nz_22 = "+ z_22 + "\nz_23 = " + z_23);
+//				}
+//				
+//				if(p==0 && q==0)
+//				{
+//					System.out.println("p==q==0");
+//					
+//					double z_1=0;
+//					
+//					zs[0] = z_1;
+//					
+//				}
+//			}
+//			else if(det<0)
+//			{
+//				System.out.println("case 3: det<0");
+//				
+//				//u, v complex conj. to each other //TODO: implement this condition!
+//
+//				double z_2 = -1*Math.sqrt(-4*p/3)*Math.cos((1/3)*Math.acos((-q/2)*Math.sqrt(-27/pow3(p)))+Math.PI/3);	//TODO Check this!
+//				double z_1 = Math.sqrt(-4*p/3)*Math.cos((1/3)*Math.acos((-q/2)*Math.sqrt(-27/pow3(p)))); //TODO Check this!
+//				double z_3 = -1*Math.sqrt(-4*p/3)*Math.cos((1/3)*Math.acos((-q/2)*Math.sqrt(-27/pow3(p)))-Math.PI/3);	//TODO Check this!
+//
+//				zs[1] = z_2;
+//				zs[0] = z_1;
+//				zs[2] = z_3;
+//				
+//				System.out.println("z_2 = " + z_2 + "\nz_1 = "+ z_1 + "\nz_3 = " + z_3);
+//			}
+//			else
+//			{
+//				System.out.println("impossible case! should not happen! (in CurveToCommand)"); //TODO
+//			}
+//			
+//			///ReSub:
+//			
+//			double[] s = new double[3];
+//			
+//			for(int index = 0; index<3; index++)
+//			{
+//				s[index] = zs[index] - aa/3;//(BB)/(3*AA);
+//				
+//				double checkZ = pow3(zs[index])+p*zs[index]+q;
+//				System.out.println("-------- checkZ = 0 it is =" + checkZ); //TODO
+//			}
+//			
+//			double[] t = new double[3];
+//			double[] tt = new double[3];
+//			
+//			double x_r[] = new double[3];
+//			double y_r[] = new double[3];
+//			
+//			double x_q[] = new double[3];
+//			double y_q[] = new double[3];
+//			
+//			double[][] intersectionPoint = new double[2][2]; //first ray, second cubic
+//			
+//			for(int index = 0; index<3; index++)
+//			{
+//				t[index] = (c*pow3(s[index])+d*pow2(s[index])+e*s[index]+f-a)/b;
+//				tt[index] = (i*pow3(s[index])+j*pow2(s[index])+k*s[index]+l-g)/h;
+//				
+//				System.out.println("t = " + t[index] + " tt = " + tt[index]);
+//				System.out.println("s = " + s[index]);
+//				
+//				x_r[index] = a + t[index]*b;
+//				y_r[index] = g + t[index]*h;
+//				
+////				s[index] = 0.5;
+//				
+//				x_q[index] = c*pow3(s[index])+d*pow2(s[index])+e*s[index]+f;
+//				y_q[index] = i*pow3(s[index])+j*pow2(s[index])+k*s[index]+l;
+//				
+//				double checkQ = pow3(s[index])*AA+pow2(s[index])*BB+s[index]*CC+DD;
+//				System.out.println("checkQ should be 0: " + checkQ);
+//				
+//				double checkQ2 = pow3(s[index])+pow2(s[index])*aa+s[index]*bb+cc;
+//				System.out.println("checkQ2 should be 0: " + checkQ2);
+//				
+//				System.out.println("P_R=[ " + x_r[index] + " | " + y_r[index] +" ]");
+//				System.out.println("P_Q=[ " + x_q[index] + " | " + y_q[index] +" ]");
+//				
+//				if(index==0)///s[index]<=1 && s[index]>=0)
+//				{
+//					System.out.println("Set point: s = " + s[index] + " index = " + index);
+//				
+//					intersectionPoint[0][0] = x_r[index];
+//					intersectionPoint[0][1] = y_r[index];
+//					
+//					intersectionPoint[1][0] = x_q[index];
+//					intersectionPoint[1][1] = y_q[index];
+//				}
+//			}
+//			
+//			BezierMain.setPointToDraw(intersectionPoint[1]);
+//			
+//			return intersectionPoint[0];
+//		}
 			
-			double aa = BB/AA;
-			double bb = CC/AA;
-			double cc = DD/AA;
+			//NEW CALC:
+			double p = (3*AA*CC-pow2(BB))/(9*pow2(AA));
+			double q = (1/2)*((2*pow3(BB))/(27*pow3(AA))-(BB*CC)/(3*pow2(AA))+(DD/AA));
 			
-			double alpha = 1;
-			double beta = -aa/3;
+			double det = pow2(q)+pow3(p);
 			
-			double p = bb-pow2(aa)/3;
-			double q = (2*pow2(aa)/27-(aa*bb)/3+cc);
-			
-			double det = pow2(q/2)+pow3(p/3);
-			
-			double u = Math.cbrt(-(q/2)+Math.sqrt(det));
-			double v = Math.cbrt(-(q/2)-Math.sqrt(det));
-			
-			//Cases:
-			
-
-			double[] zs = new double[3];
-			
-			if(det>0)
+			if(p<0 && det<=0)
 			{
-				System.out.println("case 1: det>0");
+				double r = Math.signum(q)*Math.sqrt(-p);
+				double s = Math.acos(q/pow3(r));
 				
-				double z_1 = u+v;
-				zs[0] = z_1;
-			}
-			else if(det == 0)
-			{
-				System.out.println("case 2: det==0");
-				
-				if(u == v)
-				{
-					System.out.println("u==v");
-					
-					double z_11 = 2*u;
-					double z_12 = Math.cbrt(-4*q);
-					double z_13 = 3*q/p;
-					
-					assert(z_11==z_12 && z_12==z_13); //TODO check this
-					
-					zs[0] = z_11;
-					
-					System.out.println("z_11 = " + z_11 + "\nz_12 = "+ z_12 + "\nz_13 = " + z_13);
-					
-					double z_21 = -u;
-					double z_22 = Math.cbrt(q/2);
-					double z_23 = -3*q/(2*p);
-					
-					assert(z_21==z_22 && z_22==z_23); //TODO check this
-					
-					zs[1] = z_21;
-					
-					System.out.println("z_21 = " + z_21 + "\nz_22 = "+ z_22 + "\nz_23 = " + z_23);
-				}
-				
-				if(p==0 && q==0)
-				{
-					System.out.println("p==q==0");
-					
-					double z_1=0;
-					
-					zs[0] = z_1;
-					
-				}
-			}
-			else if(det<0)
-			{
-				System.out.println("case 3: det<0");
-				
-				//u, v complex conj. to each other //TODO: implement this condition!
-				
-				double z_2 = -Math.sqrt(-4*p/3)*Math.cos((1/3)*Math.acos((-q/2))*Math.sqrt(-27/pow3(p))+Math.PI/3);	//TODO Check this!
-				double z_1 = Math.sqrt(-4*p/3)*Math.cos((1/3)*Math.acos((-q/2))*Math.sqrt(-27/pow3(p))); //TODO Check this!
-				double z_3 = -Math.sqrt(-4*p/3)*Math.cos((1/3)*Math.acos((-q/2))*Math.sqrt(-27/pow3(p))-Math.PI/3);	//TODO Check this!
-			
-				zs[1] = z_2;
-				zs[0] = z_1;
-				zs[2] = z_3;
-				
-				System.out.println("z_2 = " + z_2 + "\nz_1 = "+ z_1 + "\nz_3 = " + z_3);
-			}
-			else
-			{
-				System.out.println("impossible case! should not happen! (in CurveToCommand)"); //TODO
+				double z_1 = -2*r*Math.cos(s/3)-b/(3*AA);
+				double z_2 = 2*r*Math.cos((Math.PI-s)/3)-b/(3*a);
+				double z_3 = 2*r*Math.cos((Math.PI+s)/3)-b/(3*a);
 			}
 			
-			///ReSub:
 			
-			double[] s = new double[3];
-			
-			for(int index = 0; index<3; index++)
-			{
-				s[index] = zs[index] - (BB)/(3*AA);
-			}
-			
-			double[] t = new double[3];
-			double[] tt = new double[3];
-			
-			for(int index = 0; index<3; index++)
-			{
-				t[index] = (c*pow3(s[index])+d*pow2(s[index])+e*s[index]+f-a)/b;
-				tt[index] = (i*pow3(s[index])+j*pow2(s[index])+k*s[index]+l-g)/h;
-				
-				System.out.println("t = " + t[index] + " tt = " + tt[index]);
-			}
-			
-			return null;
-		}
 	}
 	
 	private double pow2(double n)
