@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Path2D;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Stack;
@@ -387,10 +388,10 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 		
 		protected void paintDebug(Graphics2D g2d)
 		{
-			this.paintDebugPoint(g2d, startPoint, "startPoint");
-			this.paintDebugPoint(g2d, point1, "point1");
-			this.paintDebugPoint(g2d, point2, "point2");
-			this.paintDebugPoint(g2d, endPoint, "endPoint");
+//			this.paintDebugPoint(g2d, startPoint, "startPoint");
+//			this.paintDebugPoint(g2d, point1, "point1");
+//			this.paintDebugPoint(g2d, point2, "point2");
+//			this.paintDebugPoint(g2d, endPoint, "endPoint");
 		}
 		
 		private void paintDebugPoint(Graphics2D g2d, double[] point, String s)
@@ -402,557 +403,146 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 		@Override
 		public double[] calculateIntersectionPoint(double[][] rayVector) 
 		{
-			/*
-			 * RayVector:
-			 * 	A:=startPoint =(a_x,a_y) = (a,g)
-			 * 	B:=endPoint = (b_x,b_y)
-			 * 	dR:=B-A = (dR_x,dR_y) = (b,h)
-			 * 
-			 * 	P_R:= A+t*dR
-			 * 
-			 * Cubic:
-			 *  P_0:=startPoint
-			 *  P_1,P_2 points
-			 *  P_3:=endPoint
-			 *  D:=endPoints = (d_x,d_y)
-			 *
-			 *  C:= (-P_0+3*P_1-3*P_2+P_3) = (c,i)
-			 *  D:= (3*P_0-6*P_1+3*P_2) = (d,j)
-			 *  E:= (-3*P_0+3*P_1) = (e,k)
-			 *	F:= P_0 = (f,l)
-			 *
-			 *	P_C = C*s^3+D*s^2+E*s+F
-			 *
-			 * Equation:
-			 * (I)  a + t*b = c*s^3 + d*s^2 +e*s+f
-			 * (II) g+t*h = i*s^3 + j*s^2 + l*s + l
-			 * 
-			 * 
-			 * Calculation:
-			 * 
-			 * 	COMMENT: everything with ' is a double letter(ex. A' is in the code AA)!
-			 * 
-			 * 	(I)  -> t'  = (c*s^3+d*s^2+e*s+f-a)/b
-			 * 	(II) -> t'' = (i*s^3+j*s^2+k*s+l-g)/h
-			 * 
-			 *  t' == t'' & simplify -> s^3(h*c-b*i)+s^2(h*d-b*j)+s(h*e-b*k)+h*f-h*a+b*g-b*l=0
-			 * 
-			 *  A':= h*c-b*i
-			 *  B':= h*d-b*j
-			 *  C':= h*e-b*k
-			 *  D':= h*f-h*a+b*g-b*l
-			 *  
-			 *  A'!=0 ->
-			 *  a':= B'/A'
-			 *  b':= C'/A'
-			 *  c':=D'/A'
-			 *  
-			 *  s = alpha*z+beta; alpha := 1; beta :=-a'/3
-			 *  
-			 *  p:= b'-(a'^2)/3
-			 *  q:= (2*a'^2)/27 -(a'*b')/3+c'
-			 *  
-			 *  Det:= (q/2)^2 + (p/3)^3
-			 *  
-			 *  u:= thirdRoot(-q/2+sqrt(Det))
-			 *  v:= thirdRoot(-q/2-sqrt(Det))
-			 *  
-			 *  case 1: Det>0: 1 real solution 2 complex
-			 *  	z_1 := u+v
-			 *  	z_(2,3) := .....
-			 *  case 2: Det=0: 3 real solutions
-			 *  	u=v ->  z_1 = 2u = thirdRoot(-4*q) = 3q/p
-			 *  			z_(2,3) = -u = thirdRoot(q/2) = -3q/2p
-			 *  	p=q=0 -> z = 0 is the only solution!
-			 *  case 3: Det<0 3 real solutions 
-			 *  	u,v complex konj. to each other -> z = u+v = u + �(u) = 2Re(u)
-			 *  	.
-			 *  	.
-			 *  	.
-			 *  	.
-			 *  	z_2 = ....
-			 *  	z_1 = ....
-			 *  	z_3 = ....
-			 *  
-			 */	
-			
-			System.out.println("try to calculate intersection point with a curve");
-			
 			//RAY:
-			double[] A = rayVector[0];
-			double[] B = rayVector[1];
-			
-			double a = A[0];
-			double g = A[1];
-			
-			double[] dR = {B[0]-A[0],B[1]-A[1]};
-			
-			double b = dR[0];
-			double h = dR[1];
-			
+				//StartPoint
+					double a_x = rayVector[0][0];
+					double a_y = rayVector[0][1];
+				//EndPoint
+					double b_x = rayVector[1][0];
+					double b_y = rayVector[1][1];
 			//CUBIC:
-			
-			double[] P_0 = this.startPoint;
-			double[] P_1 = this.point1;
-			double[] P_2 = this.point2;
-			double[] P_3 = this.endPoint;
-			
-			double[] C = new double[2];
-			double[] D = new double[2];
-			double[] E = new double[2];
-			double[] F = new double[2];
-			
-				for(int i=0; i<2;i++)
+				//StartPoint
+					double p_0_x = startPoint[0];
+					double p_0_y = startPoint[1];
+				//HelperPoint1
+					double p_1_x = point1[0];	
+					double p_1_y = point1[1];
+				//HelperPoint2
+					double p_2_x = point2[0];	
+					double p_2_y = point2[1];
+				//EndPoint
+					double p_3_x = endPoint[0];	
+					double p_3_y = endPoint[1];
+				
+				double c_x = -p_0_x+3*p_1_x-3*p_2_x+p_3_x;
+				double c_y = -p_0_y+3*p_1_y-3*p_2_y+p_3_y;
+				
+				double d_x = 3*p_0_x-6*p_1_x+3*p_2_x;
+				double d_y = 3*p_0_y-6*p_1_y+3*p_2_y;
+				
+				double e_x = -3*p_0_x+3*p_1_x;
+				double e_y = -3*p_0_y+3*p_1_y;
+				
+			//Equation:
+				double F = b_x*c_y-a_x*c_y+c_x*a_y-c_x*b_y;
+				double G = d_y*b_x-d_y*a_x+d_x*a_y-d_x*b_y;
+				double H = e_y*b_x-e_y*a_x+e_x*a_y-e_x*b_y;
+				double I = b_x*p_0_y-p_0_y*a_x-b_x*a_y-p_0_x*b_y+p_0_x*a_y+a_x*b_y;
+				
+				/*0 = (t³F+t²G+tH+I)/(b_x-a_x)
+				 * -> 0 = t³F+t²G+tH+I
+				 */
+				double[] t = this.solveCubicEquation(F, G, H, I);
+				
+				double[] s = new double[3];
+			//	double[][] intersectionPointCub = new double[3][2];
+			//	double[][] intersectionPointRay = new double[3][2];
+				
+				ArrayList<double[]> intersectionPointCub = new ArrayList<double[]>();
+				ArrayList<double[]> intersectionPointRay = new ArrayList<double[]>();
+				
+				
+				for(int i = 0; i<3; i++)
 				{
-					C[i] = -1*P_0[i]+3*P_1[i]-3*P_2[i]+P_3[i];
-					D[i] = 3*P_0[i]-6*P_1[i]+3*P_2[i];
-					E[i] = -3*P_0[i]+3*P_1[i];
-					F[i] = P_0[i];
+					s[i] = (pow3(t[i])*c_x+pow2(t[i])*d_x+t[i]*e_x+p_0_x-a_x)/(b_x-a_x);	//TODO ATTENTION: division 0 !!!
+					
+					if(t[i]<=1 && t[i]>=0 && s[i]<=1 && s[i]>=0)
+					{
+						double[] tmpIntersectionPointCub = new double[2];
+						tmpIntersectionPointCub[0] = c_x*pow3(t[i])+d_x*pow2(t[i])+e_x*t[i]+p_0_x; 
+						tmpIntersectionPointCub[1] = c_y*pow3(t[i])+d_y*pow2(t[i])+e_y*t[i]+p_0_y; 
+
+						intersectionPointCub.add(tmpIntersectionPointCub);
+						
+						double[] tmpIntersectionPointRay = new double[2];
+						tmpIntersectionPointRay[0] = a_x+s[i]*(b_x-a_x);
+						tmpIntersectionPointRay[1] = a_y+s[i]*(b_y-a_y);
+
+						intersectionPointRay.add(tmpIntersectionPointRay);
+					}
+					
+					System.out.println("i = " + i + " t = " + t[i]  + " s = " + s[i]);
 				}
+				
+				double[] intersectionPoint = getClosestIntersectionPoint(intersectionPointCub,rayVector);
+				
+				
+			//	BezierMain.setPointToDraw(intersectionPointCub[2]);
+				//BezierMain.setPointToDraw(intersectionPointRay[2]);
+				
+				//TODO
+				
+				//return intersectionPointCub[1];
+				//return intersectionPointRay[1];
+				return intersectionPoint;
+		}
+		
+		/**
+		 * calculates the closest intersection point to the endPoint of the ray
+		 * @param intersectionPoints
+		 * @param rayVector
+		 * @return
+		 */
+		private double[] getClosestIntersectionPoint(ArrayList<double[]> intersectionPoints, double[][] rayVector) 
+		{
+			int i = 0;
+			double distance = java.lang.Double.MAX_VALUE;
+			double[] currentClosestPoint = new double[2];
 			
-			double c = C[0];
-			double i = C[1];
+			do
+			{
+				double tmpDistance = Point2D.distance(rayVector[1][0], rayVector[1][1], intersectionPoints.get(i)[0], intersectionPoints.get(i)[1]);
 			
-			double d = D[0];
-			double j = D[1];
+				if(tmpDistance<distance)
+				{
+					currentClosestPoint=intersectionPoints.get(i);
+					distance = tmpDistance;
+				
+				}
+				i++;
+				
+			}while(i<intersectionPoints.size()-1);
 			
-			double e = D[0];
-			double k = D[1];
-			
-			double f = F[0];
-			double l = F[1];
-			
-			//EQUATION:
-			
-			double AA = h*c-b*i;
-			double BB = h*d-b*j;
-			double CC = h*e-b*k;
-			double DD = h*f-h*a+b*g-b*l;
-			
-			assert(AA!=0);
-//			
-			double aa = BB/AA;
-			double bb = CC/AA;
-			double cc = DD/AA;
-			
-			System.out.println("AA= " + AA);	
-			
-			//NEW CALC:
-			double p = (3*AA*CC-pow2(BB))/(9*pow2(AA));
-			
-			double X = (2*pow3(BB))/(27*pow3(AA));
-			double Y = (BB*CC)/(3*pow2(AA));
-			double Z = DD/AA;
-			
-			double q = 0.5*(X-Y+Z);//(1/2)*((2*pow3(BB))/(27*pow3(AA))-(BB*CC)/(3*pow2(AA))+(DD/AA));
-			
-			double det = pow2(q)+pow3(p);
-			
-			double[] z = new double[3];
+			return currentClosestPoint;
+		}
+
+		private double[] solveCubicEquation(double a, double b, double c, double d)
+		{
+			double p = (3*a*c-pow2(b))/(9*pow2(a));
+			double q = 0.5*(((2*pow3(b))/(27*pow3(a)))-((b*c)/(3*pow2(a)))+(d/a));
+			double det = pow2(q) + pow3(p);
 			
 			if(p<0 && det<=0)
 			{
 				double r = Math.signum(q)*Math.sqrt(-p);
 				double s = Math.acos(q/pow3(r));
 				
-				z[0] = -2*r*Math.cos(s/3)-b/(3*AA);
-				z[1] = 2*r*Math.cos((Math.PI-s)/3)-b/(3*a);
-				z[2] = 2*r*Math.cos((Math.PI+s)/3)-b/(3*a);
+				double[] solution = new double[3];
+				
+				solution[0] = -2*r*Math.cos(s/3)-b/(3*a);
+				solution[1] = 2*r*Math.cos((Math.PI-s)/3)-b/(3*a);
+				solution[2] = 2*r*Math.cos((Math.PI+s)/3)-b/(3*a);
+				
+				return solution;
 			}
-			
-			//ReSub:
-			
-			double[] s = new double[3];
-			double[] t = new double[3];
-			double[] tt = new double[3];
-			double[][] intersectionPointsRay = new double[3][2];
-			double[][] intersectionPointsCub = new double[3][2];
-//			
-			for(int index = 0; index<3; index++)
+			else
 			{
-				s[index] = z[index] - aa/3;//(BB)/(3*AA);
-
-				//Check:
-				double S = s[index];
-				double sum = pow3(S)+aa*pow2(S)+bb*S+cc;
-//				System.out.println("sum should be = 0; sum is = " + sum);	
-				
-				t[index] = (c*pow3(s[index])+d*pow2(s[index])+e*s[index]+f-a)/b;
-				tt[index] = (i*pow3(s[index])+j*pow2(s[index])+k*s[index]+l-g)/h;
-				
-				intersectionPointsRay[index][0] = a + t[index]*b;
-				intersectionPointsRay[index][1] = g + t[index]*h;
-				
-				intersectionPointsCub[index][0] = c*pow3(s[index])+d*pow2(s[index])+e*s[index]+f;
-				intersectionPointsCub[index][1] = i*pow3(s[index])+j*pow2(s[index])+k*s[index]+l;
+				System.out.println("Error: no solution!"); //TODO
+				return null;
 			}
-			
-			BezierMain.setPointToDraw(intersectionPointsCub[1]);
-			return intersectionPointsRay[1];
-			
-			//			
-//			double[] t = new double[3];
-//			double[] tt = new double[3];
-//			
-//			double x_r[] = new double[3];
-//			double y_r[] = new double[3];
-//			
-//			double x_q[] = new double[3];
-//			double y_q[] = new double[3];
-//			
-//			double[][] intersectionPoint = new double[2][2]; //first ray, second cubic
-//			
-//			for(int index = 0; index<3; index++)
-//			{
-//				t[index] = (c*pow3(s[index])+d*pow2(s[index])+e*s[index]+f-a)/b;
-//				tt[index] = (i*pow3(s[index])+j*pow2(s[index])+k*s[index]+l-g)/h;
-//				
-//				System.out.println("t = " + t[index] + " tt = " + tt[index]);
-//				System.out.println("s = " + s[index]);
-//				
-//				x_r[index] = a + t[index]*b;
-//				y_r[index] = g + t[index]*h;
-//				
-////				s[index] = 0.5;
-//				
-//				x_q[index] = c*pow3(s[index])+d*pow2(s[index])+e*s[index]+f;
-//				y_q[index] = i*pow3(s[index])+j*pow2(s[index])+k*s[index]+l;
-//				
-//				double checkQ = pow3(s[index])*AA+pow2(s[index])*BB+s[index]*CC+DD;
-//				System.out.println("checkQ should be 0: " + checkQ);
-//				
-//				double checkQ2 = pow3(s[index])+pow2(s[index])*aa+s[index]*bb+cc;
-//				System.out.println("checkQ2 should be 0: " + checkQ2);
-//				
-//				System.out.println("P_R=[ " + x_r[index] + " | " + y_r[index] +" ]");
-//				System.out.println("P_Q=[ " + x_q[index] + " | " + y_q[index] +" ]");
-//				
-//				if(index==0)///s[index]<=1 && s[index]>=0)
-//				{
-//					System.out.println("Set point: s = " + s[index] + " index = " + index);
-//				
-//					intersectionPoint[0][0] = x_r[index];
-//					intersectionPoint[0][1] = y_r[index];
-//					
-//					intersectionPoint[1][0] = x_q[index];
-//					intersectionPoint[1][1] = y_q[index];
-//				}
-//			}
-//			
-//			BezierMain.setPointToDraw(intersectionPoint[1]);
-//			
-//			return intersectionPoint[0];
-//		}
-			
-
-			
-			
+				
+		}
 	}
-		
-//OLD
-//		@Override
-//		public double[] calculateIntersectionPoint(double[][] rayVector) 
-//		{
-//			/*
-//			 * RayVector:
-//			 * 	A:=startPoint =(a_x,a_y) = (a,g)
-//			 * 	B:=endPoint = (b_x,b_y)
-//			 * 	dR:=B-A = (dR_x,dR_y) = (b,h)
-//			 * 
-//			 * 	P_R:= A+t*dR
-//			 * 
-//			 * Cubic:
-//			 *  P_0:=startPoint
-//			 *  P_1,P_2 points
-//			 *  P_3:=endPoint
-//			 *  D:=endPoints = (d_x,d_y)
-//			 *
-//			 *  C:= (-P_0+3*P_1-3*P_2+P_3) = (c,i)
-//			 *  D:= (3*P_0-6*P_1+3*P_2) = (d,j)
-//			 *  E:= (-3*P_0+3*P_1) = (e,k)
-//			 *	F:= P_0 = (f,l)
-//			 *
-//			 *	P_C = C*s^3+D*s^2+E*s+F
-//			 *
-//			 * Equation:
-//			 * (I)  a + t*b = c*s^3 + d*s^2 +e*s+f
-//			 * (II) g+t*h = i*s^3 + j*s^2 + l*s + l
-//			 * 
-//			 * 
-//			 * Calculation:
-//			 * 
-//			 * 	COMMENT: everything with ' is a double letter(ex. A' is in the code AA)!
-//			 * 
-//			 * 	(I)  -> t'  = (c*s^3+d*s^2+e*s+f-a)/b
-//			 * 	(II) -> t'' = (i*s^3+j*s^2+k*s+l-g)/h
-//			 * 
-//			 *  t' == t'' & simplify -> s^3(h*c-b*i)+s^2(h*d-b*j)+s(h*e-b*k)+h*f-h*a+b*g-b*l=0
-//			 * 
-//			 *  A':= h*c-b*i
-//			 *  B':= h*d-b*j
-//			 *  C':= h*e-b*k
-//			 *  D':= h*f-h*a+b*g-b*l
-//			 *  
-//			 *  A'!=0 ->
-//			 *  a':= B'/A'
-//			 *  b':= C'/A'
-//			 *  c':=D'/A'
-//			 *  
-//			 *  s = alpha*z+beta; alpha := 1; beta :=-a'/3
-//			 *  
-//			 *  p:= b'-(a'^2)/3
-//			 *  q:= (2*a'^2)/27 -(a'*b')/3+c'
-//			 *  
-//			 *  Det:= (q/2)^2 + (p/3)^3
-//			 *  
-//			 *  u:= thirdRoot(-q/2+sqrt(Det))
-//			 *  v:= thirdRoot(-q/2-sqrt(Det))
-//			 *  
-//			 *  case 1: Det>0: 1 real solution 2 complex
-//			 *  	z_1 := u+v
-//			 *  	z_(2,3) := .....
-//			 *  case 2: Det=0: 3 real solutions
-//			 *  	u=v ->  z_1 = 2u = thirdRoot(-4*q) = 3q/p
-//			 *  			z_(2,3) = -u = thirdRoot(q/2) = -3q/2p
-//			 *  	p=q=0 -> z = 0 is the only solution!
-//			 *  case 3: Det<0 3 real solutions 
-//			 *  	u,v complex konj. to each other -> z = u+v = u + �(u) = 2Re(u)
-//			 *  	.
-//			 *  	.
-//			 *  	.
-//			 *  	.
-//			 *  	z_2 = ....
-//			 *  	z_1 = ....
-//			 *  	z_3 = ....
-//			 *  
-//			 */	
-//			
-//			System.out.println("try to calculate intersection point with a curve");
-//			
-//			//RAY:
-//			double[] A = rayVector[0];
-//			double[] B = rayVector[1];
-//			
-//			double a = A[0];
-//			double g = A[1];
-//			
-//			double[] dR = {B[0]-A[0],B[1]-A[1]};
-//			
-//			double b = dR[0];
-//			double h = dR[1];
-//			
-//			//CUBIC:
-//			
-//			double[] P_0 = this.startPoint;
-//			double[] P_1 = this.point1;
-//			double[] P_2 = this.point2;
-//			double[] P_3 = this.endPoint;
-//			
-//			double[] C = new double[2];
-//			double[] D = new double[2];
-//			double[] E = new double[2];
-//			double[] F = new double[2];
-//			
-//				for(int i=0; i<2;i++)
-//				{
-//					C[i] = -1*P_0[i]+3*P_1[i]-3*P_2[i]+P_3[i];
-//					D[i] = 3*P_0[i]-6*P_1[i]+3*P_2[i];
-//					E[i] = -3*P_0[i]+3*P_1[i];
-//					F[i] = P_0[i];
-//				}
-//			
-//			double c = C[0];
-//			double i = C[1];
-//			
-//			double d = D[0];
-//			double j = D[1];
-//			
-//			double e = D[0];
-//			double k = D[1];
-//			
-//			double f = F[0];
-//			double l = F[1];
-//			
-//			//EQUATION:
-//			
-//			double AA = h*c-b*i;
-//			double BB = h*d-b*j;
-//			double CC = h*e-b*k;
-//			double DD = h*f-h*a+b*g-b*l;
-//			
-////			assert(AA!=0);
-////			
-////			double aa = BB/AA;
-////			double bb = CC/AA;
-////			double cc = DD/AA;
-////			
-////			double alpha = 1;
-////			double beta = -aa/3;
-////			
-////			double p = bb-pow2(aa)/3;
-////			double q = (2*pow2(aa)/27-((aa*bb)/3)+cc);
-////			
-////			System.out.println("q= " + q + " p = "+ p);
-////			
-////			double det = pow2(q/2)+pow3(p/3);
-////			
-////			double u = Math.cbrt(-(q/2)+Math.sqrt(det));
-////			double v = Math.cbrt(-(q/2)-Math.sqrt(det));
-////			
-////			//Cases:
-////			
-////			double[] zs = new double[3];
-////			
-////			if(det>0)
-////			{
-////				System.out.println("case 1: det>0");
-////				
-////				double z_1 = u+v;
-////				zs[0] = z_1;
-////			}
-////			else if(det == 0)
-////			{
-////				System.out.println("case 2: det==0");
-////				
-////				if(u == v)
-////				{
-////					System.out.println("u==v");
-////					
-////					double z_11 = 2*u;
-////					double z_12 = Math.cbrt(-4*q);
-////					double z_13 = 3*q/p;
-////					
-////					assert(z_11==z_12 && z_12==z_13); //TODO check this
-////					
-////					zs[0] = z_11;
-////					
-////					System.out.println("z_11 = " + z_11 + "\nz_12 = "+ z_12 + "\nz_13 = " + z_13);
-////					
-////					double z_21 = -u;
-////					double z_22 = Math.cbrt(q/2);
-////					double z_23 = -3*q/(2*p);
-////					
-////					assert(z_21==z_22 && z_22==z_23); //TODO check this
-////					
-////					zs[1] = z_21;
-////					
-////					System.out.println("z_21 = " + z_21 + "\nz_22 = "+ z_22 + "\nz_23 = " + z_23);
-////				}
-////				
-////				if(p==0 && q==0)
-////				{
-////					System.out.println("p==q==0");
-////					
-////					double z_1=0;
-////					
-////					zs[0] = z_1;
-////					
-////				}
-////			}
-////			else if(det<0)
-////			{
-////				System.out.println("case 3: det<0");
-////				
-////				//u, v complex conj. to each other //TODO: implement this condition!
-////
-////				double z_2 = -1*Math.sqrt(-4*p/3)*Math.cos((1/3)*Math.acos((-q/2)*Math.sqrt(-27/pow3(p)))+Math.PI/3);	//TODO Check this!
-////				double z_1 = Math.sqrt(-4*p/3)*Math.cos((1/3)*Math.acos((-q/2)*Math.sqrt(-27/pow3(p)))); //TODO Check this!
-////				double z_3 = -1*Math.sqrt(-4*p/3)*Math.cos((1/3)*Math.acos((-q/2)*Math.sqrt(-27/pow3(p)))-Math.PI/3);	//TODO Check this!
-////
-////				zs[1] = z_2;
-////				zs[0] = z_1;
-////				zs[2] = z_3;
-////				
-////				System.out.println("z_2 = " + z_2 + "\nz_1 = "+ z_1 + "\nz_3 = " + z_3);
-////			}
-////			else
-////			{
-////				System.out.println("impossible case! should not happen! (in CurveToCommand)"); //TODO
-////			}
-////			
-////			///ReSub:
-////			
-////			double[] s = new double[3];
-////			
-////			for(int index = 0; index<3; index++)
-////			{
-////				s[index] = zs[index] - aa/3;//(BB)/(3*AA);
-////				
-////				double checkZ = pow3(zs[index])+p*zs[index]+q;
-////				System.out.println("-------- checkZ = 0 it is =" + checkZ); //TODO
-////			}
-////			
-////			double[] t = new double[3];
-////			double[] tt = new double[3];
-////			
-////			double x_r[] = new double[3];
-////			double y_r[] = new double[3];
-////			
-////			double x_q[] = new double[3];
-////			double y_q[] = new double[3];
-////			
-////			double[][] intersectionPoint = new double[2][2]; //first ray, second cubic
-////			
-////			for(int index = 0; index<3; index++)
-////			{
-////				t[index] = (c*pow3(s[index])+d*pow2(s[index])+e*s[index]+f-a)/b;
-////				tt[index] = (i*pow3(s[index])+j*pow2(s[index])+k*s[index]+l-g)/h;
-////				
-////				System.out.println("t = " + t[index] + " tt = " + tt[index]);
-////				System.out.println("s = " + s[index]);
-////				
-////				x_r[index] = a + t[index]*b;
-////				y_r[index] = g + t[index]*h;
-////				
-//////				s[index] = 0.5;
-////				
-////				x_q[index] = c*pow3(s[index])+d*pow2(s[index])+e*s[index]+f;
-////				y_q[index] = i*pow3(s[index])+j*pow2(s[index])+k*s[index]+l;
-////				
-////				double checkQ = pow3(s[index])*AA+pow2(s[index])*BB+s[index]*CC+DD;
-////				System.out.println("checkQ should be 0: " + checkQ);
-////				
-////				double checkQ2 = pow3(s[index])+pow2(s[index])*aa+s[index]*bb+cc;
-////				System.out.println("checkQ2 should be 0: " + checkQ2);
-////				
-////				System.out.println("P_R=[ " + x_r[index] + " | " + y_r[index] +" ]");
-////				System.out.println("P_Q=[ " + x_q[index] + " | " + y_q[index] +" ]");
-////				
-////				if(index==0)///s[index]<=1 && s[index]>=0)
-////				{
-////					System.out.println("Set point: s = " + s[index] + " index = " + index);
-////				
-////					intersectionPoint[0][0] = x_r[index];
-////					intersectionPoint[0][1] = y_r[index];
-////					
-////					intersectionPoint[1][0] = x_q[index];
-////					intersectionPoint[1][1] = y_q[index];
-////				}
-////			}
-////			
-////			BezierMain.setPointToDraw(intersectionPoint[1]);
-////			
-////			return intersectionPoint[0];
-////		}
-//			
-//			//NEW CALC:
-//			double p = (3*AA*CC-pow2(BB))/(9*pow2(AA));
-//			double q = (1/2)*((2*pow3(BB))/(27*pow3(AA))-(BB*CC)/(3*pow2(AA))+(DD/AA));
-//			
-//			double det = pow2(q)+pow3(p);
-//			
-//			if(p<0 && det<=0)
-//			{
-//				double r = Math.signum(q)*Math.sqrt(-p);
-//				double s = Math.acos(q/pow3(r));
-//				
-//				double z_1 = -2*r*Math.cos(s/3)-b/(3*AA);
-//				double z_2 = 2*r*Math.cos((Math.PI-s)/3)-b/(3*a);
-//				double z_3 = 2*r*Math.cos((Math.PI+s)/3)-b/(3*a);
-//			}
-//			
-//			
-//	}
 	
 	private double pow2(double n)
 	{
@@ -963,7 +553,5 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 	{
 		return Math.pow(n, 3);
 	}
-	
-	
 }
-}
+

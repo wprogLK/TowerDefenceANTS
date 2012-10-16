@@ -125,13 +125,13 @@ public class BezierMain extends JFrame
 //			
 			g2d.setColor(Color.RED);
 			g2d.fill(new Rectangle2D.Double(intersectionPoint[0], intersectionPoint[1], 5, 5));
-			g2d.drawString("Intersection Point ray ", (int) intersectionPoint[0], (int) intersectionPoint[1]);
+			g2d.drawString("Intersection return Point ", (int) intersectionPoint[0], (int) intersectionPoint[1]);
 		}
 		
 		g2d.setColor(Color.BLUE);
 		
 		Rectangle2D point = new Rectangle2D.Double(pointToDraw[0], pointToDraw[1], 5, 5);
-		g2d.drawString("Intersection Point cubic ", (int) pointToDraw[0], (int) pointToDraw[1]);
+		g2d.drawString("Intersection Point set ", (int) pointToDraw[0], (int) pointToDraw[1]);
 		
 		g2d.fill(point);
 		
