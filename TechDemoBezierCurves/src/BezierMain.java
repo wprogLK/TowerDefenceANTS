@@ -18,8 +18,8 @@ public class BezierMain extends JFrame
 	private ArrayList<BezierIPath> paths;
 	private static double[] pointToDraw = {-1,-1};
 	
-	private double[] startPointRay ={130,150}; //{150,110};
-	private double[] endPointRay = {300,170};//{160,200};
+	private double[] startPointRay ={150,110}; //{150,110};
+	private double[] endPointRay = {160,200};//{300,170};//{160,200};
 	private double[][] rayVector = {startPointRay,endPointRay};
 	
 	public BezierMain(String title)
@@ -63,8 +63,8 @@ public class BezierMain extends JFrame
 		p.addMoveTo(100, 100);
 //		p.addLineTo(200, 200);
 //		p.addQuadTo(150, 150, 300, 50);
-//		p.addCurveTo(150, 150, 200, 250, 300, 50);
-		p.addCurveTo(150, 150, 200, 250, 150, 70);
+		p.addCurveTo(150, 150, 200, 250, 300, 50);
+//		p.addCurveTo(150, 150, 200, 250, 150, 70);
 		
 		this.paths.add(p);
 		
@@ -113,6 +113,9 @@ public class BezierMain extends JFrame
 		
 		Iterator<BezierIPath> pathIterator = this.paths.iterator();
 		
+		g2d.draw(new Line2D.Double(this.startPointRay[0], this.startPointRay[1], this.endPointRay[0], this.endPointRay[1]));
+
+		
 		while(pathIterator.hasNext())
 		{
 			BezierIPath currentPath = pathIterator.next();
@@ -122,7 +125,7 @@ public class BezierMain extends JFrame
 			currentPath.drawSingleSegments(g2d);
 			
 			double[] intersectionPoint = currentPath.calculateIntersectionPoint(rayVector);
-//			
+			
 			g2d.setColor(Color.RED);
 			g2d.fill(new Rectangle2D.Double(intersectionPoint[0], intersectionPoint[1], 5, 5));
 			g2d.drawString("Intersection return Point ", (int) intersectionPoint[0], (int) intersectionPoint[1]);
@@ -135,7 +138,6 @@ public class BezierMain extends JFrame
 		
 		g2d.fill(point);
 		
-		g2d.draw(new Line2D.Double(this.startPointRay[0], this.startPointRay[1], this.endPointRay[0], this.endPointRay[1]));
 		
 	}
 	

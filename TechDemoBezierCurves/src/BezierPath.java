@@ -444,6 +444,9 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 				 */
 				double[] t = this.solveCubicEquation(F, G, H, I);
 				
+				if(t!=null)
+				{
+				
 				double[] s = new double[3];
 			//	double[][] intersectionPointCub = new double[3][2];
 			//	double[][] intersectionPointRay = new double[3][2];
@@ -483,8 +486,17 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 				//TODO
 				
 				//return intersectionPointCub[1];
-				//return intersectionPointRay[1];
-				return intersectionPoint;
+				return intersectionPointCub.get(0);
+				//return intersectionPoint;
+				}
+				else
+				{
+					System.out.println("ERROR: no intersectionPoint!"); //TODO
+					double[] point = new double[2];
+					return point;
+				}
+				
+				
 		}
 		
 		/**
@@ -516,6 +528,7 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 			return currentClosestPoint;
 		}
 
+		//TODO: case for one intersectionPoint!
 		private double[] solveCubicEquation(double a, double b, double c, double d)
 		{
 			double p = (3*a*c-pow2(b))/(9*pow2(a));
@@ -537,7 +550,7 @@ public class BezierPath extends Path2D.Double implements BezierIPath
 			}
 			else
 			{
-				System.out.println("Error: no solution!"); //TODO
+				System.out.println("Error: no solution! \np= " + p + " q = " + q +" det = " + det); //TODO
 				return null;
 			}
 				
